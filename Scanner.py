@@ -1,10 +1,10 @@
 num = input ("#Kommentar"+ 
-             "#Leere Zeilen werden Ignoriert" + 
-             "#str: ([a-z] | [A-Z] | [0-9] | _)+" +
-             "#dec: Dezimahlzahl mit beliebig vielen Nachkommastellen" +
-             "#int: Ganzahle mit beliebig vielen Stellen >=0" +
-             "#Werte-Trenner: 0x20 (SPACE)" +
-             "#Zeilen-Trenner: 0x0A (NEWLINE)")
+             "#Leere Zeilen werden Ignoriert \n" + 
+             "#str: ([a-z] | [A-Z] | [0-9] | _ \n)+" +
+             "#dec: Dezimahlzahl mit beliebig vielen Nachkommastellen \n" +
+             "#int: Ganzahle mit beliebig vielen Stellen >=0 \n" +
+             "#Werte-Trenner: 0x20 (SPACE) \n" +
+             "#Zeilen-Trenner: 0x0A (NEWLINE) \n")
 print(num)
 name1 = input("Enter name : ")
 print(name1)
