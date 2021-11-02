@@ -1,14 +1,12 @@
-num =       ("#Kommentar"+ 
-             "#Leere Zeilen werden Ignoriert \n" + 
-             "#str: ([a-z] | [A-Z] | [0-9] | _ \n)+" +
-             "#dec: Dezimahlzahl mit beliebig vielen Nachkommastellen \n" +
-             "#int: Ganzahle mit beliebig vielen Stellen >=0 \n" +
-             "#Werte-Trenner: 0x20 (SPACE) \n" +
-             "#Zeilen-Trenner: 0x0A (NEWLINE) \n")
-print(num)
+Tstring = '# Strecken: str(ID) str(Anfang) str(Ende) dec(LÃ¤nge) int(KapazitÃ¤t)'
+Trainstring = '# ZÃ¼ge: str(ID) str(Startbahnhof)/* dec(Geschwindigkeit) int(KapazitÃ¤t)'
+Passengersstring = '# Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(GruppengrÃ¶ÃŸe) int(Ankunftszeit)'
 
-  
 
+
+Trainstations = []  
+Trains = []
+Passengers = []
 
 
 mylines = []                                # Declare an empty list.
@@ -18,4 +16,66 @@ with open ("input.txt", "rt") as myfile:    # Open lorem.txt for reading text.
 
 
 
-    print(mylines)
+
+for x in range(len(mylines)):
+    print (mylines[x])
+
+print (mylines[x])
+
+i = 1
+
+if mylines [i] == ("[Stations]"):
+    while(True):
+        i+=1 
+        Trainstations.append(mylines[i])
+        if(Tstring == mylines[i+1]):
+            break
+i+=2
+
+if mylines [i] == ("[Lines]"): 
+    print(i)     
+    while(True):
+        i+=1 
+        Trains.append(mylines[i])
+        if(Trainstring == mylines[i+1]):
+            break
+
+
+i+=2
+
+if mylines [i] == ("[Trains]"): 
+    print(i)     
+    while(True):
+        i+=1 
+        Trains.append(mylines[i])
+        if(Trainstring == mylines[i+1]):
+            break
+
+
+
+
+
+
+
+
+
+
+i+=2
+
+if mylines [i] == ("[Passengers]"): 
+    print(i)     
+    while(True):
+        i+=1 
+        Passengers.append(mylines[i])
+        if(Passengersstring == mylines[i+1]):
+            break
+
+
+
+print(i) 
+    
+    
+# Strecken: str(ID) str(Anfang) str(Ende) dec(LÃ¤nge) int(KapazitÃ¤t)
+
+    
+print(mylines)
