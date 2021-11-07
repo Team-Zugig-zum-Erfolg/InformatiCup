@@ -13,5 +13,8 @@ class Passenger:
     def __init__(self) -> None:
         pass
     
-    def to_str(self) -> str:
+    def to_str_input(self) -> str:
+        pass
+
+    def to_str_output(self) -> str:
         return "[Passenger:P" + str(self.ID) + "]\n" + str(self.board_time) + " Board " + self.train + "\n" + str(self.arrive_time)+ " Detrain\n"
