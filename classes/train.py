@@ -8,7 +8,10 @@ class Train:
   def getId(train):
     return train.id_train
   def setId(train,id_train):
+    if type(id_train) != str:
+      return False
     train.id_train = id_train
+    return True
   def setStartStation(train,start_station):
     train.start_station = start_station
   def getStartStation(train):

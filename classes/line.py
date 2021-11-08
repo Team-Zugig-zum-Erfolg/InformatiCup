@@ -7,7 +7,7 @@ class Line:
   def getId(line):
     return line.id
   def setId(line,id_line):
-    if type(id_line) != int and not isnumeric(id_line):
+    if type(id_line) != str:
       return False
     line.id = id_line
   def getCapacity(line):
@@ -31,6 +31,7 @@ class Line:
       return False
     line.length = length
     return True
+  
 
 
   

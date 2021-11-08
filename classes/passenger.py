@@ -8,9 +8,10 @@ class Passenger:
   def getId(self):
     return passenger.id
   def setId(passenger,id_passenger):
-    if type(id_passenger) != int and not isnumeric(id_passenger):
+    if type(id_passenger) != str:
       return False
     self.id = id_passenger
+    return True
   def getStartStation(self):
     return self.capacity
   def setStartStation(self,start_station):
