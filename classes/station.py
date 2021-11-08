@@ -12,7 +12,7 @@ class Station:
   def getCapacity(self):
     return self.capacity
   def setCapacity(self,capacity):
-    if type(capacity) != int or not isnumeric(capacity):
+    if type(capacity) != int and not isnumeric(capacity):
       return False
     self.capacity = capacity
     return True
