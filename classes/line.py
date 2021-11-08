@@ -17,13 +17,26 @@ class Line:
       return False
     line.capacity = capacity
     return True
-  def getEnd(line):
-    return line.end
-  def setEnd(line,end):
-    if type(end) != list or len(end) != 2:
+  def getEnd(line,index=-1):
+    if type(index) != int:
       return False
-    line.end = end
-    return True    
+    if index == -1:
+      return line.end
+    elif index in [0,1]:
+      return line.end[index]
+    return False
+  def setEnd(line,end,index=-1):
+    if type(end) == list:
+        if len(end)!=2 or index!=-1:
+          return False
+        line.end = end
+        return True
+    elif type(end) == str:
+      if type(index) != int or index not in [0,1]:
+        return False
+      line.end[index] = end
+      return True   
+    return False   
   def getLength(line):
     return line.length
   def setLength(line,length):
@@ -31,7 +44,8 @@ class Line:
       return False
     line.length = length
     return True
-  
-
+  def to_str(line):
+    output = ' '.join([line.getId(),line.getEnd(0),line.getEnd(1),str(line.getLength()),str(line.getCapacity())])
+    print(output)
 
   
