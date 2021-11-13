@@ -15,7 +15,7 @@ class Groups:
             route_number = 0
             added = 0
             for route_searched in route:
-                if route_searched[0].getStartStation() == passenger.getStartStation() and route_searched[0].getEndStation() == passenger.getEndStation():
+                if route_searched[0].get_start_station() == passenger.get_start_station() and route_searched[0].get_end_station() == passenger.get_end_station():
                     route[route_number].append(passenger)
                     added = 1
                     break
