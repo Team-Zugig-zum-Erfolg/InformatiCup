@@ -1,8 +1,8 @@
 class Passenger:
-  def __init__(self, id_passenger, start_station, target_station, group_size, target_round):
+  def __init__(self, id_passenger, start_station, end_station, group_size, target_round):
     self.id = id_passenger
     self.start_station = start_station
-    self.target_station = target_station
+    self.end_station = end_station
     self.group_size = group_size
     self.target_round = target_round
   def getId(self):
@@ -12,18 +12,18 @@ class Passenger:
       return False
     self.id = id_passenger
   def getStartStation(self):
-    return self.capacity
+    return self.start_station
   def setStartStation(self,start_station):
     if type(start_station) != str:
       return False
     self.start_station = start_station
     return True
-  def getTargetStation(self):
-    return self.end
-  def setTargetStation(self,end):
+  def getEndStation(self):
+    return self.end_station
+  def setEndStation(self,end):
     if type(end) != list or len(end) != 2:
       return False
-    self.end = end
+    self.end_station = end
     return True    
   def getGroupSize(self):
     return self.group_size
