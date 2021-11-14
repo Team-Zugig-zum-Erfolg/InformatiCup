@@ -1,8 +1,8 @@
 class Passenger:
   def __init__(self, id_passenger, start_station, end_station, group_size, target_round):
-    self.id = id_passenger
+    self.id_passenger = id_passenger
     self.start_station = start_station
-    self.end_station = target_station
+    self.end_station = end_station
     self.group_size = group_size
     self.target_round = target_round
     
