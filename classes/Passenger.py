@@ -37,13 +37,13 @@ class Passenger:
     return self.group_size
   
   def set_group_size(self,size):
-    if type(size) != int and not isnumeric(size):
+    if type(size) != int:
       return False
     self.group_size = size
     return True
   
   def set_target_round(self,target_round):
-    if type(target_round) != int and not isnumeric(target_round):
+    if type(target_round) != int:
       return False
     self.target_round = target_round
     return True

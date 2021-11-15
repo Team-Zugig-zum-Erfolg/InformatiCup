@@ -1,36 +1,48 @@
 class Line:
-  def __init__(line, id_line, end, capacity, length):
-    line.id = id_line
-    line.end = end
-    line.capacity = capacity
-    line.length = length
-  def getId(line):
-    return line.id
-  def setId(line,id_line):
-    if type(id_line) != int and not isnumeric(id_line):
+  def __init__(self, id_line, end, capacity, length):
+    self.id = id_line
+    self.end = end
+    self.capacity = capacity
+    self.length = length
+    
+  def get_id(self):
+    return self.id
+  
+  def set_id(self,id_line):
+    if type(id_line) != str:
       return False
-    line.id = id_line
-  def getCapacity(line):
-    return line.capacity
-  def setCapacity(line,capacity):
-    if type(capacity) != int and not isnumeric(capacity):
-      return False
-    line.capacity = capacity
+    self.id = id_line
     return True
-  def getEnd(line):
-    return line.end
-  def setEnd(line,end):
+  
+  def get_capacity(self):
+    return self.capacity
+  
+  def set_capacity(self,capacity):
+    if type(capacity) != int:
+      return False
+    self.capacity = capacity
+    return True
+  
+  def get_end(self):
+    return self.end
+  
+  def set_end(self,end):
     if type(end) != list or len(end) != 2:
       return False
-    line.end = end
-    return True    
-  def getLength(line):
-    return line.length
-  def setLength(line,length):
-    if type(length) != int and not isnumeric(length):
+    self.end = end
+    return True
+  
+  def get_length(self):
+    return self.length
+  
+  def set_length(self,length):
+    if type(length) != float and type(length) != int:
       return False
-    line.length = length
+    self.length = length
     return True
 
+  def to_str(self):
+      output = " ".join([self.get_id(),str(self.get_end()[0]),str(self.get_end()[1]),str(self.get_length()),str(self.get_capacity())])
+      return output
 
-  
+
