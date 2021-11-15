@@ -4,24 +4,24 @@ class Train:
     self.capacity = capacity
     self.start_station = start_station
     self.speed = speed
-  def getId(self):
+  def get_id(self):
     return self.id
-  def setId(self,id_train):
+  def set_id(self,id_train):
     self.id = id_train
-  def setStartStation(self,start_station):
+  def set_start_station(self,start_station):
     self.start_station = start_station
-  def getStartStation(self):
+  def get_start_station(self):
     return self.start_station
-  def setSpeed(self,speed):
+  def set_speed(self,speed):
     self.speed = speed
-  def getSpeed(self):
+  def get_speed(self):
     return self.speed
-  def setCapacity(self,capacity):
+  def set_capacity(self,capacity):
     self.capacity = capacity
-  def getCapacity(self):
+  def get_capacity(self):
     return self.capacity
   def to_str(self):
-      output = " ".join([self.getId(),self.getStartStation(),str(self.getCapacity()),str(self.getSpeed())])
+      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
 

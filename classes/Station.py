@@ -16,3 +16,6 @@ class Station:
       return False
     self.capacity = capacity
     return True
+  def to_str(self):
+      output = " ".join([self.get_name(),str(self.get_capacity())])
+      return output
