@@ -16,13 +16,13 @@ class Stationlist:
     def compare_free_place(self, train, in_station_time, station_number):
 
         trains_in_station = 0
-        earliest_leave_time = 0
+        earliest_leave_time = -1
         station_capacities = self.stations[station_number]
         if len(station_capacities) < self.station_objects[station_number].getCapacity():
             return [True,-1]
         for train_in_station in station_capacities:
                 if train_in_station[0] <= in_station_time and (train_in_station[1] >= in_station_time or train_in_station[3] >= in_station_time):
-                    if earliest_leave_time > train_in_station[3]:
+                    if earliest_leave_time > train_in_station[3] or earliest_leave_time == -1:
                         earliest_leave_time = train_in_station[3]
                     elif earliest_leave_time > train_in_station[1]:
                         earliest_leave_time = train_in_station[1]
