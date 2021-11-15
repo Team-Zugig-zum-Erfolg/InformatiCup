@@ -50,5 +50,8 @@ class Passenger:
   
   def get_target_round(self):
     return self.target_round
-  
-  
+   
+  def __repr__(self): 
+#    return str(self.id_passenger, self.start_station, self.end_station, self.group_size, target_round)
+    return( '' + self.id_passenger + ',' + self.start_station + ',' + self.end_station + ',' + str(self.group_size) + ',' + str(self.target_round) + '')
+ 

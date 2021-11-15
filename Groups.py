@@ -1,7 +1,7 @@
 from typing import List
 from Station import Station
 from Line import Line
-from classes import Passenger
+from classes.passenger import Passenger
 
 class Groups:
 
@@ -26,6 +26,22 @@ class Groups:
         return True
             
     def get_priority(self):
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
         return
     def passengers_arrive(self):
         return
