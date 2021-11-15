@@ -2,8 +2,8 @@ from classes import Line
 
 class Linelist:
 
-    line_objects = []    #the station objects of type class Station
-    lines = []           #the stations with capacities
+    line_objects = []    #the line objects of type class Station
+    lines = []           #the lines with capacities
     
     
     def initial(self, linelist):
