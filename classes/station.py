@@ -2,16 +2,16 @@ class Station:
   def __init__(self, name, capacity):
     self.name = name
     self.capacity = capacity
-  def getName(self):
+  def get_name(self):
     return self.name
-  def setName(self,name):
+  def set_name(self,name):
     if type(name) != str:
       return False
     self.name = name
     return True
-  def getCapacity(self):
+  def get_capacity(self):
     return self.capacity
-  def setCapacity(self,capacity):
+  def set_capacity(self,capacity):
     if type(capacity) != int and not isnumeric(capacity):
       return False
     self.capacity = capacity
