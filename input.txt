@@ -1,0 +1,5 @@
+[Stations]
+S1 20
+
+[Lines]
+L1 S1 S2 1 1

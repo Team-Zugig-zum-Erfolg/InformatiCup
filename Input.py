@@ -1,18 +1,18 @@
 from typing import List
-from Station import Station
-from Line import Line
-from Passenger import Passenger
-# from Train import Train
+from classes import Station
+from classes import Line
+from classes import Train
+from classes import Passenger
 import time
 
 
 class Input:
-    Stations: List["Station"] = []
-    Lines: List["Line"] = []
-    Trains: List["Trains"] = []
-    Passengers: List["Passenger"] = []
+    Stations = []
+    Lines = []
+    Trains = []
+    Passengers = []
 
-    def to_input_text(self) -> str:
+    def to_input_text(self):
         ''' return a string of input in format '''
         text = "# Bahnhöfe: str(ID) \n [Stations] \n"
         for station in self.Stations:
@@ -39,7 +39,7 @@ class Input:
         # or i can use list, str = "\n".join(list)
         return text
 
-    def to_input_file(self, path:str) -> bool:
+    def to_input_file(self, path):
         ''' save input format in local file '''
         state = False
         file = open(path, 'w')  
@@ -48,22 +48,66 @@ class Input:
         state = True
         return state
 
-    def path_generator(self) -> str:
+    def path_generator(self):
         ''' generate a path for local file '''
         path = "./result/Input"
         path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))
         path = path + ".txt"
         return path
 
-    @staticmethod
-    def from_file(path:str):
+    def from_file(self,path):
         ''' load input from local file '''
         # contains '#': pass
         # contains []: start
-        
-        input = Input()
 
-        pass
+        i = 0
+
+        mylines = []                                # Declare an empty list.
+        with open (path, "rt") as myfile:    # Open lorem.txt for reading text.
+            for myline in myfile:                   # For each line in the file,
+                mylines.append(myline.rstrip('\n')) # strip newline and add to list.
+            mylines.append("")
+            print(mylines)
+        while(i < len(mylines)-1):
+            if mylines[i] == ("[Stations]"):
+                while(True):
+                    i+=1
+                    parameters = mylines[i].split(" ")
+                    self.Stations.append(Station(parameters[0],parameters[1]))
+                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])):
+                        break
+
+            if mylines [i] == ("[Lines]"): 
+                print(i)     
+                while(True):
+                    i+=1
+                    parameters = mylines[i].split(" ")
+                    self.Lines.append(Line(parameters[0],[parameters[1],parameters[2]],parameters[3],parameters[4]))
+                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])):
+                        break
+
+
+            if mylines [i] == ("[Trains]"): 
+                print(i)     
+                while(True):
+                    i+=1 
+                    parameters = mylines[i].split(" ")
+                    self.Trains.append(Line(parameters[0],parameters[1],parameters[2],parameters[3]))
+                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])):
+                        break
+
+
+            if mylines [i] == ("[Passengers]"):      
+                while(True):
+                    i+=1 
+                    parameters = mylines[i].split(" ")
+                    self.Passengers.append(Line(parameters[0],parameters[1],parameters[2],parameters[3],parameters[4]))
+                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])):
+                        break    
+                break
+    
+            i+=1
+        return [self.Stations,self.Lines,self.Trains,self.Passengers]
 
     def print_input(self):
         ''' print information of input '''
@@ -95,8 +139,7 @@ class Input:
 
 
 input = Input()
-print(input.to_input_text())
-print(input.path_generator())
-input.print_input()
+
+input.from_file("input.txt")
 
 
