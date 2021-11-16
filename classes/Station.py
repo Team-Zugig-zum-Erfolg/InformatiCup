@@ -24,3 +24,8 @@ class Station:
   def to_str(self):
       output = " ".join([self.get_name(),str(self.get_capacity())])
       return output
+
+  def __repr__(self):
+      output = " ".join([self.get_name(),str(self.get_capacity())])
+      return output
+    

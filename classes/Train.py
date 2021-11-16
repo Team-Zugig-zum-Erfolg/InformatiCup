@@ -45,4 +45,8 @@ class Train:
       output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
+  def __repr__(self):
+      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
+      return output
+
 

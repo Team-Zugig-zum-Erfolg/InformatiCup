@@ -50,7 +50,12 @@ class Passenger:
   
   def get_target_round(self):
     return self.target_round
+  
   def to_str(self):
+      output = " ".join([self.get_id(),self.get_start_station(),self.get_end_station(),str(self.get_capacity()),str(self.get_group_size()),str(self.get_target_round())])
+      return output
+
+  def __repr__(self):
       output = " ".join([self.get_id(),self.get_start_station(),self.get_end_station(),str(self.get_capacity()),str(self.get_group_size()),str(self.get_target_round())])
       return output
   
