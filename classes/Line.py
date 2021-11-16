@@ -44,5 +44,9 @@ class Line:
   def to_str(self):
       output = " ".join([self.get_id(),str(self.get_end()[0]),str(self.get_end()[1]),str(self.get_length()),str(self.get_capacity())])
       return output
+    
+  def __repr__(self):
+      output = " ".join([self.get_id(),str(self.get_end()[0]),str(self.get_end()[1]),str(self.get_length()),str(self.get_capacity())])
+      return output
 
 
