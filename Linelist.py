@@ -49,6 +49,8 @@ class Linelist:
                     break
             if free == 1:
                 self.lines[line_number][capacity_number].append([start,end,train])
+                self.lines[line_number][capacity_number].sort(key=lambda x: x[0])
+                print(self.lines[line_number][capacity_number])
                 return True
             capacity_number = capacity_number + 1
         return False
@@ -67,7 +69,8 @@ linelist = Linelist()
 
 linelist.initial([["L1","S3","S4",12.2,1]])
 
-linelist.add_new_train_in_line("T1",1,12,0)
+linelist.add_new_train_in_line("T1",4,12,0)
+linelist.add_new_train_in_line("T3",1,2,0)
 print(linelist.add_new_train_in_line("T2",1,12,0))
 
 print(linelist.compare_free("T1",1,12,0))

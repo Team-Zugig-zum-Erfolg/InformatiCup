@@ -55,6 +55,7 @@ class Stationlist:
                     break
             if free == 1:
                 self.stations[station_number][capacity_number].append([in_station_time,in_station_time + 1,train,-1])
+                self.stations[station_number][capacity_number].sort(key=lambda x: x[0])
                 return True
             capacity_number = capacity_number + 1
         return False
@@ -95,7 +96,7 @@ stationlist.initial([["S1",1],["S2",2]])
 stationlist.add_new_train_in_station("T1",12,0)
 
 
-stationlist.add_new_train_in_station("T2",12,0)
+stationlist.add_new_train_in_station("T2",4,0)
 
 
 print(stationlist.compare_free_place("T1",12,0))
