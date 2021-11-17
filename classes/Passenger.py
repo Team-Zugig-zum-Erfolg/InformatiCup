@@ -1,17 +1,57 @@
+from typing import List
+from classes.Station import Station
+from classes.Train import Train
+
 class Passenger:
-  def __init__(self, id_passenger, start_station, end_station, group_size, target_round):
-    self.id = id_passenger
+  # Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
+
+  id:int = 0
+  start_station:Station = None
+  end_station:Station = None
+  group_size:int = 0
+  target_time:int = 0
+
+  action_board_time: int = 0
+  action_arrive_time: int = 0
+  action_train: str = ""
+
+  history:List[str] = []
+
+  def __init__(self, id:int, start_station:Station, end_station:Station, group_size:int, target_time:int):
+    self.id = id
     self.start_station = start_station
-    self.end_station = target_station
+    self.end_station = end_station
     self.group_size = group_size
-    self.target_round = target_round
+    self.target_time = target_time
+
+  def to_str_input(self)->str:
+    output = " ".join([self.get_id_str(), self.start_station.get_id_str(), self.end_station.get_id_str(), str(self.group_size), str(self.target_time)])
+    return output
+
+  def to_str_output(self)->str:
+    # return "[Passenger:P" + str(self.ID) + "]\n" + str(self.board_time) + " Board " + self.train + "\n" + str(self.arrive_time)+ " Detrain\n"
+    output = "\n".join(self.history)
+    return output
+  
+  def add_board(self, time:int, train:Train):
+    out = str(time) + " " + "Board" + " " + train.get_id_str()
+    self.history.append(out)
+
+  def add_detrain(self, time:int):
+    out = str(time) + " " + "Detrain"
+    self.history.append(out)
+
+
+
+  def get_id_str(self)->str:
+    ''' get id with P in a string '''
+    out = "P" + str(self.id)
+    return out
     
   def get_id(self):
-    return passenger.id
+    return self.id
   
-  def set_id(passenger,id_passenger):
-    if type(id_passenger) != str:
-      return False
+  def set_id(self,id_passenger:int):
     self.id = id_passenger
     return True
     
@@ -51,9 +91,7 @@ class Passenger:
   def get_target_round(self):
     return self.target_round
   
-  def to_str(self):
-      output = " ".join([self.get_id(),self.get_start_station(),self.get_end_station(),str(self.get_capacity()),str(self.get_group_size()),str(self.get_target_round())])
-      return output
+
 
   def __repr__(self):
       output = " ".join([self.get_id(),self.get_start_station(),self.get_end_station(),str(self.get_capacity()),str(self.get_group_size()),str(self.get_target_round())])
