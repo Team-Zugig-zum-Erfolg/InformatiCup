@@ -1,10 +1,47 @@
+from typing import List
+from classes.Station import Station
+from classes.Line import Line
+
 class Train:
-  def __init__(self, id_train, capacity, start_station, speed):
-    self.id = id_train
-    self.capacity = capacity
+  # Züge: str(ID) str(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
+
+  id:int = 0
+  start_station:Station = None
+  speed:float = 0.0
+  capacity:int = 0
+  history:List[str] = []
+
+  def __init__(self, id:int, start_station:Station, speed:float, capacity:int):
+    '''if start_station is *, input value of start_station could be None '''
+    self.id = id
     self.start_station = start_station
     self.speed = speed
-    
+    self.capacity = capacity
+
+  def to_str_input(self)->str:
+    if self.start_station == None:
+      output = " ".join([self.get_id_str(), "*", str(self.speed), str(self.capacity)])
+    else:
+      output = " ".join([self.get_id_str(), self.start_station.get_id_str(), str(self.speed), str(self.capacity)])
+    return output
+
+  def to_str_output(self)->str:
+    output = "\n".join(self.history)
+    return output
+
+  def get_id_str(self)->str:
+    ''' get id with T in a string '''
+    out = "T" + str(self.id)
+    return out
+  
+  def add_start(self, time:int, station:Station):
+    out = str(time) + " " + "Start" + " " + station.get_id_str()
+    self.history.append(out)
+  
+  def add_depart(self, time:int, line:Line):
+    out = str(time) + " " + "Depart" + " " + line.get_id_str()
+    self.history.append(out)
+
   def get_id(self):
     return self.id
   
