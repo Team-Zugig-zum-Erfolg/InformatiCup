@@ -23,20 +23,22 @@ for list in linelist:
 print(Line)#[None, [[], []], [[]], [[], []]]
 
 # Beispiel [int start, int end, int train_Id]
-train_in_line = [2, 4, 1]
-train_in_line1 = [6, 8, 1]
-train_in_line2 = [10, 12, 1]
+train_in_line1 = [4, 6, 1]
+train_in_line2 = [7, 9, 2]
+train_in_line3 = [10, 13, 3]
 
-#L1 -> 1
-Line[1][0].append(train_in_line)
+#train_in_line put in capacity
 Line[1][0].append(train_in_line1)
 Line[1][0].append(train_in_line2)
+Line[1][0].append(train_in_line3)
 
-print(Line)
 for line in Line:
     if line != None:
+        print(line)
         for capacity in line:
-            for time in capacity:
-                print("Start:"+ str(time[const_start]))
-                print("end:" + str(time[const_end]))
-                print("train:" + str(time[const_train_Id]))
+            print(capacity)
+            for train_in_line in capacity:
+                print(train_in_line)
+                print("Start:"+ str(train_in_line[const_start]))
+                print("end:" + str(train_in_line[const_end]))
+                print("train:" + str(train_in_line[const_train_Id]))
