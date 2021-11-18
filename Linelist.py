@@ -1,4 +1,3 @@
-from classes import Line
 
 class Linelist:
 
