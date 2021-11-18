@@ -1,7 +1,7 @@
 from typing import List
-from Station import Station
-from Line import Line
-from classes.passenger import Passenger
+from classes import Station
+from classes import Line
+from classes import Passenger
 
 class Groups:
 
