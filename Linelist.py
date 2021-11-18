@@ -8,7 +8,8 @@ class Linelist:
     
     def initial(self, linelist):
       
-        line_number = 0
+        line_number = 1
+        self.lines.append([])
         for line in linelist:
             self.lines.append([])
             for i in range(0,line[4]):

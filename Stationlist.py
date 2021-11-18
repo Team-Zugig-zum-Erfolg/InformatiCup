@@ -8,7 +8,8 @@ class Stationlist:
     
     def initial(self, stationlist):
         
-        station_number = 0
+        station_number = 1
+        self.stations.append([])
         for station in stationlist:
             self.stations.append([])
             for i in range(0,station[1]):
