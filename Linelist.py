@@ -68,15 +68,23 @@ class Linelist:
 linelist = Linelist()
 
 
-linelist.initial([["L1","S3","S4",12.2,1]])
+linelist.initial([[1, 3, 4, 12.2, 1], [2, 1, 2, 4.2, 2], [3, 3, 2, 4.2, 2], [4, 4, 2, 4.2, 2]])
 
-linelist.add_new_train_in_line("T1",4,12,0)
-linelist.add_new_train_in_line("T3",1,2,0)
-print(linelist.add_new_train_in_line("T2",1,12,0))
+linelist.add_new_train_in_line(1 , 7, 9, 1)
+linelist.add_new_train_in_line(2 , 1, 2, 1)
 
-print(linelist.compare_free("T1",1,12,0))
-print(linelist.read_trains_from_line(0))
+linelist.add_new_train_in_line(1 , 7, 9, 2)
+linelist.add_new_train_in_line(2 , 1, 2, 2)
+linelist.add_new_train_in_line(2 , 1, 4, 2)
+linelist.add_new_train_in_line(2 , 5, 8, 2)
 
+print(linelist.add_new_train_in_line(2, 10, 12, 1))
 
+print(linelist.compare_free(1, 2, 6, 1)) # Falsch delay_time
+print(linelist.compare_free(1, 4, 6, 1))
+linelist.add_new_train_in_line(1 , 2, 6, 1)
+print(linelist.read_trains_from_line(1))
+print(linelist.lines[1])
+print(linelist.lines[2])
 
 
