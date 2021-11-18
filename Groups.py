@@ -1,6 +1,6 @@
 from typing import List
-from Station import Station
-from Line import Line
+from classes.Station import Station
+from classes.Line import Line
 from classes import Passenger
 
 class Groups:
