@@ -25,7 +25,7 @@ class Groups:
 
         return True
             
- def partition(array, start, end, compare_func):
+def partition(array, start, end, compare_func):
 
     pivot = array[start]
     low = start + 1
@@ -47,7 +47,7 @@ class Groups:
 
     return high
      
- def quick_sort(array, start, end, compare_func):
+def quick_sort(array, start, end, compare_func):
    
     if start >= end:
         return
@@ -56,16 +56,16 @@ class Groups:
     quick_sort(array, p+1, end, compare_func)
 
 
- def get_priority(self):
+def get_priority(self):
  
-    passenger_list = self #Liste mit den Groups 
-    quick_sort(passenger_list, 0, len(passenger_list) - 1, lambda x, y: x.target_round > y.target_round)
+    #passenger_list = self #Liste mit den Groups 
+    quick_sort(route, 0, len(route) - 1, lambda x, y: x.target_round > y.target_round)
     
-    for Passenger in passenger_list:
+    for Passenger in route:
         print(Passenger) 
 
   
- def passengers_arrive(self):
+def passengers_arrive(self):
     return
- def print_output(self):
+def print_output(self):
     return
