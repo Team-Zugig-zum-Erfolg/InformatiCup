@@ -61,9 +61,54 @@ class Input:
         # contains '#': pass
         # contains []: start
         
-        input = Input()
+       i = 0
 
-        pass
+        mylines = []                                # Declare an empty list.
+        with open (path, "rt") as myfile:    # Open lorem.txt for reading text.
+            for myline in myfile:                   # For each line in the file,
+                mylines.append(myline.rstrip('\n')) # strip newline and add to list.
+            mylines.append("")
+            print(mylines)
+        while(i < len(mylines)-1):
+            if mylines[i] == ("[Stations]"):
+                while(True):
+                    i+=1
+                    parameters = mylines[i].split(" ")
+                    self.Stations.append(Station(parameters[0],parameters[1]))
+                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])):
+                        break
+
+            if mylines [i] == ("[Lines]"): 
+                print(i)     
+                while(True):
+                    i+=1
+                    parameters = mylines[i].split(" ")
+                    self.Lines.append(Line(parameters[0],[parameters[1],parameters[2]],parameters[3],parameters[4]))
+                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])):
+                        break
+
+
+            if mylines [i] == ("[Trains]"): 
+                print(i)     
+                while(True):
+                    i+=1 
+                    parameters = mylines[i].split(" ")
+                    self.Trains.append(Line(parameters[0],parameters[1],parameters[2],parameters[3]))
+                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])):
+                        break
+
+
+            if mylines [i] == ("[Passengers]"):      
+                while(True):
+                    i+=1 
+                    parameters = mylines[i].split(" ")
+                    self.Passengers.append(Line(parameters[0],parameters[1],parameters[2],parameters[3],parameters[4]))
+                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])):
+                        break    
+                break
+    
+            i+=1
+        return [self.Stations,self.Lines,self.Trains,self.Passengers]
 
     def print_input(self):
         ''' print information of input '''
