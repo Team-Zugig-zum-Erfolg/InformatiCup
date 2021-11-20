@@ -1,9 +1,12 @@
+from typing import List
+from classes.Station import Station
+from classes.Line import Line
 from classes import Passenger
 
 class Groups:
 
     route = []
-        
+    
     def initial(self,passengers):
 
         if type(passengers) != list:
@@ -16,64 +19,38 @@ class Groups:
                     self.route[route_number].append(passenger)
                     added = 1
                     break
-                self.route = self.route + 1
+                route_number = route_number + 1
             if added == 0:
                 self.route.append([passenger])
 
         return True
-            
-    def partition(array, start, end, compare_func):
-
-        pivot = array[start]
-        low = start + 1
-        high = end
-
-        while True:
-            while low <= high and compare_func(array[high], pivot):
-                high = high - 1
-
-            while low <= high and not compare_func(array[low], pivot):
-                low = low + 1
-
-            if low <= high:
-                array[low], array[high] = array[high], array[low]
-            else:
-                break
-
-        array[start], array[high] = array[high], array[start]
-
-        return high
-     
-    def quick_sort(array, start, end, compare_func):
-   
-        if start >= end:
-            return
-        p = partition(array, start, end, compare_func)
-        quick_sort(array, start, p-1, compare_func)
-        quick_sort(array, p+1, end, compare_func)
-
-
-    def get_priority(self):
- 
-        #passenger_list = self #Liste mit den Groups 
-        quick_sort(self.route, 0, len(route) - 1, lambda x, y: x.target_round > y.target_round)
+        
+    def _get_min_target_round(self,group):
     
-        for Passenger in route:
-            print(Passenger) 
-
-  
-    def passengers_arrive(self):
-        return
+    	min = -1
+    	for pa in group:
+    		if min == -1:
+    			min = pa.get_target_round()
+    			continue
+    		if pa.get_target_round() < min:
+    			min = pa.get_target_round()
+    	return min
+            
+    def get_priority(self):
+    
+    	if len(self.route) == 0:
+    		return None
+    
+    	self.route.sort(key=self._get_min_target_round)
+    	return self.route[0]
+        
+    def passengers_arrive(self,group):
+    		
+    	self.route.remove(group)
+    	return
+    	
     def print_output(self):
         return
-
-
-pa1 = Passenger("P1","S1","S2",12,12)
-pa2 = Passenger("P2","S1","S2",12,12)
-
-
-groupstest = Groups()
-groupstest.initial([pa1,pa2])
-
-
-
+        
+        
+        

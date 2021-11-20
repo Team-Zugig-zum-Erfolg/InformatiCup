@@ -13,6 +13,8 @@ class Station:
 
 
   def get_id_str(self)->str:
+    if self.id == -1:
+    	return "*"
     out = "S" + str(self.id)
     return out
 

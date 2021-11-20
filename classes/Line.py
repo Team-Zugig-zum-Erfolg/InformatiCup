@@ -26,7 +26,6 @@ class Line:
     ''' return the id of line with L, like "L1" '''
     out = "L" + str(self.id)
     return out
-    
 
   def get_id(self):
     return self.id
@@ -40,6 +39,13 @@ class Line:
   
   def set_capacity(self,capacity:int):
     self.capacity = capacity
+    return True
+  
+  def get_start(self):
+    return self.start
+  
+  def set_start(self,start:Station):
+    self.start = start
     return True
   
   def get_end(self):
