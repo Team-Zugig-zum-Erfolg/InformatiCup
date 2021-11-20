@@ -143,3 +143,6 @@ class Algo:
       
 algo = Algo()
 algo.run()
+
+print(algo._get_fastest_train_with_valid_capacity([[Train(1,Station(2,20),4,10),10,20],[Train(2,Station(2,20),4,10),10,20]],[Passenger(1,Station(2,20),Station(4,20),20,10)]))
+

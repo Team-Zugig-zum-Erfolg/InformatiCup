@@ -52,7 +52,7 @@ class Train:
     return True
   
   def set_start_station(self,start_station):
-    if type(start_station) != str:
+    if type(start_station) != Station:
       return False
     self.start_station = start_station
     return True
@@ -79,11 +79,11 @@ class Train:
     return self.capacity
   
   def to_str(self):
-      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
+      output = " ".join([self.get_id_str(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
   def __repr__(self):
-      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
+      output = " ".join([self.get_id_str(),self.get_start_station().get_id_str(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
 
