@@ -48,6 +48,19 @@ class Groups:
     		
     	self.route.remove(group)
     	return
+
+    def split_group(self,group):
+
+        self.route.remove(group)
+        
+        length = len(group)
+        middle_index = length // 2
+
+        first_group = group[:middle_index]
+        second_group = group[middle_index:]
+        self.route.append(first_group)
+        self.route.append(second_group)
+        return
     	
     def print_output(self):
         return
