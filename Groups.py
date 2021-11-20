@@ -6,7 +6,7 @@ from classes import Passenger
 class Groups:
 
     route = []
-    
+
     def initial(self,passengers):
 
         if type(passengers) != list:
@@ -24,46 +24,46 @@ class Groups:
                 self.route.append([passenger])
 
         return True
-        
+
     def _get_min_target_round(self,group):
-    
-    	min = -1
-    	for pa in group:
-    		if min == -1:
-    			min = pa.get_target_round()
-    			continue
-    		if pa.get_target_round() < min:
-    			min = pa.get_target_round()
-    	return min
-            
+
+        min = -1
+        for pa in group:
+            if min == -1:
+                min = pa.get_target_round()
+                continue
+            if pa.get_target_round() < min:
+                min = pa.get_target_round()
+        return min
+
     def get_priority(self):
-    
-    	if len(self.route) == 0:
-    		return None
-    
-    	self.route.sort(key=self._get_min_target_round)
-    	return self.route[0]
-        
+
+        if len(self.route) == 0:
+            print("hallo")
+            return None
+
+        self.route.sort(key=self._get_min_target_round)
+        return self.route[0]
+
     def passengers_arrive(self,group):
-    		
-    	self.route.remove(group)
-    	return
+
+        self.route.remove(group)
+        return
 
     def split_group(self,group):
 
         self.route.remove(group)
-        
+
         length = len(group)
         middle_index = length // 2
 
         first_group = group[:middle_index]
         second_group = group[middle_index:]
-        self.route.append(first_group)
-        self.route.append(second_group)
+        if len(first_group) != 0:
+            self.route.append(first_group)
+        if len(second_group) != 0:
+            self.route.append(second_group)
         return
-    	
+
     def print_output(self):
         return
-        
-        
-        
