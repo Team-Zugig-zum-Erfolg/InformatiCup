@@ -87,26 +87,7 @@ class Stationlist:
 
 
 
-stationlist = Stationlist()
 
-
-stationlist.initial([["S1",1],["S2",2]])
-
-
-
-stationlist.add_new_train_in_station("T1",12,0)
-
-
-stationlist.add_new_train_in_station("T2",4,0)
-
-
-print(stationlist.compare_free_place("T1",12,0))
-
-stationlist.add_train_leave_time("T1",14,0)
-
-print(stationlist.compare_free_place("T1",12,0))
-
-print(stationlist.read_trains_from_station(0))
 
 
 

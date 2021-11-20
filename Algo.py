@@ -57,17 +57,9 @@ class Algo:
 		passengerlist = self.input_manager.output_passengerlist()
 
 		self.travel_center.initial(stationlist,linelist,trainlist)
-    
-		#self.stationlist_manager.initial(stationlist)
-		#self.linelist_manager.initial(linelist)
-
 
 		self.groups_manager.initial(passengerlist)
-  
-  
-    
 
-		print("Testing:")
     
 		while self.groups_manager.get_priority():
 			group_with_prio = self.groups_manager.get_priority() #passenger group with the highest prio
@@ -114,25 +106,25 @@ class Algo:
 					route_data_list_move.append(self.travel_center.determine_route(train_and_time[0],train_and_time[1],end_station))
 
 				#self._get_fastest_train_with__valid_capacity(route_data_list,group_with_prio) -> [train_fastest:class Train,earliest_end_time:int]
-				train_max_fastest_and_time_not_move = self._get_fastest_train_with_valid_capacity(route_data_list_not_move,group_with_prio)
+				train_fastest_and_time_not_move = self._get_fastest_train_with_valid_capacity(route_data_list_not_move,group_with_prio)
 
 				#self._get_fastest_train_with_capacity(route_data_list,group_with_prio) -> [train_fastest:class Train,earliest_end_time:int]
-				train_max_fastest_and_time_move = self._get_fastest_train_with_valid_capacity(route_data_list_move,group_with_prio)    
+				train_fastest_and_time_move = self._get_fastest_train_with_valid_capacity(route_data_list_move,group_with_prio)    
 
-				if train_max_fastest_and_time_not_move[0] != None and train_max_fastest_and_time_move[0] != None: #if train in and also not in move are available for calling             
+				if train_fastest_and_time_not_move[0] != None and train_max_fastest_and_time_move[0] != None: #if train in and also not in move are available for calling             
 
-					if train_max_fastest_and_time_not_move[1] < train_max_fastest_and_time_move[1]:
-						self.travel_center.call_train_not_in_move(train_max_fastest_and_time_not_move[0],start_station,end_station)
+					if train_fastest_and_time_not_move[1] < train_fastest_and_time_move[1]:
+						self.travel_center.call_train_not_in_move(train_fastest_and_time_not_move[0],start_station,end_station)
 					else:
-						self.travel_center.call_train_in_move(train_max_fastest_and_time_move[0],start_station,end_station)
+						self.travel_center.call_train_in_move(train_fastest_and_time_move[0],start_station,end_station)
 
-				elif train_max_fastest_and_time_not_move[0] != None: #if only trains not in move are available for calling			
+				elif train_fastest_and_time_not_move[0] != None: #if only trains not in move are available for calling			
 
-					self.travel_center.call_train_not_in_move(train_max_fastest_and_time_not_move[0],start_station,end_station,group_with_prio)
+					self.travel_center.call_train_not_in_move(train_fastest_and_time_not_move[0],start_station,end_station,group_with_prio)
 
-				elif train_max_fastest_and_time_move[0] != None: #if only trains in move are available for calling
+				elif train_fastest_and_time_move[0] != None: #if only trains in move are available for calling
 
-					self.travel_center.call_train_in_move(train_max_fastest_and_time_move[0],start_station,end_station,group_with_prio)
+					self.travel_center.call_train_in_move(train_fastest_and_time_move[0],start_station,end_station,group_with_prio)
                                 
 				else: #no train available (because no train has enough capacity for the current group of passengers)
 
@@ -142,12 +134,12 @@ class Algo:
                                 
       
 			#if the ending station (where the passengers arrived) is full, check the capacities of the neighbor or other stations, where this train can move away, to not             block other trains, which want to pass this station
-			self.travel_center.optimize_full_station(train_max_fastest_and_time_not_move[0],end_station)         
+			self.travel_center.optimize_full_station(train_fastest_and_time_not_move[0],end_station)         
 
 			#remove passenger group from Groups
 			self.groups_manager.passengers_arrive(group_with_prio)
 
-		#In/With Result, generate the whole plan and output it
+		#In class Result, generate the whole plan and output it
       
 algo = Algo()
 algo.run()
