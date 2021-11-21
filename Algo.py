@@ -61,6 +61,30 @@ class Algo:
             start_station = group_with_prio[0].get_start_station()
             end_station = group_with_prio[0].get_end_station()
 
+            
+            if self.travel_center.new_trains_available(start_station):
+                
+                new_trains_available = self.travel_center.new_trains_available(start_station)
+
+                route_data_list_new_trains = []
+                
+                for new_train_and_time in new_trains_available:
+                    route_data_list_new_trains.append(self.travel_center.determine_route(new_train_and_time[0],start_station,end_station,0))
+            
+                new_train_fastest_and_time = self._get_fastest_train_with_valid_capacity(route_data_list_new_trains,group_with_prio)
+
+                if new_train_fastest_and_time[0] != None:
+                    
+                    self.travel_center.save_route(new_train_fastest_and_time[0],start_station,end_station,0,group_with_prio)
+
+                    #if the ending station (where the passengers arrived) is full, check the capacities of the neighbor or other stations, where this train can move away, to not             block other trains, which want to pass this station
+                    self.travel_center.optimize_full_station(train_fastest_and_time_not_move[0],end_station)
+
+                    #remove passenger group from Groups
+                    self.groups_manager.passengers_arrive(group_with_prio)
+
+                    continue
+
             trains_callable_not_in_move = self.travel_center.callable_trains_not_in_move(start_station) #trains_callable_not_in_move = [[train1:class Train,station:class Station,start_time:int],....]
             trains_callable_in_move = self.travel_center.callable_trains_in_move(start_station,end_station) #trains_callable_in_move = [[train1:class Train,station:class Station,start_time:int],....]
 
