@@ -1,7 +1,9 @@
+from classes.Line import Line
+from classes.Station import Station
 
 class Linelist:
 
-
+    line_objects = []
     lines = []           #the lines with capacities
     
     
@@ -9,8 +11,10 @@ class Linelist:
       
         line_number = 1
         self.lines.append([])
+        self.line_objects.append([])
         for line in linelist:
             self.lines.append([])
+            self.line_objects.append(Line(line[0],line[1],line[2],line[3],line[4]))
             for i in range(0,line[4]):
                 self.lines[line_number].append([])
             line_number = line_number + 1
@@ -63,7 +67,12 @@ class Linelist:
                     trains.append(train_in_line[2])
         return trains
 
-
+    def get_lines_from_station(self, station_number):
+        lines_return = []
+        for line_object in self.line_objects:
+            if line_object.get_start_station().get_id() == station_number or line_object.get_end_station().get_id() == station_number:
+                lines_return.append(line_object)
+        return lines_return
 
 
 
