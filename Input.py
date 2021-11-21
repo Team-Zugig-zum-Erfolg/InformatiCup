@@ -148,7 +148,7 @@ class Input:
                 break
     
             i+=1
-        return [self.Stations,self.Lines,self.Trains,self.Passengers]
+        return self.Stations,self.Lines,self.Trains,self.Passengers
 
 
     def print_input(self):
@@ -197,10 +197,19 @@ def _string_to_float(string:str)->float:
 
 
 input = Input()
-input.from_file("./test/test-input-1.txt")
-print(input.to_input_text())
-# print(input.path_generator())
-input.print_input()
+a,b,c,d = input.from_file("./test/test-input-1.txt")
+for i in a:
+    print(i.to_str_input())
+for i in b:
+    print(i.to_str_input())
+for i in c:
+    print(i.to_str_input())
+for i in d:
+    print(i.to_str_input())
+
+# print(input.to_input_text())
+# # print(input.path_generator())
+# input.print_input()
 
 
-print(input.Trains[0].start_station)
+# print(input.Trains[0].start_station)
