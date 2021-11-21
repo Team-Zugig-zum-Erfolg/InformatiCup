@@ -107,7 +107,6 @@ class Algo:
 
             if train_fastest_and_time_not_move[0] != None and train_fastest_and_time_move[0] != None: #if train in move and also not in move are available for calling
 
-                print("both")
                 if train_fastest_and_time_not_move[2] < train_fastest_and_time_move[2]:
                     self.travel_center.call_train_not_in_move(train_fastest_and_time_not_move[0],start_station,end_station,train_fastest_and_time_not_move[1],group_with_prio)
                 else:
@@ -115,12 +114,10 @@ class Algo:
 
             elif train_fastest_and_time_not_move[0] != None: #if only trains not in move are available for calling
 
-                print("both")
                 self.travel_center.call_train_not_in_move(train_fastest_and_time_not_move[0],start_station,end_station,train_fastest_and_time_not_move[1],group_with_prio)
 
             elif train_fastest_and_time_move[0] != None: #if only trains in move are available for calling
 
-                print("both")
                 self.travel_center.call_train_in_move(train_fastest_and_time_move[0],start_station,end_station,train_fastest_and_time_not_move[1],group_with_prio)
 
             else: #no train available (because no train has enough capacity for the current group of passengers)
