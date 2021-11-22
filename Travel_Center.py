@@ -1,4 +1,10 @@
 import math
+from Stationlist import Stationlist
+from Linelist import Linelist
+from classes.Travel import Travel
+from classes.TrainInLine import TrainInLine
+from classes.TrainInStation import TrainInStation
+
 
 
 class Travel_Center:
@@ -22,7 +28,6 @@ class Travel_Center:
     TRAINLIST = []
 
     S_LINEPLAN = []
-
 
     def __init__(self, stationlist, linelist, trainlist):
         self.train_line_time_list.append([])
@@ -96,5 +101,59 @@ class Travel_Center:
                 short_line = line
         return [short_len, short_line]
 
-    def call_train():
-        pass
+    def time_count_train(self, start_station, end_station, train, start_time):
+        length, lines = self.find_best_line(start_station, end_station)
+        line_time = []
+        on_board = start_time + 1
+        add_time = on_board + 1
+        for l in range(len(lines)):
+            line_time.append([])
+            line_time[l].append(TrainInLine(train.get_id(), add_time,
+                                            add_time + self.train_line_time_list[train.get_id()][lines[l]]), lines[l])
+            add_time = add_time + self.train_line_time_list[train.get_id()][lines[l]]
+        station_time = TrainInStation(train.get_id(), add_time, end_station, None)
+
+        return Travel(start_time, on_board, line_time, station_time, start_station, end_station, train)
+
+    def check_line_station(travel: Travel, stationlist: Stationlist, linelist: Linelist):
+        line_availables = []
+        line_time_changes = []
+        for line in travel.line_time:
+            line_available, line_time_change = linelist.compare_free(line)
+            line_availables.append(line_available)
+            line_time_changes.append(line_time_change)
+
+        station_available, station_time_change = stationlist.compare_free_place(travel.station_time)
+
+        available = True
+        station_delay_time = 0
+        if not station_available:
+            available = False
+            station_delay_time = station_time_change - travel.station_time
+            available = False
+
+        delay_time = station_delay_time
+        line_delay_time = 0
+        i = 0
+        for a in line_availables:
+            if not a:
+                available = False
+                line_delay_time = line_time_change[i] - travel.line_time[i]
+                if delay_time < line_delay_time:
+                    delay_time = line_delay_time
+            i += 1
+
+        return [available, linelist, stationlist, travel, delay_time]
+
+    def delay_travel(travel: Travel, delay_time):
+        travel.start_time = travel.start_time + delay_time
+        travel.on_board = travel.on_board + delay_time
+        travel.line_time = travel.line_time + delay_time
+        travel.station_time = travel.station_time + delay_time
+        travel.start_station = travel.start_station + delay_time
+        travel.end_station = travel.end_station + delay_time
+
+        return travel
+    def save_travel(travel: Travel, passengers):
+        
+
