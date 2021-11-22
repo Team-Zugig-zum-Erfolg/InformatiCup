@@ -24,6 +24,9 @@ class Passenger:
     self.group_size = group_size
     self.target_time = target_time
 
+  def to_list(self):
+    return [self.id, self.start_station.get_id(), self.end_station.get_id(), self.group_size, self.target_time]
+
   def to_str_input(self)->str:
     output = " ".join([self.get_id_str(), self.start_station.get_id_str(), self.end_station.get_id_str(), str(self.group_size), str(self.target_time)])
     return output
