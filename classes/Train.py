@@ -18,6 +18,9 @@ class Train:
     self.speed = speed
     self.capacity = capacity
 
+  def to_list(self):
+    return [self.id, self.start_station.get_id(), self.speed, self.capacity]
+
   def to_str_input(self)->str:
     if self.start_station == None:
       output = " ".join([self.get_id_str(), "*", str(self.speed), str(self.capacity)])
