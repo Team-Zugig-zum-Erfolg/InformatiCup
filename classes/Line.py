@@ -18,7 +18,7 @@ class Line:
     self.length = length
   
   def to_list(self):
-    return [self.id, self.start.get_id(), self.end.get_id(), self.capacity, self.length]
+    return [self.id, self.start.get_id(), self.end.get_id(), self.length, self.capacity]
 
   def to_str_input(self):
     '''this method is used for input, generate information of one line'''
