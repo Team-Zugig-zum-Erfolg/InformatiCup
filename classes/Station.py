@@ -7,6 +7,9 @@ class Station:
     self.id = id
     self.capacity = capacity
   
+  def to_list(self):
+    return [self.id, self.capacity]
+
   def to_str_input(self)->str:
     output = " ".join([self.get_id_str(),str(self.capacity)])
     return output
