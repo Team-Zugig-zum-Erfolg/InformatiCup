@@ -6,6 +6,7 @@ from classes.Train import Train
 import time
 import re
 
+
 class Input:
     Stations: List["Station"] = []
     Lines: List["Line"] = []
@@ -175,26 +176,25 @@ class Input:
         print("---------------")
         return
 
-# helper methods
-def _string_to_int(string:str)->int:
-    r = re.findall('\d+', string)
-    if(len(r)>0):
-        return int(r[0])
-    else:
-        return 0
-
-    
-
-def _string_to_float(string:str)->float:
-    r = re.findall('\d+', string)
-    if(len(r)>0):
-        return float(r[0])
-    else:
-        return 0
 
 # test _string_to_int()
 # print(type(_string_to_int("A1")))
 
+# helper methods
+def _string_to_int(string: str) -> int:
+    r = re.findall('\d+', string)
+    if (len(r) > 0):
+        return int(r[0])
+    else:
+        return 0
+
+
+def _string_to_float(string: str) -> float:
+    r = re.findall('\d+', string)
+    if (len(r) > 0):
+        return float(r[0])
+    else:
+        return 0
 
 input = Input()
 a,b,c,d = input.from_file("./test/test-input-1.txt")
