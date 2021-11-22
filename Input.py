@@ -122,7 +122,7 @@ class Input:
                     i+=1
                     parameters = mylines[i].split(" ")
                     # Strecken: int(ID) station(Anfang) station(Ende) dec(Länge) int(Kapazität)
-                    self.Lines.append(Line(id = _string_to_int(parameters[0]), start = self.find_station(_string_to_int(parameters[1])), end = self.find_station(_string_to_int(parameters[2])), length = _string_to_float(parameters[3]), capacity = _string_to_int(parameters[4])))
+                    self.Lines.append(Line(id = _string_to_int(parameters[0]), start = self.find_station(_string_to_int(parameters[1])), end = self.find_station(_string_to_int(parameters[2])), length = float(parameters[3]), capacity = _string_to_int(parameters[4])))
                     if(('#' in mylines[i+1]) or ("" == mylines[i+1]))or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
                         break
 
@@ -133,7 +133,7 @@ class Input:
                     i+=1 
                     parameters = mylines[i].split(" ")
                     # Züge: int(ID) station(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
-                    self.Trains.append(Train(id=_string_to_int(parameters[0]), start_station= self.find_station(_string_to_int(parameters[1])), speed = _string_to_float(parameters[2]), capacity = _string_to_int(parameters[3])))
+                    self.Trains.append(Train(id=_string_to_int(parameters[0]), start_station= self.find_station(_string_to_int(parameters[1])), speed = float(parameters[2]), capacity = _string_to_int(parameters[3])))
                     if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
                         break
 
