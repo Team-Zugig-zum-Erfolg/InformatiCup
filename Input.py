@@ -8,10 +8,14 @@ import re
 
 
 class Input:
+    star_station = Station(id=-1,capacity=999)   # the "*" station
     Stations: List["Station"] = []
     Lines: List["Line"] = []
     Trains: List["Train"] = []
     Passengers: List["Passenger"] = []
+
+    def get_star_station(self):
+        return self.star_station
 
     def find_station(self, id)->Station:
         # station may be none, if input is *
@@ -42,14 +46,26 @@ class Input:
     # input could be all string,
     # check duplication
 
-    def add_station(self):
-        pass
-    def add_line(self):
-        pass
-    def add_train(self):
-        pass
-    def add_passenger(self):
-        pass
+    def add_station(self, id:str, capacity:str):
+        # station: int(ID), int capacity
+        self.Stations.append(Station(id = _string_to_int(id), capacity = int(capacity)))
+        # self.if_station_added(id)
+        # true: find_station().capacity = xx
+        # false: append
+
+    def add_line(self, id:str, start_id:str, end_id:str, length:str, capacity:str):
+        # Strecken: int(ID) station(Anfang) station(Ende) dec(Länge) int(Kapazität)
+        self.Lines.append(Line(id = _string_to_int(id), start = self.find_station(_string_to_int(start_id)), end = self.find_station(_string_to_int(end_id)), length = float(length), capacity = int(capacity)))
+
+    def add_train(self, id:str, start_id:str, speed:str, capacity:str):
+        # Züge: int(ID) station(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
+        self.Trains.append(Train(id=_string_to_int(id), start_station= self.find_station(_string_to_int(start_id)), speed = float(speed), capacity = _string_to_int(speed)))
+        # if start_id == '*':
+
+    def add_passenger(self, id:str, start_id:str, end_id:str, size:str, target:str):
+        # Passagiere: int(ID) station(Startbahnhof) station(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
+        self.Passengers.append(Passenger(id = _string_to_int(id), start_station= self.find_station(_string_to_int(start_id)), end_station= self.find_station(_string_to_int(end_id)), group_size= _string_to_int(size), target_time=_string_to_int(target)))
+
 
 
     def to_input_text(self) -> str:
@@ -111,8 +127,7 @@ class Input:
                 while(True):
                     i += 1
                     parameters = mylines[i].split(" ")
-                    # station: int(ID), int capacity
-                    self.Stations.append(Station(id = _string_to_int(parameters[0]), capacity = _string_to_int(parameters[1])))
+                    self.add_station(id=parameters[0], capacity=parameters[1])
                     if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
                         break
 
@@ -121,19 +136,16 @@ class Input:
                 while(True):
                     i+=1
                     parameters = mylines[i].split(" ")
-                    # Strecken: int(ID) station(Anfang) station(Ende) dec(Länge) int(Kapazität)
-                    self.Lines.append(Line(id = _string_to_int(parameters[0]), start = self.find_station(_string_to_int(parameters[1])), end = self.find_station(_string_to_int(parameters[2])), length = float(parameters[3]), capacity = _string_to_int(parameters[4])))
+                    self.add_line(id=parameters[0],start_id=parameters[1],end_id=parameters[2],length=parameters[3],capacity=parameters[4])
                     if(('#' in mylines[i+1]) or ("" == mylines[i+1]))or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
                         break
-
 
             if mylines [i] == ("[Trains]"): 
                 print(i)     
                 while(True):
                     i+=1 
                     parameters = mylines[i].split(" ")
-                    # Züge: int(ID) station(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
-                    self.Trains.append(Train(id=_string_to_int(parameters[0]), start_station= self.find_station(_string_to_int(parameters[1])), speed = float(parameters[2]), capacity = _string_to_int(parameters[3])))
+                    self.add_train(id=parameters[0],start_id=parameters[1],speed=parameters[2],capacity=parameters[3])
                     if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
                         break
 
@@ -142,8 +154,7 @@ class Input:
                 while(True):
                     i += 1 
                     parameters = mylines[i].split(" ")
-                    # Passagiere: int(ID) station(Startbahnhof) station(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
-                    self.Passengers.append(Passenger(id = _string_to_int(parameters[0]), start_station= self.find_station(_string_to_int(parameters[1])), end_station= self.find_station(_string_to_int(parameters[2])), group_size= _string_to_int(parameters[3]), target_time=_string_to_int(parameters[4])))
+                    self.add_passenger(id=parameters[0],start_id=parameters[1],end_id=parameters[2],size=parameters[3],target=parameters[4])
                     if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
                         break    
                 break
