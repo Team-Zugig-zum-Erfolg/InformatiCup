@@ -19,17 +19,23 @@ def main():
     linelist = []
     for l in lines:
         linelist.append(l.to_list())
-    trainlist = []
+    '''trainlist = []
     for t in trains:
-        trainlist.append(t.to_list())
-
-    travel_center = Travel_Center(stationlist, linelist, trainlist)
+        #trainlist.append(t.to_list())
+        pass'''
+    trainlist = [[1, 3, 1.18571, 7], [2, 5, 2.94952, 6],
+                 [3, 1, 3.37228, 9], [4, 2, 2.23773, 8], [5, None, 1.16584, 9],
+                 [6, 2, 3.50270, 5], [7, 5, 1.46495, 9], [8, None, 3.79408, 6],
+                 [9, 1, 3.52201, 6], [10, None, 2.90067, 7]]
 
     print("test")
-    print(stations[0])
     print(stationlist)
     print(linelist)
     print(trainlist)
+
+    travel_center = Travel_Center(stationlist, linelist, trainlist)
+
+
 
     return
 
