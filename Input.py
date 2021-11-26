@@ -22,7 +22,12 @@ class Input:
         find = list(filter(lambda t: t.id == id, self.Stations))
         if(len(find)>0):
             return find[0]  # assume there are no duplications
-        else: return None
+        else: 
+            # print("[Warning] Input.find_station: this station doesn't exist")
+            # but what if adding a station?
+            # when adding a train, the station doesnt exist, need to print a warnin
+            # write a log
+            return None
 
     def find_line(self, id)->Line:
         find = list(filter(lambda t: t.id == id, self.Lines))
@@ -48,25 +53,53 @@ class Input:
 
     def add_station(self, id:str, capacity:str):
         # station: int(ID), int capacity
-        self.Stations.append(Station(id = _string_to_int(id), capacity = int(capacity)))
+        id = _string_to_int(id)
+        station = self.find_station(id)
+        if not station: # a station is not founded
+            self.Stations.append(Station(id = id, capacity = int(capacity)))
         # self.if_station_added(id)
         # true: find_station().capacity = xx
         # false: append
 
     def add_line(self, id:str, start_id:str, end_id:str, length:str, capacity:str):
+        id = _string_to_int(id)
+        line = self.find_line(id)
+        if not line:
+            self.Lines.append(Line(id =id, start = self.find_station(_string_to_int(start_id)), end = self.find_station(_string_to_int(end_id)), length = float(length), capacity = int(capacity)))
+        # ?? what if the station not exist?
+
         # Strecken: int(ID) station(Anfang) station(Ende) dec(Länge) int(Kapazität)
-        self.Lines.append(Line(id = _string_to_int(id), start = self.find_station(_string_to_int(start_id)), end = self.find_station(_string_to_int(end_id)), length = float(length), capacity = int(capacity)))
 
     def add_train(self, id:str, start_id:str, speed:str, capacity:str):
         # Züge: int(ID) station(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
-        self.Trains.append(Train(id=_string_to_int(id), start_station= self.find_station(_string_to_int(start_id)), speed = float(speed), capacity = _string_to_int(speed)))
-        # if start_id == '*':
+        id = _string_to_int(id)
+        train = self.find_train(id)
+        if not train:           # there are no such train duplicated
+            if start_id == "*": # a star train
+                self.Trains.append(Train(id=id, start_station= self.star_station, speed = float(speed), capacity = int(capacity)))
+            else:               # a normal train
+                self.Trains.append(Train(id=id, start_station= self.find_station(_string_to_int(start_id)), speed = float(speed), capacity = int(capacity)))
+                # assume that this station exist
 
     def add_passenger(self, id:str, start_id:str, end_id:str, size:str, target:str):
         # Passagiere: int(ID) station(Startbahnhof) station(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
-        self.Passengers.append(Passenger(id = _string_to_int(id), start_station= self.find_station(_string_to_int(start_id)), end_station= self.find_station(_string_to_int(end_id)), group_size= _string_to_int(size), target_time=_string_to_int(target)))
+        id = _string_to_int(id)
+        passenger = self.find_passenger(id)
+        if not passenger:
+            # assume station and station already wrote in [station] section
+            self.Passengers.append(Passenger(id = id, start_station = self.find_station(_string_to_int(start_id)), end_station = self.find_station(_string_to_int(end_id)), group_size = int(size), target_time =int(target)))
 
+    def if_station_exist():
+        pass
 
+    def if_line_exist():
+        pass
+
+    def if_train_exist():
+        pass
+
+    def if_passenger_exist():
+        pass
 
     def to_input_text(self) -> str:
         ''' return a string of input in format '''
@@ -121,7 +154,7 @@ class Input:
             for myline in myfile:                   # For each line in the file,
                 mylines.append(myline.rstrip('\n')) # strip newline and add to list.
             mylines.append("")
-            print(mylines)
+            # print(mylines)
         while(i < len(mylines)-1):
             if mylines[i] == ("[Stations]"):
                 while(True):
@@ -132,7 +165,7 @@ class Input:
                         break
 
             if mylines [i] == ("[Lines]"): 
-                print(i)     
+                # print(i)     
                 while(True):
                     i+=1
                     parameters = mylines[i].split(" ")
@@ -141,7 +174,7 @@ class Input:
                         break
 
             if mylines [i] == ("[Trains]"): 
-                print(i)     
+                # print(i)     
                 while(True):
                     i+=1 
                     parameters = mylines[i].split(" ")

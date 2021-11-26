@@ -22,7 +22,7 @@ class Train:
     return [self.id, self.start_station.get_id(), self.speed, self.capacity]
 
   def to_str_input(self)->str:
-    if self.start_station == None:
+    if self.start_station.id < 0:
       output = " ".join([self.get_id_str(), "*", str(self.speed), str(self.capacity)])
     else:
       output = " ".join([self.get_id_str(), self.start_station.get_id_str(), str(self.speed), str(self.capacity)])
