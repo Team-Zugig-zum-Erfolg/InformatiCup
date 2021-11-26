@@ -19,7 +19,7 @@ class Train:
     self.capacity = capacity
 
   def to_list(self):
-    return [self.id, self.start_station.get_id(), self.speed, self.capacity]
+    return [self.id, self.start_station.id, self.speed, self.capacity]
 
   def to_str_input(self)->str:
     if self.start_station.id < 0:
@@ -44,6 +44,9 @@ class Train:
   def add_depart(self, time:int, line:Line):
     out = str(time) + " " + "Depart" + " " + line.get_id_str()
     self.history.append(out)
+
+  def merge(self, train):
+    self.history += train.history
 
   def get_id(self):
     return self.id

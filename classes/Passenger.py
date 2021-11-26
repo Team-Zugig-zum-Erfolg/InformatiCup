@@ -1,6 +1,5 @@
 from typing import List
 from classes.Station import Station
-from classes.Train import Train
 
 class Passenger:
   # Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
@@ -25,7 +24,7 @@ class Passenger:
     self.target_time = target_time
 
   def to_list(self):
-    return [self.id, self.start_station.get_id(), self.end_station.get_id(), self.group_size, self.target_time]
+    return [self.id, self.start_station.id, self.end_station.id, self.group_size, self.target_time]
 
   def to_str_input(self)->str:
     output = " ".join([self.get_id_str(), self.start_station.get_id_str(), self.end_station.get_id_str(), str(self.group_size), str(self.target_time)])
@@ -44,7 +43,8 @@ class Passenger:
     out = str(time) + " " + "Detrain"
     self.history.append(out)
 
-
+  def merge(self, passenger):
+    self.history += passenger.history
 
   def get_id_str(self)->str:
     ''' get id with P in a string '''
