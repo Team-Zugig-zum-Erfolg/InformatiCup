@@ -38,12 +38,12 @@ class Passenger:
   
   def add_board(self, time:int, train_id:int):
     out = str(time) + " " + "Board" + " " + str(train_id)
-    print(f"passenger [{self.id}] add board",out)
+    # print(f"passenger [{self.id}] add board",out)
     self.history.append(out)
 
   def add_detrain(self, time:int):
     out = str(time) + " " + "Detrain"
-    print(f"passenger [{self.id}] add detrain",out)
+    # print(f"passenger [{self.id}] add detrain",out)
     self.history.append(out)
 
   def merge(self, passenger):

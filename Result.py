@@ -25,98 +25,98 @@ class Result:
     
     def save_train_depart(self, id_train, time, id_line):
         ''' find the train in trains[], add this action in its history'''
-        print(f"-> enter [save_train_depart], id={id_train}, time={time}, id_line={id_line}")
+        # print(f"-> enter [save_train_depart], id={id_train}, time={time}, id_line={id_line}")
 
         train = self.find_or_add_train(id_train)    # find the train in list, or add one in list
         train.add_depart(time = time, line_id = id_line)
-        print(" - save_train_depart:", train.id)
-        print(" - location:", id(train))
-        for i in self.trains:
-            print(" + train: ", i.id," history: ", i.history)
-        print("===")
+        # print(" - save_train_depart:", train.id)
+        # print(" - location:", id(train))
+        # for i in self.trains:
+        #     print(" + train: ", i.id," history: ", i.history)
+        # print("===")
 
     def save_train_start(self, id_train, time, id_station):
-        print(f"-> enter [save_train_start], id={id_train}, time={time}, id_line={id_station}")
+        # print(f"-> enter [save_train_start], id={id_train}, time={time}, id_line={id_station}")
 
-        for i in self.trains:
-            print(" + train: ", i.id," history: ", i.history)
+        # for i in self.trains:
+        #     print(" + train: ", i.id," history: ", i.history)
 
         train = self.find_or_add_train(id_train)
 
-        for i in self.trains:
-            print(" + train: ", i.id," history: ", i.history)
+        # for i in self.trains:
+        #     print(" + train: ", i.id," history: ", i.history)
 
         train.add_start(time = time, station_id = id_station)
         
-        print(" - save_train_start:", train.id)
-        print(" - location:", id(train))
-        for i in self.trains:
-            print(" + train: ", i.id," history: ", i.history)
-        print("===")
+        # print(" - save_train_start:", train.id)
+        # print(" - location:", id(train))
+        # for i in self.trains:
+        #     print(" + train: ", i.id," history: ", i.history)
+        # print("===")
 
     def save_passenger_board(self, id_passenger, time, id_train):
-        print(f"-> enter [save_passenger_board], id={id_passenger}, time={time}, id_line={id_train}")
+        # print(f"-> enter [save_passenger_board], id={id_passenger}, time={time}, id_line={id_train}")
         p = self.find_or_add_passenger(id_passenger)
         p.add_board(time = time, train_id = id_train)
 
-        print(" - save_passenger_board:", p.id)
-        print(" - location:", id(p))
-        for i in self.passengers:
-            print(" - passenger: ", i.id," history: ", i.history)
-        print("===")
+        # print(" - save_passenger_board:", p.id)
+        # print(" - location:", id(p))
+        # for i in self.passengers:
+        #     print(" - passenger: ", i.id," history: ", i.history)
+        # print("===")
 
     def save_passenger_detrain(self, id_passenger, time):
-        print(f"-> enter [save_passenger_detrain], id={id_passenger}, time={time}")
+        # print(f"-> enter [save_passenger_detrain], id={id_passenger}, time={time}")
         p = self.find_or_add_passenger(id_passenger)
         p.add_detrain(time = time)
-        print(" - save_passenger_detrain:", p.id)
-        print(" - location:", id(p))
-        for i in self.passengers:
-            print(" - passenger: ", i.id," history: ", i.history)
-        print("===")
+        # print(" - save_passenger_detrain:", p.id)
+        # print(" - location:", id(p))
+        # for i in self.passengers:
+        #     print(" - passenger: ", i.id," history: ", i.history)
+        # print("===")
     
     def find_or_add_train(self, id_train:int)->Train:
         '''find the train in the trains[], if not exist, create one'''
-        print("*-> enter [find_or_add_train]")
+        # print("*-> enter [find_or_add_train]")
 
-        for i in self.trains:
-            print(" + train: ", i.id," history: ", i.history)
+        # for i in self.trains:
+        #     print(" + train: ", i.id," history: ", i.history)
 
         # currently cannot deal with duplication
         if id_train in self.id_trains:                                      # already exist
-            print(f" -- train id [{id_train}] exist")
+            # print(f" -- train id [{id_train}] exist")
             find_result = filter(lambda t: t.id == id_train, self.trains)   # find it
             found_train = list(find_result)                                 # convert to list
-            print(f" -- train id [{id_train}] found with id [{found_train[0].id}]")
+            # print(f" -- train id [{id_train}] found with id [{found_train[0].id}]")
             if len(found_train) == 1:
-                print(" -- [find] location: ", id(found_train[0]))
+                # print(" -- [find] location: ", id(found_train[0]))
                 return found_train[0]
             else:   # duplication
-                print(f"* <!> [Warning] from Result: there train [{id_train}] is duplicated, \n! * there are [{len(found_train)}] such trains in [trains]")
+                # print(f"* <!> [Warning] from Result: there train [{id_train}] is duplicated, \n! * there are [{len(found_train)}] such trains in [trains]")
                 # self.handle_duplication_train()
                 return found_train[0]
         else:   # train not exist, add one
-            print(f" -- id [{id_train}] not exist, now added")
-            for i in self.trains:
-                print(" + train: ", i.id," history: ", i.history)
+            # print(f" -- id [{id_train}] not exist, now added")
+            # for i in self.trains:
+            #     print(" + train: ", i.id," history: ", i.history)
             train = Train(id_train,Station(0,0),0.0,0)  # new train
-            print(" -- new train history",train.history)
-            for i in self.trains:
-                print(" + train: ", i.id," history: ", i.history)
+            # print(" -- new train history",train.history)
+            # for i in self.trains:
+            #     print(" + train: ", i.id," history: ", i.history)
             self.id_trains.add(id_train)        # add in set() ids, to record the id in a set (there are no duplication)
-            for i in self.trains:
-                print(" + train: ", i.id," history: ", i.history)
+            # for i in self.trains:
+            #     print(" + train: ", i.id," history: ", i.history)
 
             self.trains.append(train)
-            for i in self.trains:
-                print(" + train: ", i.id," history: ", i.history)
-            print(f" -- train id [{id_train}] added with id [{train.id}]")
-            print(" -- [find] location: ", id(train))
+            # for i in self.trains:
+            #     print(" + train: ", i.id," history: ", i.history)
+            # print(f" -- train id [{id_train}] added with id [{train.id}]")
+            # print(" -- [find] location: ", id(train))
             return train
 
     def find_or_add_passenger(self, id_passenger:int)->Passenger:
         '''find the train in the trains[], if not exist, create one, currently cannot deduplicate'''
-        print("*-> enter [find_or_add_passenger]")
+        # print("*-> enter [find_or_add_passenger]")
         if id_passenger in self.id_passengers:                                      # already exist
             find_result = filter(lambda p: p.id == id_passenger, self.passengers)   # find it
             found_p = list(find_result)
@@ -180,9 +180,11 @@ class Result:
             result += f"[Train:{t.get_id_str()}]\n"
             result += t.to_str_output()
             result += "\n"
+            result += "\n"
         for p in self.passengers:
             result += f"[Passenger:{p.get_id_str()}]\n"
             result += p.to_str_output()
+            result += "\n"
             result += "\n"
         return result
 
@@ -211,41 +213,71 @@ class Result:
 print("****************************")
 r = Result()
 print("****************************")
-r.save_train_depart(id_train=1,time=2,id_line=3)
 
-r.save_train_start(id_train=2, time=1 ,id_station=3)
+def test_save_train_depart(r, id, time, line):
+    print("****************************")
+    print(f"soll: depart, train [{id}], time: [{time}], line: [{line}]")
+    print("- Before -:")
+    print(r.to_output_text())
+    print()
+    r.save_train_depart(id_train=id,time=time,id_line=line)
+    print("- After -:")
+    print(r.to_output_text())
 
-r.save_passenger_board(id_passenger=1, time=2, id_train=3)
-for i in r.passengers:
-    print("passenger: ", i.id," history: ", i.history)
+def test_save_train_start(r, id, time ,station):
+    print("****************************")
+    print(f"soll: start, train [{id}], time: [{time}], station: [{station}]")
+    print("- Before -:")
+    print(r.to_output_text())
+    print()
+    r.save_train_start(id_train=id,time=time,id_station=station)
+    print("- After -:")
+    print(r.to_output_text())
 
-r.save_passenger_detrain(id_passenger=1, time=2)
-for i in r.passengers:
-    print("passenger: ", i.id," history: ", i.history)
+def test_save_passenger_board(r, id, time, train):
+    print("****************************")
+    print(f"soll: board, passenger [{id}], time: [{time}], train: [{train}]")
+    print("- Before -:")
+    print(r.to_output_text())
+    print()
+    r.save_passenger_board(id_passenger=id, time=time, id_train=train)
+    print("- After -:")
+    print(r.to_output_text())
 
+def test_save_passenger_detrain(r, id, time):
+    print("****************************")
+    print(f"soll: detrain, passenger [{id}], time: [{time}]")
+    print("- Before -:")
+    print(r.to_output_text())
+    print()
+    r.save_passenger_detrain(id_passenger=id, time=time)
+    print("- After -:")
+    print(r.to_output_text())
 
-r.save_passenger_detrain(id_passenger=2, time=2)
-for i in r.passengers:
-    print("passenger: ", i.id," history: ", i.history)
-
-print("****************************")
-print("soll: train 1, depart, time 2, line 3")
-print("soll: train 2, start, time 1, station 3")
-print("soll: passenger 1, board, time 2, train 3")
-print("soll: passenger 1, detrain, time 2")
-print("soll: passenger 2, detrain, time 2")
 print("****************************")
 print(r.to_output_text())
 
-print(len(r.id_passengers))
-print(len(r.id_trains))
-print(len(r.passengers))
-print(len(r.trains))
+test_save_train_depart(r, id=1,time=2,line=3)
+test_save_train_start(r, id=2, time=1 ,station=3)
+test_save_train_start(r, id=1, time=1 ,station=3)
+test_save_train_start(r, id=3, time=1 ,station=3)
+test_save_train_depart(r, id=3,time=2,line=3)
+test_save_train_depart(r, id=2,time=2,line=3)
+test_save_train_depart(r, id=5,time=2,line=3)
 
-print("****************************")
+test_save_passenger_board(r, id=1, time=2, train=3)
+test_save_passenger_board(r, id=2, time=2, train=3)
+test_save_passenger_board(r, id=3, time=2, train=3)
+test_save_passenger_detrain(r, id=1, time=2)
+test_save_passenger_detrain(r, id=3, time=2)
+test_save_passenger_detrain(r, id=4, time=2)
+test_save_passenger_detrain(r, id=6, time=2)
 
-for i in r.passengers:
-    print("passenger: ", i.id," history: ", i.history)
-
-for i in r.trains:
-    print("train: ", i.id," history: ", i.history)
+# these 2 test the order of output train and passengers
+# result should be: 
+#   Train       5 after 4, before 6
+#   Passenger   5 after 4, before 6
+test_save_passenger_board(r, id=5, time=2, train=3)
+test_save_train_depart(r, id=5,time=2,line=3)
+print("--------------------")
+print(r.to_output_text())
