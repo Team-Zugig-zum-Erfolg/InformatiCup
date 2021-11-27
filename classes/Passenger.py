@@ -22,6 +22,7 @@ class Passenger:
     self.end_station = end_station
     self.group_size = group_size
     self.target_time = target_time
+    self.history = []
 
   def to_list(self):
     return [self.id, self.start_station.id, self.end_station.id, self.group_size, self.target_time]
@@ -35,12 +36,14 @@ class Passenger:
     output = "\n".join(self.history)
     return output
   
-  def add_board(self, time:int, train:Train):
-    out = str(time) + " " + "Board" + " " + train.get_id_str()
+  def add_board(self, time:int, train_id:int):
+    out = str(time) + " " + "Board" + " " + str(train_id)
+    print(f"passenger [{self.id}] add board",out)
     self.history.append(out)
 
   def add_detrain(self, time:int):
     out = str(time) + " " + "Detrain"
+    print(f"passenger [{self.id}] add detrain",out)
     self.history.append(out)
 
   def merge(self, passenger):
