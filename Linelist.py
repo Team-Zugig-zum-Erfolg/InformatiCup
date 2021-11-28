@@ -100,7 +100,7 @@ class Linelist:
         return trains
 
 
-linelist = Linelist()
+
 
 '''linelist.initial([[1, 3, 4, 12.2, 1], [2, 1, 2, 4.2, 2], [3, 3, 2, 4.2, 2], [4, 4, 2, 4.2, 2]])
 

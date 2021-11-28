@@ -1,6 +1,7 @@
 import math
 from Stationlist import Stationlist
 from Linelist import Linelist
+from Groups import Passengers
 from classes.Travel import Travel
 from classes.TrainInLine import TrainInLine
 from classes.TrainInStation import TrainInStation
@@ -19,9 +20,9 @@ T_S_ID = 1
 T_SPEED = 2
 T_CAPACITY = 3
 
-LINELIST = []
-STATIONLIST = []
-TRAINLIST = []
+LINE_INPUT_LIST = []
+STATION_INPUT_LIST = []
+TRAIN_INPUT_LIST = []
 
 S_LINEPLAN = []
 
@@ -29,29 +30,29 @@ class Travel_Center:
 
     train_line_time_list = []
 
-    def __init__(self, stationlist, linelist, trainlist):
-        global LINELIST
-        global STATIONLIST
-        global TRAINLIST
+    def __init__(self, station_input_list, line_input_list, train_input_list):
+        global LINE_INPUT_LIST
+        global STATION_INPUT_LIST
+        global TRAIN_INPUT_LIST
 
         global S_LINEPLAN
         self.train_line_time_list.append([])
-        LINELIST = linelist
-        STATIONLIST = stationlist
-        TRAINLIST = trainlist
-        for train in trainlist:
+        LINE_INPUT_LIST = line_input_list
+        STATION_INPUT_LIST = station_input_list
+        TRAIN_INPUT_LIST = train_input_list
+        for train in train_input_list:
             self.train_line_time_list.append([])
-            for line in linelist:
+            for line in line_input_list:
                 self.train_line_time_list[train[T_ID]].append(
                     math.ceil(line[L_LEN] / train[T_SPEED]))
         print(self.train_line_time_list)
         S_LINEPLAN.append([])
         S_LINEPLAN[0].append([])
-        for station in stationlist:
+        for station in station_input_list:
             S_LINEPLAN.append([])
             S_LINEPLAN[station[S_ID]].append([])
             S_LINEPLAN[station[S_ID]].append([])
-            for line in linelist:
+            for line in line_input_list:
                 if line[L_S_ID_START] == station[S_ID]:
                     S_LINEPLAN[station[S_ID]][0].append(line[L_S_ID_END])
                     S_LINEPLAN[station[S_ID]][1].append(line[L_ID])
@@ -81,7 +82,7 @@ class Travel_Center:
         for lineplan in lineplans:
             lines.append([])
             for i in range(len(lineplan) - 1):
-                for line in LINELIST:
+                for line in LINE_INPUT_LIST:
                     if line[L_S_ID_START] == lineplan[i] and line[L_S_ID_END] == lineplan[i + 1]:
                         lines[j].append(line[L_ID])
                     elif line[L_S_ID_END] == lineplan[i] and line[L_S_ID_START] == lineplan[i + 1]:
@@ -98,7 +99,7 @@ class Travel_Center:
         for line in lines:
             length = 0
             for each in line:
-                length += LINELIST[each - 1][L_LEN]
+                length += LINE_INPUT_LIST[each - 1][L_LEN]
             if short_len == 0 or short_len > length:
                 short_len = length
                 short_line = line
@@ -158,11 +159,21 @@ class Travel_Center:
 
         return travel
 
-    def save_travel(self, travel: Travel, passengers, stationlist: Stationlist, linelist: Linelist):
+    def save_travel(self, travel: Travel, passengers: Passengers, stationlist: Stationlist  , linelist: Linelist):
         save = 0
         save, linelist, stationlist, travel, delay_time = self.check_line_station(Travel, stationlist, linelist)
         if save:
             for line in travel.line_time:
                 linelist.add_new_train_in_line(line)
             stationlist.add_train_leave_time(travel.train.id, travel.on_board, travel.start_station)
-        return [save, passengers, delay_time]
+            passengers.passengers_arrive(passengers)
+        return [save, passengers, delay_time, stationlist, linelist]
+
+    def check_passengers(self, route):
+        pass
+        return [start_station, end_station, train, start_time]
+
+    def check_train_instation(self, start_station):
+
+        return start_time[], train[]
+
