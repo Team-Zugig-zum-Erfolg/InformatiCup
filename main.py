@@ -10,69 +10,87 @@ from Travel_Center import Travel_Center
 
 
 def main():
-    input = Input()
-    stations, lines, trains, passengers = input.from_file("test/test-input-1.txt")
+    # init
+    input_ = Input()
+    stations, lines, trains, passengers = input_.from_file("test/test-input-1.txt")
 
     station_input_list = []
     for s in stations:
         station_input_list.append(s.to_list())
     line_input_list = []
-    for l in lines:
-        line_input_list.append(l.to_list())
-    '''train_input_list = []
-    for t in trains:
-        #train_input_list.append(t.to_list())
-        pass'''
-    train_input_list = [[1, 3, 1.18571, 7], [2, 5, 2.94952, 6],
-                        [3, 1, 3.37228, 9], [4, 2, 2.23773, 8], [5, None, 1.16584, 9],
-                        [6, 2, 3.50270, 5], [7, 5, 1.46495, 9], [8, None, 3.79408, 6],
-                        [9, 1, 3.52201, 6], [10, None, 2.90067, 7]]
+    for li in lines:
+        line_input_list.append(li.to_list())
+    train_input_list = trains
+    result = Result()
+    # for t in trains:
+    # train_input_list.append(t.to_list())
 
-    print("test")
-    '''print(stationlist)
-    print(linelist)
-    print(trainlist)'''
     linelist = Linelist(line_input_list)
-    stationlist = Stationlist(station_input_list)
+    stationlist = Stationlist(station_input_list, train_input_list)
     travel_center = Travel_Center(station_input_list, line_input_list, train_input_list)
     groups = Groups(passengers)
-    start_station, end_station = travel_center.check_passengers(groups.get_priority())
-    start_time_list, trainlist = check_train_instation = start_station
-    for count in len(trainlist):
-        travellist = travel_center.time_count_train(start_station, end_station, start_time_list[count],
-                                                    trainlist[count])
+    groupe_to_many = 0
+    while len(groups.route) != 0:
+        if groupe_to_many == 0:
+            group = groups.get_priority()
+        else:
+            group.pop(len(group) - 1)
+        start_station, end_station, group_size = Travel_Center.check_passengers(group)
+        print("group size")
+        print(group_size)
+        start_time_list, trainlist, available = Travel_Center.check_train_in_station(start_station, group_size,
+                                                                                     stationlist, linelist)
+        if not available:
+            start_times, trains, start_stations = Travel_Center.check_train_not_in_station(group_size, stationlist)
+            Travel_Center.train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist,
+                                                      linelist, result)
+            continue
+        travels = []
+        for count in range(len(trainlist)):
+            travels.append(travel_center.time_count_train(start_station, end_station, trainlist[count],
+                                                          start_time_list[count]))
+        save = 0
+        availables = []
+        delay_times = []
+        if len(travels):
+            while not save:
+                for travel in travels:
+                    print("travel1")
+                    print(travel.start_time)
+                    available, delay_time = Travel_Center.check_line_station(travel, stationlist, linelist)
+                    availables.append(available)
+                    delay_times.append(delay_time)
+                i = 0
+                available_run = 0
+                travel_available = []
+                for available in availables:
+                    if available:
+                        travel_available.append(travels[i])
+                        available_run = 1
+                    i += 1
 
-    availables = []
-    delay_times = []
-    travels = []
-    for travel in travellist:
-        available, linelist, stationlist, travel, delay_time = travel_center.check_line_station(travel, stationlist,
-                                                                                                linelist)
-        availables.append(available)
-        travels.append(travel)
-        delay_times.append(delay_time)
-    i = 0
-    available_run = 0
-    travel_available = []
-    for available in availables:
-        if available:
-            travel_available.append(travels[i])
-            available_run = 1
-        i += 1
+                if available_run:
+                    print("available")
+                    short_time = travel_available[0].station_time.passenger_out_train_time
+                    short_travel = travel_available[0]
+                    for travel in travel_available:
+                        if short_time > travel.station_time.passenger_out_train_time:
+                            short_time = travel.end_station
+                            short_travel = travel
+                    save, delay_time = Travel_Center.save_travel(short_travel, groups, group,
+                                                                 stationlist, linelist, result)
+                else:
+                    i = 0
+                    print("travel")
+                    print(travels)
+                    for travel in travels:
+                        Travel_Center.delay_travel(travel, delay_times[i])
+                        i += 1
+            groupe_to_many = 0
+        else:
+            groupe_to_many = 1
 
-    if available_run:
-        short_time = travel_available[0].end_station
-        short_travel = travel_available[0]
-        for travel in travel_available:
-            if short_time > travel.end_station:
-                short_time = travel.end_station
-                short_travel = travel
-    else:
-        for i in range(len(travels)):
-            travels[i] = travel_center.delay_travel(travels[i], delay_times[i])
-
-    save, groups, delay_time, stationlist, linelist = travel_center.save_travel(short_travel, groups, stationlist, linelist)
-
+    groups.print_output(result)
     return
 
 

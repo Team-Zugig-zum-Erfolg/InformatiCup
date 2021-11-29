@@ -88,14 +88,14 @@ class Passenger:
     self.group_size = size
     return True
   
-  def set_target_round(self,target_round):
+  def set_target_round(self, target_round):
     if type(target_round) != int:
       return False
-    self.target_round = target_round
+    self.target_time = target_round
     return True
-  
+
   def get_target_round(self):
-    return self.target_round
+    return self.target_time
   
 
 

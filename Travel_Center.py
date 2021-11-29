@@ -1,10 +1,12 @@
 import math
+import sys
+
 from Stationlist import Stationlist
 from Linelist import Linelist
-from Groups import Passengers
 from classes.Travel import Travel
 from classes.TrainInLine import TrainInLine
 from classes.TrainInStation import TrainInStation
+import Result
 
 L_ID = 0
 L_S_ID_START = 1
@@ -26,8 +28,10 @@ TRAIN_INPUT_LIST = []
 
 S_LINEPLAN = []
 
-class Travel_Center:
+TARGET_TIME = 0
 
+
+class Travel_Center:
     train_line_time_list = []
 
     def __init__(self, station_input_list, line_input_list, train_input_list):
@@ -43,8 +47,8 @@ class Travel_Center:
         for train in train_input_list:
             self.train_line_time_list.append([])
             for line in line_input_list:
-                self.train_line_time_list[train[T_ID]].append(
-                    math.ceil(line[L_LEN] / train[T_SPEED]))
+                self.train_line_time_list[train.id].append(
+                    math.ceil(line[L_LEN] / train.speed))
         print(self.train_line_time_list)
         S_LINEPLAN.append([])
         S_LINEPLAN[0].append([])
@@ -69,7 +73,7 @@ class Travel_Center:
         lineplans = []
         for node in S_LINEPLAN[s_station_id][0]:
             if node not in lineplan:
-                newpaths = self.get_all_line_station(node, e_station_id, lineplan)
+                newpaths = self._get_all_line_station(node, e_station_id, lineplan)
                 for newpath in newpaths:
                     lineplans.append(newpath)
         return lineplans
@@ -106,24 +110,24 @@ class Travel_Center:
         return [short_len, short_line]
 
     def time_count_train(self, start_station, end_station, train, start_time):
-        length, lines = self.find_best_line(start_station, end_station)
+        length, lines = self.find_best_line(start_station.id, end_station.id)
         line_time = []
         on_board = start_time + 1
         add_time = on_board + 1
-        for l in range(len(lines)):
-            line_time.append([])
-            line_time[l].append(TrainInLine(train.get_id(), add_time,
-                                            add_time + self.train_line_time_list[train.get_id()][lines[l]]), lines[l])
-            add_time = add_time + self.train_line_time_list[train.get_id()][lines[l]]
-        station_time = TrainInStation(train.get_id(), add_time, end_station, None)
+        for li in range(len(lines)):
+            line_time.append(TrainInLine(train.id, add_time,
+                                         add_time + self.train_line_time_list[train.id][lines[li]], lines[li]))
+            add_time += self.train_line_time_list[train.id][lines[li]]
+        station_time = TrainInStation(add_time, add_time + 1, train, None, end_station.id)
 
         return Travel(start_time, on_board, line_time, station_time, start_station, end_station, train)
 
+    @staticmethod
     def check_line_station(travel: Travel, stationlist: Stationlist, linelist: Linelist):
         line_availables = []
         line_time_changes = []
-        for line in travel.line_time:
-            line_available, line_time_change = linelist.compare_free(line)
+        for travel_in_line in travel.line_time:
+            line_available, line_time_change = linelist.compare_free(travel_in_line)
             line_availables.append(line_available)
             line_time_changes.append(line_time_change)
 
@@ -133,47 +137,141 @@ class Travel_Center:
         station_delay_time = 0
         if not station_available:
             available = False
-            station_delay_time = station_time_change - travel.station_time
+            station_delay_time = station_time_change - travel.station_time.passenger_out_train_time
             available = False
 
         delay_time = station_delay_time
-        line_delay_time = 0
         i = 0
         for a in line_availables:
             if not a:
                 available = False
-                line_delay_time = line_time_change[i] - travel.line_time[i]
+                line_delay_time = line_time_changes[i] - travel.line_time[i].start
                 if delay_time < line_delay_time:
                     delay_time = line_delay_time
             i += 1
 
-        return [available, linelist, stationlist, travel, delay_time]
+        return [available, delay_time]
 
+    @staticmethod
     def delay_travel(travel: Travel, delay_time):
         travel.start_time = travel.start_time + delay_time
         travel.on_board = travel.on_board + delay_time
-        travel.line_time = travel.line_time + delay_time
-        travel.station_time = travel.station_time + delay_time
-        travel.start_station = travel.start_station + delay_time
-        travel.end_station = travel.end_station + delay_time
+        travel.line_time.start = travel.line_time.start + delay_time
+        travel.line_time.end = travel.line_time.end + delay_time
+        travel.station_time.passenger_out_train_time = travel.station_time.passenger_out_train_time + delay_time
+        travel.station_time.passenger_in_train_time = travel.station_time.passenger_in_train_time + delay_time
 
-        return travel
-
-    def save_travel(self, travel: Travel, passengers: Passengers, stationlist: Stationlist  , linelist: Linelist):
+    @staticmethod
+    def save_travel(travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result):
         save = 0
-        save, linelist, stationlist, travel, delay_time = self.check_line_station(Travel, stationlist, linelist)
+        save, delay_time = Travel_Center.check_line_station(travel, stationlist, linelist)
         if save:
             for line in travel.line_time:
-                linelist.add_new_train_in_line(line)
-            stationlist.add_train_leave_time(travel.train.id, travel.on_board, travel.start_station)
-            passengers.passengers_arrive(passengers)
-        return [save, passengers, delay_time, stationlist, linelist]
+                save = linelist.add_new_train_in_line(line)
+                if save:
+                    result.save_train_depart(line.train, line.start, line.line_id)
+            save = stationlist.add_train_leave_time(travel.train, travel.on_board, travel.start_station.id)
+            if passengers is not None:
+                groups.passengers_arrive(passengers)
+        return [save, delay_time]
 
-    def check_passengers(self, route):
-        pass
-        return [start_station, end_station, train, start_time]
+    @staticmethod
+    def check_passengers(route):
+        start_station = route[0].start_station
+        end_station = route[0].end_station
+        group_size = 0
+        global TARGET_TIME
+        TARGET_TIME = route[0].target_time
+        for passenger in route:
+            group_size = group_size + passenger.group_size
+        return [start_station, end_station, group_size]
 
-    def check_train_instation(self, start_station):
+    @staticmethod
+    def check_train_in_station(start_station, group_size, stationlist: Stationlist, linelist: Linelist):
+        start_times, trains = stationlist.read_trains_from_station(start_station.id)
+        Travel_Center._check_capacity(trains, group_size, start_times, None)
+        available = False
+        if trains is not None:
+            available = True
+        return start_times, trains, available
 
-        return start_time[], train[]
+    @staticmethod
+    def check_train_not_in_station(group_size, stationlist: Stationlist):  # choose train from other station
+        start_times, trains, start_stations = Travel_Center._check_trains_in_all_station(stationlist)
+        Travel_Center._check_capacity(trains, group_size, start_times, start_stations)
+        return start_times, trains, start_stations
 
+    @staticmethod  # move a train to start station
+    def train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist, linelist,
+                                    result: Result):
+        save = Travel_Center._train_to_station(start_station, trains, start_times, start_stations,
+                                               stationlist, linelist, result)
+        return save
+
+    @staticmethod
+    def _check_capacity(trains, group_size, start_times, start_stations):
+
+        if len(trains) != 0:
+            i = 0
+            while True:
+                if trains[i].capacity < group_size:
+                    start_times.pop(i)
+                    trains.pop(i)
+                    if start_stations is not None:
+                        start_stations.pop(i)
+                else:
+                    i += 1
+                if i >= len(trains):
+                    break
+
+    @staticmethod
+    def _check_trains_in_all_station(stationlist: Stationlist):
+        trains = []
+        start_times = []
+        start_stations = []
+        for i in range(1, len(stationlist.stations)):
+            start_time, train = stationlist.read_trains_from_station(i)
+            for t in train:
+                start_stations.append(i)
+            start_times += start_time
+            trains += train
+        return start_times, trains, start_stations
+
+    def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist, linelist,
+                          result: Result):
+        travels = []
+        availables = []
+        delay_times = []
+        for i in len(trains):
+            start = start_stations[i]
+            train = trains[i]
+            start_time = start_times[i]
+            travels.append(self.time_count_train(start, end_station, train, start_time))
+        while not availables:  # find travels until minimal 1 travel
+            # available, linelist, stationlist, travel, delay_time
+            for travel in travels:
+                available, delay_time = Travel_Center.check_line_station(travel, stationlist,
+                                                                         linelist)
+                availables.append(available)
+                delay_times.appand(delay_time)
+
+            if not availables:
+                for travel in travels:
+                    Travel_Center.delay_travel(travel)
+        travels_available = []
+        i = 0
+        for available in availables:
+            if available:
+                travels_available.append(travels[i])
+                i += 1
+        end_station_time = sys.maxsize
+        travel_choose = Travel()
+
+        for travel in travels_available:
+            if end_station_time > travel.start_station.passenger_in_train_time:
+                print("train to station")
+                end_station_time = travel.start_station
+                print(end_station_time)
+                travel_choose = travel
+        save, _ = Travel_Center.save_travel(travel_choose, None, None, stationlist, linelist, result)
+        return save
