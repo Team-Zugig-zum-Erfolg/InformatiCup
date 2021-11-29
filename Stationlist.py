@@ -151,8 +151,6 @@ class Stationlist:
         trains = []
         start_times = []
         train_not_in_station_start_time = sys.maxsize
-        print("max")
-        print(train_not_in_station_start_time)
         global TRAIN_NOT_IN_STATION
         for capacity in self.stations[station_number]:
             if len(capacity) > 0:

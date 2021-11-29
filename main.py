@@ -56,7 +56,6 @@ def main():
             while not save:
                 for travel in travels:
                     print("travel1")
-                    print(travel.start_time)
                     available, delay_time = Travel_Center.check_line_station(travel, stationlist, linelist)
                     availables.append(available)
                     delay_times.append(delay_time)
@@ -65,6 +64,8 @@ def main():
                 travel_available = []
                 for available in availables:
                     if available:
+                        print(available)
+                        print("ava")
                         travel_available.append(travels[i])
                         available_run = 1
                     i += 1
@@ -75,10 +76,12 @@ def main():
                     short_travel = travel_available[0]
                     for travel in travel_available:
                         if short_time > travel.station_time.passenger_out_train_time:
-                            short_time = travel.end_station
+                            short_time = travel.station_time.passenger_out_train_time
                             short_travel = travel
                     save, delay_time = Travel_Center.save_travel(short_travel, groups, group,
                                                                  stationlist, linelist, result)
+                    print("save2")
+                    print(save)
                 else:
                     i = 0
                     print("travel")

@@ -49,7 +49,6 @@ class Travel_Center:
             for line in line_input_list:
                 self.train_line_time_list[train.id].append(
                     math.ceil(line[L_LEN] / train.speed))
-        print(self.train_line_time_list)
         S_LINEPLAN.append([])
         S_LINEPLAN[0].append([])
         for station in station_input_list:
@@ -63,7 +62,6 @@ class Travel_Center:
                 elif line[L_S_ID_END] == station[S_ID]:
                     S_LINEPLAN[station[S_ID]][0].append(line[L_S_ID_START])
                     S_LINEPLAN[station[S_ID]][1].append(line[L_ID])
-        print(S_LINEPLAN)
 
     def _get_all_line_station(self, s_station_id, e_station_id, lineplan):
         lineplan = lineplan + [s_station_id]
@@ -81,7 +79,6 @@ class Travel_Center:
     def _find_lines(self, s_station_id, e_station_id):
         lineplans = self._get_all_line_station(s_station_id, e_station_id, [])
         lines = []
-        print(lineplans)
         j = 0
         for lineplan in lineplans:
             lines.append([])
@@ -96,8 +93,6 @@ class Travel_Center:
 
     def find_best_line(self, s_station_id, e_station_id):
         lines = self._find_lines(s_station_id, e_station_id)
-        print("end")
-        print(lines)
         short_len = 0
         short_line = None
         for line in lines:
@@ -163,9 +158,11 @@ class Travel_Center:
 
     @staticmethod
     def save_travel(travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result):
-        save = 0
         save, delay_time = Travel_Center.check_line_station(travel, stationlist, linelist)
+        print("delay")
+        print(delay_time)
         if save:
+            print("save")
             for line in travel.line_time:
                 save = linelist.add_new_train_in_line(line)
                 if save:
@@ -269,9 +266,9 @@ class Travel_Center:
 
         for travel in travels_available:
             if end_station_time > travel.start_station.passenger_in_train_time:
-                print("train to station")
                 end_station_time = travel.start_station
-                print(end_station_time)
                 travel_choose = travel
         save, _ = Travel_Center.save_travel(travel_choose, None, None, stationlist, linelist, result)
+        print("save1")
+        print(save)
         return save
