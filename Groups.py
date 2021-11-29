@@ -7,7 +7,7 @@ class Groups:
 
     route = []
 
-    def initial(self,passengers):
+    def __init__(self,passengers):
 
         if type(passengers) != list:
             return False
@@ -23,8 +23,6 @@ class Groups:
             if added == 0:
                 self.route.append([passenger])
 
-        return True
-
     def _get_min_target_round(self,group):
 
         min = -1
@@ -39,7 +37,7 @@ class Groups:
     def get_priority(self):
 
         if len(self.route) == 0:
-            print("hallo")
+        
             return None
 
         self.route.sort(key=self._get_min_target_round)

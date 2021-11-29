@@ -100,7 +100,7 @@ class Passenger:
 
 
   def __repr__(self):
-      output = " ".join([self.get_id(),self.get_start_station(),self.get_end_station(),str(self.get_capacity()),str(self.get_group_size()),str(self.get_target_round())])
+      output = " ".join([self.get_id_str(),self.get_start_station().get_id_str(),self.get_end_station().get_id_str(),str(self.get_group_size()),str(self.get_target_round())])
       return output
   
   

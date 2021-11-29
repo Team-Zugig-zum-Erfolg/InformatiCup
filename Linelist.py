@@ -74,12 +74,12 @@ class Linelist:
 
         capacity_number = 0
         for capacity in self.lines[train_in_line.line_id]:
-            free = 1
+            not_free = 0
             for train_in_line_add in capacity:
                 if self._train_in_line_is_full(train_in_line_add, train_in_line.start, train_in_line.end):
-                    free = 0
+                    not_free = 1
                     break
-            if free == 1:
+            if not_free == 0:
                 self.lines[train_in_line.line_id][capacity_number].append(train_in_line)
                 self.lines[train_in_line.line_id][capacity_number].sort(key=lambda x: x.start)
                 return True

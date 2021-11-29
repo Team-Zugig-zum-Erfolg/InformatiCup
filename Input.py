@@ -240,16 +240,8 @@ def _string_to_float(string: str) -> float:
     else:
         return 0
 
-input = Input()
-a,b,c,d = input.from_file("./test/test-input-1.txt")
-for i in a:
-    print(i.to_str_input())
-for i in b:
-    print(i.to_str_input())
-for i in c:
-    print(i.to_str_input())
-for i in d:
-    print(i.to_str_input())
+
+
 
 # print(input.to_input_text())
 # # print(input.path_generator())

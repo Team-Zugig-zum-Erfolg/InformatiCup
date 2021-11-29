@@ -92,11 +92,11 @@ class Train:
     return self.capacity
   
   def to_str(self):
-      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
+      output = " ".join([self.get_id_str(),self.start_station.get_id_str(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
   def __repr__(self):
-      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
+      output = " ".join([self.get_id_str(),self.start_station.get_id_str(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
 
