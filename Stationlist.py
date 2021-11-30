@@ -114,9 +114,9 @@ class Stationlist:
     def add_new_train_in_station(self, train_in_station: TrainInStation, result):
         global TRAIN_NOT_IN_STATION
         if result is not None:
-            if train_in_station in TRAIN_NOT_IN_STATION:
-                result.save_train_start(train_in_station.train.id, train_in_station.passenger_out_train_time - 1,
-                                        train_in_station.station_id)
+            for _train_in_station in TRAIN_NOT_IN_STATION:
+                if _train_in_station.train == train_in_station.train:
+                    result.save_train_start(train_in_station.train.id, train_in_station.passenger_out_train_time - 1, train_in_station.station_id)
             print(TRAIN_NOT_IN_STATION)
             for i in range(len(TRAIN_NOT_IN_STATION)):
                 if train_in_station.train.id == TRAIN_NOT_IN_STATION[i].train.id:

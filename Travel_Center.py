@@ -184,6 +184,7 @@ class Travel_Center:
                 print("save: "+str(save))
                 if save:
                     result.save_train_depart(line.train, line.start, line.line_id)
+                    
             stationlist.add_new_train_in_station(travel.station_time,result)
             save = stationlist.add_train_leave_time(travel.train, travel.on_board, travel.start_station.id, result)
             print("save: "+str(save))
@@ -191,6 +192,9 @@ class Travel_Center:
                 print(groups.route)
                 print(passengers)
                 groups.passengers_arrive(passengers)
+                
+                result.save_passenger_board(passengers[0].id, travel.on_board, line.train)
+                result.save_passenger_detrain(passengers[0].id, travel.station_time.passenger_out_train_time)
 
             
             

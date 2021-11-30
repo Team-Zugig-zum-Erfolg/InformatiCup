@@ -28,7 +28,6 @@ def main():
     linelist = Linelist(line_input_list)
     stationlist = Stationlist(station_input_list, train_input_list)
     travel_center = Travel_Center(station_input_list, line_input_list, train_input_list)
-    lineplans = travel_center._get_all_line_station(1,2,[])
    
     groups = Groups(passengers)
     groupe_to_many = 0
@@ -104,7 +103,7 @@ def main():
                             short_travel = travel
                     save, delay_time = Travel_Center.save_travel(short_travel, groups, group,
                                                                  stationlist, linelist, result)
-                    #groups.passengers_arrive(group)
+                    
                     
                     
                 else:
@@ -130,6 +129,7 @@ def main():
         
 
     groups.print_output()
+    print(result.to_output_text())
     return
 
 

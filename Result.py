@@ -164,7 +164,7 @@ class Result:
     def train_add_from_input(self, input:Input):
         '''from input add all passengers'''
         for train in input.Trains:
-            self.add_passenger(train)
+            self.add_train(train)
         
     def train_read_from_input(self, input:Input):
         '''directly read all passengers from input.passengers'''
@@ -209,10 +209,7 @@ class Result:
         pass
 
 
-#%%
-print("****************************")
-r = Result()
-print("****************************")
+
 
 def test_save_train_depart(r, id, time, line):
     print("****************************")
