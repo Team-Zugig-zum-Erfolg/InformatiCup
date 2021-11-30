@@ -40,14 +40,14 @@ class Train:
   
   def add_start(self, time:int, station_id:int):
     # print(" *-> enter train")
-    out = str(time) + " " + "Start" + " " + str(station_id)
+    out = str(time) + " " + "Start" + " S" + str(station_id)
     # print(f" --- train [{self.id}] add start",out)
     # print(" --- ", self.history)
-    self.history.append(out)
+    self.history.insert(0,out)
   
   def add_depart(self, time:int, line_id:int):
     # print(" *-> enter train")
-    out = str(time) + " " + "Depart" + " " + str(line_id)
+    out = str(time) + " " + "Depart" + " L" + str(line_id)
     # print(f" --- train [{self.id}] add depart: ",out)
     # print(" --- history:", self.history)
     self.history.append(out)
@@ -92,11 +92,11 @@ class Train:
     return self.capacity
   
   def to_str(self):
-      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
+      output = " ".join([self.get_id_str(),self.start_station.get_id_str(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
   def __repr__(self):
-      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
+      output = " ".join([self.get_id_str(),self.start_station.get_id_str(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
 

@@ -164,7 +164,7 @@ class Result:
     def train_add_from_input(self, input:Input):
         '''from input add all passengers'''
         for train in input.Trains:
-            self.add_passenger(train)
+            self.add_train(train)
         
     def train_read_from_input(self, input:Input):
         '''directly read all passengers from input.passengers'''
@@ -209,10 +209,7 @@ class Result:
         pass
 
 
-#%%
-print("****************************")
-r = Result()
-print("****************************")
+
 
 def test_save_train_depart(r, id, time, line):
     print("****************************")
@@ -254,30 +251,4 @@ def test_save_passenger_detrain(r, id, time):
     print("- After -:")
     print(r.to_output_text())
 
-print("****************************")
-print(r.to_output_text())
 
-test_save_train_depart(r, id=1,time=2,line=3)
-test_save_train_start(r, id=2, time=1 ,station=3)
-test_save_train_start(r, id=1, time=1 ,station=3)
-test_save_train_start(r, id=3, time=1 ,station=3)
-test_save_train_depart(r, id=3,time=2,line=3)
-test_save_train_depart(r, id=2,time=2,line=3)
-test_save_train_depart(r, id=5,time=2,line=3)
-
-test_save_passenger_board(r, id=1, time=2, train=3)
-test_save_passenger_board(r, id=2, time=2, train=3)
-test_save_passenger_board(r, id=3, time=2, train=3)
-test_save_passenger_detrain(r, id=1, time=2)
-test_save_passenger_detrain(r, id=3, time=2)
-test_save_passenger_detrain(r, id=4, time=2)
-test_save_passenger_detrain(r, id=6, time=2)
-
-# these 2 test the order of output train and passengers
-# result should be: 
-#   Train       5 after 4, before 6
-#   Passenger   5 after 4, before 6
-test_save_passenger_board(r, id=5, time=2, train=3)
-test_save_train_depart(r, id=5,time=2,line=3)
-print("--------------------")
-print(r.to_output_text())
