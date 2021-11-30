@@ -44,7 +44,7 @@ class Stationlist:
         station_capacities = self.stations[train_in_station.station_id]
         for capacity in station_capacities:
             not_free = 0
-            print("station capacity: "+str(capacity)+" for station: "+str(train_in_station.station_id))
+            
             for _train_in_station in capacity:
                 if Stationlist._train_in_station_is_full(_train_in_station, train_in_station.passenger_out_train_time):
                     if _train_in_station.leave_time is not None:
