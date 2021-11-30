@@ -29,17 +29,14 @@ def main():
     stationlist = Stationlist(station_input_list, train_input_list)
     travel_center = Travel_Center(station_input_list, line_input_list, train_input_list)
     groups = Groups(passengers)
-    groupe_to_many = 0
+
     while len(groups.route) != 0:
-        if groupe_to_many == 0:
-            group = groups.get_priority()
-        else:
-            group.pop(len(group) - 1)
+        group = groups.get_priority()
         start_station, end_station, group_size = Travel_Center.check_passengers(group)
         print("group size")
         print(group_size)
         start_time_list, trainlist, available = Travel_Center.check_train_in_station(start_station, group_size,
-                                                                                     stationlist, linelist)
+                                                                                     stationlist)
         if not available:
             start_times, trains, start_stations = Travel_Center.check_train_not_in_station(group_size, stationlist)
             Travel_Center.train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist,
@@ -60,6 +57,7 @@ def main():
                     availables.append(available)
                     delay_times.append(delay_time)
                 i = 0
+                print(stationlist.stations)
                 available_run = 0
                 travel_available = []
                 for available in availables:
@@ -68,8 +66,10 @@ def main():
                         print("ava")
                         travel_available.append(travels[i])
                         available_run = 1
+                        a, _ = Travel_Center.check_line_station(travels[i], stationlist, linelist)
+                        print(a)
                     i += 1
-
+                    print(stationlist.stations)
                 if available_run:
                     print("available")
                     short_time = travel_available[0].station_time.passenger_out_train_time
@@ -78,6 +78,10 @@ def main():
                         if short_time > travel.station_time.passenger_out_train_time:
                             short_time = travel.station_time.passenger_out_train_time
                             short_travel = travel
+                    print("short")
+                    print(short_travel.start_time)
+                    a, _ = Travel_Center.check_line_station(travel, stationlist, linelist)
+                    print(a)
                     save, delay_time = Travel_Center.save_travel(short_travel, groups, group,
                                                                  stationlist, linelist, result)
                     print("save2")
@@ -89,9 +93,8 @@ def main():
                     for travel in travels:
                         Travel_Center.delay_travel(travel, delay_times[i])
                         i += 1
-            groupe_to_many = 0
         else:
-            groupe_to_many = 1
+            groups.split_group(group)
 
     groups.print_output(result)
     return
