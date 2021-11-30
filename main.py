@@ -30,15 +30,9 @@ def main():
     travel_center = Travel_Center(station_input_list, line_input_list, train_input_list)
    
     groups = Groups(passengers)
-    groupe_to_many = 0
     while len(groups.route) != 0:
-        
-        if groupe_to_many == 0:
-            group = groups.get_priority()
-         
-        else:
-           
-            group.pop(len(group) - 1)
+
+        group = groups.get_priority()
             
         start_station, end_station, group_size = Travel_Center.check_passengers(group)
        
@@ -54,12 +48,6 @@ def main():
         for count in range(len(trainlist)):
             travels.append(travel_center.time_count_train(start_station, end_station, trainlist[count],
                                                           start_time_list[count]))
-
-
-        
-          
-            
-            
         save = 0
         
         if len(travels):
@@ -93,22 +81,14 @@ def main():
                             short_travel = travel
                     save, delay_time = Travel_Center.save_travel(short_travel, groups, group,
                                                                  stationlist, linelist, result)
-                    
-                    
-                    
+
                 else:
                     i = 0
-                  
-                   
                     for travel in travels:
                         Travel_Center.delay_travel(travel, delay_times[i])
                         i += 1
-            groupe_to_many = 0
         else:
-            groupe_to_many = 1
-
-   
-        
+            groups.split_group(group)
 
     groups.print_output()
     print(result.to_output_text())
