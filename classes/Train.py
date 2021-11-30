@@ -40,14 +40,14 @@ class Train:
   
   def add_start(self, time:int, station_id:int):
     # print(" *-> enter train")
-    out = str(time) + " " + "Start" + " " + str(station_id)
+    out = str(time) + " " + "Start" + " S" + str(station_id)
     # print(f" --- train [{self.id}] add start",out)
     # print(" --- ", self.history)
-    self.history.append(out)
+    self.history.insert(0,out)
   
   def add_depart(self, time:int, line_id:int):
     # print(" *-> enter train")
-    out = str(time) + " " + "Depart" + " " + str(line_id)
+    out = str(time) + " " + "Depart" + " L" + str(line_id)
     # print(f" --- train [{self.id}] add depart: ",out)
     # print(" --- history:", self.history)
     self.history.append(out)

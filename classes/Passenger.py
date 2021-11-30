@@ -37,7 +37,7 @@ class Passenger:
     return output
   
   def add_board(self, time:int, train_id:int):
-    out = str(time) + " " + "Board" + " " + str(train_id)
+    out = str(time) + " " + "Board" + " T" + str(train_id)
     # print(f"passenger [{self.id}] add board",out)
     self.history.append(out)
 
