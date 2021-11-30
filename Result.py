@@ -112,6 +112,10 @@ class Result:
             #     print(" + train: ", i.id," history: ", i.history)
             # print(f" -- train id [{id_train}] added with id [{train.id}]")
             # print(" -- [find] location: ", id(train))
+
+            #sort the trains list
+            self.trains.sort(key=lambda x : x.id)
+            
             return train
 
     def find_or_add_passenger(self, id_passenger:int)->Passenger:
@@ -131,6 +135,10 @@ class Result:
             p = Passenger(id_passenger,None,None,0,0)
             self.id_passengers.add(id_passenger)
             self.passengers.append(p)
+            
+            #sort the passengers list
+            self.passengers.sort(key=lambda x : x.id)
+            
             return p
 
     def add_passenger(self, passenger:Passenger):
@@ -145,12 +153,18 @@ class Result:
             self.passengers.append(passenger)
             self.id_passengers.add(passenger.id)
 
+            #sort the passengers list
+            self.passengers.sort(key=lambda x : x.id)
+
     def add_train(self,train:Train):
         if train.id in self.id_trains:
             self.find_or_add_train(train.id).merge(train)
         else:
             self.trains.append(train)
             self.id_trains.add(train.id)
+            
+            #sort the trains list
+            self.trains.sort(key=lambda x : x.id)
 
     def passengers_add_from_input(self, input:Input):
         '''from input add all passengers'''
