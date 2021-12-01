@@ -63,16 +63,15 @@ def main():
 
         if len(travels):
             while not save:
-                end_station_is_full = 1
                 availables = []
                 delay_times = []
+                full_end_station = []
                 for travel in travels:
-                    available, delay_time = Travel_Center.check_line_station(travel, stationlist, linelist)
+                    available, delay_time, full = Travel_Center.check_line_station(travel, stationlist, linelist)
                     availables.append(available)
                     delay_times.append(delay_time)
-
-                    if delay_time != -1:
-                        station_is_full = 0
+                    full_end_station.append(full)
+                    
 
                 i = 0
                 available_run = 0
@@ -94,24 +93,33 @@ def main():
                             short_travel = travel
 
                     save, delay_time = Travel_Center.save_travel(short_travel, groups, group, stationlist, linelist, result)
-
-                elif end_station_is_full: #the end_station is full, so the end_station is not available at no time in future, so the end_station has to be cleared
-                    print("full station")
-                    #calculate travel with earliest (smallest) station_time.passenger_out_train_time
-                    if not travel_center.clear_station(end_station, linelist, stationlist, result, travel_center):
-                        return
-                else:
-                    print(delay_times)
+                    
+                elif False in full_end_station: #end_station is for at least one travel free (so not blocked)
+                    print("delay_times:"+str(delay_times))
+                    print("Stations:"+str(stationlist.stations))
+                    print("Lines:"+str(linelist.lines))
                     i = 0
                     for travel in travels:
                         Travel_Center.delay_travel(travel, delay_times[i])
                         i += 1
+                else: #end_station is blocked for all possible travels
+                    print("blocked")
+                    i = 0
+                    smallest_arrive_time = travels[0].station_time.passenger_out_train_time + delay_times[0]
+                    for travel in travels:
+                        if (travels[i].station_time.passenger_out_train_time + delay_times[i]) < smallest_arrive_time:
+                            smallest_arrive_time = travels[i].station_time.passenger_out_train_time + delay_times[i]
+                        i += 1
+                    print(smallest_arrive_time)
+                    travel_center.clear_station(end_station,smallest_arrive_time-2,linelist,stationlist,result,travel_center)    
+                    
+                    
         else:
             #error: input is invalid, because no route was found, but all stations have to be connected with each other (so this should never happen)
             pass
         
-    print(stationlist.stations)
-    print(linelist.lines)
+    print("Stations:"+str(stationlist.stations))
+    print("Lines:"+str(linelist.lines))
     print(result.to_output_text())
     return
 
