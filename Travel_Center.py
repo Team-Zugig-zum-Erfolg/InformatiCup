@@ -165,7 +165,7 @@ class Travel_Center:
     def save_travel(travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result):
         save, delay_time = Travel_Center.check_line_station(travel, stationlist, linelist)
         if save:
-            stationlist.add_new_train_in_station(travel.station_time, result)
+            stationlist.add_new_train_in_station(travel.station_time, result, travel.start_time, travel.start_station)
             for line in travel.line_time:
                 save = linelist.add_new_train_in_line(line)
 

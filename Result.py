@@ -91,9 +91,12 @@ class Result:
 
         # for i in self.trains:
         #     print(" + train: ", i.id," history: ", i.history)
-
+        print("train is hier")
+        print(id_train)
         # currently cannot deal with duplication
         if id_train in self.id_trains:  # already exist
+            print("train is hier")
+            print(id_train)
             # print(f" -- train id [{id_train}] exist")
             find_result = filter(lambda t: t.id == id_train, self.trains)  # find it
             found_train = list(find_result)  # convert to list
@@ -110,6 +113,8 @@ class Result:
             # for i in self.trains:
             #     print(" + train: ", i.id," history: ", i.history)
             train = Train(id_train, Station(0, 0), 0.0, 0)  # new train
+            print("train is hier add")
+            print(id_train)
             # print(" -- new train history",train.history)
             # for i in self.trains:
             #     print(" + train: ", i.id," history: ", i.history)
@@ -118,10 +123,10 @@ class Result:
             #     print(" + train: ", i.id," history: ", i.history)
 
             self.trains.append(train)
-            # for i in self.trains:
-            #     print(" + train: ", i.id," history: ", i.history)
-            # print(f" -- train id [{id_train}] added with id [{train.id}]")
-            # print(" -- [find] location: ", id(train))
+            for i in self.trains:
+                print(" + train: ", i.id," history: ", i.history)
+            print(f" -- train id [{id_train}] added with id [{train.id}]")
+            print(" -- [find] location: ", id(train))
 
         # sort the trains list
         if len(self.trains) > 2:

@@ -29,11 +29,11 @@ class Stationlist:
             if train.start_station.id != -1:
                 available, earliest_leave_time = self.compare_free_place(train_in_station)
                 if available:
-                    self.add_new_train_in_station(train_in_station, None)
+                    self.add_new_train_in_station(train_in_station, None, 0, 0)
                 else:
                     train_in_station.passenger_out_train_time = earliest_leave_time
                     train_in_station.passenger_in_train_time = earliest_leave_time + 1
-                    self.add_new_train_in_station(train_in_station, train.start_station.id)
+                    self.add_new_train_in_station(train_in_station, train.start_station.id, 0, 0)
             else:
                 TRAIN_NOT_IN_STATION.append(train_in_station)
                 TRAIN_NOT_IN_STATION.sort(key=lambda x: x.train.capacity, reverse=False)
@@ -111,7 +111,7 @@ class Stationlist:
             earliest_leave_time = leave_time + 1
         return earliest_leave_time
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result):
+    def add_new_train_in_station(self, train_in_station: TrainInStation, result, start_time, start_station):
         global TRAIN_NOT_IN_STATION
         if result is not None:
             for _train_in_station in TRAIN_NOT_IN_STATION:
@@ -123,8 +123,8 @@ class Stationlist:
                     print(train_in_station.passenger_out_train_time)
                     print("result station")
                     print(train_in_station.station_id)
-                    result.save_train_start(train_in_station.train.id, train_in_station.passenger_out_train_time,
-                                            train_in_station.station_id)
+                    result.save_train_start(train_in_station.train.id, start_time,
+                                            start_station.id)
 
             for i in range(len(TRAIN_NOT_IN_STATION)):
                 if train_in_station.train.id == TRAIN_NOT_IN_STATION[i].train.id:
@@ -159,7 +159,7 @@ class Stationlist:
                 t = t + 1
             capacity_number = capacity_number + 1
 
-        self.add_new_train_in_station(TrainInStation(0, leave_time, train, leave_time, station_number), result)
+        self.add_new_train_in_station(TrainInStation(0, leave_time, train, leave_time, station_number), result, 0, 0)
         return True
 
     def read_trains_from_station(self, station_number):
