@@ -51,7 +51,7 @@ class Result:
         # for i in self.trains:
         #     print(" + train: ", i.id," history: ", i.history)
         print("train")
-        print(id_train)
+        print(train.id)
         print("time")
         print(time)
         print("station")
@@ -119,8 +119,8 @@ class Result:
             # for i in self.trains:
             #     print(" + train: ", i.id," history: ", i.history)
             self.id_trains.add(id_train)  # add in set() ids, to record the id in a set (there are no duplication)
-            # for i in self.trains:
-            #     print(" + train: ", i.id," history: ", i.history)
+            for i in self.trains:
+                print(" + train: ", i.id, " history: ", i.history)
 
             self.trains.append(train)
             for i in self.trains:
@@ -130,8 +130,8 @@ class Result:
 
         # sort the trains list
         if len(self.trains) > 2:
-            self.trains.sort(key=lambda x: x.id)
-
+            # self.trains.sort(key=lambda x: x.id)
+            pass
             return train
 
     def find_or_add_passenger(self, id_passenger: int) -> Passenger:
