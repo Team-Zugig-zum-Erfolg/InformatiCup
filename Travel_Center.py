@@ -235,7 +235,7 @@ class Travel_Center:
             if line[L_S_ID_START] == station.id:
                 neighboor_stations.append(Station(line[L_S_ID_END],STATION_INPUT_LIST[line[L_S_ID_END]-1][S_CAPACITY]))
             elif line[L_S_ID_END] == station.id:
-                neighboor_stations.append(Station(line[L_S_ID_START],STATION_INPUT_LIST[line[L_S_ID_START-1]][S_CAPACITY]))
+                neighboor_stations.append(Station(line[L_S_ID_START],STATION_INPUT_LIST[line[L_S_ID_START]-1][S_CAPACITY]))
 
         return neighboor_stations
 
@@ -268,8 +268,32 @@ class Travel_Center:
 
         
     @staticmethod
-    def clear_station_with_specific_train(end_station, arrive_time, linelist:Linelist, stationlist: Stationlist, result, travel_center):
-        pass
+    def clear_station_with_specific_train(end_station, train, arrive_time, linelist:Linelist, stationlist: Stationlist, result, travel_center):
+        #get the neighboor stations of the end_station, so the blocking trains in the end_station can be moved to one of the free (or not blocked) neighboor stations
+        neighboor_stations = Travel_Center.get_neighboor_stations(end_station)
+        next_station = None       
+        for neighboor_station in neighboor_stations:
+            if Travel_Center.station_is_never_blocked(neighboor_station,stationlist) == True:
+                next_station = neighboor_station
+                break
+        if next_station == None:
+            return False #no neighboor station is free (free = not blocked)
+
+
+
+
+        travel = travel_center.time_count_train(end_station, next_station, train, arrive_time)
+        available = 0
+        while not available:
+            available, delay_time, _ = Travel_Center.check_line_station(travel, stationlist, linelist)
+            if available:
+                Travel_Center.save_travel(travel, None, None, stationlist, linelist, result)
+            elif delay_time != -1:
+                Travel_Center.delay_travel(travel)
+            else:
+                return False #all neighboor stations are blocked (should actually not happen, because they are checked above)
+            
+        return True
     
     @staticmethod
     def clear_station(end_station, arrive_time, linelist:Linelist, stationlist: Stationlist, result, travel_center):  # clear station (move trains out of it to other stations)
