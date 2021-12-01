@@ -44,8 +44,11 @@ class Stationlist:
         station_capacities = self.stations[train_in_station.station_id]
         for capacity in station_capacities:
             not_free = 0
-            
             for _train_in_station in capacity:
+                if _train_in_station.leave_time == None:
+                    earliest_leave_time = -1
+                    not_free = 1
+                    continue
                 if Stationlist._train_in_station_is_full(_train_in_station, train_in_station.passenger_out_train_time):
                     if _train_in_station.leave_time is not None:
                         leave_time = _train_in_station.leave_time

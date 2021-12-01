@@ -6,6 +6,7 @@ from Linelist import Linelist
 from classes.Travel import Travel
 from classes.TrainInLine import TrainInLine
 from classes.TrainInStation import TrainInStation
+from classes.Station import Station
 import Result
 
 L_ID = 0
@@ -134,6 +135,10 @@ class Travel_Center:
 
         station_available, station_time_change = stationlist.compare_free_place(travel.station_time)
 
+        if station_available == False and station_time_change == -1:
+            return [False, -1]
+            
+
         available = True
         station_delay_time = 0
         if not station_available:
@@ -219,6 +224,34 @@ class Travel_Center:
         Travel_Center._check_capacity(trains, group_size, start_times, start_stations)
         return start_times, trains, start_stations
 
+    @staticmethod
+    def clear_station(end_station, linelist:Linelist, stationlist: Stationlist, result, travel_center):  # clear station (move trains out of it to other stations)
+
+        next_station = Station(3,6) #only for testing
+        #get one of the blocking trains in the station (blocking trains = trains in the station with no leave time)
+        start_times, trains, station = stationlist.read_trains_from_station(end_station.id)
+        train_with_smallest_start_time = trains[0]
+        smallest_start_time = start_times[0]
+        i=0
+        for train in trains:
+            if start_times[i] < smallest_start_time:
+                smallest_start_time = start_times[i]
+                train_with_smallest_start_time = train
+            i = i + 1
+        
+
+        travel = travel_center.time_count_train(end_station, next_station, train_with_smallest_start_time, 0)
+        available = 0
+        while not available:
+            available, delay_time = Travel_Center.check_line_station(travel, stationlist, linelist)
+            if available:
+                Travel_Center.save_travel(travel, None, None, stationlist, linelist, result)
+            elif delay_time != -1:
+                Travel_Center.delay_travel(travel)
+            else:
+                return
+            
+    
     @staticmethod  # move a train to start station
     def train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist, linelist, result:Result, travel_center):
         save = travel_center._train_to_station(start_station, trains, start_times, start_stations, stationlist, linelist, result, travel_center)
@@ -269,9 +302,9 @@ class Travel_Center:
             travels.append(self.time_count_train(start, end_station, train, start_time))
         while not availables:  # find travels until minimal 1 travel
             # available, linelist, stationlist, travel, delay_time
+            print("train_to_station")
             for travel in travels:
-                available, delay_time = Travel_Center.check_line_station(travel, stationlist,
-                                                                         linelist)
+                available, delay_time = Travel_Center.check_line_station(travel, stationlist, linelist)
                 availables.append(available)
                 delay_times.append(delay_time)
 
