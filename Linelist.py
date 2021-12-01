@@ -97,7 +97,6 @@ class Linelist:
 
 
 
-
 '''linelist.initial([[1, 3, 4, 12.2, 1], [2, 1, 2, 4.2, 2], [3, 3, 2, 4.2, 2], [4, 4, 2, 4.2, 2]])
 
 linelist.add_new_train_in_line(1 , 7, 9, 1)

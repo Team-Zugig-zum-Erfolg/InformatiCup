@@ -156,8 +156,7 @@ class Stationlist:
             capacity_number = capacity_number + 1
             
         self.add_new_train_in_station(TrainInStation(0,leave_time,train,leave_time,station_number),result)
-        return True
-       
+        return True    
 
     def read_trains_from_station(self, station_number):
         trains = []

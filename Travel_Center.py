@@ -225,9 +225,40 @@ class Travel_Center:
         return start_times, trains, start_stations
 
     @staticmethod
+    def get_neighboor_stations(station):
+
+        neighboor_stations = []
+        print(STATION_INPUT_LIST)
+        for line in LINE_INPUT_LIST:
+            if line[L_S_ID_START] == station.id:
+                neighboor_stations.append(Station(line[L_S_ID_END],STATION_INPUT_LIST[line[L_S_ID_END]-1][S_CAPACITY]))
+            elif line[L_S_ID_END] == station.id:
+                neighboor_stations.append(Station(line[L_S_ID_START],STATION_INPUT_LIST[line[L_S_ID_START-1]][S_CAPACITY]))
+
+        return neighboor_stations
+
+    @staticmethod
+    def station_is_not_blocked(station, stationlist):
+    
+        for capacity in stationlist.stations[station.id]:
+            if len(capacity) == 0:
+                return True
+            for train_in_station in capacity:
+                if train_in_station.leave_time != None:
+                    return True
+        return False
+    
+    @staticmethod
     def clear_station(end_station, linelist:Linelist, stationlist: Stationlist, result, travel_center):  # clear station (move trains out of it to other stations)
 
-        next_station = Station(3,6) #only for testing
+        #get the neighboor stations of the end_station, so the blocking trains in the end_station can be moved to one of the free (or not blocked) neighboor stations
+        neighboor_stations = Travel_Center.get_neighboor_stations(end_station)
+        next_station = neighboor_stations[0]        
+        for neighboor_station in neighboor_stations:
+            if Travel_Center.station_is_not_blocked(neighboor_station,stationlist) == True:
+                next_station = neighboor_station
+                break
+        
         #get one of the blocking trains in the station (blocking trains = trains in the station with no leave time)
         start_times, trains, station = stationlist.read_trains_from_station(end_station.id)
         train_with_smallest_start_time = trains[0]
