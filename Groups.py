@@ -48,7 +48,7 @@ class Groups:
         self.route.remove(group)
         return
 
-    def split_group(self,group):
+    def split_group(self, group):
 
         self.route.remove(group)
 

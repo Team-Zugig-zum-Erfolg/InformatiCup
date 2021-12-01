@@ -43,6 +43,8 @@ class Train:
     out = str(time) + " " + "Start" + " S" + str(station_id)
     # print(f" --- train [{self.id}] add start",out)
     # print(" --- ", self.history)
+    print("add start")
+    print(station_id)
     self.history.insert(0,out)
   
   def add_depart(self, time:int, line_id:int):
