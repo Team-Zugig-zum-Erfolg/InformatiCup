@@ -46,7 +46,7 @@ class Stationlist:
             not_free = 0
             for _train_in_station in capacity:
                 print(train_in_station.passenger_out_train_time)
-                if _train_in_station.leave_time == None and train_in_station.passenger_out_train_time >= _train_in_station.passenger_out_train_time+2:
+                if _train_in_station.leave_time == None and train_in_station.passenger_out_train_time >= _train_in_station.passenger_out_train_time+1:
                     earliest_leave_time = -1
                     not_free = 1
                     break
@@ -132,7 +132,7 @@ class Stationlist:
         for capacity in self.stations[train_in_station.station_id]:
             free = 1
             for _train_in_station in capacity:
-                if Stationlist._train_in_station_is_full(_train_in_station, train_in_station.passenger_out_train_time):
+                if Stationlist._train_in_station_is_full(_train_in_station, train_in_station.passenger_out_train_time) or (_train_in_station.leave_time == None and _train_in_station.passenger_out_train_time+1 < train_in_station.passenger_out_train_time):
                     free = 0
                     break
             if free == 1:

@@ -96,7 +96,7 @@ def main():
 
                     save, delay_time = Travel_Center.save_travel(short_travel, groups, group, stationlist, linelist, result)
 
-                    stationlist.stations[2][0].append(TrainInStation(6,7,Train(3,Station(1,2),2,3),None,2))
+                    #stationlist.stations[2][0].append(TrainInStation(6,7,Train(3,Station(1,2),2,3),None,2))
                     if Travel_Center.train_is_blocking_other_train_in_station(end_station,short_travel.train,stationlist):
                         print("hallo")
                     
