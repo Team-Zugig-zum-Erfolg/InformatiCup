@@ -194,7 +194,7 @@ class Travel_Center:
                 groups.passengers_arrive(passengers)
                 
                 result.save_passenger_board(passengers[0].id, travel.on_board, line.train)
-                result.save_passenger_detrain(passengers[0].id, travel.station_time.passenger_out_train_time)
+                result.save_passenger_detrain(passengers[0].id, travel.station_time.passenger_in_train_time)
 
             
             
@@ -240,7 +240,7 @@ class Travel_Center:
         return neighboor_stations
 
     @staticmethod
-    def station_is_not_blocked(station, stationlist):
+    def station_is_never_blocked(station, stationlist):
     
         for capacity in stationlist.stations[station.id]:
             if len(capacity) == 0:
@@ -254,13 +254,31 @@ class Travel_Center:
         return False
     
     @staticmethod
+    def train_is_blocking_other_train_in_station(station,train,stationlist):
+
+        for capacity in stationlist.stations[station.id]:
+            for train_in_station in capacity:
+                if train_in_station.train == train and train_in_station.leave_time == None:
+                    for _train_in_station in capacity:
+                        if _train_in_station.passenger_out_train_time > train_in_station.passenger_out_train_time and _train_in_station.train != train:
+                            return True
+                        
+        
+        return False
+
+        
+    @staticmethod
+    def clear_station_with_specific_train(end_station, arrive_time, linelist:Linelist, stationlist: Stationlist, result, travel_center):
+        pass
+    
+    @staticmethod
     def clear_station(end_station, arrive_time, linelist:Linelist, stationlist: Stationlist, result, travel_center):  # clear station (move trains out of it to other stations)
 
         #get the neighboor stations of the end_station, so the blocking trains in the end_station can be moved to one of the free (or not blocked) neighboor stations
         neighboor_stations = Travel_Center.get_neighboor_stations(end_station)
         next_station = None       
         for neighboor_station in neighboor_stations:
-            if Travel_Center.station_is_not_blocked(neighboor_station,stationlist) == True:
+            if Travel_Center.station_is_never_blocked(neighboor_station,stationlist) == True:
                 next_station = neighboor_station
                 break
         if next_station == None:
