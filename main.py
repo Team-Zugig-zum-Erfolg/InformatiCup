@@ -98,7 +98,8 @@ def main():
                 elif end_station_is_full: #the end_station is full, so the end_station is not available at no time in future, so the end_station has to be cleared
                     print("full station")
                     #calculate travel with earliest (smallest) station_time.passenger_out_train_time
-                    travel_center.clear_station(end_station, linelist, stationlist, result, travel_center)
+                    if not travel_center.clear_station(end_station, linelist, stationlist, result, travel_center):
+                        return
                 else:
                     print(delay_times)
                     i = 0
@@ -106,8 +107,9 @@ def main():
                         Travel_Center.delay_travel(travel, delay_times[i])
                         i += 1
         else:
-            #error: no route was found, but all stations have to be connected with each other (should never happen)
+            #error: input is invalid, because no route was found, but all stations have to be connected with each other (so this should never happen)
             pass
+        
     print(stationlist.stations)
     print(linelist.lines)
     print(result.to_output_text())

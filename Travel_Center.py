@@ -253,17 +253,21 @@ class Travel_Center:
 
         #get the neighboor stations of the end_station, so the blocking trains in the end_station can be moved to one of the free (or not blocked) neighboor stations
         neighboor_stations = Travel_Center.get_neighboor_stations(end_station)
-        next_station = neighboor_stations[0]        
+        next_station = None       
         for neighboor_station in neighboor_stations:
             if Travel_Center.station_is_not_blocked(neighboor_station,stationlist) == True:
                 next_station = neighboor_station
                 break
+        if next_station == None:
+            return False #no neighboor station is free (free = not blocked)
         
-        #get one of the blocking trains in the station (blocking trains = trains in the station with no leave time)
+        #get the blocking trains in the station (blocking trains = trains in the station with no leave time)
+        #a station is only blocked, if all trains in the station have no leave time
         start_times, trains, station = stationlist.read_trains_from_station(end_station.id)
         train_with_smallest_start_time = trains[0]
         smallest_start_time = start_times[0]
         i=0
+        #choose the train with the smallest start time
         for train in trains:
             if start_times[i] < smallest_start_time:
                 smallest_start_time = start_times[i]
@@ -280,8 +284,9 @@ class Travel_Center:
             elif delay_time != -1:
                 Travel_Center.delay_travel(travel)
             else:
-                return
+                return False #all neighboor stations are blocked (should actually not happen, because they are checked above)
             
+        return True
     
     @staticmethod  # move a train to start station
     def train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist, linelist, result:Result, travel_center):
