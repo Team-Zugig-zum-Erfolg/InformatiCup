@@ -78,13 +78,16 @@ def main():
                     i += 1
 
                 if available_run:
-
+                    print("available_run")
+                    print(available_run)
                     short_time = travel_available[0].station_time.passenger_out_train_time
                     short_travel = travel_available[0]
                     for travel in travel_available:
                         if short_time > travel.station_time.passenger_out_train_time:
                             short_time = travel.station_time.passenger_out_train_time
                             short_travel = travel
+                    print("save")
+                    print(save)
                     save, delay_time = Travel_Center.save_travel(short_travel, groups, group,
                                                                  stationlist, linelist, result)
 

@@ -36,7 +36,7 @@ class Linelist:
         for capacity in line_capacities:
             for train_pos in range(len(capacity) - 1):
                 time_change = earliest_leave_time
-                if train_pos.end < train_in_line.start:
+                if capacity[train_pos].end < train_in_line.start:
                     earliest_leave_time = Linelist._train_in_line_pos(capacity[train_pos], capacity[train_pos + 1],
                                                                       train_in_line.start, train_in_line.end,
                                                                       earliest_leave_time)
@@ -44,7 +44,7 @@ class Linelist:
                     time_change = None
                     break
                 elif train_pos == len(capacity) - 2:
-                    ends.append(capacity[train_pos + 1][1] + 1)
+                    ends.append(capacity[train_pos + 1].start + 1)
             if time_change != earliest_leave_time:
                 break
         if time_change is not None:

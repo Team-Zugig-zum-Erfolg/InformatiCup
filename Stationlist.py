@@ -67,10 +67,10 @@ class Stationlist:
         for capacity in station_capacities:
             for train_pos in range(len(capacity) - 1):
                 time_change = earliest_leave_time
-                if train_pos.leave_time is not None:
-                    leave_time = train_pos.leave_time
+                if capacity[train_pos].leave_time is not None:
+                    leave_time = capacity[train_pos].leave_time
                 else:
-                    leave_time = train_pos.passenger_in_train_time
+                    leave_time = capacity[train_pos].passenger_in_train_time
                 if leave_time < train_in_station.passenger_out_train_time:
                     earliest_leave_time = Stationlist._train_in_station_pos(capacity[train_pos], capacity[train_pos + 1]
                                                                             , earliest_leave_time)
@@ -78,7 +78,7 @@ class Stationlist:
                     time_change = None
                     break
                 elif train_pos == len(capacity) - 2:
-                    ends.append(capacity[train_pos + 1][1] + 1)
+                    ends.append(capacity[train_pos + 1].passenger_out_train_time + 1)
             if time_change != earliest_leave_time:
                 break
         if time_change is not None:
@@ -118,12 +118,6 @@ class Stationlist:
             for _train_in_station in TRAIN_NOT_IN_STATION:
                 if _train_in_station.train.id == train_in_station.train.id:
                     print("result save train")
-                    print("result train")
-                    print(train_in_station.train.id)
-                    print("result start")
-                    print(train_in_station.passenger_out_train_time)
-                    print("result station")
-                    print(train_in_station.station_id)
                     result.save_train_start(train_in_station.train.id, start_time,
                                             start_station.id)
                     TRAIN_NOT_IN_STATION.pop(i)

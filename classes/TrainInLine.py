@@ -6,6 +6,6 @@ class TrainInLine:
         self.line_id = line_id
 
     def __repr__(self):
-        output = ",".join(["T"+str(self.train),str(self.start),str(self.end),str(self.line_id)])
+        output = ",".join([str(self.train), str(self.start), str(self.end), str(self.line_id)])
         return output
         

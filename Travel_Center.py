@@ -170,12 +170,7 @@ class Travel_Center:
                 save = linelist.add_new_train_in_line(line)
 
                 if save:
-                    print("result train")
-                    print(line.train.id)
-                    print("result start")
-                    print(line.start)
-                    print("result line")
-                    print(line.line_id)
+                    print("result train depart")
                     result.save_train_depart(line.train.id, line.start, line.line_id)
 
             save = stationlist.add_train_leave_time(travel.train, travel.on_board, travel.start_station.id, result)
