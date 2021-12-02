@@ -1,6 +1,5 @@
 from typing import List
 from classes.Station import Station
-from classes.Train import Train
 
 class Passenger:
   # Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
@@ -23,9 +22,10 @@ class Passenger:
     self.end_station = end_station
     self.group_size = group_size
     self.target_time = target_time
+    self.history = []
 
   def to_list(self):
-    return [self.id, self.start_station.get_id(), self.end_station.get_id(), self.group_size, self.target_time]
+    return [self.id, self.start_station.id, self.end_station.id, self.group_size, self.target_time]
 
   def to_str_input(self)->str:
     output = " ".join([self.get_id_str(), self.start_station.get_id_str(), self.end_station.get_id_str(), str(self.group_size), str(self.target_time)])
@@ -36,15 +36,18 @@ class Passenger:
     output = "\n".join(self.history)
     return output
   
-  def add_board(self, time:int, train:Train):
-    out = str(time) + " " + "Board" + " " + train.get_id_str()
+  def add_board(self, time:int, train_id:int):
+    out = str(time) + " " + "Board" + " T" + str(train_id)
+    # print(f"passenger [{self.id}] add board",out)
     self.history.append(out)
 
   def add_detrain(self, time:int):
     out = str(time) + " " + "Detrain"
+    # print(f"passenger [{self.id}] add detrain",out)
     self.history.append(out)
 
-
+  def merge(self, passenger):
+    self.history += passenger.history
 
   def get_id_str(self)->str:
     ''' get id with P in a string '''
@@ -85,19 +88,19 @@ class Passenger:
     self.group_size = size
     return True
   
-  def set_target_round(self,target_round):
+  def set_target_round(self, target_round):
     if type(target_round) != int:
       return False
-    self.target_round = target_round
+    self.target_time = target_round
     return True
-  
+
   def get_target_round(self):
-    return self.target_round
+    return self.target_time
   
 
 
   def __repr__(self):
-      output = " ".join([self.get_id(),self.get_start_station(),self.get_end_station(),str(self.get_capacity()),str(self.get_group_size()),str(self.get_target_round())])
+      output = " ".join([self.get_id_str(),self.get_start_station().get_id_str(),self.get_end_station().get_id_str(),str(self.get_group_size()),str(self.get_target_round())])
       return output
   
   

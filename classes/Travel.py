@@ -1,5 +1,9 @@
+from classes.TrainInLine import TrainInLine
+from classes.TrainInStation import TrainInStation
+
 class Travel:
-    def __init__(self, start_time, on_board, line_time, station_time, start_station, end_station, train):
+    def __init__(self, start_time, on_board, line_time, station_time: TrainInStation, start_station,
+                 end_station, train):
         self.start_time = start_time
         self.on_board = on_board
         self.line_time = line_time
@@ -7,3 +11,8 @@ class Travel:
         self.start_station = start_station
         self.end_station = end_station
         self.train = train
+
+    def __repr__(self):
+
+        output = ",".join([str(self.start_time),str(self.on_board),str(self.start_station.get_id_str()),str(self.end_station.get_id_str()),str(self.train.get_id_str())])
+        return output

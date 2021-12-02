@@ -3,9 +3,15 @@ from classes import Passenger
 class Groups:
 
     route = []
+<<<<<<< HEAD
         
     def initial(self,passengers):
 
+=======
+
+    def __init__(self,passengers):
+
+>>>>>>> ae9cd0693b93054938120316d7268bc89775b99a
         if type(passengers) != list:
             return False
         for passenger in passengers:
@@ -16,6 +22,7 @@ class Groups:
                     self.route[route_number].append(passenger)
                     added = 1
                     break
+<<<<<<< HEAD
                 self.route = self.route + 1
             if added == 0:
                 self.route.append([passenger])
@@ -63,7 +70,52 @@ class Groups:
 
   
     def passengers_arrive(self):
+=======
+                route_number = route_number + 1
+            if added == 0:
+                self.route.append([passenger])
+
+    def _get_min_target_round(self,group):
+
+        min = -1
+        for pa in group:
+            if min == -1:
+                min = pa.get_target_round()
+                continue
+            if pa.get_target_round() < min:
+                min = pa.get_target_round()
+        return min
+
+    def get_priority(self):
+
+        if len(self.route) == 0:
+        
+            return None
+
+        self.route.sort(key=self._get_min_target_round)
+        return self.route[0]
+
+    def passengers_arrive(self,group):
+
+        self.route.remove(group)
         return
+
+    def split_group(self,group):
+
+        self.route.remove(group)
+
+        length = len(group)
+        middle_index = length // 2
+
+        first_group = group[:middle_index]
+        second_group = group[middle_index:]
+        if len(first_group) != 0:
+            self.route.append(first_group)
+        if len(second_group) != 0:
+            self.route.append(second_group)
+>>>>>>> ae9cd0693b93054938120316d7268bc89775b99a
+        return
+
     def print_output(self):
         return
 

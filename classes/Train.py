@@ -17,12 +17,13 @@ class Train:
     self.start_station = start_station
     self.speed = speed
     self.capacity = capacity
+    self.history = []
 
   def to_list(self):
-    return [self.id, self.start_station.get_id(), self.speed, self.capacity]
+    return [self.id, self.start_station.id, self.speed, self.capacity]
 
   def to_str_input(self)->str:
-    if self.start_station == None:
+    if self.start_station.id < 0:
       output = " ".join([self.get_id_str(), "*", str(self.speed), str(self.capacity)])
     else:
       output = " ".join([self.get_id_str(), self.start_station.get_id_str(), str(self.speed), str(self.capacity)])
@@ -37,13 +38,22 @@ class Train:
     out = "T" + str(self.id)
     return out
   
-  def add_start(self, time:int, station:Station):
-    out = str(time) + " " + "Start" + " " + station.get_id_str()
-    self.history.append(out)
+  def add_start(self, time:int, station_id:int):
+    # print(" *-> enter train")
+    out = str(time) + " " + "Start" + " S" + str(station_id)
+    # print(f" --- train [{self.id}] add start",out)
+    # print(" --- ", self.history)
+    self.history.insert(0,out)
   
-  def add_depart(self, time:int, line:Line):
-    out = str(time) + " " + "Depart" + " " + line.get_id_str()
+  def add_depart(self, time:int, line_id:int):
+    # print(" *-> enter train")
+    out = str(time) + " " + "Depart" + " L" + str(line_id)
+    # print(f" --- train [{self.id}] add depart: ",out)
+    # print(" --- history:", self.history)
     self.history.append(out)
+
+  def merge(self, train):
+    self.history += train.history
 
   def get_id(self):
     return self.id
@@ -82,11 +92,11 @@ class Train:
     return self.capacity
   
   def to_str(self):
-      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
+      output = " ".join([self.get_id_str(),self.start_station.get_id_str(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
   def __repr__(self):
-      output = " ".join([self.get_id(),self.get_start_station(),str(self.get_capacity()),str(self.get_speed())])
+      output = " ".join([self.get_id_str(),self.start_station.get_id_str(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
 
