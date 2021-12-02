@@ -14,7 +14,7 @@ from classes import Station
 def main():
     # init
     input_ = Input()
-    stations, lines, trains, passengers = input_.from_file("test/test_other.txt")
+    stations, lines, trains, passengers = input_.from_file("test/test40.txt")
 
     station_input_list = []
     for s in stations:
@@ -131,6 +131,5 @@ def main():
     print("Lines:"+str(linelist.lines))
     print(result.to_output_text())
     return
-
 
 main()
