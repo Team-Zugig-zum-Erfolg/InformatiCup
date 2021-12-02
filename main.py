@@ -96,14 +96,13 @@ def main():
 
                     save, delay_time = Travel_Center.save_travel(short_travel, groups, group, stationlist, linelist, result)
 
-                    stationlist.stations[2][0].append(TrainInStation(6,7,Train(3,Station(1,2),2,3),None,2))#!!!!!!only for testing!!!!!!!! (simulate a full station)
+                    #stationlist.stations[2][0].append(TrainInStation(6,7,Train(3,Station(1,2),2,3),None,2))#!!!!!!only for testing!!!!!!!! (simulate a full station)
 
                     #if the arrived train then blocks other trains, because he stops at the end_station, move the train to another station (clear the end_station)
                     if Travel_Center.train_is_blocking_other_train_in_station(end_station,short_travel.train,stationlist):
                         
                         Travel_Center.clear_station_with_specific_train(end_station,short_travel.train,short_travel.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
-
-                    
+ 
                 elif False in full_end_station: #end_station is for at least one travel free (so not blocked)
                     
                     i = 0
@@ -121,7 +120,6 @@ def main():
                             smallest_arrive_time = travels[i].station_time.passenger_out_train_time + delay_times[i]
                         i += 1
                         
-                    
                     travel_center.clear_station(end_station,smallest_arrive_time-2,linelist,stationlist,result,travel_center)    
                     
                     

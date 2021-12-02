@@ -373,33 +373,59 @@ class Travel_Center:
                     
         return start_times, trains, start_stations
 
-    def _train_to_station(self,end_station, trains, start_times, start_stations, stationlist, linelist, result:Result,travel_center):
+    def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist, linelist, result:Result, travel_center):
         travels = []
-        availables = []
-        delay_times = []
         for i in range(0,len(trains)):
             start = start_stations[i]
             train = trains[i]
             start_time = start_times[i]
-            
+            print("-----")
+            print(start)
+            print(end_station)
+            print(train)
+            print(start_time)
             travels.append(self.time_count_train(start, end_station, train, start_time))
-        while not availables:  # find travels until minimal 1 travel
+
+        
+        availables = []
+        while True not in availables:  # find travels until minimal 1 travel
             # available, linelist, stationlist, travel, delay_time
+            availables = []
+            delay_times = []
+            full_end_station = []
             print("train_to_station")
             for travel in travels:
-                available, delay_time, _ = Travel_Center.check_line_station(travel, stationlist, linelist)
+                available, delay_time, full = Travel_Center.check_line_station(travel, stationlist, linelist)
                 availables.append(available)
                 delay_times.append(delay_time)
+                full_end_station.append(full)
 
-            if not availables:
+            if True not in availables and (False in full_end_station):
+                print("delay")
+                i=0
                 for travel in travels:
-                    Travel_Center.delay_travel(travel)
+                    Travel_Center.delay_travel(travel,delay_times[i])
+                    i = i + 1
+            else:
+                smallest_arrive_time = travels[0].station_time.passenger_out_train_time + delay_times[0]
+                i=0
+                #calculate the smallest time, when to move a stopped train out of the blocked station
+                for travel in travels:
+                    if (travels[i].station_time.passenger_out_train_time + delay_times[i]) < smallest_arrive_time:
+                        smallest_arrive_time = travels[i].station_time.passenger_out_train_time + delay_times[i]
+                    i += 1
+                        
+                print("hallo")    
+                travel_center.clear_station(end_station,smallest_arrive_time-2,linelist,stationlist,result,travel_center)
+        
+        print(availables)            
         travels_available = []
         i = 0
         for available in availables:
             if available:
                 travels_available.append(travels[i])
                 i += 1
+                
         end_station_time = sys.maxsize
         travel_choose = None
 
@@ -407,7 +433,12 @@ class Travel_Center:
             if end_station_time > travel.station_time.passenger_in_train_time:
                 end_station_time = travel.station_time.passenger_in_train_time
                 travel_choose = travel
+                
         save, _ = Travel_Center.save_travel(travel_choose, None, None, stationlist, linelist, result)
+
+        if Travel_Center.train_is_blocking_other_train_in_station(end_station,travel_choose.train,stationlist):
+                        
+            Travel_Center.clear_station_with_specific_train(end_station,travel_choose.train,travel_choose.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
         
        
         return save
