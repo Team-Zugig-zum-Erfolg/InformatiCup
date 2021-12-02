@@ -14,7 +14,7 @@ from classes import Station
 def main():
     # init
     input_ = Input()
-    stations, lines, trains, passengers = input_.from_file("test/test_full.txt")
+    stations, lines, trains, passengers = input_.from_file("test/test_other.txt")
 
     station_input_list = []
     for s in stations:
@@ -44,16 +44,16 @@ def main():
         if not available:
 
             start_times, trains, start_stations = Travel_Center.check_train_not_in_station(group_size, stationlist)
-            Travel_Center.train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist, linelist, result, travel_center)
+            if len(trains) != 0:
+                
+                Travel_Center.train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist, linelist, result, travel_center)
+
+            else:
+                
+                #if no train is available, then the passengers group size is too big
+                groups.split_group(group)
+
             continue
-
-
-        #if no train is available, then the passengers group size is too big
-        if len(trainlist) == 0:
-
-            groups.split_group(group)
-            continue
-
 
 
 

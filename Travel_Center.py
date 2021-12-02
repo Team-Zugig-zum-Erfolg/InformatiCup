@@ -186,8 +186,9 @@ class Travel_Center:
                 if save:
                     result.save_train_depart(line.train, line.start, line.line_id)
                     
-            stationlist.add_new_train_in_station(travel.station_time,result)
+            
             save = stationlist.add_train_leave_time(travel.train, travel.on_board, travel.start_station.id, result)
+            stationlist.add_new_train_in_station(travel.station_time,result)
            
             if passengers is not None:
                 

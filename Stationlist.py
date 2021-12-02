@@ -120,7 +120,7 @@ class Stationlist:
         if result is not None:
             for _train_in_station in TRAIN_NOT_IN_STATION:
                 if _train_in_station.train == train_in_station.train:
-                    result.save_train_start(train_in_station.train.id, train_in_station.passenger_out_train_time - 1, train_in_station.station_id)
+                    result.save_train_start(train_in_station.train.id, 0, train_in_station.station_id)
           
             for i in range(len(TRAIN_NOT_IN_STATION)):
                 if train_in_station.train.id == TRAIN_NOT_IN_STATION[i].train.id:
@@ -155,7 +155,7 @@ class Stationlist:
                     return True
                 t = t + 1
             capacity_number = capacity_number + 1
-            
+        print("idhhw"+str(station_number))            
         self.add_new_train_in_station(TrainInStation(0,leave_time,train,leave_time,station_number),result)
         return True    
 
