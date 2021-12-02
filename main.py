@@ -26,7 +26,6 @@ def main():
     result = Result()
     # for t in trains:
     # train_input_list.append(t.to_list())
-    print(station_input_list)
 
     linelist = Linelist(line_input_list)
     stationlist = Stationlist(station_input_list, train_input_list)
@@ -45,7 +44,10 @@ def main():
 
             start_times, trains, start_stations = Travel_Center.check_train_not_in_station(group_size, stationlist)
             if len(trains) != 0:
-                
+                #print("group_size:"+str(group_size))
+                #print("trains:"+str(trains))
+                #print("start_station:"+str(start_stations))
+                #print("group:"+str(group))
                 Travel_Center.train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist, linelist, result, travel_center)
 
             else:
@@ -104,14 +106,16 @@ def main():
                         Travel_Center.clear_station_with_specific_train(end_station,short_travel.train,short_travel.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
  
                 elif False in full_end_station: #end_station is for at least one travel free (so not blocked)
-                    
+
+                    #print(stationlist.stations)
+                    #print(travel)
                     i = 0
                     for travel in travels:
                         Travel_Center.delay_travel(travel, delay_times[i])
                         i += 1
                         
                 else: #end_station is blocked for all possible travels, so the end_station has to be cleared
-                    
+
                     smallest_arrive_time = travels[0].station_time.passenger_out_train_time + delay_times[0]
                     i=0
                     #calculate the smallest time, when to move a stopped train out of the blocked station
@@ -119,7 +123,7 @@ def main():
                         if (travels[i].station_time.passenger_out_train_time + delay_times[i]) < smallest_arrive_time:
                             smallest_arrive_time = travels[i].station_time.passenger_out_train_time + delay_times[i]
                         i += 1
-                        
+                  
                     travel_center.clear_station(end_station,smallest_arrive_time-2,linelist,stationlist,result,travel_center)    
                     
                     
@@ -127,8 +131,8 @@ def main():
             #error: input is invalid, because no route was found, but all stations have to be connected with each other (so this should never happen)
             pass
         
-    print("Stations:"+str(stationlist.stations))
-    print("Lines:"+str(linelist.lines))
+    #print("Stations:"+str(stationlist.stations))
+    #print("Lines:"+str(linelist.lines))
     print(result.to_output_text())
     return
 

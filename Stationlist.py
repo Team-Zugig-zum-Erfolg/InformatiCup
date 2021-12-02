@@ -45,8 +45,8 @@ class Stationlist:
         for capacity in station_capacities:
             not_free = 0
             for _train_in_station in capacity:
-                print(train_in_station.passenger_out_train_time)
-                if _train_in_station.leave_time == None and train_in_station.passenger_out_train_time >= _train_in_station.passenger_out_train_time+1:
+                #print(train_in_station.passenger_out_train_time)
+                if _train_in_station.leave_time == None and train_in_station.passenger_out_train_time > _train_in_station.passenger_out_train_time+1:
                     earliest_leave_time = -1
                     not_free = 1
                     break
@@ -155,7 +155,7 @@ class Stationlist:
                     return True
                 t = t + 1
             capacity_number = capacity_number + 1
-        print("idhhw"+str(station_number))            
+                 
         self.add_new_train_in_station(TrainInStation(0,leave_time,train,leave_time,station_number),result)
         return True    
 

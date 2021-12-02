@@ -140,12 +140,14 @@ class Travel_Center:
         if station_available == False and station_time_change == -1:
             station_is_full = True
             available = False
+            #print("full")
             
         station_delay_time = 0
         if not station_available and station_is_full == False:
             #print("station_time_change: "+str(station_time_change))
             #print("out_train_time:"+str(travel.station_time.passenger_out_train_time))
-            station_delay_time = station_time_change - travel.station_time.passenger_out_train_time
+            station_delay_time = ((station_time_change + 1) - travel.station_time.passenger_out_train_time)
+            #print("station_delay_time:"+str(station_delay_time))
             available = False
 
 
@@ -193,9 +195,10 @@ class Travel_Center:
             if passengers is not None:
                 
                 groups.passengers_arrive(passengers)
-                
-                result.save_passenger_board(passengers[0].id, travel.on_board, line.train)
-                result.save_passenger_detrain(passengers[0].id, travel.station_time.passenger_in_train_time)
+
+                for passenger in passengers:
+                    result.save_passenger_board(passenger.id, travel.on_board, line.train)
+                    result.save_passenger_detrain(passenger.id, travel.station_time.passenger_in_train_time)
 
             
             
@@ -281,7 +284,7 @@ class Travel_Center:
             return False #no neighboor station is free (free = not blocked)
 
 
-
+       
 
         travel = travel_center.time_count_train(end_station, next_station, train, arrive_time)
         available = 0
@@ -321,16 +324,18 @@ class Travel_Center:
                 smallest_start_time = start_times[i]
                 train_with_smallest_start_time = train
             i = i + 1
+            
+        #print("next_station:"+str(next_station))
+        #print("train_in_next_station:"+str(stationlist.stations[end_station.id]))
         
-
-        travel = travel_center.time_count_train(end_station, next_station, train_with_smallest_start_time, arrive_time)
+        travel = travel_center.time_count_train(end_station, next_station, train_with_smallest_start_time, smallest_start_time)#smallest start time
         available = 0
         while not available:
             available, delay_time, _ = Travel_Center.check_line_station(travel, stationlist, linelist)
             if available:
                 Travel_Center.save_travel(travel, None, None, stationlist, linelist, result)
             elif delay_time != -1:
-                Travel_Center.delay_travel(travel)
+                Travel_Center.delay_travel(travel, delay_time)
             else:
                 return False #all neighboor stations are blocked (should actually not happen, because they are checked above)
             
@@ -380,11 +385,11 @@ class Travel_Center:
             start = start_stations[i]
             train = trains[i]
             start_time = start_times[i]
-            print("-----")
-            print(start)
-            print(end_station)
-            print(train)
-            print(start_time)
+            #print("-----")
+            #print(start)
+            #print(end_station)
+            #print(train)
+            #print(start_time)
             travels.append(self.time_count_train(start, end_station, train, start_time))
 
         
@@ -394,38 +399,40 @@ class Travel_Center:
             availables = []
             delay_times = []
             full_end_station = []
-            print("train_to_station")
+            #print("train_to_station")
             for travel in travels:
                 available, delay_time, full = Travel_Center.check_line_station(travel, stationlist, linelist)
                 availables.append(available)
                 delay_times.append(delay_time)
-                full_end_station.append(full)
-
+                full_end_station.append(full)     
+            
             if True not in availables and (False in full_end_station):
-                print("delay")
+                #print("delay")
                 i=0
                 for travel in travels:
                     Travel_Center.delay_travel(travel,delay_times[i])
                     i = i + 1
-            else:
+            elif True in full_end_station:
                 smallest_arrive_time = travels[0].station_time.passenger_out_train_time + delay_times[0]
                 i=0
+                #print(end_station)
+                #print(stationlist.stations[end_station.id][0])
+                #print(availables)
                 #calculate the smallest time, when to move a stopped train out of the blocked station
                 for travel in travels:
                     if (travels[i].station_time.passenger_out_train_time + delay_times[i]) < smallest_arrive_time:
                         smallest_arrive_time = travels[i].station_time.passenger_out_train_time + delay_times[i]
                     i += 1
-                        
-                print("hallo")    
+                           
                 travel_center.clear_station(end_station,smallest_arrive_time-2,linelist,stationlist,result,travel_center)
         
-        print(availables)            
+        #print(availables)            
         travels_available = []
         i = 0
         for available in availables:
             if available:
                 travels_available.append(travels[i])
-                i += 1
+            i += 1
                 
         end_station_time = sys.maxsize
         travel_choose = None
@@ -434,11 +441,11 @@ class Travel_Center:
             if end_station_time > travel.station_time.passenger_in_train_time:
                 end_station_time = travel.station_time.passenger_in_train_time
                 travel_choose = travel
-                
+        #print(stationlist.stations)
+        #print("travel:"+str(travel_choose))
         save, _ = Travel_Center.save_travel(travel_choose, None, None, stationlist, linelist, result)
-
         if Travel_Center.train_is_blocking_other_train_in_station(end_station,travel_choose.train,stationlist):
-                        
+            #print("blocking")  
             Travel_Center.clear_station_with_specific_train(end_station,travel_choose.train,travel_choose.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
         
        
