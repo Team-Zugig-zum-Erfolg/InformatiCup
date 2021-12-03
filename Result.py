@@ -2,7 +2,6 @@ from typing import List
 from classes.Passenger import Passenger
 from classes.Train import Train
 from classes.Station import Station
-from classes.Line import Line
 from Input import Input
 import time
 
@@ -22,7 +21,7 @@ class Result:
     id_trains:set = set()
     id_passengers:set = set()
 
- 
+
     
     def save_train_depart(self, id_train, time, id_line):
         ''' find the train in trains[], add this action in its history'''

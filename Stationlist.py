@@ -110,7 +110,7 @@ class Stationlist:
             earliest_leave_time = leave_time + 1
         return earliest_leave_time
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result, start_time, start_station, ignore_full_station = False):
+    def add_new_train_in_station(self, train_in_station: TrainInStation, result, start_time, start_station):
         global TRAIN_NOT_IN_STATION
         enable, delay_time = self.compare_free_place(train_in_station)
         print("compare add " + str(enable))
