@@ -14,7 +14,7 @@ from classes import Station
 def main():
     # init
     input_ = Input()
-    stations, lines, trains, passengers = input_.from_file("test/test_full.txt")
+    stations, lines, trains, passengers = input_.from_file("test/test_other.txt")
 
     station_input_list = []
     for s in stations:
@@ -126,18 +126,16 @@ def main():
                             smallest_arrive_time = travels[i].station_time.passenger_out_train_time + delay_times[i]
                         i += 1
                   
-                    cleared = travel_center.clear_station(end_station,start_station,smallest_arrive_time-2,linelist,stationlist,result,travel_center)    
-                    
-                    if cleared == False:
-                        raise ValueError("Clearing station failed: No free station for clearing available!")
+                    travel_center.clear_station(end_station,smallest_arrive_time-2, linelist, stationlist, result,
+                                                travel_center)
                     
                     
         else:
             #error: input is invalid, because no route was found, but all stations have to be connected with each other (so this should never happen)
             pass
         
-    print("Stations:"+str(stationlist.stations))
-    print("Lines:"+str(linelist.lines))
+    #print("Stations:"+str(stationlist.stations))
+    #print("Lines:"+str(linelist.lines))
     print(result.to_output_text())
     return
 
