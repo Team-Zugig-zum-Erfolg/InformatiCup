@@ -149,20 +149,14 @@ class Travel_Center:
             available = False
 
         delay_time = station_delay_time
-        print(station_delay_time)
-        print("station_delay_zeit")
+
         for i in range(len(line_availables_list)):
             if not line_availables_list[i]:
                 available = False
 
                 line_delay_time = line_time_changes[i] - travel.line_time[i].start
-                print(travel.line_time[i].start)
-                print(line_time_changes[i])
-                print("zeit")
                 if delay_time < line_delay_time:
                     delay_time = line_delay_time
-        print(delay_time)
-        print("line_delay_time")
         return [available, delay_time, station_is_full]
 
     @staticmethod
@@ -181,6 +175,7 @@ class Travel_Center:
         if enable:
             save = stationlist.add_new_train_in_station(travel.station_time, result, travel.start_time,
                                                         travel.start_station)
+
             for line in travel.line_time:
                 save = linelist.add_new_train_in_line(line)
 
@@ -294,7 +289,9 @@ class Travel_Center:
         return True
 
     @staticmethod
-    def clear_station(end_station, arrive_time, linelist: Linelist, stationlist: Stationlist, result, travel_center):
+    def clear_station(end_station, origin_station, arrive_time, linelist:Linelist, stationlist: Stationlist, result,
+                      travel_center):
+        # clear station (move trains out of it to other stations)
         # clear station (move trains out of it to other stations)
 
         # get the neighboor stations of the end_station,
