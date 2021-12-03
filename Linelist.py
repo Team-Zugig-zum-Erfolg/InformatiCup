@@ -30,6 +30,8 @@ class Linelist:
             if not_free == 0:
                 return [True, -1]
 
+        return [False, earliest_leave_time]
+
         time_change = None
         ends = []
 

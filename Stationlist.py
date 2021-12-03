@@ -114,14 +114,14 @@ class Stationlist:
             earliest_leave_time = leave_time + 1
         return earliest_leave_time
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result, ignore_full_station = False):
+    def add_new_train_in_station(self, train_in_station: TrainInStation, result, start_time, start_station, ignore_full_station = False):
         global TRAIN_NOT_IN_STATION
         if result is not None:
             i = 0
             for _train_in_station in TRAIN_NOT_IN_STATION:
                 if _train_in_station.train.id == train_in_station.train.id:
                     result.save_train_start(train_in_station.train.id, start_time, 
-                                            start_station.id)
+                                            start_station)
                     TRAIN_NOT_IN_STATION.pop(i)
                     break
                 i += 1

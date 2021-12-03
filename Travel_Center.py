@@ -153,6 +153,7 @@ class Travel_Center:
 
         delay_time = station_delay_time
         
+        i=0
         for line_available in line_availables_list:
             if not line_available:
                 available = False
@@ -161,6 +162,7 @@ class Travel_Center:
                 if delay_time < line_delay_time:
                     delay_time = line_delay_time
                     
+            i = i + 1       
 
         
 
@@ -188,7 +190,7 @@ class Travel_Center:
                     
             
             save = stationlist.add_train_leave_time(travel.train, travel.on_board, travel.start_station.id, result)
-            stationlist.add_new_train_in_station(travel.station_time,result,ignore_full_station)
+            stationlist.add_new_train_in_station(travel.station_time,result,0,0,ignore_full_station)
            
             if passengers is not None:
                 
