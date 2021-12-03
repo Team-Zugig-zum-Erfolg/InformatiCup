@@ -30,6 +30,8 @@ class Linelist:
             if not_free == 0:
                 return [True, -1]
 
+        return [False, earliest_leave_time]
+
         time_change = None
         ends = []
 
@@ -61,8 +63,8 @@ class Linelist:
 
     @staticmethod
     def _train_in_line_is_full(train_in_line, start, end):
-        return ((train_in_line.end >= start >= train_in_line.start) or
-                (train_in_line.start <= end <= train_in_line.end))
+        return ((train_in_line.start <= start < train_in_line.end) or
+                (train_in_line.start < end <= train_in_line.end))
 
     @staticmethod
     def _train_in_line_pos(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start, end,
