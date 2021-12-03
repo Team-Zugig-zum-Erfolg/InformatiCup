@@ -139,10 +139,11 @@ class Input:
 
     def path_generator(self) -> str:
         ''' generate a path for local file '''
-        path = "./result/Input"
-        path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))
-        path = path + ".txt"
-        return path
+        # path = "./result/Input"
+        # path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))
+        # path = path + ".txt"
+        filename = "Input-" + time.strftime("%y%m%d-%H%M%S",time.localtime(time.time())) + ".txt"
+        return filename
 
     def from_file(self, path:str):
         ''' load input from local file '''

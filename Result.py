@@ -214,10 +214,11 @@ class Result:
 
     def path_generator(self) -> str:
         ''' generate a path for local file '''
-        path = "./result/Output"
-        path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))
-        path = path + ".txt"
-        return path
+        # path = "./result/Output"
+        # path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))
+        # path = path + ".txt"
+        filename = "Output-" + time.strftime("%y%m%d-%H%M%S",time.localtime(time.time())) + ".txt"
+        return filename
 
     def compare_with(path:str):
         pass
