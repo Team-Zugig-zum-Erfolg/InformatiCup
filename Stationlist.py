@@ -47,7 +47,6 @@ class Stationlist:
             for _train_in_station in capacity:
                 #print(train_in_station.passenger_out_train_time)
                 if _train_in_station.leave_time == None and train_in_station.passenger_out_train_time > _train_in_station.passenger_out_train_time+1:
-                    earliest_leave_time = -1
                     not_free = 1
                     break
                 if Stationlist._train_in_station_is_full(_train_in_station, train_in_station.passenger_out_train_time):
@@ -115,7 +114,7 @@ class Stationlist:
             earliest_leave_time = leave_time + 1
         return earliest_leave_time
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result):
+    def add_new_train_in_station(self, train_in_station: TrainInStation, result, ignore_full_station = False):
         global TRAIN_NOT_IN_STATION
         if result is not None:
             for _train_in_station in TRAIN_NOT_IN_STATION:
@@ -132,7 +131,7 @@ class Stationlist:
         for capacity in self.stations[train_in_station.station_id]:
             free = 1
             for _train_in_station in capacity:
-                if Stationlist._train_in_station_is_full(_train_in_station, train_in_station.passenger_out_train_time) or (_train_in_station.leave_time == None and _train_in_station.passenger_out_train_time+1 < train_in_station.passenger_out_train_time):
+                if Stationlist._train_in_station_is_full(_train_in_station, train_in_station.passenger_out_train_time) or ((_train_in_station.leave_time == None and _train_in_station.passenger_out_train_time+1 < train_in_station.passenger_out_train_time) and ignore_full_station == False):
                     free = 0
                     break
             if free == 1:
@@ -141,6 +140,7 @@ class Stationlist:
                     key=lambda x: x.passenger_out_train_time)
                 return True
             capacity_number = capacity_number + 1
+
         return False
 
     def add_train_leave_time(self, train, leave_time, station_number, result):

@@ -103,8 +103,11 @@ def main():
                     #if the arrived train then blocks other trains, because he stops at the end_station, move the train to another station (clear the end_station)
                     if Travel_Center.train_is_blocking_other_train_in_station(end_station,short_travel.train,stationlist):
                         
-                        Travel_Center.clear_station_with_specific_train(end_station,short_travel.train,short_travel.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
+                        cleared = Travel_Center.clear_station_with_specific_train(end_station,short_travel.train,short_travel.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
  
+                        if cleared == False:
+                            raise ValueError("Clearing station failed: No free station for clearing available!")
+
                 elif False in full_end_station: #end_station is for at least one travel free (so not blocked)
 
                     #print(stationlist.stations)
@@ -124,15 +127,18 @@ def main():
                             smallest_arrive_time = travels[i].station_time.passenger_out_train_time + delay_times[i]
                         i += 1
                   
-                    travel_center.clear_station(end_station,smallest_arrive_time-2,linelist,stationlist,result,travel_center)    
+                    cleared = travel_center.clear_station(end_station,start_station,smallest_arrive_time-2,linelist,stationlist,result,travel_center)    
+                    
+                    if cleared == False:
+                        raise ValueError("Clearing station failed: No free station for clearing available!")
                     
                     
         else:
             #error: input is invalid, because no route was found, but all stations have to be connected with each other (so this should never happen)
             pass
         
-    #print("Stations:"+str(stationlist.stations))
-    #print("Lines:"+str(linelist.lines))
+    print("Stations:"+str(stationlist.stations))
+    print("Lines:"+str(linelist.lines))
     print(result.to_output_text())
     return
 
