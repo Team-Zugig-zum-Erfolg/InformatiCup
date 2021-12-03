@@ -34,8 +34,6 @@ class Linelist:
         ends = []
 
 
-        return [False, earliest_leave_time]
-
         for capacity in line_capacities:
             for train_pos in range(len(capacity) - 1):
                 time_change = earliest_leave_time
