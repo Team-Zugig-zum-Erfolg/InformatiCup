@@ -153,16 +153,14 @@ class Travel_Center:
 
         delay_time = station_delay_time
         
-        i = 0
         for line_available in line_availables_list:
-            if line_availables_list[i] == False:
+            if not line_available:
                 available = False
                 
                 line_delay_time = line_time_changes[i] - travel.line_time[i].start
                 if delay_time < line_delay_time:
                     delay_time = line_delay_time
                     
-            i += 1
 
         
 
@@ -172,7 +170,7 @@ class Travel_Center:
     def delay_travel(travel: Travel, delay_time):
         travel.start_time = travel.start_time + delay_time
         travel.on_board = travel.on_board + delay_time
-        for i in range(0,len(travel.line_time)):   
+        for i in range(0, len(travel.line_time)):
             travel.line_time[i].start = travel.line_time[i].start + delay_time
             travel.line_time[i].end = travel.line_time[i].end + delay_time
         travel.station_time.passenger_out_train_time = travel.station_time.passenger_out_train_time + delay_time
@@ -182,6 +180,7 @@ class Travel_Center:
     def save_travel(travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result):
         save, delay_time, _ = Travel_Center.check_line_station(travel, stationlist, linelist)
         if save:
+            stationlist.add_new_train_in_station(travel.station_time, result, travel.start_time, travel.start_station)                                                                           
             for line in travel.line_time:
                 save = linelist.add_new_train_in_line(line)
                 
@@ -190,7 +189,7 @@ class Travel_Center:
                     
             
             save = stationlist.add_train_leave_time(travel.train, travel.on_board, travel.start_station.id, result)
-            stationlist.add_new_train_in_station(travel.station_time,result)
+            
            
             if passengers is not None:
                 
@@ -198,7 +197,7 @@ class Travel_Center:
 
                 for passenger in passengers:
                     result.save_passenger_board(passenger.id, travel.on_board, line.train)
-                    result.save_passenger_detrain(passenger.id, travel.station_time.passenger_in_train_time)
+                    result.save_passenger_detrain(passenger.id, travel.station_time.passenger_out_train_time)
 
             
             
@@ -220,7 +219,7 @@ class Travel_Center:
         start_times, trains, station_current = stationlist.read_trains_from_station(start_station.id)
         Travel_Center._check_capacity(trains, group_size, start_times, None)
         available = False
-        if len(trains)>0:
+        if len(trains) > 0:
             available = True
         return start_times, trains, available
 
@@ -348,7 +347,7 @@ class Travel_Center:
 
     @staticmethod
     def _check_capacity(trains, group_size, start_times, start_stations):
-
+        b_capacity = False
         if len(trains) != 0:
             i = 0
             while True:
@@ -359,8 +358,10 @@ class Travel_Center:
                         start_stations.pop(i)
                 else:
                     i += 1
+                    b_capacity = True                 
                 if i >= len(trains):
                     break
+         return b_capacity                
 
     @staticmethod
     def _check_trains_in_all_station(stationlist: Stationlist):
