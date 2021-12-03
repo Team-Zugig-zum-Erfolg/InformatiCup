@@ -42,8 +42,8 @@ def main():
 
         if not available:
 
-            start_times, trains, start_stations = Travel_Center.check_train_not_in_station(group_size, stationlist)
-            if len(trains) != 0:
+            start_times, trains, start_stations, capacity_enable = Travel_Center.check_train_not_in_station(group_size, stationlist)
+            if capacity_enable:
                 #print("group_size:"+str(group_size))
                 #print("trains:"+str(trains))
                 #print("start_station:"+str(start_stations))
@@ -52,7 +52,6 @@ def main():
 
             else:
                 
-                #if no train is available, then the passengers group size is too big
                 groups.split_group(group)
 
             continue

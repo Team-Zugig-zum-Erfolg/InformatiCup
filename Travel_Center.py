@@ -226,8 +226,8 @@ class Travel_Center:
     @staticmethod
     def check_train_not_in_station(group_size, stationlist: Stationlist):  # choose train from other station
         start_times, trains, start_stations = Travel_Center._check_trains_in_all_station(stationlist)
-        Travel_Center._check_capacity(trains, group_size, start_times, start_stations)
-        return start_times, trains, start_stations
+        capacity_enable = Travel_Center._check_capacity(trains, group_size, start_times, start_stations)
+        return start_times, trains, start_stations, capacity_enable
 
     @staticmethod
     def get_neighboor_stations(station):
