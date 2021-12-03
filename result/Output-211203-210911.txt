@@ -197,6 +197,7 @@
 
 [Passenger:P38]
 14 Board T7
+19 Detrain
 
 [Passenger:P39]
 21 Board T5
@@ -209,3 +210,4 @@
 [Passenger:P41]
 7 Board T7
 13 Detrain
+
