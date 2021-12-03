@@ -35,20 +35,19 @@ class Linelist:
         time_change = None
         ends = []
 
+
         for capacity in line_capacities:
             for train_pos in range(len(capacity) - 1):
                 time_change = earliest_leave_time
-                if capacity[train_pos].end < train_in_line.start:
+                if train_pos.end < train_in_line.start:
                     earliest_leave_time = Linelist._train_in_line_pos(capacity[train_pos], capacity[train_pos + 1],
                                                                       train_in_line.start, train_in_line.end,
                                                                       earliest_leave_time)
                 if time_change != earliest_leave_time:
-                    print(earliest_leave_time)
-                    print("earlist")
                     time_change = None
                     break
                 elif train_pos == len(capacity) - 2:
-                    ends.append(capacity[train_pos + 1].end + 1)
+                    ends.append(capacity[train_pos + 1][1] + 1)
             if time_change != earliest_leave_time:
                 break
         if time_change is not None:
@@ -57,8 +56,7 @@ class Linelist:
                 if cpa_end > end:
                     cpa_end = end
             earliest_leave_time = cpa_end
-            print(earliest_leave_time)
-            print("earlist _end")
+
         return [False, earliest_leave_time]
 
     @staticmethod
@@ -96,31 +94,30 @@ class Linelist:
         trains = []
         for capacity in self.lines[line_number]:
             for train_in_line in capacity:
-                if train_in_line.train not in trains:
-                    trains.append(train_in_line.train)
+                if train_in_line[self.TRAIN] not in trains:
+                    trains.append(train_in_line[self.TRAIN])
         return trains
 
 
-'''
-linelist = Linelist([[1, 3, 4, 12.2, 1], [2, 1, 2, 4.2, 2], [3, 3, 2, 4.2, 2], [4, 4, 2, 4.2, 2]])
 
-linelist.add_new_train_in_line(TrainInLine(1, 7, 9, 1))
-linelist.add_new_train_in_line(TrainInLine(2, 1, 2, 1))
+'''linelist.initial([[1, 3, 4, 12.2, 1], [2, 1, 2, 4.2, 2], [3, 3, 2, 4.2, 2], [4, 4, 2, 4.2, 2]])
 
-linelist.add_new_train_in_line(TrainInLine(1, 7, 9, 2))
-linelist.add_new_train_in_line(TrainInLine(2, 1, 2, 2))
-linelist.add_new_train_in_line(TrainInLine(2, 1, 2, 2))
-linelist.add_new_train_in_line(TrainInLine(2, 8, 9, 2))
+linelist.add_new_train_in_line(1 , 7, 9, 1)
+linelist.add_new_train_in_line(2 , 1, 2, 1)
 
-print(linelist.add_new_train_in_line(TrainInLine(2, 10, 12, 1)))
+linelist.add_new_train_in_line(1 , 7, 9, 2)
+linelist.add_new_train_in_line(2 , 1, 2, 2)
+linelist.add_new_train_in_line(2 , 1, 2, 2)
+linelist.add_new_train_in_line(2 , 8, 9, 2)
 
-print(linelist.compare_free(TrainInLine(1, 2, 6, 2))) # Falsch delay_time
-print(linelist.compare_free(TrainInLine(1, 4, 6, 1)))
-print(linelist.compare_free(TrainInLine(1, 2, 6, 1)))
-print(linelist.compare_free(TrainInLine(1, 3, 6, 2)))
-linelist.add_new_train_in_line(TrainInLine(1 , 2, 6, 1))
+print(linelist.add_new_train_in_line(2, 10, 12, 1))
+
+print(linelist.compare_free(1, 2, 6, 2)) # Falsch delay_time
+print(linelist.compare_free(1, 4, 6, 1))
+print(linelist.compare_free(1, 2, 6, 1))
+print(linelist.compare_free(1, 3, 6, 2))
+linelist.add_new_train_in_line(1 , 2, 6, 1)
 #linelist.add_new_train_in_line(1 , 13, 15, 1)
 print(linelist.read_trains_from_line(1))
 print(linelist.lines[1])
-print(linelist.lines[2])
-'''
+print(linelist.lines[2])'''
