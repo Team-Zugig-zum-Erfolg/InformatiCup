@@ -207,7 +207,7 @@ class Result:
         ''' save input format in local file '''
         path = self.path_generator()
         state = False
-        file = open(path, 'w')  
+        file = open(path, 'w+')
         file.write(self.to_output_text())  
         file.close()
         state = True

@@ -68,7 +68,8 @@ def main():
             while not save:
                 availables = []
                 delay_times = []
-                full_end_station = [] #if full_end_station[i]=True, then for travels[i] the end_station is blocked (there are only trains with leave_time=None before the train will arrive)
+                full_end_station = [] #if full_end_station[i]=True, then for travels[i] the end_station is blocked
+                # (there are only trains with leave_time=None before the train will arrive)
                 for travel in travels:
                     available, delay_time, full = Travel_Center.check_line_station(travel, stationlist, linelist)
                     availables.append(available)
@@ -79,15 +80,19 @@ def main():
                 i = 0
                 available_run = 0
                 travel_available = []
-
                 for available in availables:
                     if available:
                         travel_available.append(travels[i])
                         available_run = 1
+                    print("delay_time")
+                    print(delay_times[i])
+                    print(available)
+                    print("first")
                     i += 1
 
                 if available_run:
-
+                    print(available_run)
+                    print("available")
                     short_time = travel_available[0].station_time.passenger_out_train_time
                     short_travel = travel_available[0]
                     for travel in travel_available:
@@ -95,25 +100,26 @@ def main():
                             short_time = travel.station_time.passenger_out_train_time
                             short_travel = travel
 
-                    save, delay_time = Travel_Center.save_travel(short_travel, groups, group, stationlist, linelist, result)
+                    save, delay_time = Travel_Center.save_travel(short_travel, groups, group, stationlist, linelist,
+                                                                 result)
 
                     #stationlist.stations[2][0].append(TrainInStation(6,7,Train(3,Station(1,2),2,3),None,2))#!!!!!!only for testing!!!!!!!! (simulate a full station)
 
                     #if the arrived train then blocks other trains, because he stops at the end_station, move the train to another station (clear the end_station)
-                    if Travel_Center.train_is_blocking_other_train_in_station(end_station,short_travel.train,stationlist):
+                    #if Travel_Center.train_is_blocking_other_train_in_station(end_station,short_travel.train,stationlist):
                         
-                        cleared = Travel_Center.clear_station_with_specific_train(end_station,short_travel.train,short_travel.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
- 
-                        if cleared == False:
-                            raise ValueError("Clearing station failed: No free station for clearing available!")
+                    #    Travel_Center.clear_station_with_specific_train(end_station,short_travel.train,
+                    #    short_travel.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
 
                 elif False in full_end_station: #end_station is for at least one travel free (so not blocked)
 
-                    #print(stationlist.stations)
-                    #print(travel)
+                    print(stationlist.stations)
+
                     i = 0
                     for travel in travels:
                         Travel_Center.delay_travel(travel, delay_times[i])
+                        print(delay_times[i])
+                        print(travel)
                         i += 1
                         
                 else: #end_station is blocked for all possible travels, so the end_station has to be cleared
@@ -139,6 +145,7 @@ def main():
     print("Stations:"+str(stationlist.stations))
     print("Lines:"+str(linelist.lines))
     print(result.to_output_text())
+    result.to_file()
     return
 
 
