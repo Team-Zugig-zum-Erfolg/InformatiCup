@@ -2,7 +2,6 @@ from typing import List
 from classes.Passenger import Passenger
 from classes.Train import Train
 from classes.Station import Station
-from classes.Line import Line
 from Input import Input
 import time
 
@@ -22,7 +21,7 @@ class Result:
     id_trains:set = set()
     id_passengers:set = set()
 
- 
+
     
     def save_train_depart(self, id_train, time, id_line):
         ''' find the train in trains[], add this action in its history'''
@@ -207,7 +206,7 @@ class Result:
         ''' save input format in local file '''
         path = self.path_generator()
         state = False
-        file = open(path, 'w+')
+        file = open(path, 'w')  
         file.write(self.to_output_text())  
         file.close()
         state = True
@@ -215,10 +214,11 @@ class Result:
 
     def path_generator(self) -> str:
         ''' generate a path for local file '''
-        path = "./result/Output"
-        path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))
-        path = path + ".txt"
-        return path
+        # path = "./result/Output"
+        # path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))
+        # path = path + ".txt"
+        filename = "Output-" + time.strftime("%y%m%d-%H%M%S",time.localtime(time.time())) + ".txt"
+        return filename
 
     def compare_with(path:str):
         pass
