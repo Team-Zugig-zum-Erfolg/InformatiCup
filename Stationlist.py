@@ -203,6 +203,8 @@ class Stationlist:
             else:
                 train_not_in_station_start_time = 0
         for train_not_in_station in TRAIN_NOT_IN_STATION:
+            #check if the station is at least to the time train_not_in_station_start_time for one train free
+            #only then return the train
             train_not_in_station.passenger_out_train_time = train_not_in_station_start_time
             train_not_in_station.passenger_in_train_time = train_not_in_station_start_time + 1
             trains.append(train_not_in_station.train)
