@@ -135,7 +135,7 @@ def main():
                             smallest_arrive_time = travels[i].station_time.passenger_out_train_time + delay_times[i]
                         i += 1
                   
-                    travel_center.clear_station(end_station,smallest_arrive_time-2, linelist, stationlist, result,
+                    travel_center.clear_station(end_station,start_station,smallest_arrive_time-2, linelist, stationlist, result,
                                                 travel_center)
                     
                     
@@ -145,8 +145,8 @@ def main():
             groups.split_group(group)
             pass
         
-    # print("Stations:"+str(stationlist.stations))
-    # print("Lines:"+str(linelist.lines))
+    print("Stations:"+str(stationlist.stations))
+    print("Lines:"+str(linelist.lines))
     print(result.to_output_text())
     result.to_file()
     return

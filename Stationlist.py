@@ -44,6 +44,14 @@ class Stationlist:
                 TRAIN_NOT_IN_STATION.sort(key=lambda x: x.train.capacity, reverse=False)
         print(TRAIN_NOT_IN_STATION)
 
+    @staticmethod
+    def _capacity_is_full(capacity, train_in_station: TrainInStation):
+
+        for _train_in_station in capacity:
+            if _train_in_station.leave_time == None and _train_in_station.passenger_out_train_time <= train_in_station.passenger_out_train_time + 1:
+                return True
+        return False
+    
     def compare_free_place(self, train_in_station: TrainInStation):
         # train, in_station_time, station_number
         earliest_leave_time = -1
@@ -53,6 +61,8 @@ class Stationlist:
         for capacity in station_capacities:
             if len(capacity) == 0:
                 return [True, -1]
+            if Stationlist._capacity_is_full(capacity,train_in_station):
+                continue
             last_train_in_station = len(capacity) - 1
             if capacity[0].passenger_out_train_time > train_in_station.passenger_in_train_time:
                 print("erst")
@@ -110,12 +120,15 @@ class Stationlist:
             earliest_leave_time = leave_time + 1
         return earliest_leave_time
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result, start_time, start_station):
+    def add_new_train_in_station(self, train_in_station: TrainInStation, result, start_time, start_station, ignore_full_station=False):
         global TRAIN_NOT_IN_STATION
         enable, delay_time = self.compare_free_place(train_in_station)
         print("compare add " + str(enable))
         if not enable:
-            return enable
+            if delay_time != -1:
+                return enable
+            elif ignore_full_station == False:
+                return enable
         if result is not None:
             i = 0
             for _train_in_station in TRAIN_NOT_IN_STATION:
@@ -130,6 +143,10 @@ class Stationlist:
         capacity_pos = 0
         finish = 0
         for capacity in self.stations[train_in_station.station_id]:
+            if Stationlist._capacity_is_full(capacity,train_in_station) and ignore_full_station == True:
+                capacity.append(train_in_station)
+                capacity.sort(key=lambda x: x.passenger_out_train_time)
+                return True
             if len(capacity) == 0 or capacity[0].passenger_out_train_time > train_in_station.passenger_in_train_time:
                 capacity.append(train_in_station)
                 capacity.sort(key=lambda x: x.passenger_out_train_time)
