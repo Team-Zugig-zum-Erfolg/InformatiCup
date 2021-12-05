@@ -2,9 +2,6 @@ from classes import Station
 from classes.TrainInStation import TrainInStation
 import sys
 
-from Linelist import Linelist
-from Input import Input
-from Groups import Groups
 from Result import Result
 
 TRAIN_NOT_IN_STATION = []
@@ -20,7 +17,7 @@ S_CAPACITY = 1
 class Stationlist:
     stations = []  # the stations with capacities
 
-    def __init__(self, stationlist, trainlist):
+    def __init__(self, stationlist, trainlist, result: Result):
         global TRAIN_NOT_IN_STATION
         station_id = 1
         self.stations.append([])
@@ -34,15 +31,29 @@ class Stationlist:
             if train.start_station.id != -1:
                 available, earliest_leave_time = self.compare_free_place(train_in_station)
                 if available:
-                    self.add_new_train_in_station(train_in_station, None, 0, 0)
+                    self.add_new_train_in_station(train_in_station)
                 else:
                     train_in_station.passenger_out_train_time = earliest_leave_time
                     train_in_station.passenger_in_train_time = earliest_leave_time + 1
-                    self.add_new_train_in_station(train_in_station, train.start_station.id, 0, 0)
+                    self.add_new_train_in_station(train_in_station)
             else:
                 TRAIN_NOT_IN_STATION.append(train_in_station)
                 TRAIN_NOT_IN_STATION.sort(key=lambda x: x.train.capacity, reverse=False)
         print(TRAIN_NOT_IN_STATION)
+        if len(TRAIN_NOT_IN_STATION):
+            for train_in_station in TRAIN_NOT_IN_STATION:
+                for i in range(1, len(self.stations)):
+                    train_in_station.station_id = i
+                    enable, _ = self.compare_free_place(train_in_station)
+                    if enable:
+                        save = self.add_new_train_in_station(train_in_station)
+                        if save:
+                            result.save_train_start(train_in_station.train.id,
+                                                    train_in_station.passenger_out_train_time,
+                                                    train_in_station.station_id)
+                            break
+        print(self.stations)
+        TRAIN_NOT_IN_STATION = []
 
     @staticmethod
     def _capacity_is_full(capacity, train_in_station: TrainInStation):
@@ -120,8 +131,7 @@ class Stationlist:
             earliest_leave_time = leave_time + 1
         return earliest_leave_time
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result, start_time, start_station, ignore_full_station=False):
-        global TRAIN_NOT_IN_STATION
+    def add_new_train_in_station(self, train_in_station: TrainInStation, ignore_full_station=False):
         enable, delay_time = self.compare_free_place(train_in_station)
         print("compare add " + str(enable))
         if not enable:
@@ -129,17 +139,6 @@ class Stationlist:
                 return enable
             elif ignore_full_station == False:
                 return enable
-        if result is not None:
-            i = 0
-            for _train_in_station in TRAIN_NOT_IN_STATION:
-                if _train_in_station.train.id == train_in_station.train.id:
-                    result.save_train_start(train_in_station.train.id, start_time,
-                                            start_station.id)
-                    TRAIN_NOT_IN_STATION.pop(i)
-                    self.add_train_leave_time(train_in_station.train, start_time + 1, train_in_station.station_id,
-                                              result)
-                    break
-                i += 1
         capacity_pos = 0
         finish = 0
         for capacity in self.stations[train_in_station.station_id]:
@@ -182,7 +181,7 @@ class Stationlist:
                 t = t + 1
             capacity_number = capacity_number + 1
 
-        self.add_new_train_in_station(TrainInStation(0, leave_time, train, leave_time, station_number), result, 0, 0)
+        self.add_new_train_in_station(TrainInStation(0, leave_time, train, leave_time, station_number))
         return True
 
     def read_trains_from_station(self, station_number):
@@ -248,25 +247,25 @@ stationlist = Stationlist(station_input_list, train_input_list)
 stationlist.print_out()
 print(train_input_list)
 print(stationlist.stations)
-enable = stationlist.add_new_train_in_station(TrainInStation(2, 3, trains[1], 5, 2), result, 0, 0)
-enable = stationlist.add_new_train_in_station(TrainInStation(2, 3, trains[6], None, 2), result, 0, 0)
+enable = stationlist.add_new_train_in_station(TrainInStation(2, 3, trains[1], 5, 2))
+enable = stationlist.add_new_train_in_station(TrainInStation(2, 3, trains[6], None, 2))
 #enable, delay = stationlist.compare_free_place(TrainInStation(3, 4, trains[1], None, 1))
-enable = stationlist.add_new_train_in_station(TrainInStation(3, 4, trains[3], 6, 2), result, 0, 0)
-enable = stationlist.add_new_train_in_station(TrainInStation(4, 5, trains[3], None, 2), result, 0, 0)
+enable = stationlist.add_new_train_in_station(TrainInStation(3, 4, trains[3], 6, 2))
+enable = stationlist.add_new_train_in_station(TrainInStation(4, 5, trains[3], None, 2))
 #enable, delay = stationlist.compare_free_place(TrainInStation(7, 8, trains[5], None, 2))
-enable = stationlist.add_new_train_in_station(TrainInStation(6, 7, trains[3], None, 2), result, 0, 0)
-enable = stationlist.add_new_train_in_station(TrainInStation(6, 7, trains[3], None, 2), result, 0, 0)
-#enable = stationlist.add_new_train_in_station(TrainInStation(delay, delay + 1, trains[3], None, 1), result, 0, 0)
+enable = stationlist.add_new_train_in_station(TrainInStation(6, 7, trains[3], None, 2))
+enable = stationlist.add_new_train_in_station(TrainInStation(6, 7, trains[3], None, 2))
+#enable = stationlist.add_new_train_in_station(TrainInStation(delay, delay + 1, trains[3], None, 1))
 enable, delay = stationlist.compare_free_place(TrainInStation(3, 4, trains[5], None, 2))
-enable = stationlist.add_new_train_in_station(TrainInStation(delay, delay + 1, trains[3], None, 1), result, 0, 0)
+enable = stationlist.add_new_train_in_station(TrainInStation(delay, delay + 1, trains[3], None, 1))
 
 enable, delay = stationlist.compare_free_place(TrainInStation(0, 1, trains[4], None, 2))
 
 
-enable = stationlist.add_new_train_in_station(TrainInStation(0, 1, trains[3], None, 2), result, 0, 0)
+enable = stationlist.add_new_train_in_station(TrainInStation(0, 1, trains[3], None, 2))
 print(enable)
 enable, delay = stationlist.compare_free_place(TrainInStation(1, 2, trains[5], None, 2))
 print(enable)
 print(delay)
-enable = stationlist.add_new_train_in_station(TrainInStation(delay, delay + 1, trains[8], None, 2), result, 0, 0)
+enable = stationlist.add_new_train_in_station(TrainInStation(delay, delay + 1, trains[8], None, 2))
 stationlist.print_out()'''

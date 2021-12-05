@@ -1,5 +1,4 @@
 from classes.TrainInLine import TrainInLine
-import Result
 
 class Linelist:
     lines = []  # the lines with capacities
