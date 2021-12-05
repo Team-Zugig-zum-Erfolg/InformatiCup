@@ -10,11 +10,22 @@ from Travel_Center import Travel_Center
 from classes import Train
 from classes import Station
 
+import argparse
+
 
 def main():
     # init
+    parser = argparse.ArgumentParser()
+    parser.add_argument('check',type=str,default="",nargs='?',help="test")
+    args = parser.parse_args()
+    
     input_ = Input()
-    stations, lines, trains, passengers = input_.from_file("test/input.txt")
+    
+    if args.check == "":
+        stations, lines, trains, passengers = input_.from_file("test/input.txt")
+    else:
+        stations, lines, trains, passengers = input_.from_file("test/"+ args.check +".txt")
+         
 
     station_input_list = []
     for s in stations:
