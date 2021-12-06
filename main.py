@@ -67,16 +67,17 @@ def main():
 
         if len(travels):
             while not save:
+                full_station_list = []
                 availables = []
                 delay_times = []
                 full_end_station = [] #if full_end_station[i]=True, then for travels[i] the end_station is blocked
                 # (there are only trains with leave_time=None before the train will arrive)
                 for travel in travels:
-                    available, delay_time, full = Travel_Center.check_line_station(travel, stationlist, linelist)
+                    available, delay_time, full, full_stations = Travel_Center.check_line_station(travel, stationlist, linelist,result,travel_center)
                     availables.append(available)
                     delay_times.append(delay_time)
                     full_end_station.append(full) #full==1: the end_station is blocked by stopped trains with leave_time=None
-                    
+                    full_station_list.append(full_stations)
 
                 i = 0
                 available_run = 0
@@ -101,18 +102,16 @@ def main():
                             short_time = travel.station_time.passenger_out_train_time
                             short_travel = travel
 
-                    save, delay_time = Travel_Center.save_travel(short_travel, groups, group, stationlist, linelist,
-                                                                 result)
+                    save, delay_time = Travel_Center.save_travel(short_travel, groups, group, stationlist, linelist, result,travel_center)
 
                     # stationlist.stations[2][0].append(TrainInStation(6,7,Train(3,Station(1,2),2,3),None,2))#!!!!!!
                     # only for testing!!!!!!!! (simulate a full station)
 
                     # if the arrived train then blocks other trains,
                     # because he stops at the end_station, move the train to another station (clear the end_station)
-                    # if Travel_Center.train_is_blocking_other_train_in_station(end_station,short_travel.train,stationlist):
+                    if Travel_Center.train_is_blocking_other_train_in_station(end_station,short_travel.train,stationlist):
 
-                    #    Travel_Center.clear_station_with_specific_train(end_station,short_travel.train,
-                    #    short_travel.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
+                        Travel_Center.clear_station_with_specific_train(end_station,short_travel.train,short_travel.station_time.passenger_out_train_time,linelist,stationlist,result,travel_center)
 
                 elif False in full_end_station: # end_station is for at least one travel free (so not blocked)
 
@@ -124,9 +123,13 @@ def main():
                         print(delay_times[i])
                         print(travel)
                         i += 1
-                        
+                    i=0
+                    for travel in travels:
+                        for full_station in full_station_list[i]:
+                            Travel_Center.clear_station(full_station[0],travel.start_station,full_station[1],linelist,stationlist,result,travel_center,travel.station_times)
+                        i=i+1
                 else: # end_station is blocked for all possible travels, so the end_station has to be cleared
-
+                    
                     smallest_arrive_time = travels[0].station_time.passenger_out_train_time + delay_times[0]
                     i=0
                     # calculate the smallest time, when to move a stopped train out of the blocked station
@@ -134,9 +137,8 @@ def main():
                         if (travels[i].station_time.passenger_out_train_time + delay_times[i]) < smallest_arrive_time:
                             smallest_arrive_time = travels[i].station_time.passenger_out_train_time + delay_times[i]
                         i += 1
-                  
-                    travel_center.clear_station(end_station,start_station,smallest_arrive_time-2, linelist, stationlist, result,
-                                                travel_center)
+
+                    Travel_Center.clear_station(end_station,start_station,smallest_arrive_time-2, linelist, stationlist, result, travel_center,travel.station_times)
                     
                     
         else:

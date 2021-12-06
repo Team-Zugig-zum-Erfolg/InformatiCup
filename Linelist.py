@@ -40,6 +40,8 @@ class Linelist:
                     earliest_leave_time = Linelist._train_in_line_pos(capacity[train_pos], capacity[train_pos + 1],
                                                                       train_in_line.start, train_in_line.end,
                                                                       earliest_leave_time)
+                    if earliest_leave_time < train_in_line.start:
+                        earliest_leave_time = capacity[train_pos + 1].end + 1
                     print("early")
                 if time_change != earliest_leave_time:
                     time_change = None
@@ -58,8 +60,8 @@ class Linelist:
 
     @staticmethod
     def _train_in_line_is_full(train_in_line, start, end):
-        return ((train_in_line.end >= start >= train_in_line.start) or
-                (train_in_line.start <= end <= train_in_line.end))
+        return ((train_in_line.end > start >= train_in_line.start) or
+                (train_in_line.start < end <= train_in_line.end))
 
     @staticmethod
     def _train_in_line_pos(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start, end,
