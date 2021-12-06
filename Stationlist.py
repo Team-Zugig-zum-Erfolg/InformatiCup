@@ -65,7 +65,6 @@ class Stationlist:
                 continue
             last_train_in_station = len(capacity) - 1
             if capacity[0].passenger_out_train_time > train_in_station.passenger_in_train_time and train_in_station.leave_time != None:
-                print("erst")
                 return [True, -1]
             for i in range(last_train_in_station):
                 # print(train_in_station.passenger_out_train_time)
@@ -82,12 +81,10 @@ class Stationlist:
                         earliest_leave_time = train_in_station.passenger_out_train_time                                             
                     if time_change != earliest_leave_time:
                         time_change = None
-                        print("rime none")
                     break
 
             leave_time = Stationlist.train_leave_time(capacity[last_train_in_station])
             ends.append(leave_time + 1)
-            print("ends append")
             if leave_time < train_in_station.passenger_out_train_time:
                 return [True, -1]
             elif last_train_in_station == 0:
@@ -95,15 +92,11 @@ class Stationlist:
             elif earliest_leave_time == -1:
                 earliest_leave_time = leave_time
         if time_change is not None:
-            print(ends)
-            print("ends")
             cpa_end = ends[0]
             for end in ends:
                 if cpa_end > end:
                     cpa_end = end
             earliest_leave_time = cpa_end
-            print(earliest_leave_time)
-        print("compare delay time" + str(earliest_leave_time))
         return [False, earliest_leave_time]
 
     @staticmethod
@@ -130,7 +123,6 @@ class Stationlist:
     def add_new_train_in_station(self, train_in_station: TrainInStation, result, ignore_full_station=False):
         global TRAIN_NOT_IN_STATION
         enable, delay_time = self.compare_free_place(train_in_station)
-        print("compare add " + str(enable))
         if not enable:
             if delay_time != -1:
                 return enable
@@ -210,12 +202,11 @@ class Stationlist:
                         if train_not_in_station_start_time > train_in_station.passenger_in_train_time + 1:
                             train_not_in_station_start_time = train_in_station.passenger_in_train_time + 1
             else:
-                train_not_in_station_start_time = 0
                 one_empty_capacity = 1
         for train_not_in_station in TRAIN_NOT_IN_STATION:
             #check if the station is at least to the time train_not_in_station_start_time for at least one train free
             #only then return the train
-            if one_empty_capacity == 1 and False:
+            if one_empty_capacity == 1:
                 train_not_in_station.passenger_out_train_time = 0
                 train_not_in_station.passenger_in_train_time = 1
                 trains.append(train_not_in_station.train)

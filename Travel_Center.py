@@ -393,9 +393,6 @@ class Travel_Center:
         # a station is only blocked, if all trains in the station have no leave time
         start_times, trains, station = stationlist.read_trains_from_station(end_station.id)
         
-        
-        
-
         travels = []
         # print("next_station:"+str(next_station))
         # print("train_in_next_station:"+str(stationlist.stations[end_station.id]))
@@ -423,18 +420,12 @@ class Travel_Center:
             available_run = 0
             travel_available = []
             for available in availables:
-                    if available:
+                if available:
                         travel_available.append(travels[i])
                         available_run = 1
-                    print("delay_time")
-                    print(delay_times[i])
-                    print(available)
-                    print("first")
-                    i += 1
+                i += 1
 
             if available_run:
-                    print(available_run)
-                
                     short_time = travel_available[0].station_time.passenger_out_train_time
                     short_travel = travel_available[0]
                     for travel in travel_available:
@@ -442,7 +433,6 @@ class Travel_Center:
                             short_time = travel.station_time.passenger_out_train_time
                             short_travel = travel
             
-          
                     Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result,travel_center)
                     available = 1
             elif False in full_end_station: # end_station is for at least one travel free (so not blocked)
@@ -537,7 +527,6 @@ class Travel_Center:
                 full_end_station.append(full)
 
             if True not in availables and (False in full_end_station):
-                # print("delay")
                 i = 0
                 for travel in travels:
                     Travel_Center.delay_travel(travel, delay_times[i])
@@ -546,9 +535,6 @@ class Travel_Center:
                 smallest_arrive_time = travels[0].station_time.passenger_out_train_time + delay_times[0]
                 shortest_travel = travels[0]
                 i = 0
-                # print(end_station)
-                # print(stationlist.stations[end_station.id][0])
-                # print(availables)
                 # calculate the smallest time, when to move a stopped train out of the blocked station
                 for travel in travels:
                     if (travels[i].station_time.passenger_out_train_time + delay_times[i]) < smallest_arrive_time:
@@ -577,7 +563,6 @@ class Travel_Center:
         # print("travel:"+str(travel_choose))
         save, _ = Travel_Center.save_travel(travel_choose, None, None, stationlist, linelist, result,travel_center)
         if Travel_Center.train_is_blocking_other_train_in_station(end_station, travel_choose.train, stationlist):
-            # print("blocking")
             Travel_Center.clear_station_with_specific_train(end_station, travel_choose.train,
                                                             travel_choose.station_time.passenger_out_train_time,
                                                             linelist, stationlist, result, travel_center)
