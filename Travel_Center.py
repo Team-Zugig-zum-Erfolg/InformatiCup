@@ -232,14 +232,14 @@ class Travel_Center:
                 else:
                     next_station = stations[1]
                 if next_station.id != travel.end_station.id:
-                    stationlist.add_new_train_in_station(TrainInStation(line.end,line.end,TRAIN_INPUT_LIST[line.train-1],line.end,next_station.id),result,0,None)
+                    stationlist.add_new_train_in_station(TrainInStation(line.end,line.end,TRAIN_INPUT_LIST[line.train-1],line.end,next_station.id),result)
 
                 if save:
                     result.save_train_depart(line.train, line.start, line.line_id)
 
             
 
-            save = stationlist.add_new_train_in_station(travel.station_time, result, travel.start_time,travel.start_station,ignore_full_station)
+            save = stationlist.add_new_train_in_station(travel.station_time, result,ignore_full_station)
 
             if passengers is not None:
 
