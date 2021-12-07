@@ -181,11 +181,12 @@ class Stationlist:
                     return True
                 t = t + 1
             capacity_number = capacity_number + 1
-
-        self.add_new_train_in_station(TrainInStation(0, 1, train, leave_time, station_number), result)
+        for train_not_in_station in TRAIN_NOT_IN_STATION:
+            if train.id == train_not_in_station.train.id:
+                self.add_new_train_in_station(TrainInStation(0, 1, train, leave_time, station_number), result, True)
         return True
 
-    def read_trains_from_station(self, station_number):
+    def read_trains_from_station(self, station_number, also_not_in_station_trains=True):
         trains = []
         start_times = []
         one_empty_capacity = 0
@@ -203,14 +204,17 @@ class Stationlist:
                             train_not_in_station_start_time = train_in_station.passenger_in_train_time + 1
             else:
                 one_empty_capacity = 1
-        for train_not_in_station in TRAIN_NOT_IN_STATION:
-            #check if the station is at least to the time train_not_in_station_start_time for at least one train free
-            #only then return the train
-            if one_empty_capacity == 1:
-                train_not_in_station.passenger_out_train_time = 0
-                train_not_in_station.passenger_in_train_time = 1
-                trains.append(train_not_in_station.train)
-                start_times.append(0)
+
+        if also_not_in_station_trains:
+            for train_not_in_station in TRAIN_NOT_IN_STATION:
+                #check if the station is at least to the time train_not_in_station_start_time for at least one train free
+                #only then return the train
+                if one_empty_capacity == 1:
+                    train_not_in_station.passenger_out_train_time = 0
+                    train_not_in_station.passenger_in_train_time = 1
+                    trains.append(train_not_in_station.train)
+                    start_times.append(0)
+
         return start_times, trains, Station(station_number, len(self.stations[station_number]))
 
     @staticmethod

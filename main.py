@@ -92,7 +92,7 @@ def main():
                             short_time = travel.station_time.passenger_out_train_time
                             short_travel = travel
 
-                    save, _ = Travel_Center.save_travel(short_travel, groups, group, stationlist, linelist, result,travel_center)
+                    save, _ = Travel_Center.save_travel(short_travel, groups, group, stationlist, linelist, result, travel_center)
 
                 elif False in full_end_station: # end_station is for at least one travel free (so not blocked)
 
@@ -102,10 +102,16 @@ def main():
                         i += 1
 
                     #free all FULL stations on the route of every travel, so the train of the travel can pass them
+                    cleared_stations_ids = []
                     i=0
                     for travel in travels:
                         for full_station in full_station_list[i]:
-                            Travel_Center.clear_station(full_station[0],travel.start_station,full_station[1],linelist,stationlist,result,travel_center,travel.station_times)
+                            station_to_clear = full_station[0]
+                            arrive_time = full_station[1]
+                            if station_to_clear.id in cleared_stations_ids:
+                                continue
+                            Travel_Center.clear_station(station_to_clear,travel.start_station,arrive_time,linelist,stationlist,result,travel_center,travel.station_times)
+                            cleared_stations_ids.append(station_to_clear.id)  
                         i += 1
 
                 else: # end_station is blocked for all possible travels, so the end_station has to be cleared

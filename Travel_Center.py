@@ -239,7 +239,7 @@ class Travel_Center:
 
             
 
-            save = stationlist.add_new_train_in_station(travel.station_time, result,ignore_full_station)
+            save = stationlist.add_new_train_in_station(travel.station_time, result, ignore_full_station)
 
             if passengers is not None:
 
@@ -391,7 +391,7 @@ class Travel_Center:
 
         # get the blocking trains in the station (blocking trains = trains in the station with no leave time)
         # a station is only blocked, if all trains in the station have no leave time
-        start_times, trains, station = stationlist.read_trains_from_station(end_station.id)
+        start_times, trains, station = stationlist.read_trains_from_station(end_station.id,False)
         
         travels = []
         # print("next_station:"+str(next_station))
@@ -435,11 +435,24 @@ class Travel_Center:
             
                     Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result,travel_center)
                     available = 1
-            elif False in full_end_station: # end_station is for at least one travel free (so not blocked)
+            elif False in full_end_station or 0 not in delay_times: # end_station is for at least one travel free (so not blocked)
                     i = 0
                     for travel in travels:
                         Travel_Center.delay_travel(travel, delay_times[i])
                         i += 1
+            elif next_station.id == origin_station.id:
+                    short_time = sys.maxsize
+                    short_travel = None
+                    i=0
+                    for travel in travels:
+                        if short_time > travel.station_time.passenger_out_train_time and delay_times[i] == 0:
+                            short_time = travel.station_time.passenger_out_train_time
+                            short_travel = travel
+                        i = i + 1
+
+                    Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result,travel_center,True)
+                    available = 1
+
             else:
                 raise ValueError("clear station error: no station available")  # all neighboor stations are blocked (should actually not happen, because they are checked above)
 
