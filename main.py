@@ -101,18 +101,26 @@ def main():
                         Travel_Center.delay_travel(travel, delay_times[i])
                         i += 1
 
+
                     #free all FULL stations on the route of every travel, so the train of the travel can pass them
                     cleared_stations_ids = []
+                    travel_short = None
                     i=0
                     for travel in travels:
+                        if delay_times[i] == 0:
+                            travel_short = travel
+                            break
+                        i = i + 1
+
+                    if travel_short != None:
                         for full_station in full_station_list[i]:
                             station_to_clear = full_station[0]
                             arrive_time = full_station[1]
                             if station_to_clear.id in cleared_stations_ids:
                                 continue
-                            Travel_Center.clear_station(station_to_clear,travel.start_station,arrive_time,linelist,stationlist,result,travel_center,travel.station_times)
+                            Travel_Center.clear_station(station_to_clear,Travel_Center.get_prev_station_in_travel(travel_short,station_to_clear),arrive_time-2,linelist,stationlist,result,travel_center,travel_short.station_times)
                             cleared_stations_ids.append(station_to_clear.id)  
-                        i += 1
+                       
 
                 else: # end_station is blocked for all possible travels, so the end_station has to be cleared
                     

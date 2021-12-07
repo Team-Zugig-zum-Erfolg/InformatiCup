@@ -234,6 +234,8 @@ class Travel_Center:
                 if next_station.id != travel.end_station.id:
                     stationlist.add_new_train_in_station(TrainInStation(line.end,line.end,TRAIN_INPUT_LIST[line.train-1],line.end,next_station.id),result)
 
+                prev_station = next_station
+
                 if save:
                     result.save_train_depart(line.train, line.start, line.line_id)
 
@@ -358,6 +360,15 @@ class Travel_Center:
         return False
 
     @staticmethod
+    def get_prev_station_in_travel(travel, station):
+        neighboor_stations = Travel_Center.get_neighboor_stations(station)
+        for station_time in travel.station_times:
+            for neighboor_station in neighboor_stations:
+                if station_time.station_id == neighboor_station.id:
+                    return neighboor_station
+        return None
+
+    @staticmethod
     def station_has_more_than_one_free_capcacity(station, stationlist):
         capacities = stationlist.stations[station.id]
         free = 0
@@ -393,6 +404,12 @@ class Travel_Center:
         # a station is only blocked, if all trains in the station have no leave time
         start_times, trains, station = stationlist.read_trains_from_station(end_station.id,False)
         
+        i=0
+        for start_time in start_times:
+            if start_time < arrive_time:
+                start_times[i] = arrive_time
+            i = i + 1
+
         travels = []
         # print("next_station:"+str(next_station))
         # print("train_in_next_station:"+str(stationlist.stations[end_station.id]))

@@ -61,13 +61,12 @@ class Stationlist:
         for capacity in station_capacities:
             if len(capacity) == 0:
                 return [True, -1]
-            if Stationlist._capacity_is_full(capacity):
+            if Stationlist._capacity_is_full(capacity) and train_in_station.leave_time == None:
                 continue
             last_train_in_station = len(capacity) - 1
             if capacity[0].passenger_out_train_time > train_in_station.passenger_in_train_time and train_in_station.leave_time != None:
                 return [True, -1]
             for i in range(last_train_in_station):
-                # print(train_in_station.passenger_out_train_time)
                 if train_in_station.leave_time == None:
                     continue
                 time_change = earliest_leave_time
@@ -82,7 +81,11 @@ class Stationlist:
                     if time_change != earliest_leave_time:
                         time_change = None
                     break
-
+            if capacity[last_train_in_station].leave_time == None and train_in_station.leave_time != None:
+                if train_in_station.passenger_out_train_time >= capacity[last_train_in_station].passenger_out_train_time:
+                    return [False, -1]
+                elif train_in_station.leave_time < capacity[last_train_in_station].passenger_out_train_time:
+                    return [True, -1]
             leave_time = Stationlist.train_leave_time(capacity[last_train_in_station])
             ends.append(leave_time + 1)
             if leave_time < train_in_station.passenger_out_train_time:
@@ -144,7 +147,7 @@ class Stationlist:
                 capacity.append(train_in_station)
                 capacity.sort(key=lambda x: x.passenger_out_train_time)
                 return True
-            elif Stationlist._capacity_is_full(capacity):
+            elif Stationlist._capacity_is_full(capacity) and train_in_station.leave_time == None:
                 capacity_pos += 1
                 continue
             if len(capacity) == 0 or capacity[0].passenger_out_train_time > train_in_station.passenger_in_train_time:
