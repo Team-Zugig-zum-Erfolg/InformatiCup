@@ -1,2 +1,3 @@
 test_1  Testing to put multiple Passengers in one train
 test_2  Testing train spawning
+test_3 Mehrere Züge durch eine Station
