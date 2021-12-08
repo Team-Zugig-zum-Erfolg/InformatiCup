@@ -122,11 +122,19 @@ class Travel_Center:
                 next_station = stations[0]
             else:
                 next_station = stations[1]
-            prev_station = next_station
             
-            station_times.append(TrainInStation(add_time + self.train_line_time_list[train.id][lines[li]],add_time + self.train_line_time_list[train.id][lines[li]],train.id,add_time + self.train_line_time_list[train.id][lines[li]],next_station.id))                          
+            current_leave_time = None
+            current_passenger_in_time = add_time + self.train_line_time_list[train.id][lines[li]] + 1
+
+            if next_station.id != end_station.id:
+                current_leave_time = add_time + self.train_line_time_list[train.id][lines[li]]
+                current_passenger_in_time = add_time + self.train_line_time_list[train.id][lines[li]]
+
+            station_times.append(TrainInStation(add_time + self.train_line_time_list[train.id][lines[li]],current_passenger_in_time,train.id,current_leave_time,next_station.id))                          
             
             add_time += self.train_line_time_list[train.id][lines[li]]
+
+            prev_station = next_station
         
         station_time = TrainInStation(add_time, add_time + 1, train, None, end_station.id)
 
@@ -158,14 +166,22 @@ class Travel_Center:
                 next_station = stations[0]
             else:
                 next_station = stations[1]
+           
+            current_leave_time = None
+            current_passenger_in_time = travel_in_line.end + 1
+
             if next_station.id != travel.end_station.id:
-                s_available, s_time_change = stationlist.compare_free_place(TrainInStation(travel_in_line.end,travel_in_line.end,travel_in_line.train,travel_in_line.end,next_station.id))
-                if s_available == False and s_time_change == -1: #full
-                    full_stations.append([next_station,travel_in_line.end]) 
-                line_availables_list.append(s_available)
-                line_time_changes.append(s_time_change)
+                current_leave_time = travel_in_line.end
+                current_passenger_in_time = travel_in_line.end
+
+            s_available, s_time_change = stationlist.compare_free_place(TrainInStation(travel_in_line.end,current_passenger_in_time,travel_in_line.train,current_leave_time,next_station.id))
+            if s_available == False and s_time_change == -1: #full
+                full_stations.append([next_station,travel_in_line.end]) 
+            line_availables_list.append(s_available)
+            line_time_changes.append(s_time_change)
 
             prev_station = next_station
+
         station_available, station_time_change = stationlist.compare_free_place(travel.station_time)
 
         if station_available == False and station_time_change == -1:
@@ -212,11 +228,13 @@ class Travel_Center:
         for i in range(0, len(travel.station_times)):
             travel.station_times[i].passenger_out_train_time = travel.station_times[i].passenger_out_train_time + delay_time
             travel.station_times[i].passenger_in_train_time = travel.station_times[i].passenger_in_train_time + delay_time
+            if travel.station_times[i].leave_time != None:
+                travel.station_times[i].leave_time = travel.station_times[i].leave_time + delay_time
         travel.station_time.passenger_out_train_time = travel.station_time.passenger_out_train_time + delay_time
         travel.station_time.passenger_in_train_time = travel.station_time.passenger_in_train_time + delay_time
 
     @staticmethod
-    def save_travel(travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center, ignore_full_station=False):
+    def save_travel(travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center, ignore_full_station=False, train_to_replace=None):
         enable, delay_time, full , _ = Travel_Center.check_line_station(travel, stationlist, linelist, result, travel_center)
         if enable or (full == True and ignore_full_station==True):
             
@@ -241,7 +259,7 @@ class Travel_Center:
 
             
 
-            save = stationlist.add_new_train_in_station(travel.station_time, result, ignore_full_station)
+            save = stationlist.add_new_train_in_station(travel.station_time, result, ignore_full_station, train_to_replace)
 
             if passengers is not None:
 
@@ -380,7 +398,7 @@ class Travel_Center:
 
     @staticmethod
     def clear_station(end_station, origin_station, arrive_time, linelist:Linelist, stationlist: Stationlist, result,
-                      travel_center,stations_to_ignore):
+                      travel_center,stations_to_ignore,train_to_replace=None):
         # clear station (move trains out of it to other stations)
         # clear station (move trains out of it to other stations)
 
@@ -467,7 +485,7 @@ class Travel_Center:
                             short_travel = travel
                         i = i + 1
 
-                    Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result,travel_center,True)
+                    Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result,travel_center,True,train_to_replace)
                     available = 1
 
             else:

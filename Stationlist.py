@@ -106,8 +106,8 @@ class Stationlist:
     def _train_in_station_is_free(front_train_leave_time, back_train_in_station: TrainInStation,
                                   in_station_time):
         # train_in_station[] = [out, in, train_Id, leave]
-        return front_train_leave_time < in_station_time and \
-               back_train_in_station.passenger_out_train_time > (in_station_time + 1)
+       
+        return front_train_leave_time < in_station_time and back_train_in_station.passenger_out_train_time > in_station_time+1
 
     @staticmethod
     def _train_in_station_pos(front_train_in_station: TrainInStation, back_train_in_station: TrainInStation,
@@ -123,7 +123,16 @@ class Stationlist:
             earliest_leave_time = leave_time + 1
         return earliest_leave_time
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result, ignore_full_station=False):
+    @staticmethod
+    def _train_in_capacity(capacity,train):
+        if train == None:
+            return True
+        for train_in_station in capacity:
+            if train_in_station.train.id == train.id:
+                return True
+        return False 
+
+    def add_new_train_in_station(self, train_in_station: TrainInStation, result, ignore_full_station=False, train_to_replace=None):
         global TRAIN_NOT_IN_STATION
         enable, delay_time = self.compare_free_place(train_in_station)
         if not enable:
@@ -143,7 +152,7 @@ class Stationlist:
         capacity_pos = 0
         finish = 0
         for capacity in self.stations[train_in_station.station_id]:
-            if Stationlist._capacity_is_full(capacity) and ignore_full_station == True:
+            if Stationlist._capacity_is_full(capacity) and ignore_full_station == True and Stationlist._train_in_capacity(capacity,train_to_replace):
                 capacity.append(train_in_station)
                 capacity.sort(key=lambda x: x.passenger_out_train_time)
                 return True
@@ -157,7 +166,7 @@ class Stationlist:
             last_train_in_station = len(capacity) - 1
             for i in range(last_train_in_station):
                 leave_time = Stationlist.train_leave_time(capacity[i])
-                if Stationlist._train_in_station_is_free(leave_time, capacity[i + 1],
+                if train_in_station.leave_time != None and Stationlist._train_in_station_is_free(leave_time, capacity[i + 1],
                                                               train_in_station.passenger_out_train_time):
                     finish = 1
                     break
@@ -186,7 +195,7 @@ class Stationlist:
             capacity_number = capacity_number + 1
         for train_not_in_station in TRAIN_NOT_IN_STATION:
             if train.id == train_not_in_station.train.id:
-                self.add_new_train_in_station(TrainInStation(0, 1, train, leave_time, station_number), result, True)
+                self.add_new_train_in_station(TrainInStation(0, 1, train, leave_time, station_number), result, True, None)
         return True
 
     def read_trains_from_station(self, station_number, also_not_in_station_trains=True):
