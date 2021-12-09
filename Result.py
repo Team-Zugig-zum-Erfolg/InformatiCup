@@ -4,6 +4,8 @@ from classes.Train import Train
 from classes.Station import Station
 from Input import Input
 import time
+import os
+
 
 class Result:
     # Format
@@ -202,9 +204,9 @@ class Result:
             result += "\n"
         return result
 
-    def to_file(self):
-        ''' save input format in local file '''
-        path = self.path_generator()
+    def to_file_same(self):
+        ''' save output file in SAME file output '''
+        path = './output.txt'
         state = False
         file = open(path, 'w')  
         file.write(self.to_output_text())  
@@ -212,13 +214,32 @@ class Result:
         state = True
         return state
 
-    def path_generator(self) -> str:
+    def to_file(self, folder = "result"):
+        ''' save output format in local file 
+        parameter: folder: the folder to save this file, default is "result"
+        '''
+        dir_name = str(folder)
+        path = self.path_generator(folder = dir_name)
+        state = False
+        if os.path.isdir(dir_name):
+            file = open(path, 'w')
+        else:
+            os.mkdir(dir_name)
+            file = open(path, 'w')
+        file.write(self.to_output_text())  
+        file.close()
+        state = True
+        return state
+
+    def path_generator(self, folder = "result") -> str:
         ''' generate a path for local file '''
-        # path = "./result/Output"
-        # path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))
-        # path = path + ".txt"
-        filename = "Output-" + time.strftime("%y%m%d-%H%M%S",time.localtime(time.time())) + ".txt"
-        return filename
+        dir_name = str(folder)
+        path = "./" + dir_name + "/Output"
+        path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))
+        path = path + ".txt"
+        # filename = "Output-" + time.strftime("%y%m%d-%H%M%S",time.localtime(time.time())) + ".txt"
+        # return filename
+        return path
 
     def compare_with(path:str):
         pass
@@ -265,5 +286,3 @@ def test_save_passenger_detrain(r, id, time):
     r.save_passenger_detrain(id_passenger=id, time=time)
     print("- After -:")
     print(r.to_output_text())
-
-
