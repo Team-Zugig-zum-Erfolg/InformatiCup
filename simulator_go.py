@@ -1,13 +1,11 @@
 import subprocess
+import sys
+
+result = subprocess.run([sys.executable, "-c", "print('ocean')"])
 
 
-def simulator_go():
-	subprocess.call(["start","Google Chrome","wikipedia.com"])
-    #print("go")
-    
-    
- 
+subprocess.Popen(["rm","-r","some.file"])
 
 
- 
-simulator_go()
+
+print(result)
