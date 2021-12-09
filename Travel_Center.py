@@ -141,6 +141,15 @@ class Travel_Center:
         return Travel(start_time, on_board, line_time, station_time, start_station, end_station, train, station_times)
 
     @staticmethod
+    def full_stations_list_not_empty(full_stations_list):
+        if full_stations_list == None:
+            return False
+        for full_stations in full_stations_list:
+            if len(full_stations) > 0:
+                return True
+        return False
+
+    @staticmethod
     def get_stations_by_line(line_id):
         line = LINE_INPUT_LIST[line_id-1]
         station_1 = Station(STATION_INPUT_LIST[line[L_S_ID_START]-1][S_ID],STATION_INPUT_LIST[line[L_S_ID_START]-1][S_CAPACITY])
@@ -270,6 +279,11 @@ class Travel_Center:
                     result.save_passenger_detrain(passenger.id, travel.station_time.passenger_in_train_time)
 
         return [save, delay_time]
+
+
+    @staticmethod
+    def determine_and_save_shortest_travel():
+
 
     @staticmethod
     def check_passengers(route):
@@ -554,12 +568,86 @@ class Travel_Center:
             start = start_stations[i]
             train = trains[i]
             start_time = start_times[i]
-            # print("-----")
-            # print(start)
-            # print(end_station)
-            # print(train)
-            # print(start_time)
             travels.append(self.time_count_train(start, end_station, train, start_time))
+        
+        save = 0
+        if len(travels):
+            while not save:
+                full_station_list = []
+                availables = []
+                delay_times = []
+                full_end_station = [] #if full_end_station[i]=True, then for travels[i] the end_station is blocked
+                # (there are only trains with leave_time=None before the train will arrive)
+                for travel in travels:
+                    available, delay_time, full, full_stations = Travel_Center.check_line_station(travel, stationlist, linelist, result, travel_center)
+                    availables.append(available)
+                    delay_times.append(delay_time)
+                    full_end_station.append(full) #full==1: the end_station is blocked by stopped trains with leave_time=None
+                    full_station_list.append(full_stations)
+
+                i=0
+                available_run=0
+                travel_available = []
+                for available in availables:
+                    if available:
+                        travel_available.append(travels[i])
+                        available_run = 1
+                    i += 1
+
+                if available_run: 
+                    short_time = travel_available[0].station_time.passenger_out_train_time
+                    short_travel = travel_available[0]
+                    for travel in travel_available:
+                        if short_time > travel.station_time.passenger_out_train_time:
+                            short_time = travel.station_time.passenger_out_train_time
+                            short_travel = travel
+
+                    save, _ = Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result, travel_center)
+
+                elif 0 not in delay_times and -1 not in delay_times: #travels have to be delayed first, before clearing full stations
+
+                    i=0
+                    for travel in travels:
+                        Travel_Center.delay_travel(travel, delay_times[i])
+                        i += 1   
+
+                else: #at least one station is blocked on the route
+                
+                    #free all FULL stations on the route of the shortest travel, so the train of the travel can pass them
+                    cleared_stations_ids = []
+                    travel_short = None
+                    smallest_arrive_time = sys.maxsize
+                    t=0
+                    i=0
+                    for travel in travels:
+                        if delay_times[i] == 0 and smallest_arrive_time > travel.station_time.passenger_out_train_time:
+                            travel_short = travel
+                            smallest_arrive_time = travel.station_time.passenger_out_train_time
+                            t = i
+                        i = i + 1
+
+                    
+                    if travel_short != None:
+                        for full_station in full_station_list[t]:
+                            station_to_clear = full_station[0]
+                            arrive_time = full_station[1]
+                            if station_to_clear.id in cleared_stations_ids: #prevent clearing a station twice
+                                continue
+                            Travel_Center.clear_station(station_to_clear,Travel_Center.get_prev_station_in_travel(travel_short,station_to_clear),arrive_time-2,linelist,stationlist,result,travel_center,travel_short.station_times,travel_short.train)
+                            cleared_stations_ids.append(station_to_clear.id)
+
+              
+
+                    #raise ValueError("Error in main: no full stations or delayable travels")
+                    
+        else:
+            # error: input is invalid, because no route was found, but all stations have to be connected with each other
+            # (so this should never happen)
+            raise ValueError("train in station error: no valid route could be found")
+
+
+        return save
+
 
         availables = []
         while True not in availables:  # find travels until minimal 1 travel
@@ -610,9 +698,6 @@ class Travel_Center:
         # print(stationlist.stations)
         # print("travel:"+str(travel_choose))
         save, _ = Travel_Center.save_travel(travel_choose, None, None, stationlist, linelist, result,travel_center)
-        if Travel_Center.train_is_blocking_other_train_in_station(end_station, travel_choose.train, stationlist):
-            Travel_Center.clear_station_with_specific_train(end_station, travel_choose.train,
-                                                            travel_choose.station_time.passenger_out_train_time,
-                                                            linelist, stationlist, result, travel_center)
+       
 
         return save

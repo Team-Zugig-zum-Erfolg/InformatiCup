@@ -15,7 +15,7 @@ import sys
 def main():
     # init
     input_ = Input()
-    stations, lines, trains, passengers = input_.from_file("test/input.txt")
+    stations, lines, trains, passengers = input_.from_file("test/test_replace.txt")
 
     station_input_list = []
     for s in stations:
@@ -102,7 +102,7 @@ def main():
                         Travel_Center.delay_travel(travel, delay_times[i])
                         i += 1   
 
-                else: #at least one station is blocked on the route
+                elif Travel_Center.full_stations_list_not_empty(full_station_list): #at least one station is blocked on the route
                 
                     #free all FULL stations on the route of the shortest travel, so the train of the travel can pass them
                     cleared_stations_ids = []
@@ -127,15 +127,13 @@ def main():
                             Travel_Center.clear_station(station_to_clear,Travel_Center.get_prev_station_in_travel(travel_short,station_to_clear),arrive_time-2,linelist,stationlist,result,travel_center,travel_short.station_times,travel_short.train)
                             cleared_stations_ids.append(station_to_clear.id)
 
-              
-
-                    #raise ValueError("Error in main: no full stations or delayable travels")
+                else:
+                    raise ValueError("Error in main: no full stations or delayable travels")
                     
         else:
             # error: input is invalid, because no route was found, but all stations have to be connected with each other
             # (so this should never happen)
-            groups.split_group(group)
-            pass
+            raise ValueError("main error: no route could be found")
         
     print("Stations:"+str(stationlist.stations))
     print("Lines:"+str(linelist.lines))
