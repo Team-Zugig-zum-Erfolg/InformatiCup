@@ -1,3 +1,8 @@
 test_1  Testing to put multiple Passengers in one train
 test_2  Testing train spawning
 test_3 Mehrere Züge durch eine Station
+test_4 Eine Lange und eine Kurze Strecke mit weniger Stationen
+test_5 Der längste Weg ist der Beste
+test_6 mehrere Züge auf kleinem Netz (versuch eines Deathlocks)
+test_7 Werden die Richtigen Züge genutzt 3 Trains Triangle
+test_8   (test_7) mit weniger Kapazität
