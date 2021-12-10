@@ -39,21 +39,6 @@ class Stationlist:
             else:
                 TRAIN_NOT_IN_STATION.append(train_in_station)
                 TRAIN_NOT_IN_STATION.sort(key=lambda x: x.train.capacity, reverse=False)
-        print(TRAIN_NOT_IN_STATION)
-        if len(TRAIN_NOT_IN_STATION):
-            for train_in_station in TRAIN_NOT_IN_STATION:
-                for i in range(1, len(self.stations)):
-                    train_in_station.station_id = i
-                    enable, _ = self.compare_free_place(train_in_station)
-                    if enable:
-                        save = self.add_new_train_in_station(train_in_station)
-                        if save:
-                            result.save_train_start(train_in_station.train.id,
-                                                    train_in_station.passenger_out_train_time,
-                                                    train_in_station.station_id)
-                            break
-        print(self.stations)
-        TRAIN_NOT_IN_STATION = []
 
     @staticmethod
     def _capacity_is_full(capacity):
