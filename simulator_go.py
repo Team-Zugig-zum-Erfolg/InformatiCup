@@ -1,13 +1,27 @@
-import subprocess
-import sys
 import os
+import signal
+import subprocess
+import subprocess, signal, time
 
-result = subprocess.run([sys.executable, "-c", "print('ocean')"])
+p = subprocess.Popen('python main.py test_1', shell = True)
+
+out, err = p.communicate()
+print(err)
+print(out)
+
+p.terminate()
+
+#time.sleep(3) #Wait 5 secs before killing
+#p.send_signal(signal.CTRL_C_EVENT)
 
 
-#subprocess.Popen(["rm","-r","some.file"])
+
+p = subprocess.Popen('Bahn-Simulator.exe -input input.txt -output output.txt -verbose', shell = True)
+
+out, err = p.comunicate()
+print(err)
+print(out)
 
 
-os.spawnl(os.P_DETACH, 'main.py')
+print("gggg")
 
-print(result)
