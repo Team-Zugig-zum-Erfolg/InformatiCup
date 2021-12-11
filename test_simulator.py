@@ -15,19 +15,15 @@ list = ['test_1','test_2','test_3','test_4']
 
 for i in range(len(list)):
    
-    print('======================================' + list[i] + '===========================================') 
+    print('========' + list[i] + '========') 
     
     p = subprocess.Popen('python main.py' + ' ' + list[i] + '.txt', shell = True)
     out, err = p.communicate()
 
-
-
-for j in range(len(list)):
     
-    print('======================================' + list[j] + '_gotest' '===========================================') 
+    print('====' + list[i] + '_gotest' '====') 
     
-    p = subprocess.run('Bahn-Simulator.exe -input test/' + list[j] + '.txt -output output.txt -verbose', shell = True)
-
+    p = subprocess.run('Bahn-Simulator.exe -input test/' + list[i] + '.txt -output output.txt -verbose', shell = True)
 
 print("end")
 
