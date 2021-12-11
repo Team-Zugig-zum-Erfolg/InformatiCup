@@ -132,11 +132,11 @@ class Travel_Center:
 
             station_times.append(TrainInStation(add_time + self.train_line_time_list[train.id][lines[li]],current_passenger_in_time,train.id,current_leave_time,next_station.id))                          
             
-            add_time += self.train_line_time_list[train.id][lines[li]]
+            add_time += self.train_line_time_list[train.id][lines[li]] + 1
 
             prev_station = next_station
         
-        station_time = TrainInStation(add_time, add_time + 1, train, None, end_station.id)
+        station_time = TrainInStation(add_time-1, add_time, train, None, end_station.id)
 
         return Travel(start_time, on_board, line_time, station_time, start_station, end_station, train, station_times)
 
