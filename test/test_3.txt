@@ -1,6 +1,6 @@
 # Bahnhöfe: str(ID)
 [Stations]
-S1 1
+S1 2
 S2 1
 S3 1
 S4 1
