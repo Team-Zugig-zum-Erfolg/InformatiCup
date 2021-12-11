@@ -1,4 +1,4 @@
-import subprocess, signal, time, os
+import subprocess, signal, time, os, io
 import pathlib
 import sys
 import argparse
@@ -11,9 +11,12 @@ import argparse
 files_test = os.listdir('test/')
 files_test.remove('testlexicon.txt')
 files_test.remove('.DS_Store')
+
+files_test.remove('test_100_passengers.txt')
+
 #files_test = ['test_1','test_2','test_3','test_4']
 
-print(files_test) 
+score = 0
 
 for i in range(len(files_test)):
    
@@ -24,7 +27,13 @@ for i in range(len(files_test)):
 
     print('====' + files_test[i] + '++++gotest' '====') 
     
-    p = subprocess.run('Bahn-Simulator.exe -input test/' + files_test[i] + ' -output output.txt -verbose', shell = True)
-
-print("end")
+    p = subprocess.run('Bahn-Simulator.exe -input test/' + files_test[i] + ' -output output.txt -verbose', stdout=subprocess.PIPE, shell = True)
+    print(p.stdout.decode("utf-8"))
+    
+    #for line in (p.stdout.decode("utf-8")):
+    if('Printing score' in (p.stdout.decode("utf-8"))):
+        score = score + 1
+    
+print("Files tested:")
 print(files_test) 
+print (str(score) + " from " + str(len(files_test)))
