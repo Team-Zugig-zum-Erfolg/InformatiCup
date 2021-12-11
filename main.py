@@ -74,6 +74,7 @@ def main():
     print("Lines:"+str(linelist.lines))
     print(result.to_output_text())
     result.to_file()
+    result.to_file_same()
     return
 
 main()

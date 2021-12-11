@@ -26,7 +26,7 @@ for j in range(len(list)):
     
     print('======================================' + list[j] + '_gotest' '===========================================') 
     
-    p = subprocess.run('Bahn-Simulator.exe -input test/' + list[j] + '.txt -output output.txt -verbose', shell = True)
+    p = subprocess.run('Bahn-Simulator.exe -input test/' list[j] + '.txt -output output.txt -verbose', shell = True)
 
 
 print("end")
