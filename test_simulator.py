@@ -17,7 +17,7 @@ for i in range(len(list)):
    
    print('======================================' + list[i] + '===========================================') 
     
-   p = subprocess.Popen('python main.py' + ' ' + list[i], shell = True)
+   p = subprocess.Popen('python main.py' + ' ' + list[i] + '.txt', shell = True)
    out, err = p.communicate()
 
 

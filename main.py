@@ -26,7 +26,7 @@ def main():
     if args.check == "":
         stations, lines, trains, passengers = input_.from_file("test/input.txt")
     else:
-        stations, lines, trains, passengers = input_.from_file("test/"+ args.check +".txt")
+        stations, lines, trains, passengers = input_.from_file("test/"+ args.check)
          
 
     station_input_list = []
