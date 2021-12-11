@@ -1,6 +1,4 @@
-import signal
-import subprocess
-import subprocess, signal, time
+import subprocess, signal, time, os
 import pathlib
 import sys
 import argparse
@@ -10,20 +8,23 @@ import argparse
 #csp = csp + 'g'
 #print(csp)
 
-list = ['test_1','test_2','test_3','test_4']
+files_test = os.listdir('test/')
+files_test.remove('testlexicon.txt')
+files_test.remove('.DS_Store')
+#files_test = ['test_1','test_2','test_3','test_4']
 
+print(files_test) 
 
-for i in range(len(list)):
+for i in range(len(files_test)):
    
-    print('========' + list[i] + '========') 
+    print('========' + files_test[i] + '========') 
     
-    p = subprocess.Popen('python main.py' + ' ' + list[i] + '.txt', shell = True)
+    p = subprocess.Popen('python main.py' + ' ' + files_test[i], shell = True)
     out, err = p.communicate()
 
+    print('====' + files_test[i] + '++++gotest' '====') 
     
-    print('====' + list[i] + '_gotest' '====') 
-    
-    p = subprocess.run('Bahn-Simulator.exe -input test/' + list[i] + '.txt -output output.txt -verbose', shell = True)
+    p = subprocess.run('Bahn-Simulator.exe -input test/' + files_test[i] + ' -output output.txt -verbose', shell = True)
 
 print("end")
-
+print(files_test) 
