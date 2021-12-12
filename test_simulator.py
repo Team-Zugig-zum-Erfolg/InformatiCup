@@ -17,6 +17,7 @@ files_test.remove('test_100_passengers.txt')
 #files_test = ['test_1','test_2','test_3','test_4']
 
 score = 0
+Errlist = []
 
 for i in range(len(files_test)):
    
@@ -30,10 +31,15 @@ for i in range(len(files_test)):
     p = subprocess.run('Bahn-Simulator.exe -input test/' + files_test[i] + ' -output output.txt -verbose', stdout=subprocess.PIPE, shell = True)
     print(p.stdout.decode("utf-8"))
     
-    #for line in (p.stdout.decode("utf-8")):
     if('Printing score' in (p.stdout.decode("utf-8"))):
         score = score + 1
+    else:
+        Errlist.append(files_test[i])
     
-print("Files tested:")
+    
+print('Files tested:')
 print(files_test) 
-print (str(score) + " from " + str(len(files_test)))
+
+print ('\n' + 'Testscore: ' + str(score) + ' from ' + str(len(files_test)) + '\n')
+print('List of failed testcases:')
+print('\n'.join(map(str, Errlist)))
