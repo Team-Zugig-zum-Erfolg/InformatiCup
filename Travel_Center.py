@@ -39,25 +39,29 @@ class Travel_Center:
         global LINE_INPUT_LIST
         global STATION_INPUT_LIST
         global TRAIN_INPUT_LIST
-
         global S_LINEPLAN
+        
         self.train_line_time_list.append([])
         LINE_INPUT_LIST = line_input_list
         STATION_INPUT_LIST = station_input_list
         TRAIN_INPUT_LIST = train_input_list
+        
         for train in train_input_list:
             self.train_line_time_list.append([])
             self.train_line_time_list[train.id].append(0)
             for line in line_input_list:
+            
                 self.train_line_time_list[train.id].append(
                     math.ceil(line[L_LEN] / train.speed)-1)
         S_LINEPLAN.append([])
         S_LINEPLAN[0].append([])
         for station in station_input_list:
+        
             S_LINEPLAN.append([])
             S_LINEPLAN[station[S_ID]].append([])
             S_LINEPLAN[station[S_ID]].append([])
             for line in line_input_list:
+            
                 if line[L_S_ID_START] == station[S_ID]:
                     S_LINEPLAN[station[S_ID]][0].append(line[L_S_ID_END])
                     S_LINEPLAN[station[S_ID]][1].append(line[L_ID])
@@ -71,6 +75,7 @@ class Travel_Center:
             return [lineplan]
 
         lineplans = []
+        
         for node in S_LINEPLAN[s_station_id][0]:
             if node not in lineplan:
                 newpaths = self._get_all_line_station(node, e_station_id, lineplan)
@@ -282,7 +287,7 @@ class Travel_Center:
 
 
     @staticmethod
-    def determine_and_save_shortest_travel(travels,groups,passengers,stationlist:Stationlist,linelist:Linelist,result:Result,travel_center):
+    def determine_and_save_shortest_travel(travels, groups, passengers, stationlist:Stationlist, linelist:Linelist, result:Result, travel_center):
         
         save = 0
         if len(travels):
@@ -401,7 +406,7 @@ class Travel_Center:
         return neighboor_stations
 
     @staticmethod
-    def station_is_never_blocked(station, stationlist):
+    def station_is_never_blocked(station, stationlist: Stationlist):
 
         for capacity in stationlist.stations[station.id]:
             if len(capacity) == 0:
@@ -415,7 +420,7 @@ class Travel_Center:
         return False
 
     @staticmethod
-    def train_is_blocking_other_train_in_station(station, train, stationlist):
+    def train_is_blocking_other_train_in_station(station, train, stationlist: Stationlist):
 
         for capacity in stationlist.stations[station.id]:
             for train_in_station in capacity:
@@ -474,7 +479,7 @@ class Travel_Center:
         return None
 
     @staticmethod
-    def station_has_more_than_one_free_capcacity(station, stationlist):
+    def station_has_more_than_one_free_capcacity(station, stationlist: Stationlist):
         capacities = stationlist.stations[station.id]
         free = 0
         for capacity in capacities:
@@ -580,14 +585,14 @@ class Travel_Center:
         return True
 
     @staticmethod  # move a train to start station
-    def train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist, linelist,
+    def train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist: Stationlist, linelist,
                                     result: Result, travel_center):
         save = travel_center._train_to_station(start_station, trains, start_times, start_stations, stationlist,
                                                linelist, result, travel_center)
         return save
 
     @staticmethod
-    def _remove_passing_station_trains(start_station,trains,start_times,stationlist):
+    def _remove_passing_station_trains(start_station, trains, start_times, stationlist: Stationlist):
         capacities = stationlist.stations[start_station.id]
         i=0
         for train in trains:
@@ -633,7 +638,7 @@ class Travel_Center:
 
         return start_times, trains, start_stations
 
-    def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist, linelist, result: Result, travel_center):
+    def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist: Stationlist, linelist, result: Result, travel_center):
         travels = []
         for i in range(0, len(trains)):
             start = start_stations[i]
