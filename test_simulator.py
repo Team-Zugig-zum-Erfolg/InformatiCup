@@ -14,7 +14,7 @@ files_test.remove('.DS_Store')
 
 files_test.remove('test_100_passengers.txt')
 
-#files_test = ['test_1','test_2','test_3','test_4']
+#files_test = ['test_1', 'test_2', 'test_3', 'test_4']
 
 score = 0
 Errlist = []
