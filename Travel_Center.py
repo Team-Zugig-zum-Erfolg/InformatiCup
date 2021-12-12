@@ -508,7 +508,7 @@ class Travel_Center:
         return False
 
     @staticmethod
-    def get_prev_station_in_travel(travel, station):
+    def get_prev_station_in_travel(travel: Travel, station):
         neighboor_stations = Travel_Center.get_neighboor_stations(station)
         for station_time in travel.station_times:
             for neighboor_station in neighboor_stations:
