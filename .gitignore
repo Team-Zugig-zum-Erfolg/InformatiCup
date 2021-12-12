@@ -1,3 +1,4 @@
 
 *.pyc
 Result/*.txt
+.vscode/settings.json
