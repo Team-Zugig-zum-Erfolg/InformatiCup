@@ -1,12 +1,16 @@
-import subprocess, signal, time, os, io
+import subprocess
+import signal
+import time
+import os
+import io
 import pathlib
 import sys
 import argparse
 
-#csp = str(pathlib.Path(__file__).parent.resolve()) 
+#csp = str(pathlib.Path(__file__).parent.resolve())
 #csp = csp[:-1]
 #csp = csp + 'g'
-#print(csp)
+# print(csp)
 
 files_test = os.listdir('test/')
 files_test.remove('testlexicon.txt')
@@ -20,26 +24,28 @@ score = 0
 Errlist = []
 
 for i in range(len(files_test)):
-   
-    print('========' + files_test[i] + '========') 
-    
-    p = subprocess.Popen('python main.py' + ' ' + files_test[i], shell = True)
+
+    print('========' + files_test[i] + '========')
+
+    p = subprocess.Popen('python main.py' + ' ' + files_test[i], shell=True)
     out, err = p.communicate()
 
-    print('====' + files_test[i] + '++++gotest' '====') 
-    
-    p = subprocess.run('Bahn-Simulator.exe -input test/' + files_test[i] + ' -output output.txt -verbose', stdout=subprocess.PIPE, shell = True)
+    print('====' + files_test[i] + '++++gotest' '====')
+
+    p = subprocess.run('Bahn-Simulator.exe -input test/' +
+                       files_test[i] + ' -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
     print(p.stdout.decode("utf-8"))
-    
+
     if('Printing score' in (p.stdout.decode("utf-8"))):
         score = score + 1
     else:
         Errlist.append(files_test[i])
-    
-    
-print('Files tested:')
-print(files_test) 
 
-print ('\n' + 'Testscore: ' + str(score) + ' from ' + str(len(files_test)) + '\n')
+
+print('Files tested:')
+print(files_test)
+
+print('\n' + 'Testscore: ' + str(score) +
+      ' from ' + str(len(files_test)) + '\n')
 print('List of failed testcases:')
 print('\n'.join(map(str, Errlist)))
