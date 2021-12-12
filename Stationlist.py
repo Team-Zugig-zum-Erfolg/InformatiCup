@@ -78,7 +78,7 @@ class Stationlist:
                         time_change = None
                     break
             if capacity[last_train_in_station].leave_time == None and train_in_station.leave_time != None:
-                if train_in_station.passenger_out_train_time >= capacity[last_train_in_station].passenger_out_train_time:
+                if train_in_station.passenger_out_train_time >= capacity[last_train_in_station].passenger_out_train_time and capacity == station_capacities[-1]:
                     return [False, -1]
                 elif train_in_station.leave_time < capacity[last_train_in_station].passenger_out_train_time:
                     return [True, -1]
@@ -191,7 +191,7 @@ class Stationlist:
             capacity_number = capacity_number + 1
         for train_not_in_station in TRAIN_NOT_IN_STATION:
             if train.id == train_not_in_station.train.id:
-                self.add_new_train_in_station(TrainInStation(0, 1, train, leave_time, station_number), result, True, None)
+                self.add_new_train_in_station(TrainInStation(0, 1, train, leave_time, station_number), result)
         return True
 
     def read_trains_from_station(self, station_number, also_not_in_station_trains=True):
