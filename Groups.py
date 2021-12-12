@@ -3,11 +3,12 @@ from classes.Station import Station
 from classes.Line import Line
 from classes import Passenger
 
+
 class Groups:
 
     route = []
 
-    def __init__(self,passengers):
+    def __init__(self, passengers):
 
         if type(passengers) != list:
             return False
@@ -23,7 +24,7 @@ class Groups:
             if added == 0:
                 self.route.append([passenger])
 
-    def _get_min_target_round(self,group):
+    def _get_min_target_round(self, group):
 
         min = -1
         for pa in group:
@@ -37,18 +38,18 @@ class Groups:
     def get_priority(self):
 
         if len(self.route) == 0:
-        
+
             return None
 
         self.route.sort(key=self._get_min_target_round)
         return self.route[0]
 
-    def passengers_arrive(self,group):
+    def passengers_arrive(self, group):
 
         self.route.remove(group)
         return
 
-    def split_group(self,group):
+    def split_group(self, group):
 
         self.route.remove(group)
 
