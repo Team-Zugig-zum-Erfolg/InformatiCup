@@ -78,8 +78,11 @@ class Stationlist:
                         time_change = None
                     break
             if capacity[last_train_in_station].leave_time == None and train_in_station.leave_time != None:
-                if train_in_station.passenger_out_train_time >= capacity[last_train_in_station].passenger_out_train_time and capacity == station_capacities[-1]:
-                    return [False, -1]
+                if train_in_station.passenger_out_train_time >= capacity[last_train_in_station].passenger_out_train_time:
+                    if capacity == station_capacities[-1]:
+                        return [False, -1]
+                    else:
+                        continue
                 elif train_in_station.leave_time < capacity[last_train_in_station].passenger_out_train_time:
                     return [True, -1]
             leave_time = Stationlist.train_leave_time(capacity[last_train_in_station])
