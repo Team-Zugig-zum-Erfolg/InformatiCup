@@ -5,7 +5,7 @@ from classes.Passenger import Passenger
 from classes.Train import Train
 import time
 import re
-
+import sys
 
 class Input:
     star_station = Station(id=-1,capacity=999)   # the "*" station
@@ -89,6 +89,46 @@ class Input:
             # assume station and station already wrote in [station] section
             self.Passengers.append(Passenger(id = id, start_station = self.find_station(_string_to_int(start_id)), end_station = self.find_station(_string_to_int(end_id)), group_size = int(size), target_time =int(target)))
 
+    def from_stdin(self):
+        ''' read input from stdin '''
+        '''
+        # Kommentar
+        # Leere Zeilen werden ignoriert
+        # str: ([a-z]|[A-Z]|[0-9]|_)+
+        # dec: Dezimalzahl mit beliebig vielen Nachkommastellen
+        # int: Ganzzahl mit beliebig vielen Stellen >= 0
+        # Werte-Trenner: 0x20 (SPACE)
+        # Zeilen-Trenner: 0x0A (NEWLINE)
+        # Bahnhöfe: str(ID) int(Kapazität)
+        [Stations]
+        S1 2
+        S2 2
+        S3 2
+        # Strecken: str(ID) str(Anfang) str(Ende) dec(Länge) int(Kapazität)
+        [Lines]
+        L1 S2 S3 3.14 1
+        L2 S2 S1 4 1
+        # Züge: str(ID) str(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
+        [Trains]
+        T1 S2 5.5 30
+        T2 * 0.999 50
+        # Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof)
+        # int(Gruppengröße) int(Ankunftszeit)
+        [Passengers]
+        P1 S2 S3 3 3
+        P2 S2 S1 10 3
+        '''
+        lines = sys.stdin.readlines()
+        mylines = []                                # Declare an empty list.
+
+        for line in lines:                   # For each line in the file,
+            mylines.append(line.rstrip('\n')) # strip newline and add to list.
+        mylines.append("")
+            # print(mylines)
+        return self.parse_lines(mylines)
+
+
+
     def if_station_exist():
         pass
 
@@ -149,47 +189,91 @@ class Input:
         ''' load input from local file '''
         # contains '#': pass
         # contains []: start
-        i = 0
+        # i = 0
         mylines = []                                # Declare an empty list.
         with open (path, "rt") as myfile:           # Open lorem.txt for reading text.
             for myline in myfile:                   # For each line in the file,
                 mylines.append(myline.rstrip('\n')) # strip newline and add to list.
             mylines.append("")
             # print(mylines)
-        while(i < len(mylines)-1):
-            if mylines[i] == ("[Stations]"):
+        return self.parse_lines(mylines)
+        # while(i < len(mylines)-1):
+        #     if mylines[i] == ("[Stations]"):
+        #         while(True):
+        #             i += 1
+        #             parameters = mylines[i].split(" ")
+        #             self.add_station(id=parameters[0], capacity=parameters[1])
+        #             if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
+        #                 break
+
+        #     if mylines [i] == ("[Lines]"): 
+        #         # print(i)     
+        #         while(True):
+        #             i+=1
+        #             parameters = mylines[i].split(" ")
+        #             self.add_line(id=parameters[0],start_id=parameters[1],end_id=parameters[2],length=parameters[3],capacity=parameters[4])
+        #             if(('#' in mylines[i+1]) or ("" == mylines[i+1]))or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
+        #                 break
+
+        #     if mylines [i] == ("[Trains]"): 
+        #         # print(i)     
+        #         while(True):
+        #             i+=1 
+        #             parameters = mylines[i].split(" ")
+        #             self.add_train(id=parameters[0],start_id=parameters[1],speed=parameters[2],capacity=parameters[3])
+        #             if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
+        #                 break
+
+
+        #     if mylines [i] == ("[Passengers]"):
+        #         while(True):
+        #             i += 1 
+        #             parameters = mylines[i].split(" ")
+        #             self.add_passenger(id=parameters[0],start_id=parameters[1],end_id=parameters[2],size=parameters[3],target=parameters[4])
+        #             if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
+        #                 break    
+        #         break
+    
+        #     i+=1
+        # return self.Stations,self.Lines,self.Trains,self.Passengers
+
+    def parse_lines(self, lines: list):
+        ''' this is used in from_input(), from_input_stdin()'''
+        i = 0
+        while(i < len(lines)-1):
+            if lines[i] == ("[Stations]"):
                 while(True):
                     i += 1
-                    parameters = mylines[i].split(" ")
+                    parameters = lines[i].split(" ")
                     self.add_station(id=parameters[0], capacity=parameters[1])
-                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
+                    if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
                         break
 
-            if mylines [i] == ("[Lines]"): 
+            if lines [i] == ("[Lines]"): 
                 # print(i)     
                 while(True):
                     i+=1
-                    parameters = mylines[i].split(" ")
+                    parameters = lines[i].split(" ")
                     self.add_line(id=parameters[0],start_id=parameters[1],end_id=parameters[2],length=parameters[3],capacity=parameters[4])
-                    if(('#' in mylines[i+1]) or ("" == mylines[i+1]))or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
+                    if(('#' in lines[i+1]) or ("" == lines[i+1]))or ('[' in lines[i+1]) or (']' in lines[i+1]):
                         break
 
-            if mylines [i] == ("[Trains]"): 
+            if lines [i] == ("[Trains]"): 
                 # print(i)     
                 while(True):
                     i+=1 
-                    parameters = mylines[i].split(" ")
+                    parameters = lines[i].split(" ")
                     self.add_train(id=parameters[0],start_id=parameters[1],speed=parameters[2],capacity=parameters[3])
-                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
+                    if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
                         break
 
 
-            if mylines [i] == ("[Passengers]"):
+            if lines [i] == ("[Passengers]"):
                 while(True):
                     i += 1 
-                    parameters = mylines[i].split(" ")
+                    parameters = lines[i].split(" ")
                     self.add_passenger(id=parameters[0],start_id=parameters[1],end_id=parameters[2],size=parameters[3],target=parameters[4])
-                    if(('#' in mylines[i+1]) or ("" == mylines[i+1])) or ('[' in mylines[i+1]) or (']' in mylines[i+1]):
+                    if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
                         break    
                 break
     
@@ -201,21 +285,21 @@ class Input:
         ''' print information of input '''
         print("---------------")
         print("| * printing input started ...")
-        print(f"| * Stations: ({len(self.Stations)})")
+        print(f"| * Stations: [{len(self.Stations)}]")
         for i in range(len(self.Stations)):
-            print(f"| * [{i}/{len(self.Stations)}] " + self.Stations[i].to_str_input())
+            print(f"|   * [{i+1}/{len(self.Stations)}] " + self.Stations[i].to_str_input())
 
-        print(f"| * Lines: ({len(self.Lines)})")
+        print(f"| * Lines: [{len(self.Lines)}]")
         for i in range(len(self.Lines)):
-            print(f"| * [{i}/{len(self.Lines)}] " + self.Lines[i].to_str_input())
+            print(f"|   * [{i+1}/{len(self.Lines)}] " + self.Lines[i].to_str_input())
 
-        print(f"| * Trains: ({len(self.Trains)})")
+        print(f"| * Trains: [{len(self.Trains)}]")
         for i in range(len(self.Trains)):
-            print(f"| * [{i}/{len(self.Trains)}] " + self.Trains[i].to_str_input())
+            print(f"|   * [{i+1}/{len(self.Trains)}] " + self.Trains[i].to_str_input())
 
-        print(f"| * Passengers: ({len(self.Passengers)})")
+        print(f"| * Passengers: [{len(self.Passengers)}]")
         for i in range(len(self.Passengers)):
-            print(f"| * [{i}/{len(self.Passengers)}] " + self.Passengers[i].to_str_input())
+            print(f"|   * [{i+1}/{len(self.Passengers)}] " + self.Passengers[i].to_str_input())
 
         print("| * print input finished")
         print("---------------")
@@ -249,4 +333,9 @@ def _string_to_float(string: str) -> float:
 # input.print_input()
 
 
+''' test from_stdin() and parse_lines()'''
 # print(input.Trains[0].start_station)
+# input = Input()
+# input.from_file("./test/test_1.txt")
+# input.from_stdin()
+# input.print_input()
