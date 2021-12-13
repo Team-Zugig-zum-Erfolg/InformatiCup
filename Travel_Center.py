@@ -415,49 +415,6 @@ class Travel_Center:
         return False
 
     @staticmethod
-    def train_is_blocking_other_train_in_station(station, train, stationlist):
-
-        for capacity in stationlist.stations[station.id]:
-            for train_in_station in capacity:
-                if train_in_station.train == train and train_in_station.leave_time == None:
-                    for _train_in_station in capacity:
-                        if _train_in_station.passenger_out_train_time > train_in_station.passenger_out_train_time and _train_in_station.train != train:
-                            return True
-
-        return False
-
-    @staticmethod
-    def clear_station_with_specific_train(end_station, train, arrive_time, linelist: Linelist, stationlist: Stationlist,
-                                          result, travel_center):
-        # get the neighboor stations of the end_station,
-        # so the blocking trains in the end_station can be moved to one of the free (or not blocked) neighboor stations
-        neighboor_stations = Travel_Center.get_neighboor_stations(end_station)
-        next_station = None
-        for neighboor_station in neighboor_stations:
-            if Travel_Center.station_is_never_blocked(neighboor_station, stationlist) == True:
-                next_station = neighboor_station
-                break
-        if next_station == None:
-            raise ValueError ("clear station error: no station available")  # no neighboor station is free (free = not blocked)
-
-        travel = travel_center.time_count_train(end_station, next_station, train, arrive_time)
-        available = 0
-        while not available:
-            available, delay_time, _, _ = Travel_Center.check_line_station(travel, stationlist, linelist,result,travel_center)
-            if available:
-                Travel_Center.save_travel(travel, None, None, stationlist, linelist, result,travel_center)
-            elif delay_time != -1:
-                Travel_Center.delay_travel(travel, delay_time)
-            else:
-                raise ValueError("clear station error: no station available")  # all neighboor stations are blocked (should actually not happen, because they are checked above)
-
-        if Travel_Center.train_is_blocking_other_train_in_station(next_station, travel.train, stationlist):
-            Travel_Center.clear_station_with_specific_train(next_station, travel.train,
-                                                            travel.station_time.passenger_out_train_time,
-                                                            linelist, stationlist, result, travel_center)
-        return True
-
-    @staticmethod
     def station_is_in_station_times_list(station, station_times_list):
         for station_time in station_times_list:
             if station.id == station_time.station_id:
