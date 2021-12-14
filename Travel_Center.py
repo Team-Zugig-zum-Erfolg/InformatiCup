@@ -160,6 +160,8 @@ class Travel_Center:
     def check_line_station(travel: Travel, stationlist: Stationlist, linelist: Linelist, result, travel_center):
         line_availables_list = []
         line_time_changes = []
+        station_availables_list = []
+        station_time_changes = []
         available = True
         station_is_full = False
         full_stations = []
@@ -186,8 +188,8 @@ class Travel_Center:
             s_available, s_time_change = stationlist.compare_free_place(TrainInStation(travel_in_line.end,current_passenger_in_time,travel_in_line.train,current_leave_time,next_station.id))
             if s_available == False and s_time_change == -1: #full
                 full_stations.append([next_station,travel_in_line.end]) 
-            line_availables_list.append(s_available)
-            line_time_changes.append(s_time_change)
+            station_availables_list.append(s_available)
+            station_time_changes.append(s_time_change)
 
             prev_station = next_station
 
@@ -209,20 +211,21 @@ class Travel_Center:
         delay_time = station_delay_time
 
         i=0
-        t=0
         for _line_time in travel.line_time:
             if not line_availables_list[i]:
                 available = False
-
-                line_delay_time = line_time_changes[t] - travel.line_time[i].start
+                line_delay_time = line_time_changes[i] - travel.line_time[i].start
                 if delay_time < line_delay_time:
                     delay_time = line_delay_time
-            if (len(line_time_changes) - t) > 1:
-                if not line_availables_list[i+1]:
-                    current_station_delay_time = line_time_changes[t+1] - travel.line_time[i].end
+            i = i + 1
+
+        i=0
+        for _station_time in travel.station_times[1:]:
+            if not station_availables_list[i]:
+                    available = False
+                    current_station_delay_time = station_time_changes[i] - travel.station_times[i].passenger_out_train_time
                     if delay_time < current_station_delay_time:
                         delay_time = current_station_delay_time
-            t = t + 2
             i = i + 1
 
         return [available, delay_time, station_is_full, full_stations]
