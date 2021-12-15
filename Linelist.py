@@ -60,7 +60,7 @@ class Linelist:
     @staticmethod
     def _train_in_line_is_full(train_in_line, start, end):
         return ((train_in_line.end > start >= train_in_line.start) or
-                (train_in_line.start < end <= train_in_line.end))
+                (train_in_line.start < end <= train_in_line.end) or (start <= train_in_line.start and train_in_line.end <= end))
 
     @staticmethod
     def _train_in_line_pos(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start, end,
