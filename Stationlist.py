@@ -214,10 +214,12 @@ class Stationlist:
                 i += 1
         capacity_pos = 0
         finish = 0
+        inserted = 0
         for capacity in self.stations[train_in_station.station_id]:
             if Stationlist._capacity_is_full(capacity) and ignore_full_station == True and Stationlist._train_in_capacity(capacity,train_to_replace):
                 capacity.append(train_in_station)
                 capacity.sort(key=lambda x: x.passenger_out_train_time)
+                inserted = 1
                 return True
             elif Stationlist._capacity_is_full(capacity) and train_in_station.leave_time == None:
                 capacity_pos += 1
@@ -239,6 +241,9 @@ class Stationlist:
             if finish == 1:
                 break
             capacity_pos += 1
+        if ignore_full_station == True and train_to_replace != None and inserted == 0:
+            self.stations[train_in_station.station_id][0].append(train_in_station)
+            self.stations[train_in_station.station_id][0].sort(key=lambda x: x.passenger_out_train_time)
         if enable:
             self.stations[train_in_station.station_id][capacity_pos].append(train_in_station)
             self.stations[train_in_station.station_id][capacity_pos].sort(key=lambda x: x.passenger_out_train_time)

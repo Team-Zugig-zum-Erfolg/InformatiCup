@@ -223,7 +223,7 @@ class Travel_Center:
         for _station_time in travel.station_times[1:]:
             if not station_availables_list[i]:
                     available = False
-                    current_station_delay_time = station_time_changes[i] - travel.station_times[i].passenger_out_train_time
+                    current_station_delay_time = station_time_changes[i] - travel.station_times[i+1].passenger_out_train_time
                     if delay_time < current_station_delay_time:
                         delay_time = current_station_delay_time
             i = i + 1
@@ -343,7 +343,6 @@ class Travel_Center:
                             t = i
                         i = i + 1
 
-                    
                     if travel_short != None:
                         for full_station in full_station_list[t]:
                             station_to_clear = full_station[0]
@@ -352,6 +351,7 @@ class Travel_Center:
                                 continue
                             Travel_Center.clear_station(station_to_clear,Travel_Center.get_prev_station_in_travel(travel_short,station_to_clear),arrive_time-2,linelist,stationlist,result,travel_center,travel_short.station_times,travel_short.train)
                             cleared_stations_ids.append(station_to_clear.id)
+                            break
 
                 else:
                     raise ValueError("Error in main: no full stations or delayable travels")
@@ -531,7 +531,7 @@ class Travel_Center:
                             short_travel = travel
                         i = i + 1
 
-                    Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result,travel_center,True,train_to_replace)
+                    Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result, travel_center, True, train_to_replace)
                     available = 1
 
             else:
