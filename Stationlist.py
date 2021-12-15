@@ -33,9 +33,7 @@ class Stationlist:
                 if available:
                     self.add_new_train_in_station(train_in_station, None)
                 else:
-                    train_in_station.passenger_out_train_time = earliest_leave_time
-                    train_in_station.passenger_in_train_time = earliest_leave_time + 1
-                    self.add_new_train_in_station(train_in_station, train.start_station.id)
+                    raise ValueError("Too many trains in station at beginning!")
             else:
                 TRAIN_NOT_IN_STATION.append(train_in_station)
                 TRAIN_NOT_IN_STATION.sort(key=lambda x: x.train.capacity, reverse=False)
@@ -188,21 +186,21 @@ class Stationlist:
 
     @staticmethod
     def _train_in_capacity(capacity,train):
-        if train == None:
-            return True
+        if not train:
+            return False
         for train_in_station in capacity:
             if train_in_station.train.id == train.id:
                 return True
         return False 
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result, ignore_full_station=False, train_to_replace=None):
+    def add_new_train_in_station(self, train_in_station: TrainInStation, result, train_to_replace=False):
         global TRAIN_NOT_IN_STATION
         enable, delay_time = self.compare_free_place(train_in_station)
         if not enable:
             if delay_time != -1:
-                return enable
-            elif ignore_full_station == False:
-                return enable
+                return False
+            elif not train_to_replace:
+                return False
         if result is not None:
             i = 0
             for _train_in_station in TRAIN_NOT_IN_STATION:
@@ -216,7 +214,7 @@ class Stationlist:
         finish = 0
         inserted = 0
         for capacity in self.stations[train_in_station.station_id]:
-            if Stationlist._capacity_is_full(capacity) and ignore_full_station == True and Stationlist._train_in_capacity(capacity,train_to_replace):
+            if Stationlist._capacity_is_full(capacity) and Stationlist._train_in_capacity(capacity,train_to_replace):
                 capacity.append(train_in_station)
                 capacity.sort(key=lambda x: x.passenger_out_train_time)
                 inserted = 1
@@ -241,9 +239,15 @@ class Stationlist:
             if finish == 1:
                 break
             capacity_pos += 1
-        if ignore_full_station == True and train_to_replace != None and inserted == 0:
-            self.stations[train_in_station.station_id][0].append(train_in_station)
-            self.stations[train_in_station.station_id][0].sort(key=lambda x: x.passenger_out_train_time)
+        if train_to_replace and inserted == 0:
+            i=0
+            for capacity in self.stations[train_in_station.station_id]:
+                if Stationlist._capacity_is_full(capacity):
+                    i=i+1
+                else:
+                    self.stations[train_in_station.station_id][i].append(train_in_station)
+                    self.stations[train_in_station.station_id][i].sort(key=lambda x: x.passenger_out_train_time)
+                    break    
         if enable:
             self.stations[train_in_station.station_id][capacity_pos].append(train_in_station)
             self.stations[train_in_station.station_id][capacity_pos].sort(key=lambda x: x.passenger_out_train_time)
