@@ -23,10 +23,7 @@ def main():
     
     input_ = Input()
     
-    if args.check == "":
-        stations, lines, trains, passengers = input_.from_file("test/test_other.txt")
-    else:
-        stations, lines, trains, passengers = input_.from_file("test/"+ args.check)
+    stations, lines, trains, passengers = input_.from_stdin()
          
 
     station_input_list = []

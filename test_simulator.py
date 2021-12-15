@@ -23,7 +23,7 @@ for i in range(len(files_test)):
    
     print('========' + files_test[i] + '========') 
     
-    p = subprocess.Popen('python main.py' + ' ' + files_test[i], shell = True)
+    p = subprocess.Popen('python main.py' + ' < test/' + files_test[i], shell = True)
     out, err = p.communicate()
 
     print('====' + files_test[i] + '++++gotest' '====') 
