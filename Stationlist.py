@@ -189,7 +189,7 @@ class Stationlist:
         if not train:
             return False
         for train_in_station in capacity:
-            if train_in_station.train.id == train.id:
+            if train_in_station.train.id == train.id and train_in_station.leave_time == None:
                 return True
         return False 
 
