@@ -3,11 +3,6 @@ import pathlib
 import sys
 import argparse
 
-#csp = str(pathlib.Path(__file__).parent.resolve()) 
-#csp = csp[:-1]
-#csp = csp + 'g'
-#print(csp)
-
 files_test = os.listdir('test/')
 files_test.remove('testlexicon.txt')
 files_test.remove('.DS_Store')
@@ -35,11 +30,31 @@ for i in range(len(files_test)):
         score = score + 1
     else:
         Errlist.append(files_test[i])
-    
-    
+        
 print('Files tested:')
 print(files_test) 
+print('\n' + 'Testscore: ' + str(score) + ' from ' + str(len(files_test)) + '\n')
 
-print ('\n' + 'Testscore: ' + str(score) + ' from ' + str(len(files_test)) + '\n')
-print('List of failed testcases:')
-print('\n'.join(map(str, Errlist)))
+if(score == len(files_test)):
+    print("Test was successfully completed")
+else:    
+    print('List of failed testcases:')
+    print('\n'.join(map(str, Errlist)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
