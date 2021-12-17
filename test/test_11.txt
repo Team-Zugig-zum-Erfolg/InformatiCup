@@ -50,11 +50,10 @@ L24 S17 S12 5 1
 L25 S18 S13 5 1
 L26 S19 S14 5 1
 L27 S20 S15 5 1
-L28 S20 S15 5 1
-L29 S16 S17 5 1
-L30 S17 S18 5 1
-L31 S18 S19 5 1
-L32 S19 S20 5 1
+L28 S16 S17 5 1
+L29 S17 S18 5 1
+L30 S18 S19 5 1
+L31 S19 S20 5 1
 
 # Züge: str(ID) str(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
 [Trains]
