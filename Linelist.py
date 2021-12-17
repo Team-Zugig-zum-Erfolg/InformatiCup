@@ -25,9 +25,9 @@ class Linelist:
                 if Linelist._train_in_line_is_full(_train_in_line, train_in_line.start, train_in_line.end):
                     not_free = 1
                     if earliest_leave_time == -1:
-                        earliest_leave_time = _train_in_line.end + 1
-                    elif earliest_leave_time > (_train_in_line.end + 1):
-                        earliest_leave_time = _train_in_line.end + 1
+                        earliest_leave_time = _train_in_line.end
+                    elif earliest_leave_time > (_train_in_line.end):
+                        earliest_leave_time = _train_in_line.end
             if not_free == 0:
                 return [True, -1]
 
@@ -62,7 +62,7 @@ class Linelist:
     @staticmethod
     def _train_in_line_is_full(train_in_line, start, end):
         return ((train_in_line.end > start >= train_in_line.start) or
-                (train_in_line.start < end <= train_in_line.end) or (start <= train_in_line.start and train_in_line.end <= end))
+                (train_in_line.start < end < train_in_line.end) or (start <= train_in_line.start and train_in_line.end <= end and (train_in_line.start != train_in_line.end or start != end)))
 
     @staticmethod
     def _train_in_line_pos(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start, end,
