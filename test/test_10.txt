@@ -15,7 +15,7 @@ S10 2
 [Lines]
 L1 S1 S2 2 1
 L2 S2 S3 5 1
-L3 S3 S4 3 1
+L3 S3 S4 1 1
 L4 S3 S5 1 1
 L5 S3 S6 1 1
 L6 S6 S7 1 1
@@ -28,14 +28,14 @@ L11 S1 S10 150 1
 
 # Züge: str(ID) str(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
 [Trains]
-T1 S1 2 30
-T2 S2 5 30
-T3 S7 7 30
+T1 S1 2 50
+T2 S2 5 50
+T3 S7 7 50
 
 # Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
 [Passengers]
 P1 S1 S10 50 10
 P2 S2 S6 50 10
 P3 S3 S7 50 10
-P4 S4 S9 50 10
+P4 S5 S9 50 10
 P5 S5 S8 50 10
