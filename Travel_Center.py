@@ -404,7 +404,7 @@ class Travel_Center:
         return neighboor_stations
 
     @staticmethod
-    def station_is_never_blocked(station, stationlist):
+    def station_is_never_blocked(station, stationlist: Stationlist):
 
         for capacity in stationlist.stations[station.id]:
             if len(capacity) == 0:
@@ -434,7 +434,7 @@ class Travel_Center:
         return None
 
     @staticmethod
-    def station_has_more_than_one_free_capcacity(station, stationlist):
+    def station_has_more_than_one_free_capcacity(station, stationlist: Stationlist):
         capacities = stationlist.stations[station.id]
         free = 0
         for capacity in capacities:
@@ -538,14 +538,14 @@ class Travel_Center:
         return True
 
     @staticmethod  # move a train to start station
-    def train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist, linelist,
+    def train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist,
                                     result: Result, travel_center):
         save = travel_center._train_to_station(start_station, trains, start_times, start_stations, stationlist,
                                                linelist, result, travel_center)
         return save
 
     @staticmethod
-    def _remove_passing_station_trains(start_station,trains,start_times,stationlist):
+    def _remove_passing_station_trains(start_station,trains, start_times, stationlist: Stationlist): 
         capacities = stationlist.stations[start_station.id]
         i=0
         for train in trains:
@@ -591,7 +591,7 @@ class Travel_Center:
 
         return start_times, trains, start_stations
 
-    def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist, linelist, result: Result, travel_center):
+    def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
         travels = []
         for i in range(0, len(trains)):
             start = start_stations[i]
