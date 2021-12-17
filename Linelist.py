@@ -20,12 +20,14 @@ class Linelist:
         for capacity in line_capacities:
             not_free = 0
             for _train_in_line in capacity:
+                if train_in_line.end <= _train_in_line.start:
+                    return [True, -1]
                 if Linelist._train_in_line_is_full(_train_in_line, train_in_line.start, train_in_line.end):
                     not_free = 1
                     if earliest_leave_time == -1:
-                        earliest_leave_time = train_in_line.end
-                    elif earliest_leave_time > train_in_line.end:
-                        earliest_leave_time = train_in_line.end
+                        earliest_leave_time = _train_in_line.end + 1
+                    elif earliest_leave_time > (_train_in_line.end + 1):
+                        earliest_leave_time = _train_in_line.end + 1
             if not_free == 0:
                 return [True, -1]
 

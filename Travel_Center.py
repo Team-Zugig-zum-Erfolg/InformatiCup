@@ -202,7 +202,7 @@ class Travel_Center:
         if not station_available and station_is_full == False:
             # print("station_time_change: "+str(station_time_change))
             # print("out_train_time:"+str(travel.station_time.passenger_out_train_time))
-            station_delay_time = ((station_time_change + 1) - travel.station_time.passenger_out_train_time)
+            station_delay_time = ((station_time_change) - travel.station_time.passenger_out_train_time)
             # print("station_delay_time:"+str(station_delay_time))
             available = False
 
@@ -293,7 +293,7 @@ class Travel_Center:
                 full_end_station = [] #if full_end_station[i]=True, then for travels[i] the end_station is blocked
                 # (there are only trains with leave_time=None before the train will arrive)
                 for travel in travels:
-                    available, delay_time, full, full_stations = Travel_Center.check_line_station(travel, stationlist, linelist, result,travel_center)
+                    available, delay_time, full, full_stations = Travel_Center.check_line_station(travel, stationlist, linelist, result, travel_center)
                     availables.append(available)
                     delay_times.append(delay_time)
                     full_end_station.append(full) #full==1: the end_station is blocked by stopped trains with leave_time=None
