@@ -1,5 +1,5 @@
-import math
-import sys
+import math # This module provides access to the mathematical functions defined by the C standard. (https://docs.python.org/3/library/math.html)
+import sys # This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
 
 from Stationlist import Stationlist
 from Linelist import Linelist
@@ -39,7 +39,6 @@ class Travel_Center:
         global LINE_INPUT_LIST
         global STATION_INPUT_LIST
         global TRAIN_INPUT_LIST
-
         global S_LINEPLAN
         self.train_line_time_list.append([])
         LINE_INPUT_LIST = line_input_list
