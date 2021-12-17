@@ -6,3 +6,4 @@ test_5 Der längste Weg ist der Beste
 test_6 mehrere Züge auf kleinem Netz (versuch eines Deathlocks)
 test_7 Werden die Richtigen Züge genutzt 3 Trains Triangle
 test_8   (test_7) mit weniger Kapazität
+test_9 Tset aus issue 16 aus dem Git.
