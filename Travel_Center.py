@@ -157,7 +157,7 @@ class Travel_Center:
         return [station_1,station_2]
 
     @staticmethod
-    def check_line_station(travel: Travel, stationlist: Stationlist, linelist: Linelist, result, travel_center):
+    def check_line_station(travel: Travel, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
         line_availables_list = []
         line_time_changes = []
         station_availables_list = []
@@ -444,7 +444,7 @@ class Travel_Center:
         return (free >= 2)
 
     @staticmethod
-    def clear_station(end_station, prev_station, arrive_time, linelist:Linelist, stationlist: Stationlist, result,
+    def clear_station(end_station, prev_station, arrive_time, linelist:Linelist, stationlist: Stationlist, result: Result,
                       travel_center,stations_to_ignore,train_to_replace=None):
         # clear station (move trains out of it to other stations)
         # clear station (move trains out of it to other stations)
