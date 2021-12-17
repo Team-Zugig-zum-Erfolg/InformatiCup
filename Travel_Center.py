@@ -106,7 +106,6 @@ class Travel_Center:
         return [short_len, short_line]
 
     def time_count_train(self, start_station, end_station, train, start_time):
-
         length, lines = self.find_best_line(start_station.id, end_station.id)
         line_time = []
         station_times = [TrainInStation(start_time,start_time+1,train,None,start_station.id)]
@@ -285,7 +284,6 @@ class Travel_Center:
 
     @staticmethod
     def determine_and_save_shortest_travel(travels,groups,passengers,stationlist:Stationlist,linelist:Linelist,result:Result,travel_center):
-        
         save = 0
         if len(travels):
             while not save:
@@ -389,9 +387,7 @@ class Travel_Center:
 
     @staticmethod
     def get_neighboor_stations(station):
-
         neighboor_stations = []
-
         for line in LINE_INPUT_LIST:
             if line[L_S_ID_START] == station.id:
                 neighboor_stations.append(
@@ -404,7 +400,6 @@ class Travel_Center:
 
     @staticmethod
     def station_is_never_blocked(station, stationlist: Stationlist):
-
         for capacity in stationlist.stations[station.id]:
             if len(capacity) == 0:
                 return True
@@ -439,7 +434,6 @@ class Travel_Center:
         for capacity in capacities:
             if not Stationlist._capacity_is_full(capacity):
                 free = free + 1
-
         return (free >= 2)
 
     @staticmethod
@@ -467,7 +461,6 @@ class Travel_Center:
         # get the blocking trains in the station (blocking trains = trains in the station with no leave time)
         # a station is only blocked, if all trains in the station have no leave time
         start_times, trains, station = stationlist.read_trains_from_station(end_station.id,False)
-        
         i=0
         for start_time in start_times:
             if start_time < arrive_time:
@@ -530,10 +523,8 @@ class Travel_Center:
 
                     Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result, travel_center, train_to_replace)
                     available = 1
-
             else:
                 raise ValueError("clear station error: no station available")  # all neighboor stations are blocked (should actually not happen, because they are checked above)
-
         return True
 
     @staticmethod  # move a train to start station
