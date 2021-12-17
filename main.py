@@ -45,6 +45,8 @@ def main():
                 Travel_Center.train_move_to_start_station(
                     start_station, trains, start_times, start_stations, stationlist, linelist, result, travel_center)
             else:
+                if len(group) == 1:
+                    raise ValueError("Error: Capacity of all trains to low!")
                 groups.split_group(group)
             continue
 
