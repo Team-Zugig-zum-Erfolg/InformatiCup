@@ -167,7 +167,9 @@ class Stationlist:
     def _train_in_station_is_free(front_train_leave_time, back_train_in_station: TrainInStation,
                                   in_station_time,leave_station_time):
         # train_in_station[] = [out, in, train_Id, leave]
-       
+        if front_train_leave_time == None:
+            return False
+
         return front_train_leave_time < in_station_time and back_train_in_station.passenger_out_train_time > leave_station_time
 
     @staticmethod
@@ -228,14 +230,17 @@ class Stationlist:
                 return True
             last_train_in_station = len(capacity) - 1
             for i in range(last_train_in_station):
-                leave_time = Stationlist.train_leave_time(capacity[i])
+                leave_time = capacity[i].leave_time
                 if train_in_station.leave_time != None and Stationlist._train_in_station_is_free(leave_time, capacity[i + 1],
                                                               train_in_station.passenger_out_train_time,train_in_station.leave_time):
                     finish = 1
                     break
-            leave_time = Stationlist.train_leave_time(capacity[last_train_in_station])
-            if leave_time < train_in_station.passenger_out_train_time:
+            leave_time = capacity[last_train_in_station].leave_time
+            if leave_time == None:
+                pass
+            elif leave_time < train_in_station.passenger_out_train_time:
                 finish = 1
+
             if finish == 1:
                 break
             capacity_pos += 1
