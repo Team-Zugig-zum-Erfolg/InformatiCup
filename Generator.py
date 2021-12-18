@@ -3,6 +3,52 @@ import random
 
 class Generator:
 
+
+    def random_input_generate_file(self, size_station, size_lines, size_trains, size_pa):
+        output = generator.random_input_generate(size_station, size_lines, size_trains, size_pa)
+
+        out_file = open("output_generated.txt","w")
+
+        out_file.write("[Stations]\n")
+        generator.write_objects_to_file(output[0],out_file)
+
+        out_file.write("\n")
+
+        out_file.write("[Lines]\n")
+        generator.write_objects_to_file(output[1],out_file)
+
+        out_file.write("\n")
+
+        out_file.write("[Trains]\n")
+        generator.write_objects_to_file(output[2],out_file)
+
+        out_file.write("\n")
+
+        out_file.write("[Passengers]\n")
+
+        generator.write_objects_to_file(output[3],out_file)
+
+
+
+        out_file.close()
+
+        
+
+    def write_objects_to_file(self, _objects, out_file):
+        for _object in _objects:
+            i=1
+            for attr in _object:
+                if type(attr) != str:
+                    out_file.write(str(attr))
+                else:
+                    out_file.write(str(attr))
+                if i == len(_object):
+                    out_file.write("\n")
+                else:
+                    out_file.write(" ")
+                i+=1
+
+                
     
     def random_input_generate(self, size_station, size_lines, size_trains, size_pa):
 
@@ -51,18 +97,19 @@ class Generator:
                 line_end_1 = random.randint(1,size_stations)
             contain = 0
             for line_current in lines:
-                if line_current[1] == ["S"+str(line_end_0),"S"+str(line_end_1)]:
+                if line_current[1] == "S"+str(line_end_0) and line_current[2] == "S"+str(line_end_1) or line_current[1] == "S"+str(line_end_1) and line_current[2] == "S"+str(line_end_0):
                     contain = 1
             if contain == 1:
                 continue
             else:
                 break
         
-        line_end = ["S"+str(line_end_0),"S"+str(line_end_1)]
+        line_start = "S"+str(line_end_0)
+        line_end = "S"+str(line_end_1)
         line_capacity = random.randint(1,20)
         line_length = random.randint(1,10)
         
-        return [line_id,line_end,line_length,line_capacity]
+        return [line_id,line_start,line_end,line_length,line_capacity]
 
     def random_train_generate(self,number,stations,trains):
 
@@ -87,7 +134,7 @@ class Generator:
             if check == 1:
                 break
 
-        train_speed = round(random.uniform(0, 2), 1)
+        train_speed = round(random.uniform(1, 6), 1)
         train_capacity = random.randint(1,20)
 
         return [train_id,train_start_station,train_speed,train_capacity]
@@ -110,4 +157,4 @@ class Generator:
 
 generator = Generator()
 
-print(generator.random_input_generate(4,4,4,4))
+generator.random_input_generate_file(4,4,4,4)
