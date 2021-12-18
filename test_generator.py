@@ -23,8 +23,9 @@ class test_generator:
             if('Printing score' in (p.stdout.decode("utf-8"))):
                 score += 1
             elif 'Error: Capacity of all trains to low!' in p.stdout.decode("utf-8") or 'not all stations connected' in p.stdout.decode("utf-8"):
+                print("Skipped")
                 score += 1
-                continue
+                break
             else:
                 print("Error")
                 break

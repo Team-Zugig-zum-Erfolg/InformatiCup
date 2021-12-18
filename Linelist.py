@@ -18,45 +18,33 @@ class Linelist:
         earliest_leave_time = -1
         line_capacities = self.lines[train_in_line.line_id]
         for capacity in line_capacities:
-            not_free = 0
-            for _train_in_line in capacity:
-                if train_in_line.end <= _train_in_line.start:
-                    return [True, -1]
-                if Linelist._train_in_line_is_full(_train_in_line, train_in_line.start, train_in_line.end):
-                    not_free = 1
-                    if earliest_leave_time == -1:
-                        earliest_leave_time = _train_in_line.end
-                    elif earliest_leave_time > (_train_in_line.end):
-                        earliest_leave_time = _train_in_line.end
-            if not_free == 0:
+            if len(capacity) == 0:
                 return [True, -1]
 
-        time_change = None
+    
         ends = []
 
         for capacity in line_capacities:
+            if train_in_line.end <= capacity[0].start:
+                return [True,-1]
             for train_pos in range(len(capacity) - 1):
-                time_change = earliest_leave_time
-                if capacity[train_pos].start <= train_in_line.start and train_in_line.end <= capacity[train_pos+1].start:
-                    earliest_leave_time = Linelist._train_in_line_pos(capacity[train_pos], capacity[train_pos + 1],
-                                                                      train_in_line.start, train_in_line.end,
-                                                                      earliest_leave_time)
-                    if earliest_leave_time < train_in_line.start:
-                        earliest_leave_time = capacity[train_pos + 1].end + 1
-                    print("early")
-                if time_change != earliest_leave_time:
-                    time_change = None
-                    break
-                elif train_pos == len(capacity) - 2:
-                    ends.append(capacity[train_pos + 1].end + 1)
-            if time_change != earliest_leave_time:
-                break
-        if time_change is not None:
-            cpa_end = ends[0]
-            for end in ends:
-                if cpa_end > end:
-                    cpa_end = end
-            earliest_leave_time = cpa_end
+                if capacity[train_pos].end <= train_in_line.start and train_in_line.end <= capacity[train_pos+1].start:
+                    #earliest_leave_time = Linelist._train_in_line_pos(capacity[train_pos], capacity[train_pos + 1], train_in_line.start, train_in_line.end)
+                    return [True,-1]
+                elif Linelist._train_in_line_between(capacity[train_pos], capacity[train_pos + 1], train_in_line.start, train_in_line.end) == True:
+                    if capacity[train_pos].end > train_in_line.start:
+                        ends.append(capacity[train_pos].end)
+
+            if capacity[-1].end > train_in_line.start:
+                ends.append(capacity[-1].end)
+            else:
+                return [True,-1]
+        
+        cpa_end = ends[0]
+        for end in ends:
+            if cpa_end > end:
+                cpa_end = end
+        earliest_leave_time = cpa_end
         return [False, earliest_leave_time]
 
     @staticmethod
@@ -73,20 +61,37 @@ class Linelist:
             earliest_leave_time = front_train_in_line.end + 1
         return earliest_leave_time
 
+
+    @staticmethod
+    def _train_in_line_between(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start, end):
+        dis = back_train_in_line.start - front_train_in_line.end
+        dis_needed = end - start
+        return dis_needed <= dis
+
     def add_new_train_in_line(self, train_in_line: TrainInLine):
 
         capacity_number = 0
         for capacity in self.lines[train_in_line.line_id]:
-            not_free = 0
-            for train_in_line_add in capacity:
-                if self._train_in_line_is_full(train_in_line_add, train_in_line.start, train_in_line.end):
-                    not_free = 1
-                    break
-            if not_free == 0:
+            if len(capacity) == 0:
                 self.lines[train_in_line.line_id][capacity_number].append(train_in_line)
                 self.lines[train_in_line.line_id][capacity_number].sort(key=lambda x: x.start)
                 return True
-            capacity_number = capacity_number + 1
+            if train_in_line.end <= capacity[0].start:
+                self.lines[train_in_line.line_id][capacity_number].append(train_in_line)
+                self.lines[train_in_line.line_id][capacity_number].sort(key=lambda x: x.start)
+                return True
+            for train_pos in range(len(capacity) - 1):
+                if capacity[train_pos].end <= train_in_line.start and train_in_line.end <= capacity[train_pos+1].start:
+                    #earliest_leave_time = Linelist._train_in_line_pos(capacity[train_pos], capacity[train_pos + 1], train_in_line.start, train_in_line.end)
+                    self.lines[train_in_line.line_id][capacity_number].append(train_in_line)
+                    self.lines[train_in_line.line_id][capacity_number].sort(key=lambda x: x.start)
+                    return True
+            if capacity[-1].end <= train_in_line.start:
+                self.lines[train_in_line.line_id][capacity_number].append(train_in_line)
+                self.lines[train_in_line.line_id][capacity_number].sort(key=lambda x: x.start)
+                return True
+
+            capacity_number += 1
 
         return False
 
