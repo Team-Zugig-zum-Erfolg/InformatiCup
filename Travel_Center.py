@@ -79,6 +79,8 @@ class Travel_Center:
                         break
                 if found == True:
                     continue
+                if node != e_station_id and e_station_id in S_LINEPLAN[s_station_id][0]:
+                    continue
                 newpaths = self._get_all_line_station(node, e_station_id, lineplan)
                 for newpath in newpaths:
                     lineplans.append(newpath)

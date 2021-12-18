@@ -94,7 +94,6 @@ class Generator:
         #check if all passengers have a valid capacity
         again=1
         while(again==1):
-            print("hallo")
             for passenger in passengers:
                 found=0
                 again=0
