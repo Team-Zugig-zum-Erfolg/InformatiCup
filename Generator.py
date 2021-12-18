@@ -4,29 +4,29 @@ import random
 class Generator:
 
 
-    def random_input_generate_file(self, size_station, size_lines, size_trains, size_pa):
-        output = generator.random_input_generate(size_station, size_lines, size_trains, size_pa)
+    def random_input_generate_file(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max):
+        output = self.random_input_generate(size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max)
 
         out_file = open("output_generated.txt","w")
 
         out_file.write("[Stations]\n")
-        generator.write_objects_to_file(output[0],out_file)
+        self.write_objects_to_file(output[0],out_file)
 
         out_file.write("\n")
 
         out_file.write("[Lines]\n")
-        generator.write_objects_to_file(output[1],out_file)
+        self.write_objects_to_file(output[1],out_file)
 
         out_file.write("\n")
 
         out_file.write("[Trains]\n")
-        generator.write_objects_to_file(output[2],out_file)
+        self.write_objects_to_file(output[2],out_file)
 
         out_file.write("\n")
 
         out_file.write("[Passengers]\n")
 
-        generator.write_objects_to_file(output[3],out_file)
+        self.write_objects_to_file(output[3],out_file)
 
 
 
@@ -50,39 +50,79 @@ class Generator:
 
                 
     
-    def random_input_generate(self, size_station, size_lines, size_trains, size_pa):
+    def random_input_generate(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max):
 
         stations = []
         lines = []
         trains = []
         passengers = []
 
+        random.seed(None)
+
 
         for i in range(1,size_station+1):
-            stations.append(self.random_station_generate(i))
+            stations.append(self.random_station_generate(i,sc_max))
 
         for i in range(1,size_lines+1):
-            lines.append(self.random_line_generate(i,stations,lines))
+            lines.append(self.random_line_generate(i,stations,lines,lc_max,ll_max))
 
         for i in range(1,size_trains+1):
-            trains.append(self.random_train_generate(i,stations,trains))
+            trains.append(self.random_train_generate(i,stations,trains,tc_max))
 
         for i in range(1,size_pa+1):
-            passengers.append(self.random_passenger_generate(i,stations,passengers))
+            passengers.append(self.random_passenger_generate(i,stations,passengers,pgs_max,ptr_max))
 
 
+
+        again=1
+        while(again==1):
+            for station in stations:
+                found=0
+                again=0
+                for line in lines:
+                    if station[0] in [line[1],line[2]]:
+                        found=1
+                        break
+                if found == 0:
+                    lines = []
+                    for i in range(1,size_lines+1):
+                        lines.append(self.random_line_generate(i,stations,lines,lc_max,ll_max))
+                    again=1
+                    break
+
+
+        #check if all passengers have a valid capacity
+        again=1
+        while(again==1):
+            print("hallo")
+            for passenger in passengers:
+                found=0
+                again=0
+                for train in trains:
+                    if passenger[3] <= train[3]:
+                        found=1
+                        break
+                if found == 0:
+                    passengers = []
+                    print(passengers)
+                    for i in range(1,size_pa+1):
+                        passengers.append(self.random_passenger_generate(i,stations,passengers,pgs_max,ptr_max))
+                    again=1
+                    break
+                
+        
         
         return [stations,lines,trains,passengers]
             
-    def random_station_generate(self,number):
+    def random_station_generate(self,number,station_capacity_max):
 
         station = []
         station_name = "S" + str(number)
-        station_capacity = random.randint(1,8)
+        station_capacity = random.randint(1,station_capacity_max)
         station = [station_name,station_capacity]
         return station
 
-    def random_line_generate(self,number,stations,lines):
+    def random_line_generate(self,number,stations,lines,line_capacity_max,line_length_max):
 
         size_stations = len(stations)
         
@@ -106,12 +146,12 @@ class Generator:
         
         line_start = "S"+str(line_end_0)
         line_end = "S"+str(line_end_1)
-        line_capacity = random.randint(1,20)
-        line_length = random.randint(1,10)
+        line_capacity = random.randint(1,line_capacity_max)
+        line_length = random.randint(1,line_length_max)
         
         return [line_id,line_start,line_end,line_length,line_capacity]
 
-    def random_train_generate(self,number,stations,trains):
+    def random_train_generate(self,number,stations,trains,train_capacity_max):
 
         size_stations = len(stations)
 
@@ -134,12 +174,12 @@ class Generator:
             if check == 1:
                 break
 
-        train_speed = round(random.uniform(1, 6), 1)
-        train_capacity = random.randint(1,20)
+        train_speed = round(random.uniform(1, 10), 2)
+        train_capacity = random.randint(1,train_capacity_max)
 
         return [train_id,train_start_station,train_speed,train_capacity]
 
-    def random_passenger_generate(self,number,stations,passengers):
+    def random_passenger_generate(self,number,stations,passengers,group_size,target_round):
 
         size_stations = len(stations)
 
@@ -150,11 +190,9 @@ class Generator:
         while passenger_start_station == passenger_end_station:
             passenger_end_station = random.randint(1,size_stations)
 
-        passenger_group_size = random.randint(1,10)
-        passenger_target_round = random.randint(1,10)
+        passenger_group_size = random.randint(1,group_size)
+        passenger_target_round = random.randint(1,target_round)
 
         return [passenger_id,"S"+str(passenger_start_station),"S"+str(passenger_end_station),passenger_group_size,passenger_target_round]
 
-generator = Generator()
 
-generator.random_input_generate_file(4,4,4,4)

@@ -71,7 +71,14 @@ class Travel_Center:
 
         lineplans = []
         for node in S_LINEPLAN[s_station_id][0]:
+            found=False
             if node not in lineplan:
+                for _lineplan in lineplans:
+                    if node in _lineplan:
+                        found=True
+                        break
+                if found == True:
+                    continue
                 newpaths = self._get_all_line_station(node, e_station_id, lineplan)
                 for newpath in newpaths:
                     lineplans.append(newpath)

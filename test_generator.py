@@ -13,7 +13,7 @@ class test_generator:
         tests = 10
 
         for i in range(tests):
-            generator.random_input_generate_file(4,4,4,4)
+            generator.random_input_generate_file(40,300,10,20,10,4,20,100,60,200)
             p = subprocess.Popen('python main.py' +
                                  ' < output_generated.txt', shell=True)
             out, err = p.communicate()
