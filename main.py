@@ -23,7 +23,7 @@ def main():
     result = Result()
 
     linelist = Linelist(line_input_list)
-    stationlist = Stationlist(station_input_list, train_input_list, result)
+    stationlist = Stationlist(station_input_list, train_input_list)
     travel_center = Travel_Center(
         station_input_list, line_input_list, train_input_list)
 

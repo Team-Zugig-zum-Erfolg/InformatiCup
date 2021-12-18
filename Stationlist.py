@@ -17,7 +17,7 @@ S_CAPACITY = 1
 class Stationlist:
     stations = []  # the stations with capacities
 
-    def __init__(self, stationlist, trainlist, result: Result):
+    def __init__(self, stationlist, trainlist):
         global TRAIN_NOT_IN_STATION
         station_id = 1
         self.stations.append([])
