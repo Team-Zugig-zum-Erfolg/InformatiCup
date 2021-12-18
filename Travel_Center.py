@@ -351,7 +351,7 @@ class Travel_Center:
                             break
 
                 else:
-                    raise ValueError("Error in main: no full stations or delayable travels")
+                    raise ValueError("Error: no full stations or delayable travels")
                     
         else:
             # error: input is invalid, because no route was found, but all stations have to be connected with each other

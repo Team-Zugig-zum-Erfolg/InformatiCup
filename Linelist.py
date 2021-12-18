@@ -21,7 +21,6 @@ class Linelist:
             if len(capacity) == 0:
                 return [True, -1]
 
-    
         ends = []
 
         for capacity in line_capacities:
