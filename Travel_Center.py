@@ -9,6 +9,82 @@ from classes.TrainInStation import TrainInStation
 from classes.Station import Station
 import Result
 
+
+class Graph:
+    def __init__(self):
+        self.nodes = []
+        self.edges = [[]]
+        self.distances = {}
+    
+    def addNode(self,value):
+        self.nodes.append(value)
+    
+    def addEdge(self, fromNode, toNode, distance):
+        if fromNode <= len(self.edges)-1:
+            self.edges[fromNode].append(toNode)
+            self.distances[(fromNode, toNode)] = distance
+        else:
+            for i in range(len(self.edges),fromNode+1):
+                self.edges.append([])
+            self.edges[fromNode].append(toNode)
+            self.distances[(fromNode, toNode)] = distance
+            
+    def removeEdge(self, fromNode, toNode):
+        self.edges[fromNode].remove(toNode)
+        
+
+def shortest(v, path, path_to_target):
+    ''' make shortest path from v.previous'''
+    #print(path[v])
+    if path[v]:
+        path_to_target.append(path[v])
+        shortest(path[v], path, path_to_target)
+    return
+
+
+
+def dijkstra(graph, initial):
+    visited = [initial]
+    weight_visited = [0]
+    path = [0]
+
+    for i in range(len(graph.nodes)):
+        weight_visited.append(0)
+
+    for i in range(len(graph.nodes)):
+        path.append(0)
+
+    nodes = []
+
+    for current_node in graph.nodes:
+        nodes.append(current_node)
+
+    while len(nodes)>0:
+        minNode = None
+        for node in nodes:
+            if node in visited:
+                if minNode is None:
+                    minNode = node
+                elif weight_visited[node] < weight_visited[minNode]:
+                    minNode = node
+        if minNode is None:
+            break
+
+
+
+        nodes.remove(minNode)
+        currentWeight = weight_visited[minNode]
+
+        for edge in graph.edges[minNode]:
+            weight = currentWeight + graph.distances[(minNode, edge)]
+            if edge not in visited or (weight < weight_visited[edge] and edge in visited):
+                weight_visited[edge] = weight
+                visited.append(edge)
+                path[edge] = minNode
+           
+    return visited, path
+
+
 L_ID = 0
 L_S_ID_START = 1
 L_S_ID_END = 2
@@ -26,6 +102,8 @@ T_CAPACITY = 3
 LINE_INPUT_LIST = []
 STATION_INPUT_LIST = []
 TRAIN_INPUT_LIST = []
+
+GRAPH = Graph()
 
 S_LINEPLAN = []
 
@@ -56,13 +134,16 @@ class Travel_Center:
             S_LINEPLAN.append([])
             S_LINEPLAN[station[S_ID]].append([])
             S_LINEPLAN[station[S_ID]].append([])
+            GRAPH.addNode(station[S_ID])
             for line in line_input_list:
                 if line[L_S_ID_START] == station[S_ID]:
                     S_LINEPLAN[station[S_ID]][0].append(line[L_S_ID_END])
                     S_LINEPLAN[station[S_ID]][1].append(line[L_ID])
+                    GRAPH.addEdge(station[S_ID],line[L_S_ID_END],line[L_LEN])
                 elif line[L_S_ID_END] == station[S_ID]:
                     S_LINEPLAN[station[S_ID]][0].append(line[L_S_ID_START])
                     S_LINEPLAN[station[S_ID]][1].append(line[L_ID])
+                    GRAPH.addEdge(station[S_ID],line[L_S_ID_START],line[L_LEN])
 
     def _get_all_line_station(self, s_station_id, e_station_id, lineplan):
         lineplan = lineplan + [s_station_id]
@@ -87,21 +168,27 @@ class Travel_Center:
         return lineplans
 
     def _find_lines(self, s_station_id, e_station_id):
-        lineplans = self._get_all_line_station(s_station_id, e_station_id, [])
+        global GRAPH
+        out, path_out = dijkstra(GRAPH, s_station_id)
+        path = [e_station_id]
+        shortest(e_station_id,path_out,path)
+        lineplans = [path[::-1]]
         lines = []
         j = 0
         for lineplan in lineplans:
             lines.append([])
             for i in range(len(lineplan) - 1):
-                for line in LINE_INPUT_LIST:
-                    if line[L_S_ID_START] == lineplan[i] and line[L_S_ID_END] == lineplan[i + 1]:
-                        lines[j].append(line[L_ID])
-                    elif line[L_S_ID_END] == lineplan[i] and line[L_S_ID_START] == lineplan[i + 1]:
-                        lines[j].append(line[L_ID])
+                t=0
+                for station in S_LINEPLAN[lineplan[i]][0]:
+                    if station == lineplan[i+1]:
+                        lines[j].append(S_LINEPLAN[lineplan[i]][1][t])
+                        break
+                    t += 1
             j += 1
         return lines
 
     def find_best_line(self, s_station_id, e_station_id):
+        #print("S"+str(s_station_id)+"-->S"+str(e_station_id))
         lines = self._find_lines(s_station_id, e_station_id)
         short_len = 0
         short_line = None

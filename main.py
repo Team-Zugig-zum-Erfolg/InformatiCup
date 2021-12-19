@@ -33,6 +33,8 @@ def main():
 
         group = groups.get_priority()
 
+        print("groups:"+str(len(groups.route)))
+
         start_station, end_station, group_size = Travel_Center.check_passengers(
             group)
         start_time_list, trainlist, available = Travel_Center.check_train_in_station(
