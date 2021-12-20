@@ -14,18 +14,18 @@ class test_generator:
 
         for i in range(tests):
             generator.random_input_generate_file(40,300,10,20,10,4,20,100,60,200)
-            p = subprocess.Popen('python main.py' +
-                                 ' < output_generated.txt', shell=True)
-            out, err = p.communicate()
-            p = subprocess.run('Bahn-Simulator.exe -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
-            print(p.stdout.decode("utf-8"))
+            p1 = subprocess.run('python main.py < output_generated.txt', capture_output=True,shell=True)
 
-            if('Printing score' in (p.stdout.decode("utf-8"))):
+            if 'Too many trains in station at beginning' in p1.stderr.decode("utf-8"):
+                print("Skipped (because input is not valid (too many trains at station at beginning))")
                 score += 1
-            elif 'Error: Capacity of all trains to low!' in p.stdout.decode("utf-8") or 'Error: Too many trains in station at beginning!' in p.stdout.decode("utf-8"):
-                print("Skipped")
+                continue
+            
+            p2 = subprocess.run('Bahn-Simulator.exe -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
+            #print(p.stdout.decode("utf-8"))
+
+            if('Printing score' in (p2.stdout.decode("utf-8"))):
                 score += 1
-                break
             else:
                 print("Error")
                 break
