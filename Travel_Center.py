@@ -7,82 +7,14 @@ from classes.Travel import Travel
 from classes.TrainInLine import TrainInLine
 from classes.TrainInStation import TrainInStation
 from classes.Station import Station
+from classes.Graph import Graph
 import Result
 
 
-class Graph:
-    def __init__(self):
-        self.nodes = []
-        self.edges = [[]]
-        self.distances = {}
-    
-    def addNode(self,value):
-        self.nodes.append(value)
-    
-    def addEdge(self, fromNode, toNode, distance):
-        if fromNode <= len(self.edges)-1:
-            self.edges[fromNode].append(toNode)
-            self.distances[(fromNode, toNode)] = distance
-        else:
-            for i in range(len(self.edges),fromNode+1):
-                self.edges.append([])
-            self.edges[fromNode].append(toNode)
-            self.distances[(fromNode, toNode)] = distance
-            
-    def removeEdge(self, fromNode, toNode):
-        self.edges[fromNode].remove(toNode)
+
         
 
-def shortest(v, path, path_to_target):
-    ''' make shortest path from v.previous'''
-    #print(path[v])
-    if path[v]:
-        path_to_target.append(path[v])
-        shortest(path[v], path, path_to_target)
-    return
 
-
-
-def dijkstra(graph, initial):
-    visited = [initial]
-    weight_visited = [0]
-    path = [0]
-
-    for i in range(len(graph.nodes)):
-        weight_visited.append(0)
-
-    for i in range(len(graph.nodes)):
-        path.append(0)
-
-    nodes = []
-
-    for current_node in graph.nodes:
-        nodes.append(current_node)
-
-    while len(nodes)>0:
-        minNode = None
-        for node in nodes:
-            if node in visited:
-                if minNode is None:
-                    minNode = node
-                elif weight_visited[node] < weight_visited[minNode]:
-                    minNode = node
-        if minNode is None:
-            break
-
-
-
-        nodes.remove(minNode)
-        currentWeight = weight_visited[minNode]
-
-        for edge in graph.edges[minNode]:
-            weight = currentWeight + graph.distances[(minNode, edge)]
-            if edge not in visited or (weight < weight_visited[edge] and edge in visited):
-                weight_visited[edge] = weight
-                visited.append(edge)
-                path[edge] = minNode
-           
-    return visited, path
 
 
 L_ID = 0
@@ -169,9 +101,9 @@ class Travel_Center:
 
     def _find_lines(self, s_station_id, e_station_id):
         global GRAPH
-        out, path_out = dijkstra(GRAPH, s_station_id)
+        out, prev_list = Graph.dijkstra(GRAPH, s_station_id)
         path = [e_station_id]
-        shortest(e_station_id,path_out,path)
+        Graph.shortest(e_station_id,prev_list,path)
         lineplans = [path[::-1]]
         lines = []
         j = 0
@@ -679,7 +611,7 @@ class Travel_Center:
 
     def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
         travels = []
-        for i in range(0, len(trains)):
+        for i in range(0, 1):
             start = start_stations[i]
             train = trains[i]
             start_time = start_times[i]
