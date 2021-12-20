@@ -11,12 +11,6 @@ from classes.Graph import Graph
 import Result
 
 
-
-        
-
-
-
-
 L_ID = 0
 L_S_ID_START = 1
 L_S_ID_END = 2
@@ -609,9 +603,29 @@ class Travel_Center:
 
         return start_times, trains, start_stations
 
+    @staticmethod
+    def determine_calling_trains_limit(stations_amount):
+        if stations_amount < 50:
+            return 50 
+        elif stations_amount < 100:
+            return 6
+        elif stations_amount < 150:
+            return 4
+        elif stations_amount < 200:
+            return 2
+        elif stations_amount < 250:
+            return 1
+        else:
+            return 1
+
     def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
         travels = []
-        for i in range(0, 1):
+
+        calling_trains_limit = Travel_Center.determine_calling_trains_limit(len(stationlist.stations))
+        if calling_trains_limit > len(trains):
+            calling_trains_limit = len(trains)
+
+        for i in range(0, calling_trains_limit):
             start = start_stations[i]
             train = trains[i]
             start_time = start_times[i]
