@@ -48,8 +48,6 @@ class Generator:
                     out_file.write(" ")
                 i+=1
 
-                
-    
     def random_input_generate(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max):
 
         stations = []
@@ -71,7 +69,6 @@ class Generator:
 
         for i in range(1,size_pa+1):
             passengers.append(self.random_passenger_generate(i,stations,passengers,pgs_max,ptr_max))
-
 
 
         again=1
@@ -108,9 +105,7 @@ class Generator:
                         passengers.append(self.random_passenger_generate(i,stations,passengers,pgs_max,ptr_max))
                     again=1
                     break
-                
-        
-        
+                       
         return [stations,lines,trains,passengers]
             
     def random_station_generate(self,number,station_capacity_max):
@@ -183,7 +178,7 @@ class Generator:
         size_stations = len(stations)
 
         passenger_id = "P" + str(number)
-      
+        
         passenger_start_station = random.randint(1,size_stations)
         passenger_end_station = random.randint(1,size_stations)
         while passenger_start_station == passenger_end_station:
@@ -193,5 +188,3 @@ class Generator:
         passenger_target_round = random.randint(1,target_round)
 
         return [passenger_id,"S"+str(passenger_start_station),"S"+str(passenger_end_station),passenger_group_size,passenger_target_round]
-
-

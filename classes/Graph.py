@@ -3,20 +3,20 @@ class Graph:
         self.nodes = []
         self.edges = [[]]
         self.distances = {}
-    
-    def addNode(self,value):
+
+    def addNode(self, value):
         self.nodes.append(value)
-    
+
     def addEdge(self, fromNode, toNode, distance):
         if fromNode <= len(self.edges)-1:
             self.edges[fromNode].append(toNode)
             self.distances[(fromNode, toNode)] = distance
         else:
-            for i in range(len(self.edges),fromNode+1):
+            for i in range(len(self.edges), fromNode+1):
                 self.edges.append([])
             self.edges[fromNode].append(toNode)
             self.distances[(fromNode, toNode)] = distance
-            
+
     def removeEdge(self, fromNode, toNode):
         self.edges[fromNode].remove(toNode)
 
@@ -26,7 +26,6 @@ class Graph:
             path_to_target.append(prev_list[v])
             Graph.shortest(prev_list[v], prev_list, path_to_target)
         return
-
 
     @staticmethod
     def dijkstra(graph, initial):
@@ -45,7 +44,7 @@ class Graph:
         for current_node in graph.nodes:
             nodes.append(current_node)
 
-        while len(nodes)>0:
+        while len(nodes) > 0:
             minNode = None
             for node in nodes:
                 if node in visited:
@@ -56,8 +55,6 @@ class Graph:
             if minNode is None:
                 break
 
-
-
             nodes.remove(minNode)
             currentWeight = weight_visited[minNode]
 
@@ -67,7 +64,5 @@ class Graph:
                     weight_visited[edge] = weight
                     visited.append(edge)
                     path[edge] = minNode
-           
-        return visited, path
-    
 
+        return visited, path
