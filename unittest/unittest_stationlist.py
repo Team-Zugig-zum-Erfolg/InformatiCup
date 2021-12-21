@@ -11,7 +11,7 @@ from classes.TrainInStation import TrainInStation
 __unittest = True
 
 stations = [Station(1,1), Station(2,1), Station(3,2), Station(3,2), Station(4,2), Station(5,3), Station(6,3)]
-trains = [Train(1,Station(-1,1),1,10), Train(2,Station(-1,1),1,10), Train(3,Station(-1,1),1,10), Train(4,Station(-1,3),1,10)]]
+trains = [Train(1,Station(1,1),1,10), Train(2,Station(3,2),1,10), Train(3,Station(5,3),1,10), Train(4,Station(6,3),1,10)]]
 
 stationlist = []
 
