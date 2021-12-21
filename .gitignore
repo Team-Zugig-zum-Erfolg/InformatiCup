@@ -1,5 +1,5 @@
 
 *.pyc
-Result/*.txt
-output.txt
-output_generated.txt
+abfahrt/Result/*.txt
+abfahrt/output.txt
+abfahrt/output_generated.txt
