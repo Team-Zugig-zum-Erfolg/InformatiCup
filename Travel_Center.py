@@ -127,8 +127,27 @@ class Travel_Center:
                 short_line = line
         return [short_len, short_line]
 
-    def time_count_train(self, start_station, end_station, train, start_time):
+
+    def find_only_one_line_between_stations(self,start_station_id,end_station_id):
+        t=0
+        line = None
+        for next_station_id in S_LINEPLAN[start_station_id][0]:
+            if next_station_id == end_station_id:
+                line = S_LINEPLAN[start_station_id][1][t]
+                break
+            t+=1
+        length = LINE_INPUT_LIST[line - 1][L_LEN]
+        return [length,[line]]
+
+    def time_count_length(self,start_station,end_station):
         length, lines = self.find_best_line(start_station.id, end_station.id)
+        return length
+
+    def time_count_train(self, start_station, end_station, train, start_time, use_one_line=False):
+        if use_one_line == False:
+            length, lines = self.find_best_line(start_station.id, end_station.id)
+        else:
+            length, lines = self.find_only_one_line_between_stations(start_station.id, end_station.id)
         line_time = []
         station_times = [TrainInStation(start_time,start_time+1,train,None,start_station.id)]
         on_board = start_time + 1
@@ -158,7 +177,7 @@ class Travel_Center:
         
         station_time = TrainInStation(add_time-1, add_time, train, None, end_station.id)
 
-        return Travel(start_time, on_board, line_time, station_time, start_station, end_station, train, station_times)
+        return Travel(start_time, on_board, line_time, station_time, start_station, end_station, train, station_times, length)
 
     @staticmethod
     def full_stations_list_not_empty(full_stations_list):
@@ -493,7 +512,7 @@ class Travel_Center:
         i=0
         for train in trains:
             travels.append(travel_center.time_count_train(end_station, next_station, train,
-                                                start_times[i]))
+                                                start_times[i],True))
             i= i + 1
         available = 0
         while not available:
@@ -604,7 +623,7 @@ class Travel_Center:
         return start_times, trains, start_stations
 
     @staticmethod
-    def determine_calling_trains_limit(stations_amount):
+    def determine_trains_limit(stations_amount):
         if stations_amount < 50:
             return 50 
         elif stations_amount < 100:
@@ -621,7 +640,7 @@ class Travel_Center:
     def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
         travels = []
 
-        calling_trains_limit = Travel_Center.determine_calling_trains_limit(len(stationlist.stations))
+        calling_trains_limit = Travel_Center.determine_trains_limit(len(stationlist.stations))
         if calling_trains_limit > len(trains):
             calling_trains_limit = len(trains)
 

@@ -3,7 +3,7 @@ from classes.TrainInStation import TrainInStation
 
 class Travel:
     def __init__(self, start_time, on_board, line_time, station_time: TrainInStation, start_station,
-                 end_station, train, station_times):
+                 end_station, train, station_times, length):
         self.start_time = start_time
         self.on_board = on_board
         self.line_time = line_time
@@ -12,6 +12,7 @@ class Travel:
         self.end_station = end_station
         self.train = train
         self.station_times = station_times
+        self.length = length
 
     def __repr__(self):
 

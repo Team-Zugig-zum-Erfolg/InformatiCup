@@ -13,7 +13,7 @@ class test_generator:
         tests = 10
 
         for i in range(tests):
-            generator.random_input_generate_file(40,300,10,20,10,4,20,100,60,200)
+            generator.random_input_generate_file(60,1000,10,20,10,100,20,100,60,200)
             p1 = subprocess.run('python main.py < output_generated.txt', capture_output=True,shell=True)
 
             if 'Too many trains in station at beginning' in p1.stderr.decode("utf-8"):
@@ -26,6 +26,7 @@ class test_generator:
 
             if('Printing score' in (p2.stdout.decode("utf-8"))):
                 score += 1
+                print("Successful: "+str(score))
             else:
                 print("Error")
                 break
