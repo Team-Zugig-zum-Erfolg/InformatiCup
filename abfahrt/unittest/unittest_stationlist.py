@@ -10,7 +10,7 @@ from classes.TrainInStation import TrainInStation
 
 __unittest = True
 
-stations = [Station(1,1), Station(2,1), Station(3,2), Station(3,2), Station(4,2), Station(5,3), Station(6,3)]
+stations = [Station(1,1), Station(2,1), Station(3,2),  Station(4,2), Station(5,3), Station(6,3)]
 trains = [Train(1,Station(1,1),1,10), Train(2,Station(3,2),1,10), Train(3,Station(5,3),1,10), Train(4,Station(6,3),1,10)]
 
 stationlist = []
@@ -30,10 +30,11 @@ class Testing(unittest.TestCase):
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[2],4,2)),[False,-1])
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[2],3,2)),[True,-1])
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(2,3,trains[2],3,2)),[True,-1])
-
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(4,3,trains[1],2,1)),[False,-1])
 		
 	def test_delay_time(self):
-		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[1],4,1)),[False,6])
-		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[1],3,1)),[True,-1])
-				
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[1],4,1)),[False, -1])
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(0,1,trains[3],1,1)),[False,-1])
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(0,2,trains[2],1,1)),[False,-1])		
+
 unittest.main()
