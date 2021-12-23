@@ -27,7 +27,7 @@ test_stationlist.stations[1][0].append(TrainInStation(0,1,trains[0],1,2))
 	
 class Testing(unittest.TestCase):
 
-	def test_between_two_trains(self):
+	def test_traininline(self):
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[2],4,2)),[False,-1])
 
 		
