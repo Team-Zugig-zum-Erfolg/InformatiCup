@@ -3,36 +3,38 @@ import unittest, sys, os
 path = os.path.abspath(os.getcwd())
 sys.path.append(path+'\\..')
 
-from Stationlist import Stationlist
+from Linelist import Linelist
 from classes.Train import Train
 from classes.Station import Station
 from classes.Line import Line
-from classes.TrainInStation import TrainInStation
 from classes.TrainInLine import TrainInLine
 
 __unittest = True
-# self.id, self.start.id, self.end.id, self.length, self.capacity
-line = [Line(Station(1,1), Station(2,1), 10, 2)]
-trains = [Train(1,Station(1,1),1,10), Train(2,Station(3,2),1,10), Train(3,Station(5,3),1,10), Train(4,Station(6,3),1,10)]
 
-stationlist = []
 
-for station in stations:
-        stationlist.append(station.to_list())
+stations = [Station(1,1),Station(2,2),Station(3,1)]
+lines = [Line(1,stations[0], stations[2],2,1),Line(2,stations[2], stations[1],2,1),Line(3,stations[0], stations[1],2,1)]
+trains = [Train(1,stations[0],1,10), Train(2,stations[1],1,10), Train(3,stations[2],1,10), Train(4,stations[1],1,10)]
 
-test_stationlist = Stationlist(stationlist,trains)
+linelist = []
 
-test_stationlist.stations[1][0].append(TrainInStation(0,1,trains[0],1,2))
+for line in lines:
+        linelist.append(line.to_list())
 
+test_linelist = Linelist(linelist)
+
+test_linelist.lines[1][0].append(TrainInLine(trains[0],0,1,1))
+test_linelist.lines[1][0].append(TrainInLine(trains[1],4,5,1))
 	
 class Testing(unittest.TestCase):
-
-	def test_traininline(self):
-		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[2],4,2)),[False,-1])
-
+        
+        def test_between_trains(self):
+            test_linelist.compare_free(TrainInLine(trains[2],2,2,1))
 		
-	def test_delay_time(self):
-		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[1],4,1)),[False, -1])
-			
+        def test_after_train(self):
+	        return
+
+        #def test_before_first_train(self):
+         #   return
 
 unittest.main()
