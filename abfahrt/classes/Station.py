@@ -33,8 +33,11 @@ class Station:
     self.capacity = capacity
     return True
   
-
   def __repr__(self):
       output = " ".join([self.get_id_str(),str(self.get_capacity())])
       return output
     
+  def __eq__(self, other):
+        if (isinstance(other, Station)):
+            return self.id == other.id and self.capacity == other.capacity
+        return False
