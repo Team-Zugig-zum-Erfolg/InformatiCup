@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-files_test = os.listdir('test/')
+files_test = os.listdir('testfiles/')
 files_test.remove('testlexicon.txt')
 files_test.remove('.DS_Store')
 files_test.remove('test_100_passengers.txt')
@@ -20,10 +20,10 @@ class test_simulator:
         for i in range(len(files_test)):
             print('========' + files_test[i] + '========')
             p = subprocess.Popen('python main.py' +
-                                 ' < test/' + files_test[i], shell=True)
+                                 ' < testfiles/' + files_test[i], shell=True)
             out, err = p.communicate()
             print('====' + files_test[i] + '++++gotest' '====')
-            p = subprocess.run('Bahn-Simulator.exe -input test/' +
+            p = subprocess.run('Bahn-Simulator.exe -input testfiles/' +
                                files_test[i] + ' -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
             print(p.stdout.decode("utf-8"))
 
