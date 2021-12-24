@@ -58,14 +58,16 @@ class Passenger:
     return self.id
   
   def set_id(self,id_passenger:int):
+    if type(id_passenger) != int:
+      return False
     self.id = id_passenger
     return True
     
   def get_start_station(self):
     return self.start_station
   
-  def set_start_station(self,start_station):
-    if type(start_station) != str:
+  def set_start_station(self,start_station:Station):
+    if (isinstance(start_station, Station) == False):
       return False
     self.start_station = start_station
     return True
@@ -73,10 +75,10 @@ class Passenger:
   def get_end_station(self):
     return self.end_station
   
-  def set_end_station(self,end):
-    if type(end) != list or len(end) != 2:
+  def set_end_station(self,end_station:Station):
+    if (isinstance(end_station, Station) == False):
       return False
-    self.end_station = end
+    self.end_station = end_station
     return True
   
   def get_group_size(self):
@@ -97,10 +99,13 @@ class Passenger:
   def get_target_round(self):
     return self.target_time
   
-
-
   def __repr__(self):
-      output = " ".join([self.get_id_str(),self.get_start_station().get_id_str(),self.get_end_station().get_id_str(),str(self.get_group_size()),str(self.get_target_round())])
-      return output
+    output = " ".join([self.get_id_str(),self.get_start_station().get_id_str(),self.get_end_station().get_id_str(),str(self.get_group_size()),str(self.get_target_round())])
+    return output
+  
+  def __eq__(self, other):
+    if (isinstance(other, Station)):
+      return self.id == other.id and self.group_size == other.group_size and self.start_station == other.start_station and self.end_station == other.end_station and self.target_time == other.target_time
+    return False
   
   

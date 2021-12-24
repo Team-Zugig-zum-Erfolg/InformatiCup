@@ -30,11 +30,12 @@ class Line:
     out = "L" + str(self.id)
     return out
     
-
   def get_id(self):
     return self.id
   
   def set_id(self,id_line:str):
+    if type(id_line) != str:
+      return False
     self.id = id_line
     return True
   
@@ -42,13 +43,26 @@ class Line:
     return self.capacity
   
   def set_capacity(self,capacity:int):
+    if type(capacity) != int:
+      return False
     self.capacity = capacity
     return True
   
+  def get_start(self):
+    return self.start
+  
+  def set_start(self,start:Station):
+    if (isinstance(start,Station)==False):
+      return False
+    self.start = start
+    return True
+
   def get_end(self):
     return self.end
   
   def set_end(self,end:Station):
+    if (isinstance(end,Station)==False):
+      return False
     self.end = end
     return True
   
@@ -56,13 +70,19 @@ class Line:
     return self.length
   
   def set_length(self,length:float):
+    if type(length) != float:
+      return False
     self.length = length
     return True
 
-
   def __repr__(self):
-      # output = " ".join([self.get_id(),str(self.get_end()[0]),str(self.get_end()[1]),str(self.get_length()),str(self.get_capacity())])
-      out = self.to_str_input()
-      return out
+    # output = " ".join([self.get_id(),str(self.get_end()[0]),str(self.get_end()[1]),str(self.get_length()),str(self.get_capacity())])
+    out = self.to_str_input()
+    return out
+
+  def __eq__(self, other):
+    if (isinstance(other, Station)):
+      return self.id == other.id and self.capacity == other.capacity and self.length == other.length and self.start == other.start and self.end == other.end
+    return False
 
 

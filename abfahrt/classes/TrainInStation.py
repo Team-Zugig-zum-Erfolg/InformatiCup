@@ -9,3 +9,8 @@ class TrainInStation:
     def __repr__(self):
         output = ",".join([str(self.passenger_out_train_time),str(self.passenger_in_train_time),str(self.train.get_id_str()),str(self.leave_time)])
         return output
+    
+    def __eq__(self, other):
+        if (isinstance(other, TrainInStation)):
+            return self.train == other.train and self.passenger_out_train_time == other.passenger_out_train_time and self.passenger_in_train_time == other.passenger_in_train_time and self.leave_time == other.leave_time and self.station_id == other.station_id
+        return False

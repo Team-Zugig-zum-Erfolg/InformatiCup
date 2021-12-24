@@ -99,4 +99,8 @@ class Train:
       output = " ".join([self.get_id_str(),self.start_station.get_id_str(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
+  def __eq__(self, other):
+    if (isinstance(other, Train)):
+      return self.id == other.id and self.capacity == other.capacity and self.start_station == other.start_station and self.speed == other.speed
+    return False
 
