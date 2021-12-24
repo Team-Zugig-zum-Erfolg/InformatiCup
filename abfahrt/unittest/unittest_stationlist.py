@@ -37,21 +37,15 @@ class Testing(unittest.TestCase):
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(2,7,trains[3],6,3)),[True,-1])
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,99,trains[3],4,1)),[False,-1])
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(2,2,trains[3],6,1)),[False,-1])
-		
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(-1,7,trains[0],3,1)),[False,-1])
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(-1,7,trains[0],-1,-1)),[True,-1])
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(0,1,trains[3],1,1)),[False,-1])
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(0,2,trains[2],1,1)),[False,-1])		
-
-
-
-
-
-
-
-	def test_delay_time(self):
-		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[1],4,1)),[False, -1])
-		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(0,1,trains[3],1,1)),[False,-1])
-		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(0,2,trains[2],1,1)),[False,-1])		
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[2],2,1)),[False,-1])	
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(2,7,trains[3],7,3)),[True,-1])
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(2,7,trains[3],100,3)),[True,-1])
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(2,7,trains[3],1000000,3)),[True,-1])
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,1,trains[2],5,2)),[False,-1])		
+		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[1],7,1)),[False,-1])	
 
 unittest.main()
