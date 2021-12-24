@@ -15,6 +15,5 @@ class Travel:
         self.length = length
 
     def __repr__(self):
-
         output = ",".join([str(self.start_time),str(self.on_board),str(self.start_station.get_id_str()),str(self.end_station.get_id_str()),str(self.train.get_id_str())])
         return output

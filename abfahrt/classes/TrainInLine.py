@@ -8,4 +8,9 @@ class TrainInLine:
     def __repr__(self):
         output = ",".join(["T"+str(self.train),str(self.start),str(self.end),str(self.line_id)])
         return output
+
+    def __eq__(self, other):
+        if (isinstance(other, TrainInLine)):
+            return self.train == other.train and self.start == other.start and self.end == other.end and self.line_id == other.line_id
+        return False
         
