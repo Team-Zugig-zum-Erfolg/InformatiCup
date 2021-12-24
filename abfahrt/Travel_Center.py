@@ -207,8 +207,7 @@ class Travel_Center:
         prev_station = travel.start_station
         for travel_in_line in travel.line_time:
             line_available, line_time_change = linelist.compare_free(travel_in_line)
-            # print("line_time_change: "+str(line_time_change))
-            # print("line_time_change: "+str(line_available))
+           
             line_availables_list.append(line_available)
             line_time_changes.append(line_time_change)
             stations = Travel_Center.get_stations_by_line(travel_in_line.line_id)
@@ -237,35 +236,29 @@ class Travel_Center:
         if station_available == False and station_time_change == -1:
             station_is_full = True
             available = False
-            # print("full")
 
         station_delay_time = 0
         if not station_available and station_is_full == False:
-            # print("station_time_change: "+str(station_time_change))
-            # print("out_train_time:"+str(travel.station_time.passenger_out_train_time))
-            station_delay_time = ((station_time_change) - travel.station_time.passenger_out_train_time)
-            # print("station_delay_time:"+str(station_delay_time))
+            station_delay_time = ((station_time_change) - travel.station_time.arrive_train_time)
             available = False
 
         delay_time = station_delay_time
 
-        i=0
-        for _line_time in travel.line_time:
+        
+        for i in range(len(travel.line_time)):
             if not line_availables_list[i]:
                 available = False
                 line_delay_time = line_time_changes[i] - travel.line_time[i].start
                 if delay_time < line_delay_time:
                     delay_time = line_delay_time
-            i = i + 1
 
-        i=0
-        for _station_time in travel.station_times[1:]:
+        
+        for i in range(0,len(travel.station_times[1:])):
             if not station_availables_list[i]:
                     available = False
-                    current_station_delay_time = station_time_changes[i] - travel.station_times[i+1].passenger_out_train_time
+                    current_station_delay_time = station_time_changes[i] - travel.station_times[i+1].arrive_train_time
                     if delay_time < current_station_delay_time:
                         delay_time = current_station_delay_time
-            i = i + 1
 
         return [available, delay_time, station_is_full, full_stations]
 
@@ -277,11 +270,11 @@ class Travel_Center:
             travel.line_time[i].start = travel.line_time[i].start + delay_time
             travel.line_time[i].end = travel.line_time[i].end + delay_time
         for i in range(0, len(travel.station_times)):
-            travel.station_times[i].passenger_out_train_time = travel.station_times[i].passenger_out_train_time + delay_time
+            travel.station_times[i].arrive_train_time = travel.station_times[i].arrive_train_time + delay_time
             travel.station_times[i].passenger_in_train_time = travel.station_times[i].passenger_in_train_time + delay_time
             if travel.station_times[i].leave_time != None:
                 travel.station_times[i].leave_time = travel.station_times[i].leave_time + delay_time
-        travel.station_time.passenger_out_train_time = travel.station_time.passenger_out_train_time + delay_time
+        travel.station_time.arrive_train_time = travel.station_time.arrive_train_time + delay_time
         travel.station_time.passenger_in_train_time = travel.station_time.passenger_in_train_time + delay_time
 
     @staticmethod
@@ -331,8 +324,9 @@ class Travel_Center:
                 full_station_list = []
                 availables = []
                 delay_times = []
-                full_end_station = [] #if full_end_station[i]=True, then for travels[i] the end_station is blocked
-                # (there are only trains with leave_time=None before the train will arrive)
+                full_end_station = []   #if full_end_station[i]=True, then for travels[i] the end_station is blocked
+                                        #blocked = (there are only trains with leave_time=None before the train will arrive)
+                
                 for travel in travels:
                     available, delay_time, full, full_stations = Travel_Center.check_line_station(travel, stationlist, linelist, result, travel_center)
                     availables.append(available)
@@ -350,11 +344,11 @@ class Travel_Center:
                     i += 1
 
                 if available_run: 
-                    short_time = travel_available[0].station_time.passenger_out_train_time
+                    short_time = travel_available[0].station_time.arrive_train_time
                     short_travel = travel_available[0]
                     for travel in travel_available:
-                        if short_time > travel.station_time.passenger_out_train_time:
-                            short_time = travel.station_time.passenger_out_train_time
+                        if short_time > travel.station_time.arrive_train_time:
+                            short_time = travel.station_time.arrive_train_time
                             short_travel = travel
 
                     save, _ = Travel_Center.save_travel(short_travel, groups, passengers, stationlist, linelist, result, travel_center)
@@ -375,9 +369,9 @@ class Travel_Center:
                     t=0
                     i=0
                     for travel in travels:
-                        if delay_times[i] == 0 and smallest_arrive_time > travel.station_time.passenger_out_train_time:
+                        if delay_times[i] == 0 and smallest_arrive_time > travel.station_time.arrive_train_time:
                             travel_short = travel
-                            smallest_arrive_time = travel.station_time.passenger_out_train_time
+                            smallest_arrive_time = travel.station_time.arrive_train_time
                             t = i
                         i = i + 1
 
@@ -397,7 +391,7 @@ class Travel_Center:
         else:
             # error: input is invalid, because no route was found, but all stations have to be connected with each other
             # (so this should never happen)
-            raise ValueError("main error: no route could be found")
+            raise ValueError("error: no travels could be found")
 
     @staticmethod
     def check_passengers(route):
@@ -538,11 +532,11 @@ class Travel_Center:
                 i += 1
 
             if available_run:
-                    short_time = travel_available[0].station_time.passenger_out_train_time
+                    short_time = travel_available[0].station_time.arrive_train_time
                     short_travel = travel_available[0]
                     for travel in travel_available:
-                        if short_time > travel.station_time.passenger_out_train_time:
-                            short_time = travel.station_time.passenger_out_train_time
+                        if short_time > travel.station_time.arrive_train_time:
+                            short_time = travel.station_time.arrive_train_time
                             short_travel = travel
             
                     Travel_Center.save_travel(short_travel, None, None, stationlist, linelist, result, travel_center)
@@ -557,8 +551,8 @@ class Travel_Center:
                     short_travel = None
                     i=0
                     for travel in travels:
-                        if short_time > travel.station_time.passenger_out_train_time and delay_times[i] == 0:
-                            short_time = travel.station_time.passenger_out_train_time
+                        if short_time > travel.station_time.arrive_train_time and delay_times[i] == 0:
+                            short_time = travel.station_time.arrive_train_time
                             short_travel = travel
                         i = i + 1
 
@@ -583,8 +577,8 @@ class Travel_Center:
             for capacity in capacities:
                 for _train_in_station in capacity:
                     if train.id == _train_in_station.train.id:
-                        if start_times[i] <= _train_in_station.passenger_out_train_time:
-                            if _train_in_station.passenger_out_train_time == _train_in_station.passenger_in_train_time:
+                        if start_times[i] <= _train_in_station.arrive_train_time:
+                            if _train_in_station.arrive_train_time == _train_in_station.passenger_in_train_time:
                                 trains.remove(train)
             i = i + 1
 
