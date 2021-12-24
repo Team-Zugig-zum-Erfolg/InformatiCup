@@ -169,7 +169,7 @@ class Travel_Center:
                 current_leave_time = add_time + self.train_line_time_list[train.id][lines[li]]
                 current_passenger_in_time = add_time + self.train_line_time_list[train.id][lines[li]]
 
-            station_times.append(TrainInStation(add_time + self.train_line_time_list[train.id][lines[li]],current_passenger_in_time,train.id,current_leave_time,next_station.id))                          
+            station_times.append(TrainInStation(add_time + self.train_line_time_list[train.id][lines[li]],current_passenger_in_time,train,current_leave_time,next_station.id))                          
             
             add_time += self.train_line_time_list[train.id][lines[li]] + 1
 
@@ -204,17 +204,14 @@ class Travel_Center:
         available = True
         station_is_full = False
         full_stations = []
-        prev_station = travel.start_station
+        next_station = travel.start_station
         for travel_in_line in travel.line_time:
             line_available, line_time_change = linelist.compare_free(travel_in_line)
            
             line_availables_list.append(line_available)
             line_time_changes.append(line_time_change)
-            stations = Travel_Center.get_stations_by_line(travel_in_line.line_id)
-            if stations[0].id != prev_station.id:
-                next_station = stations[0]
-            else:
-                next_station = stations[1]
+            next_station = Travel_Center.get_next_station_in_travel(travel,next_station)
+            
            
             current_leave_time = None
             current_passenger_in_time = travel_in_line.end + 1
@@ -229,7 +226,7 @@ class Travel_Center:
             station_availables_list.append(s_available)
             station_time_changes.append(s_time_change)
 
-            prev_station = next_station
+          
 
         station_available, station_time_change = stationlist.compare_free_place(travel.station_time)
 
@@ -279,41 +276,30 @@ class Travel_Center:
 
     @staticmethod
     def save_travel(travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center, train_to_replace=False):
-        enable, delay_time, full , _ = Travel_Center.check_line_station(travel, stationlist, linelist, result, travel_center)
+        enable, _, full, _ = Travel_Center.check_line_station(travel, stationlist, linelist, result, travel_center)
         if enable or (full == True and train_to_replace):
             
-            save = stationlist.add_train_leave_time(travel.train, travel.on_board, travel.start_station.id, result)
+            stationlist.add_train_leave_time(travel.train, travel.on_board, travel.start_station.id, result)
 
-            prev_station = travel.start_station
-            for line in travel.line_time:
-                save = linelist.add_new_train_in_line(line)
-
-                stations = Travel_Center.get_stations_by_line(line.line_id)
-                if stations[0].id != prev_station.id:
-                    next_station = stations[0]
-                else:
-                    next_station = stations[1]
-                if next_station.id != travel.end_station.id:
-                    stationlist.add_new_train_in_station(TrainInStation(line.end,line.end,TRAIN_INPUT_LIST[line.train-1],line.end,next_station.id),result)
-
-                prev_station = next_station
-
+            for train_in_line in travel.line_time:
+                save = linelist.add_new_train_in_line(train_in_line)
                 if save:
-                    result.save_train_depart(line.train, line.start, line.line_id)
+                    result.save_train_depart(train_in_line.train, train_in_line.start, train_in_line.line_id)
 
-            
+            for train_in_station in travel.station_times[1:len(travel.station_times)-1]:
+                stationlist.add_new_train_in_station(train_in_station, None)
 
-            save = stationlist.add_new_train_in_station(travel.station_time, result, train_to_replace)
+            stationlist.add_new_train_in_station(travel.station_time, None, train_to_replace)
 
             if passengers is not None:
-
                 groups.passengers_arrive(passengers)
-
                 for passenger in passengers:
-                    result.save_passenger_board(passenger.id, travel.on_board, line.train)
+                    result.save_passenger_board(passenger.id, travel.on_board, travel.train.id)
                     result.save_passenger_detrain(passenger.id, travel.station_time.passenger_in_train_time)
-
-        return [save, delay_time]
+            
+            return True
+        else:
+            return False
 
 
     @staticmethod
@@ -351,7 +337,7 @@ class Travel_Center:
                             short_time = travel.station_time.arrive_train_time
                             short_travel = travel
 
-                    save, _ = Travel_Center.save_travel(short_travel, groups, passengers, stationlist, linelist, result, travel_center)
+                    save = Travel_Center.save_travel(short_travel, groups, passengers, stationlist, linelist, result, travel_center)
 
                 elif 0 not in delay_times and -1 not in delay_times: #travels have to be delayed first, before clearing full stations
 
@@ -391,7 +377,7 @@ class Travel_Center:
         else:
             # error: input is invalid, because no route was found, but all stations have to be connected with each other
             # (so this should never happen)
-            raise ValueError("error: no travels could be found")
+            raise ValueError("Error: no travels could be found")
 
     @staticmethod
     def check_passengers(route):
@@ -454,12 +440,24 @@ class Travel_Center:
         return False
 
     @staticmethod
+    def get_next_station_in_travel(travel, station):
+        neighboor_stations = Travel_Center.get_neighboor_stations(station)
+        station_times = travel.station_times
+        for i in range(1,len(station_times)):
+            if station_times[i-1].station_id == station.id:
+                for neighboor_station in neighboor_stations:
+                    if station_times[i].station_id == neighboor_station.id:
+                        return neighboor_station
+        return None
+
+    @staticmethod
     def get_prev_station_in_travel(travel, station):
         neighboor_stations = Travel_Center.get_neighboor_stations(station)
-        for station_time in travel.station_times:
-            for neighboor_station in neighboor_stations:
-                if station_time.station_id == neighboor_station.id:
-                    return neighboor_station
+        for i in range(1,len(travel.station_times)):
+            if travel.station_times[i].station_id == station.id:
+                for neighboor_station in neighboor_stations:
+                    if travel.station_times[i-1].station_id == neighboor_station.id:
+                        return neighboor_station
         return None
 
     @staticmethod

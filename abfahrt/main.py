@@ -33,8 +33,6 @@ def main():
 
         group = groups.get_priority()
 
-        #print("groups:"+str(len(groups.route)))
-
         start_station, end_station, group_size = Travel_Center.check_passengers(
             group)
         start_time_list, trainlist, available = Travel_Center.check_train_in_station(
@@ -48,7 +46,7 @@ def main():
                     start_station, trains, start_times, start_stations, stationlist, linelist, result, travel_center)
             else:
                 if len(group) == 1:
-                    raise ValueError("Error: Capacity of all trains to low!")
+                    raise ValueError("Error: Capacity of all trains too low!")
                 groups.split_group(group)
             continue
 
@@ -71,10 +69,7 @@ def main():
         Travel_Center.determine_and_save_shortest_travel(
             travels, groups, group, stationlist, linelist, result, travel_center)
 
-    #print("Stations:"+str(stationlist.stations))
-    #print("Lines:"+str(linelist.lines))
     print(result.to_output_text())
-    #result.to_file()
     result.to_file_same()
     return
 
