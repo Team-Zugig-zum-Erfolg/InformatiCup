@@ -14,6 +14,8 @@ class test_generator:
 
         for i in range(test_amount):
             test_number += 1
+            #random_input_generate_file(size_station, size_lines, size_trains, size_pa, sc_max, lc_max (lc=line capacity), ll_max (ll=line length),
+            #                           tc_max (tc = train capacity), pgs_max (pgs = passenger group size), ptr_max(passenger target round))
             generator.random_input_generate_file(60,1000,10,20,10,100,20,100,60,200) 
             p1 = subprocess.run('python main.py < output_generated.txt', capture_output=True,shell=True)
 
