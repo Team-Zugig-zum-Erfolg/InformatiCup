@@ -1,5 +1,6 @@
 import subprocess
 import os
+import platform
 
 files_test = os.listdir('abfahrt/testfiles/')
 files_test.remove('testlexicon.txt')
@@ -18,11 +19,22 @@ class test_simulator:
         global Errlist
         for i in range(len(files_test)):
             print('========' + files_test[i] + '========')
-            p = subprocess.Popen('python -m abfahrt < abfahrt/testfiles/' + files_test[i], shell=True)
+            if platform.system() == "Linux":
+            	p = subprocess.Popen('python3 -m abfahrt < abfahrt/testfiles/' + files_test[i], shell=True)
+            elif platform.system() == "Windows":
+            	p = subprocess.Popen('python -m abfahrt < abfahrt/testfiles/' + files_test[i], shell=True)
+            else:
+            	return
             out, err = p.communicate()
             print('====' + files_test[i] + '++++gotest' '====')
-            p = subprocess.run('"abfahrt/simulator/Bahn-Simulator.exe" -input abfahrt/testfiles/' +
+            if platform.system() == "Linux":
+            	p = subprocess.run('"./abfahrt/simulator/bahn-simulator" -input abfahrt/testfiles/' +
                                files_test[i] + ' -output output.txt -verbose', stdout=subprocess.PIPE, shell=True, cwd=".")
+            elif platform.system() == "Windows":
+            	p = subprocess.run('"abfahrt/simulator/bahn-simulator.exe" -input abfahrt/testfiles/' +
+                               files_test[i] + ' -output output.txt -verbose', stdout=subprocess.PIPE, shell=True, cwd=".")
+            else:
+            	return
             print(p.stdout.decode("utf-8"))
 
             if('Printing score' in (p.stdout.decode("utf-8"))):
