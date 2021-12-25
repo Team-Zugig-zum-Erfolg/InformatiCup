@@ -1,5 +1,5 @@
 from typing import List
-from classes.Station import Station
+from abfahrt.classes.Station import Station
 
 class Passenger:
   # Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)

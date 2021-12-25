@@ -1,9 +1,9 @@
-from Stationlist import Stationlist
-from Linelist import Linelist
-from Input import Input
-from Groups import Groups
-from Result import Result
-from Travel_Center import Travel_Center
+from abfahrt.Stationlist import Stationlist
+from abfahrt.Linelist import Linelist
+from abfahrt.Input import Input
+from abfahrt.Groups import Groups
+from abfahrt.Result import Result
+from abfahrt.Travel_Center import Travel_Center
 
 
 def main():
@@ -74,4 +74,3 @@ def main():
     return
 
 
-main()

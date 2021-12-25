@@ -1,4 +1,4 @@
-from classes.Station import Station
+from abfahrt.classes.Station import Station
 
 class Line:
   # Strecken: str(ID) str(Anfang) str(Ende) dec(Länge) int(Kapazität)

@@ -1,14 +1,14 @@
 import math # This module provides access to the mathematical functions defined by the C standard. (https://docs.python.org/3/library/math.html)
 import sys # This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
 
-from Stationlist import Stationlist
-from Linelist import Linelist
-from classes.Travel import Travel
-from classes.TrainInLine import TrainInLine
-from classes.TrainInStation import TrainInStation
-from classes.Station import Station
-from classes.Graph import Graph
-import Result
+from abfahrt.Stationlist import Stationlist
+from abfahrt.Linelist import Linelist
+from abfahrt.classes.Travel import Travel
+from abfahrt.classes.TrainInLine import TrainInLine
+from abfahrt.classes.TrainInStation import TrainInStation
+from abfahrt.classes.Station import Station
+from abfahrt.classes.Graph import Graph
+from abfahrt.Result import Result
 
 
 L_ID = 0

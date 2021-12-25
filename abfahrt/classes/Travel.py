@@ -1,5 +1,5 @@
-from classes.TrainInLine import TrainInLine
-from classes.TrainInStation import TrainInStation
+from abfahrt.classes.TrainInLine import TrainInLine
+from abfahrt.classes.TrainInStation import TrainInStation
 
 class Travel:
     def __init__(self, start_time, on_board, line_time, station_time: TrainInStation, start_station,

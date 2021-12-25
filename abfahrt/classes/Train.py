@@ -1,6 +1,6 @@
 from typing import List
-from classes.Station import Station
-from classes.Line import Line
+from abfahrt.classes.Station import Station
+from abfahrt.classes.Line import Line
 
 class Train:
   # Züge: str(ID) str(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)

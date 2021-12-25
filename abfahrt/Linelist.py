@@ -1,4 +1,4 @@
-from classes.TrainInLine import TrainInLine
+from abfahrt.classes.TrainInLine import TrainInLine
 
 class Linelist:
     lines = []  # the lines with capacities

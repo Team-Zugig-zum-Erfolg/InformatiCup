@@ -1,8 +1,8 @@
-from classes import Station
-from classes.TrainInStation import TrainInStation
+from abfahrt.classes.Station import Station
+from abfahrt.classes.TrainInStation import TrainInStation
 import sys
 
-from Result import Result
+from abfahrt.Result import Result
 
 TRAIN_NOT_IN_STATION = []
 T_ID = 0

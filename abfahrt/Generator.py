@@ -1,5 +1,5 @@
-from classes import Passenger
 import random
+from abfahrt.classes.Passenger import Passenger
 
 class Generator:
 
