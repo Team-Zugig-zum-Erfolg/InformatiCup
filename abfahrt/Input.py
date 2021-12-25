@@ -1,8 +1,8 @@
 from typing import List
-from classes.Station import Station
-from classes.Line import Line
-from classes.Passenger import Passenger
-from classes.Train import Train
+from abfahrt.classes.Station import Station
+from abfahrt.classes.Line import Line
+from abfahrt.classes.Passenger import Passenger
+from abfahrt.classes.Train import Train
 import time
 import re
 import sys
