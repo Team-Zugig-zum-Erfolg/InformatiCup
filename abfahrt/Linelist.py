@@ -103,25 +103,3 @@ class Linelist:
         return trains
 
 
-'''
-linelist = Linelist([[1, 3, 4, 12.2, 1], [2, 1, 2, 4.2, 2], [3, 3, 2, 4.2, 2], [4, 4, 2, 4.2, 2]])
-
-linelist.add_new_train_in_line(TrainInLine(1, 7, 9, 1))
-linelist.add_new_train_in_line(TrainInLine(2, 1, 2, 1))
-
-linelist.add_new_train_in_line(TrainInLine(1, 7, 9, 2))
-linelist.add_new_train_in_line(TrainInLine(2, 1, 2, 2))
-linelist.add_new_train_in_line(TrainInLine(2, 1, 2, 2))
-linelist.add_new_train_in_line(TrainInLine(2, 8, 9, 2))
-
-print(linelist.add_new_train_in_line(TrainInLine(2, 10, 12, 1)))
-
-print(linelist.compare_free(TrainInLine(1, 2, 6, 2))) # Falsch delay_time
-print(linelist.compare_free(TrainInLine(1, 4, 6, 1)))
-print(linelist.compare_free(TrainInLine(1, 1, 4, 1)))
-print(linelist.compare_free(TrainInLine(1, 3, 6, 2)))
-linelist.add_new_train_in_line(TrainInLine(1 , 2, 6, 1))
-#linelist.add_new_train_in_line(1 , 13, 15, 1)
-print(linelist.read_trains_from_line(1))
-print(linelist.lines[1])
-print(linelist.lines[2])'''

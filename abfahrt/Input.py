@@ -306,9 +306,6 @@ class Input:
         return
 
 
-# test _string_to_int()
-# print(type(_string_to_int("A1")))
-
 # helper methods
 def _string_to_int(string: str) -> int:
     r = re.findall('\d+', string)
@@ -327,15 +324,3 @@ def _string_to_float(string: str) -> float:
 
 
 
-
-# print(input.to_input_text())
-# # print(input.path_generator())
-# input.print_input()
-
-
-''' test from_stdin() and parse_lines()'''
-# print(input.Trains[0].start_station)
-# input = Input()
-# input.from_file("./test/test_1.txt")
-# input.from_stdin()
-# input.print_input()

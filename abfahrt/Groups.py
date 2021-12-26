@@ -62,6 +62,3 @@ class Groups:
         if len(second_group) != 0:
             self.route.append(second_group)
         return
-
-    def print_output(self):
-        return

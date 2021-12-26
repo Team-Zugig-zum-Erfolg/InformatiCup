@@ -241,48 +241,4 @@ class Result:
         # return filename
         return path
 
-    def compare_with(path:str):
-        pass
 
-
-
-
-def test_save_train_depart(r, id, time, line):
-    print("****************************")
-    print(f"soll: depart, train [{id}], time: [{time}], line: [{line}]")
-    print("- Before -:")
-    print(r.to_output_text())
-    print()
-    r.save_train_depart(id_train=id,time=time,id_line=line)
-    print("- After -:")
-    print(r.to_output_text())
-
-def test_save_train_start(r, id, time ,station):
-    print("****************************")
-    print(f"soll: start, train [{id}], time: [{time}], station: [{station}]")
-    print("- Before -:")
-    print(r.to_output_text())
-    print()
-    r.save_train_start(id_train=id,time=time,id_station=station)
-    print("- After -:")
-    print(r.to_output_text())
-
-def test_save_passenger_board(r, id, time, train):
-    print("****************************")
-    print(f"soll: board, passenger [{id}], time: [{time}], train: [{train}]")
-    print("- Before -:")
-    print(r.to_output_text())
-    print()
-    r.save_passenger_board(id_passenger=id, time=time, id_train=train)
-    print("- After -:")
-    print(r.to_output_text())
-
-def test_save_passenger_detrain(r, id, time):
-    print("****************************")
-    print(f"soll: detrain, passenger [{id}], time: [{time}]")
-    print("- Before -:")
-    print(r.to_output_text())
-    print()
-    r.save_passenger_detrain(id_passenger=id, time=time)
-    print("- After -:")
-    print(r.to_output_text())
