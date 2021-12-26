@@ -253,55 +253,5 @@ class Stationlist:
         else:
             return train_in_station.leave_time
 
-    def print_out(self):
-        i = 0
-        for capacity in self.stations:
-            print("station " + str(i))
-            print(capacity)
-            i += 1
-        if TRAIN_NOT_IN_STATION != None:
-            print(TRAIN_NOT_IN_STATION)
-
-'''
-input_ = Input()
-stations, lines, trains, passengers = input_.from_file("test/test-input-1.txt")
-
-station_input_list = []
-for s in stations:
-    station_input_list.append(s.to_list())
-line_input_list = []
-for li in lines:
-    line_input_list.append(li.to_list())
-train_input_list = trains
-result = Result()
-
-# for t in trains:
-# train_input_list.append(t.to_list())
-
-linelist = Linelist(line_input_list)
-stationlist = Stationlist(station_input_list, train_input_list)
-stationlist.print_out()
-print(train_input_list)
-print(stationlist.stations)
-enable = stationlist.add_new_train_in_station(TrainInStation(2, 3, trains[1], 5, 2))
-enable = stationlist.add_new_train_in_station(TrainInStation(2, 3, trains[6], None, 2))
-#enable, delay = stationlist.compare_free_place(TrainInStation(3, 4, trains[1], None, 1))
-enable = stationlist.add_new_train_in_station(TrainInStation(3, 4, trains[3], 6, 2))
-enable = stationlist.add_new_train_in_station(TrainInStation(4, 5, trains[3], None, 2))
-#enable, delay = stationlist.compare_free_place(TrainInStation(7, 8, trains[5], None, 2))
-enable = stationlist.add_new_train_in_station(TrainInStation(6, 7, trains[3], None, 2))
-enable = stationlist.add_new_train_in_station(TrainInStation(6, 7, trains[3], None, 2))
-#enable = stationlist.add_new_train_in_station(TrainInStation(delay, delay + 1, trains[3], None, 1))
-enable, delay = stationlist.compare_free_place(TrainInStation(3, 4, trains[5], None, 2))
-enable = stationlist.add_new_train_in_station(TrainInStation(delay, delay + 1, trains[3], None, 1))
-
-enable, delay = stationlist.compare_free_place(TrainInStation(0, 1, trains[4], None, 2))
 
 
-enable = stationlist.add_new_train_in_station(TrainInStation(0, 1, trains[3], None, 2))
-print(enable)
-enable, delay = stationlist.compare_free_place(TrainInStation(1, 2, trains[5], None, 2))
-print(enable)
-print(delay)
-enable = stationlist.add_new_train_in_station(TrainInStation(delay, delay + 1, trains[8], None, 2))
-stationlist.print_out()'''
