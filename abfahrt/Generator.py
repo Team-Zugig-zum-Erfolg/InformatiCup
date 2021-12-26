@@ -3,7 +3,6 @@ from abfahrt.classes.Passenger import Passenger
 
 class Generator:
 
-
     def random_input_generate_file(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max):
         output = self.random_input_generate(size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max)
 
@@ -28,13 +27,10 @@ class Generator:
 
         self.write_objects_to_file(output[3],out_file)
 
-
-
         out_file.close()
 
-        
-
     def write_objects_to_file(self, _objects, out_file):
+        
         for _object in _objects:
             i=1
             for attr in _object:
@@ -57,7 +53,6 @@ class Generator:
 
         random.seed(None)
 
-
         for i in range(1,size_station+1):
             stations.append(self.random_station_generate(i,sc_max))
 
@@ -70,7 +65,8 @@ class Generator:
         for i in range(1,size_pa+1):
             passengers.append(self.random_passenger_generate(i,stations,passengers,pgs_max,ptr_max))
 
-
+        #check if every station is connected via at least one line
+        #regenerating lines while not every station is connected
         again=1
         while(again==1):
             for station in stations:
@@ -87,8 +83,8 @@ class Generator:
                     again=1
                     break
 
-
-        #check if all passengers have a valid capacity
+        #check if all passengers have a valid (not too huge) group size
+        #regenerating passengers while at least one passenger has a too huge group size
         again=1
         while(again==1):
             for passenger in passengers:
@@ -100,9 +96,25 @@ class Generator:
                         break
                 if found == 0:
                     passengers = []
-                    print(passengers)
                     for i in range(1,size_pa+1):
                         passengers.append(self.random_passenger_generate(i,stations,passengers,pgs_max,ptr_max))
+                    again=1
+                    break
+
+        #check if not too many trains have the same initial start station
+        #regenerating trains while at least one station has too many trains starting initially at it
+        again=1
+        while(again==1):
+            for station in stations:
+                again=0
+                trains_starting=0
+                for train in trains:
+                    if train[1] == station[0]:
+                        trains_starting += 1
+                if trains_starting > station[1]:
+                    trains = []
+                    for i in range(1,size_trains+1):
+                        trains.append(self.random_train_generate(i,stations,trains,tc_max))
                     again=1
                     break
                        
@@ -121,7 +133,6 @@ class Generator:
         size_stations = len(stations)
         
         line_id = "L" + str(number)
-        
         line_end_0 = 0
         line_end_1 = 0
         while True:
@@ -148,7 +159,6 @@ class Generator:
     def random_train_generate(self,number,stations,trains,train_capacity_max):
 
         size_stations = len(stations)
-
         train_id = "T" + str(number)
         train_start_station = "*"
         while True:
@@ -176,7 +186,6 @@ class Generator:
     def random_passenger_generate(self,number,stations,passengers,group_size,target_round):
 
         size_stations = len(stations)
-
         passenger_id = "P" + str(number)
         
         passenger_start_station = random.randint(1,size_stations)
