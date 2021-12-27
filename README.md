@@ -8,8 +8,8 @@ python -m abfahrt [< input.txt]
 
 test_simulator:
 
-python -m abfahrt/testutils/test_simulator
+python -m abfahrt.testutils.test_simulator
 
 test_generator:
 
-python -m abfahrt/testutils/test_generator
+python -m abfahrt.testutils.test_generator
