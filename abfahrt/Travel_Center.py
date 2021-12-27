@@ -114,7 +114,6 @@ class Travel_Center:
         return lines
 
     def find_best_line(self, s_station_id, e_station_id):
-        #print("S"+str(s_station_id)+"-->S"+str(e_station_id))
         lines = self._find_lines(s_station_id, e_station_id)
         short_len = 0
         short_line = None
