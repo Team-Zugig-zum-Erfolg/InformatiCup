@@ -37,7 +37,6 @@ class Groups:
     def get_priority(self):
 
         if len(self.route) == 0:
-        
             return None
 
         self.route.sort(key=self._get_min_target_round)
@@ -48,15 +47,25 @@ class Groups:
         self.route.remove(group)
         return
 
+    def get_passenger_with_most_size(self,group):
+        if len(group) == 0:
+            return None
+        passenger_max_size = group[0]
+        for passenger in group:
+            if passenger.target_time > passenger_max_size.target_time:
+                passenger_max_size = passenger
+        return passenger_max_size
+
     def split_group(self,group):
 
         self.route.remove(group)
 
-        length = len(group)
-        middle_index = length // 2
+        passenger_with_max_size = self.get_passenger_with_most_size(group)
+        
+        group.remove(passenger_with_max_size)
 
-        first_group = group[:middle_index]
-        second_group = group[middle_index:]
+        first_group = group
+        second_group = [passenger_with_max_size]
         if len(first_group) != 0:
             self.route.append(first_group)
         if len(second_group) != 0:
