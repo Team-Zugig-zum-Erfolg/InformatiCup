@@ -18,3 +18,6 @@ python -m abfahrt.testutils.test_simulator
 test_generator:
 
 python -m abfahrt.testutils.test_generator
+
+Example:
+python -m abfahrt.testutils.test_generator 10,60,1000,40,20,10,100,20,100,60,200

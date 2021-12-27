@@ -14,8 +14,8 @@ class test_generator:
         args = parser.parse_args()
                
         if(args.check == "10,60,1000,40,20,10,100,20,100,60,200"):  
-            print("please check documentation for the use of this function and be more creative")
- 
+            print("Please check documentation for the use of this function and be more creative")
+            print("Basic test 10,60,1000,40,20,10,100,20,100,60,200 was used")
         if(args.check != ""):  
             command = args.check.split(',')
                
