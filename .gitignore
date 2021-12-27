@@ -1,5 +1,8 @@
 
 *.pyc
+*.xml
+Output*.txt
+output*.txt
 abfahrt/Result/*.txt
 abfahrt/output.txt
 output.txt
