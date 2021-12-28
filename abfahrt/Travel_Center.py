@@ -528,7 +528,7 @@ class Travel_Center:
                 break
         if next_station == None and prev_station != None:
             for neighboor_station in neighboor_stations:
-                if neighboor_station.id == prev_station.id:
+                if neighboor_station == prev_station:
                     next_station = prev_station
         if next_station == None:
             # no neighboor station is free (free = not blocked) and origin station is also not available
@@ -593,7 +593,7 @@ class Travel_Center:
                 for travel in travels:
                     Travel_Center.delay_travel(travel, delay_times[i])
                     i += 1
-            elif next_station.id == prev_station.id:
+            elif next_station == prev_station:
                 short_time = sys.maxsize
                 short_travel = None
                 i = 0
@@ -625,7 +625,7 @@ class Travel_Center:
         for train in trains:
             for capacity in capacities:
                 for _train_in_station in capacity:
-                    if train.id == _train_in_station.train.id:
+                    if train == _train_in_station.train:
                         if start_times[i] <= _train_in_station.arrive_train_time:
                             if _train_in_station.arrive_train_time == _train_in_station.passenger_in_train_time:
                                 trains.remove(train)
