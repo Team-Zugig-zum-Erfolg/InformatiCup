@@ -37,8 +37,6 @@ S_LINEPLAN = []
 
 AVERAGE_LINE_LENGTH = 0
 
-TARGET_TIME = 0
-
 
 class Travel_Center:
     train_line_time_list = []
@@ -420,8 +418,6 @@ class Travel_Center:
         start_station = route[0].start_station
         end_station = route[0].end_station
         group_size = 0
-        global TARGET_TIME
-        TARGET_TIME = route[0].target_time
         for passenger in route:
             group_size = group_size + passenger.group_size
         return [start_station, end_station, group_size]
