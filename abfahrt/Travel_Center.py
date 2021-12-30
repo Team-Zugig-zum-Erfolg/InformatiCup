@@ -39,6 +39,7 @@ AVERAGE_LINE_LENGTH = 0
 
 
 class Travel_Center:
+    """ """
     train_line_time_list = []
 
     def __init__(self, station_input_list, line_input_list, train_input_list):
@@ -82,6 +83,13 @@ class Travel_Center:
         AVERAGE_LINE_LENGTH = full_lines_length / len(line_input_list)
 
     def _get_all_line_station(self, s_station_id, e_station_id, lineplan):
+        """
+
+        :param s_station_id: 
+        :param e_station_id: 
+        :param lineplan: 
+
+        """
         lineplan = lineplan + [s_station_id]
         if s_station_id == e_station_id:
             return [lineplan]
@@ -105,6 +113,12 @@ class Travel_Center:
         return lineplans
 
     def _find_lines(self, s_station_id, e_station_id):
+        """
+
+        :param s_station_id: 
+        :param e_station_id: 
+
+        """
         global GRAPH
         out, prev_list = Graph.dijkstra(GRAPH, s_station_id)
         path = [e_station_id]
@@ -125,6 +139,12 @@ class Travel_Center:
         return lines
 
     def find_best_line(self, s_station_id, e_station_id):
+        """
+
+        :param s_station_id: 
+        :param e_station_id: 
+
+        """
         lines = self._find_lines(s_station_id, e_station_id)
         short_len = 0
         short_line = None
@@ -138,6 +158,12 @@ class Travel_Center:
         return [short_len, short_line]
 
     def find_only_one_line_between_stations(self, start_station_id, end_station_id):
+        """
+
+        :param start_station_id: 
+        :param end_station_id: 
+
+        """
         t = 0
         line = None
         for next_station_id in S_LINEPLAN[start_station_id][0]:
@@ -149,10 +175,25 @@ class Travel_Center:
         return [length, [line]]
 
     def time_count_length(self, start_station, end_station):
+        """
+
+        :param start_station: 
+        :param end_station: 
+
+        """
         length, lines = self.find_best_line(start_station.id, end_station.id)
         return length
 
     def time_count_train(self, start_station, end_station, train, start_time, use_one_line=False):
+        """
+
+        :param start_station: 
+        :param end_station: 
+        :param train: 
+        :param start_time: 
+        :param use_one_line:  (Default value = False)
+
+        """
         if use_one_line == False:
             length, lines = self.find_best_line(
                 start_station.id, end_station.id)
@@ -198,6 +239,11 @@ class Travel_Center:
 
     @staticmethod
     def full_stations_list_not_empty(full_stations_list):
+        """
+
+        :param full_stations_list: 
+
+        """
         if full_stations_list == None:
             return False
         for full_stations in full_stations_list:
@@ -207,6 +253,11 @@ class Travel_Center:
 
     @staticmethod
     def get_stations_by_line(line_id):
+        """
+
+        :param line_id: 
+
+        """
         line = LINE_INPUT_LIST[line_id-1]
         station_1 = Station(STATION_INPUT_LIST[line[L_S_ID_START]-1]
                             [S_ID], STATION_INPUT_LIST[line[L_S_ID_START]-1][S_CAPACITY])
@@ -216,6 +267,19 @@ class Travel_Center:
 
     @staticmethod
     def check_line_station(travel: Travel, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
+        """
+
+        :param travel: 
+        :type travel: Travel
+        :param stationlist: 
+        :type stationlist: Stationlist
+        :param linelist: 
+        :type linelist: Linelist
+        :param result: 
+        :type result: Result
+        :param travel_center: 
+
+        """
         line_availables_list = []
         line_time_changes = []
         station_availables_list = []
@@ -282,6 +346,13 @@ class Travel_Center:
 
     @staticmethod
     def delay_travel(travel: Travel, delay_time):
+        """
+
+        :param travel: 
+        :type travel: Travel
+        :param delay_time: 
+
+        """
         travel.start_time = travel.start_time + delay_time
         travel.on_board = travel.on_board + delay_time
         for i in range(0, len(travel.line_time)):
@@ -297,6 +368,22 @@ class Travel_Center:
 
     @staticmethod
     def save_travel(travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center, train_to_replace=False):
+        """
+
+        :param travel: 
+        :type travel: Travel
+        :param groups: 
+        :param passengers: 
+        :param stationlist: 
+        :type stationlist: Stationlist
+        :param linelist: 
+        :type linelist: Linelist
+        :param result: 
+        :type result: Result
+        :param travel_center: 
+        :param train_to_replace:  (Default value = False)
+
+        """
         enable, _, full, _ = Travel_Center.check_line_station(
             travel, stationlist, linelist, result, travel_center)
         if enable or (full == True and train_to_replace):
@@ -330,6 +417,20 @@ class Travel_Center:
 
     @staticmethod
     def determine_and_save_shortest_travel(travels, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
+        """
+
+        :param travels: 
+        :param groups: 
+        :param passengers: 
+        :param stationlist: 
+        :type stationlist: Stationlist
+        :param linelist: 
+        :type linelist: Linelist
+        :param result: 
+        :type result: Result
+        :param travel_center: 
+
+        """
         save = 0
         if len(travels):
             while not save:
@@ -415,6 +516,11 @@ class Travel_Center:
 
     @staticmethod
     def check_passengers(route):
+        """
+
+        :param route: 
+
+        """
         start_station = route[0].start_station
         end_station = route[0].end_station
         group_size = 0
@@ -424,6 +530,16 @@ class Travel_Center:
 
     @staticmethod
     def check_train_in_station(start_station, group_size, stationlist: Stationlist, linelist: Linelist):
+        """
+
+        :param start_station: 
+        :param group_size: 
+        :param stationlist: 
+        :type stationlist: Stationlist
+        :param linelist: 
+        :type linelist: Linelist
+
+        """
         start_times, trains, station_current = stationlist.read_trains_from_station(
             start_station.id)
         capacity_enable = Travel_Center._check_capacity(
@@ -438,6 +554,13 @@ class Travel_Center:
     @staticmethod
     # choose train from other station
     def check_train_not_in_station(group_size, stationlist: Stationlist):
+        """
+
+        :param group_size: 
+        :param stationlist: 
+        :type stationlist: Stationlist
+
+        """
         start_times, trains, start_stations = Travel_Center._check_trains_in_all_station(
             stationlist)
         capacity_enable = Travel_Center._check_capacity(
@@ -446,6 +569,11 @@ class Travel_Center:
 
     @staticmethod
     def get_neighboor_stations(station):
+        """
+
+        :param station: 
+
+        """
         neighboor_stations = []
         for line in LINE_INPUT_LIST:
             if line[L_S_ID_START] == station.id:
@@ -459,6 +587,13 @@ class Travel_Center:
 
     @staticmethod
     def station_is_never_blocked(station, stationlist: Stationlist):
+        """
+
+        :param station: 
+        :param stationlist: 
+        :type stationlist: Stationlist
+
+        """
         for capacity in stationlist.stations[station.id]:
             if len(capacity) == 0:
                 return True
@@ -472,6 +607,12 @@ class Travel_Center:
 
     @staticmethod
     def station_is_in_station_times_list(station, station_times_list):
+        """
+
+        :param station: 
+        :param station_times_list: 
+
+        """
         for station_time in station_times_list:
             if station.id == station_time.station_id:
                 return True
@@ -479,6 +620,12 @@ class Travel_Center:
 
     @staticmethod
     def get_next_station_in_travel(travel, station):
+        """
+
+        :param travel: 
+        :param station: 
+
+        """
         neighboor_stations = Travel_Center.get_neighboor_stations(station)
         station_times = travel.station_times
         for i in range(1, len(station_times)):
@@ -490,6 +637,12 @@ class Travel_Center:
 
     @staticmethod
     def get_prev_station_in_travel(travel, station):
+        """
+
+        :param travel: 
+        :param station: 
+
+        """
         neighboor_stations = Travel_Center.get_neighboor_stations(station)
         for i in range(1, len(travel.station_times)):
             if travel.station_times[i].station_id == station.id:
@@ -500,6 +653,13 @@ class Travel_Center:
 
     @staticmethod
     def station_has_more_than_one_free_capcacity(station, stationlist: Stationlist):
+        """
+
+        :param station: 
+        :param stationlist: 
+        :type stationlist: Stationlist
+
+        """
         capacities = stationlist.stations[station.id]
         free = 0
         for capacity in capacities:
@@ -510,6 +670,22 @@ class Travel_Center:
     @staticmethod
     def clear_station(end_station, prev_station, arrive_time, linelist: Linelist, stationlist: Stationlist, result: Result,
                       travel_center, stations_to_ignore, train_to_replace=None):
+        """
+
+        :param end_station: 
+        :param prev_station: 
+        :param arrive_time: 
+        :param linelist: 
+        :type linelist: Linelist
+        :param stationlist: 
+        :type stationlist: Stationlist
+        :param result: 
+        :type result: Result
+        :param travel_center: 
+        :param stations_to_ignore: 
+        :param train_to_replace:  (Default value = None)
+
+        """
         # clear station (move trains out of it to other stations)
         # clear station (move trains out of it to other stations)
 
@@ -610,12 +786,36 @@ class Travel_Center:
     @staticmethod  # move a train to start station
     def train_move_to_start_station(start_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist,
                                     result: Result, travel_center):
+        """
+
+        :param start_station: 
+        :param trains: 
+        :param start_times: 
+        :param start_stations: 
+        :param stationlist: 
+        :type stationlist: Stationlist
+        :param linelist: 
+        :type linelist: Linelist
+        :param result: 
+        :type result: Result
+        :param travel_center: 
+
+        """
         save = travel_center._train_to_station(start_station, trains, start_times, start_stations, stationlist,
                                                linelist, result, travel_center)
         return save
 
     @staticmethod
     def _remove_passing_station_trains(start_station, trains, start_times, stationlist: Stationlist):
+        """
+
+        :param start_station: 
+        :param trains: 
+        :param start_times: 
+        :param stationlist: 
+        :type stationlist: Stationlist
+
+        """
         capacities = stationlist.stations[start_station.id]
         i = 0
         for train in trains:
@@ -629,6 +829,14 @@ class Travel_Center:
 
     @staticmethod
     def _check_capacity(trains, group_size, start_times, start_stations):
+        """
+
+        :param trains: 
+        :param group_size: 
+        :param start_times: 
+        :param start_stations: 
+
+        """
         b_capacity = False
         if len(trains) != 0:
             i = 0
@@ -647,6 +855,12 @@ class Travel_Center:
 
     @staticmethod
     def _check_trains_in_all_station(stationlist: Stationlist):
+        """
+
+        :param stationlist: 
+        :type stationlist: Stationlist
+
+        """
         trains = []
         start_times = []
         start_stations = []
@@ -663,6 +877,14 @@ class Travel_Center:
         return start_times, trains, start_stations
 
     def get_trains_with_limit_by_start_time_and_speed(self, trains, start_times, start_stations, limit):
+        """
+
+        :param trains: 
+        :param start_times: 
+        :param start_stations: 
+        :param limit: 
+
+        """
         trains_limit = []
         station_times_limit = []
         start_stations_limit = []
@@ -683,6 +905,11 @@ class Travel_Center:
 
     @staticmethod
     def determine_trains_limit(stations_amount):
+        """
+
+        :param stations_amount: 
+
+        """
         if stations_amount < 50:
             return 50
         elif stations_amount < 100:
@@ -697,6 +924,21 @@ class Travel_Center:
             return 1
 
     def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
+        """
+
+        :param end_station: 
+        :param trains: 
+        :param start_times: 
+        :param start_stations: 
+        :param stationlist: 
+        :type stationlist: Stationlist
+        :param linelist: 
+        :type linelist: Linelist
+        :param result: 
+        :type result: Result
+        :param travel_center: 
+
+        """
         travels = []
         trains_to_call = trains
         calling_trains_limit = Travel_Center.determine_trains_limit(

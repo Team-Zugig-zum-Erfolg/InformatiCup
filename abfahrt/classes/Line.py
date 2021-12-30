@@ -1,6 +1,7 @@
 from abfahrt.classes.Station import Station
 
 class Line:
+    """ """
   # Strecken: str(ID) str(Anfang) str(Ende) dec(Länge) int(Kapazität)
   # L1 S1 S2 1 3
   id:int = 0
@@ -18,58 +19,99 @@ class Line:
     self.length = length
   
   def to_list(self):
+    """ """
     return [self.id, self.start.id, self.end.id, self.length, self.capacity]
 
   def to_str_input(self):
-    '''this method is used for input, generate information of one line'''
+    """this method is used for input, generate information of one line"""
     output = " ".join([self.get_id_str(), self.start.get_id_str(), self.end.get_id_str() ,str(self.length),str(self.capacity)])
     return output
 
   def get_id_str(self)->str:
-    ''' return the id of line with L, like "L1" '''
+    """
+
+
+    :rtype: str
+
+    """
     out = "L" + str(self.id)
     return out
     
   def get_id(self):
+    """ """
     return self.id
   
   def set_id(self,id_line:str):
+    """
+
+    :param id_line: 
+    :type id_line: str
+
+    """
     if type(id_line) != str:
       return False
     self.id = id_line
     return True
   
   def get_capacity(self):
+    """ """
     return self.capacity
   
   def set_capacity(self,capacity:int):
+    """
+
+    :param capacity: 
+    :type capacity: int
+
+    """
     if type(capacity) != int:
       return False
     self.capacity = capacity
     return True
   
   def get_start(self):
+    """ """
     return self.start
   
   def set_start(self,start:Station):
+    """
+
+    :param start: 
+    :type start: Station
+
+    """
     if (isinstance(start,Station)==False):
       return False
     self.start = start
     return True
 
   def get_end(self):
+    """ """
     return self.end
   
   def set_end(self,end:Station):
+    """
+
+    :param end: 
+    :type end: Station
+
+    """
     if (isinstance(end,Station)==False):
       return False
     self.end = end
     return True
   
   def get_length(self):
+    """ """
     return self.length
   
   def set_length(self,length:float):
+    """
+
+    :param length: 
+    :type length: float
+
+    """
     if type(length) != float:
       return False
     self.length = length

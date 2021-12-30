@@ -26,8 +26,10 @@ test_linelist.lines[1][0].append(TrainInLine(trains[0],0,1,1))
 test_linelist.lines[1][0].append(TrainInLine(trains[1],4,5,1))
 	
 class Testing(unittest.TestCase):
+    
 		
 	def test_compare_free(self):
+		
 	
 		self.assertEqual(test_linelist.compare_free(TrainInLine(trains[2],2,2,1)), [True, -1])
 		self.assertEqual(test_linelist.compare_free(TrainInLine(trains[3],4,5,1)), [False, 5])

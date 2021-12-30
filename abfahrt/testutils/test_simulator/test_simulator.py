@@ -14,10 +14,12 @@ Errlist = []
 
 
 class test_simulator:
+    """ """
 
     error_messages = ["Traceback", "Error", "error"]
 
     def simulator(self):
+        """ """
         global tests_completed
         global Errlist
         for i in range(len(files_test)):

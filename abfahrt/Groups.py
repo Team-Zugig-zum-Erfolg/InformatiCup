@@ -5,6 +5,7 @@ from abfahrt.classes.Passenger import Passenger
 
 
 class Groups:
+    """ """
 
     route = []
 
@@ -25,6 +26,11 @@ class Groups:
                 self.route.append([passenger])
 
     def _get_min_target_round(self, group):
+        """
+
+        :param group: 
+
+        """
 
         min = -1
         for pa in group:
@@ -36,6 +42,7 @@ class Groups:
         return min
 
     def get_priority(self):
+        """ """
 
         if len(self.route) == 0:
             return None
@@ -44,11 +51,21 @@ class Groups:
         return self.route[0]
 
     def passengers_arrive(self, group):
+        """
+
+        :param group: 
+
+        """
 
         self.route.remove(group)
         return
 
     def get_passenger_with_most_size(self, group):
+        """
+
+        :param group: 
+
+        """
         if len(group) == 0:
             return None
         passenger_max_size = group[0]
@@ -58,6 +75,11 @@ class Groups:
         return passenger_max_size
 
     def split_group(self, group):
+        """
+
+        :param group: 
+
+        """
 
         self.route.remove(group)
 
