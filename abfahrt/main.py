@@ -27,6 +27,9 @@ def main():
     travel_center = Travel_Center(
         station_input_list, line_input_list, train_input_list)
 
+    if not Travel_Center.check_plan():
+        raise NameError("Plan is not valid!")
+
     groups = Groups(passengers)
 
     while len(groups.route) != 0:
@@ -50,27 +53,29 @@ def main():
                 groups.split_group(group)
             continue
 
-        route_length = travel_center.time_count_length(start_station,end_station)
+        route_length = travel_center.time_count_length(
+            start_station, end_station)
 
         train_fastest = trainlist[0]
         train_fastest_start_time = start_time_list[0]
-        time_all_smallest = start_time_list[0] + route_length/trainlist[0].speed
+        time_all_smallest = start_time_list[0] + \
+            route_length/trainlist[0].speed
 
         for count in range(len(trainlist)):
-            time_all = start_time_list[count] + route_length/trainlist[count].speed
+            time_all = start_time_list[count] + \
+                route_length/trainlist[count].speed
             if time_all < time_all_smallest:
                 time_all_smallest = time_all
                 train_fastest = trainlist[count]
                 train_fastest_start_time = start_time_list[count]
 
-        travel_fastest = travel_center.time_count_train(start_station, end_station, train_fastest, train_fastest_start_time)
+        travel_fastest = travel_center.time_count_train(
+            start_station, end_station, train_fastest, train_fastest_start_time)
         travels = [travel_fastest]
-            
+
         Travel_Center.determine_and_save_shortest_travel(
             travels, groups, group, stationlist, linelist, result, travel_center)
 
     print(result.to_output_text())
     result.to_file_same()
     return
-
-

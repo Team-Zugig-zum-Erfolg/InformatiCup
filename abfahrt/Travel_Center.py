@@ -197,6 +197,12 @@ class Travel_Center:
         return Travel(start_time, on_board, line_time, station_time, start_station, end_station, train, station_times, length)
 
     @staticmethod
+    def check_plan():
+        if not Graph.is_connected(GRAPH):
+            return False
+        return True
+
+    @staticmethod
     def full_stations_list_not_empty(full_stations_list):
         if full_stations_list == None:
             return False
