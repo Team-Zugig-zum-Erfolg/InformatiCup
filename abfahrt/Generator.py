@@ -1,38 +1,40 @@
 import random
 from abfahrt.classes.Passenger import Passenger
 
+
 class Generator:
 
     def random_input_generate_file(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max):
-        output = self.random_input_generate(size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max)
+        output = self.random_input_generate(
+            size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max)
 
-        out_file = open("output_generated.txt","w")
+        out_file = open("output_generated.txt", "w")
 
         out_file.write("[Stations]\n")
-        self.write_objects_to_file(output[0],out_file)
+        self.write_objects_to_file(output[0], out_file)
 
         out_file.write("\n")
 
         out_file.write("[Lines]\n")
-        self.write_objects_to_file(output[1],out_file)
+        self.write_objects_to_file(output[1], out_file)
 
         out_file.write("\n")
 
         out_file.write("[Trains]\n")
-        self.write_objects_to_file(output[2],out_file)
+        self.write_objects_to_file(output[2], out_file)
 
         out_file.write("\n")
 
         out_file.write("[Passengers]\n")
 
-        self.write_objects_to_file(output[3],out_file)
+        self.write_objects_to_file(output[3], out_file)
 
         out_file.close()
 
     def write_objects_to_file(self, _objects, out_file):
-        
+
         for _object in _objects:
-            i=1
+            i = 1
             for attr in _object:
                 if type(attr) != str:
                     out_file.write(str(attr))
@@ -42,7 +44,26 @@ class Generator:
                     out_file.write("\n")
                 else:
                     out_file.write(" ")
-                i+=1
+                i += 1
+
+    def _depth_search(self, station, station_lines, visited):
+        visited[station] = True
+        for next in station_lines[station]:
+            if not visited[next]:
+                self._depth_search(next, station_lines, visited)
+        return
+
+    def _check_all_stations_connected(self, stations, station_lines):
+        visited = [True]
+        for i in range(len(stations)):
+            visited.append(False)
+        self._depth_search(1, station_lines, visited)
+        t = 0
+        for b in visited:
+            if not b:
+                return False
+            t += 1
+        return True
 
     def random_input_generate(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max):
 
@@ -51,95 +72,107 @@ class Generator:
         trains = []
         passengers = []
 
+        station_lines = [[]]
+
         random.seed(None)
 
-        for i in range(1,size_station+1):
-            stations.append(self.random_station_generate(i,sc_max))
+        for i in range(1, size_station+1):
+            stations.append(self.random_station_generate(i, sc_max))
+            station_lines.append([])
 
-        for i in range(1,size_lines+1):
-            lines.append(self.random_line_generate(i,stations,lines,lc_max,ll_max))
+        for i in range(1, size_lines+1):
+            line = self.random_line_generate(
+                i, stations, lines, lc_max, ll_max)
+            lines.append(line)
+            station_lines[int(line[1][1:])].append(int(line[2][1:]))
+            station_lines[int(line[2][1:])].append(int(line[1][1:]))
 
-        for i in range(1,size_trains+1):
-            trains.append(self.random_train_generate(i,stations,trains,tc_max))
+        for i in range(1, size_trains+1):
+            trains.append(self.random_train_generate(
+                i, stations, trains, tc_max))
 
-        for i in range(1,size_pa+1):
-            passengers.append(self.random_passenger_generate(i,stations,passengers,pgs_max,ptr_max))
+        for i in range(1, size_pa+1):
+            passengers.append(self.random_passenger_generate(
+                i, stations, passengers, pgs_max, ptr_max))
 
-        #check if every station is connected via at least one line
-        #regenerating lines while not every station is connected
-        again=1
-        while(again==1):
+        # check if not too many trains have the same initial start station
+        # regenerating trains while at least one station has too many trains starting initially at it
+        again = 1
+        while(again == 1):
             for station in stations:
-                found=0
-                again=0
-                for line in lines:
-                    if station[0] in [line[1],line[2]]:
-                        found=1
-                        break
-                if found == 0:
-                    lines = []
-                    for i in range(1,size_lines+1):
-                        lines.append(self.random_line_generate(i,stations,lines,lc_max,ll_max))
-                    again=1
-                    break
-
-        #check if all passengers have a valid (not too huge) group size
-        #regenerating passengers while at least one passenger has a too huge group size
-        again=1
-        while(again==1):
-            for passenger in passengers:
-                found=0
-                again=0
-                for train in trains:
-                    if passenger[3] <= train[3]:
-                        found=1
-                        break
-                if found == 0:
-                    passengers = []
-                    for i in range(1,size_pa+1):
-                        passengers.append(self.random_passenger_generate(i,stations,passengers,pgs_max,ptr_max))
-                    again=1
-                    break
-
-        #check if not too many trains have the same initial start station
-        #regenerating trains while at least one station has too many trains starting initially at it
-        again=1
-        while(again==1):
-            for station in stations:
-                again=0
-                trains_starting=0
+                again = 0
+                trains_starting = 0
                 for train in trains:
                     if train[1] == station[0]:
                         trains_starting += 1
                 if trains_starting > station[1]:
                     trains = []
-                    for i in range(1,size_trains+1):
-                        trains.append(self.random_train_generate(i,stations,trains,tc_max))
-                    again=1
+                    for i in range(1, size_trains+1):
+                        trains.append(self.random_train_generate(
+                            i, stations, trains, tc_max))
+                    again = 1
                     break
-                       
-        return [stations,lines,trains,passengers]
-            
-    def random_station_generate(self,number,station_capacity_max):
+
+        # check if all passengers have a valid (not too huge) group size
+        # regenerating passengers while at least one passenger has a too huge group size
+        again = 1
+        while(again == 1):
+            for passenger in passengers:
+                found = 0
+                again = 0
+                for train in trains:
+                    if passenger[3] <= train[3]:
+                        found = 1
+                        break
+                if found == 0:
+                    passengers = []
+                    for i in range(1, size_pa+1):
+                        passengers.append(self.random_passenger_generate(
+                            i, stations, passengers, pgs_max, ptr_max))
+                    again = 1
+                    break
+
+        # check if every station is connected via at least one path with every other station
+        # regenerating lines while not every station is connected with every each other station
+        again = 1
+        while again == 1:
+            if self._check_all_stations_connected(stations, station_lines) == False:
+                lines = []
+                station_lines = []
+                for i in range(0, size_station+1):
+                    station_lines.append([])
+                for i in range(1, size_lines+1):
+                    line = self.random_line_generate(
+                        i, stations, lines, lc_max, ll_max)
+                    lines.append(line)
+                    station_lines[int(line[1][1:])].append(int(line[2][1:]))
+                    station_lines[int(line[2][1:])].append(int(line[1][1:]))
+                again = 1
+            else:
+                again = 0
+
+        return [stations, lines, trains, passengers]
+
+    def random_station_generate(self, number, station_capacity_max):
 
         station = []
         station_name = "S" + str(number)
-        station_capacity = random.randint(1,station_capacity_max)
-        station = [station_name,station_capacity]
+        station_capacity = random.randint(1, station_capacity_max)
+        station = [station_name, station_capacity]
         return station
 
-    def random_line_generate(self,number,stations,lines,line_capacity_max,line_length_max):
+    def random_line_generate(self, number, stations, lines, line_capacity_max, line_length_max):
 
         size_stations = len(stations)
-        
+
         line_id = "L" + str(number)
         line_end_0 = 0
         line_end_1 = 0
         while True:
-            line_end_0 = random.randint(1,size_stations)
-            line_end_1 = random.randint(1,size_stations)
+            line_end_0 = random.randint(1, size_stations)
+            line_end_1 = random.randint(1, size_stations)
             while line_end_1 == line_end_0:
-                line_end_1 = random.randint(1,size_stations)
+                line_end_1 = random.randint(1, size_stations)
             contain = 0
             for line_current in lines:
                 if line_current[1] == "S"+str(line_end_0) and line_current[2] == "S"+str(line_end_1) or line_current[1] == "S"+str(line_end_1) and line_current[2] == "S"+str(line_end_0):
@@ -148,24 +181,24 @@ class Generator:
                 continue
             else:
                 break
-        
+
         line_start = "S"+str(line_end_0)
         line_end = "S"+str(line_end_1)
-        line_capacity = random.randint(1,line_capacity_max)
-        line_length = random.randint(1,line_length_max)
-        
-        return [line_id,line_start,line_end,line_length,line_capacity]
+        line_capacity = random.randint(1, line_capacity_max)
+        line_length = random.randint(1, line_length_max)
 
-    def random_train_generate(self,number,stations,trains,train_capacity_max):
+        return [line_id, line_start, line_end, line_length, line_capacity]
+
+    def random_train_generate(self, number, stations, trains, train_capacity_max):
 
         size_stations = len(stations)
         train_id = "T" + str(number)
         train_start_station = "*"
         while True:
-            every = random.randint(1,10)
+            every = random.randint(1, 10)
             if every <= 4:
                 break
-            train_start_station = "S" + str(random.randint(1,size_stations))
+            train_start_station = "S" + str(random.randint(1, size_stations))
             used = 0
             for train in trains:
                 if train[1] == train_start_station:
@@ -179,21 +212,21 @@ class Generator:
                 break
 
         train_speed = round(random.uniform(1, 10), 2)
-        train_capacity = random.randint(1,train_capacity_max)
+        train_capacity = random.randint(1, train_capacity_max)
 
-        return [train_id,train_start_station,train_speed,train_capacity]
+        return [train_id, train_start_station, train_speed, train_capacity]
 
-    def random_passenger_generate(self,number,stations,passengers,group_size,target_round):
+    def random_passenger_generate(self, number, stations, passengers, group_size, target_round):
 
         size_stations = len(stations)
         passenger_id = "P" + str(number)
-        
-        passenger_start_station = random.randint(1,size_stations)
-        passenger_end_station = random.randint(1,size_stations)
+
+        passenger_start_station = random.randint(1, size_stations)
+        passenger_end_station = random.randint(1, size_stations)
         while passenger_start_station == passenger_end_station:
-            passenger_end_station = random.randint(1,size_stations)
+            passenger_end_station = random.randint(1, size_stations)
 
-        passenger_group_size = random.randint(1,group_size)
-        passenger_target_round = random.randint(1,target_round)
+        passenger_group_size = random.randint(1, group_size)
+        passenger_target_round = random.randint(1, target_round)
 
-        return [passenger_id,"S"+str(passenger_start_station),"S"+str(passenger_end_station),passenger_group_size,passenger_target_round]
+        return [passenger_id, "S"+str(passenger_start_station), "S"+str(passenger_end_station), passenger_group_size, passenger_target_round]
