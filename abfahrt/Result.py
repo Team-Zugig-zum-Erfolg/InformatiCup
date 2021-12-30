@@ -8,7 +8,7 @@ import os
 
 
 class Result:
-    """ """
+   
     # Format
     # [Train T1]
     # 0 Start S2
@@ -261,7 +261,7 @@ class Result:
 #%% saving methods
 
     def to_output_text(self):
-        """ """
+        
         result = ""
         for t in self.trains:
             result += f"[Train:{t.get_id_str()}]\n"

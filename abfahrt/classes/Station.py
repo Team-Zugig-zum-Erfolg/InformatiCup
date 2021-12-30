@@ -1,5 +1,5 @@
 class Station:
-    """ """
+  
   # station: str(ID), int capacity
   id:int = 0
   capacity:int = 0
@@ -9,7 +9,7 @@ class Station:
     self.capacity = capacity
   
   def to_list(self):
-    """ """
+   
     return [self.id, self.capacity]
 
   def to_str_input(self)->str:

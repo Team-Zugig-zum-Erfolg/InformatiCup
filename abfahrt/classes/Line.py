@@ -1,7 +1,7 @@
 from abfahrt.classes.Station import Station
 
 class Line:
-    """ """
+    
   # Strecken: str(ID) str(Anfang) str(Ende) dec(Länge) int(Kapazität)
   # L1 S1 S2 1 3
   id:int = 0

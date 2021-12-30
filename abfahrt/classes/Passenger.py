@@ -2,7 +2,7 @@ from typing import List
 from abfahrt.classes.Station import Station
 
 class Passenger:
-    """ """
+    
   # Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
 
   id:int = 0

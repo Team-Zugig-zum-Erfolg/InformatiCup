@@ -39,7 +39,7 @@ AVERAGE_LINE_LENGTH = 0
 
 
 class Travel_Center:
-    """ """
+    
     train_line_time_list = []
 
     def __init__(self, station_input_list, line_input_list, train_input_list):

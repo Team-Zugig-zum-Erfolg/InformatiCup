@@ -3,7 +3,7 @@ from abfahrt.classes.Station import Station
 from abfahrt.classes.Line import Line
 
 class Train:
-    """ """
+    
   # Züge: str(ID) str(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
 
   id:int = 0
@@ -21,7 +21,7 @@ class Train:
     self.history = []
 
   def to_list(self):
-    """ """
+    
     return [self.id, self.start_station.id, self.speed, self.capacity]
 
   def to_str_input(self)->str:
@@ -152,11 +152,11 @@ class Train:
     return True
   
   def get_capacity(self):
-    """ """
+    
     return self.capacity
   
   def to_str(self):
-    """ """
+    
       output = " ".join([self.get_id_str(),self.start_station.get_id_str(),str(self.get_capacity()),str(self.get_speed())])
       return output
 
