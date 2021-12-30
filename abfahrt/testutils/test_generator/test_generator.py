@@ -1,4 +1,4 @@
-import subprocess, argparse, sys
+import subprocess, argparse, platform
 
 from abfahrt.Generator import Generator
 
@@ -94,6 +94,12 @@ class test_generator:
 
             p1 = subprocess.run('python -m abfahrt < output_generated.txt', capture_output=True,shell=True)
 
+            if platform.system() == "Linux":
+                p1 = subprocess.run('python3 -m abfahrt < output_generated.txt', capture_output=True,shell=True)
+            
+            elif platform.system() == "Windows":
+                p1 = subprocess.run('python -m abfahrt < output_generated.txt', capture_output=True,shell=True)
+                
             if 'error' in p1.stderr.decode("utf-8"):
                 print("Error in test: "+str(test_number))
                 break
