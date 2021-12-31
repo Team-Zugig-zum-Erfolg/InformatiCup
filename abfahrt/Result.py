@@ -8,7 +8,6 @@ import os
 
 
 class Result:
-   
     # Format
     # [Train T1]
     # 0 Start S2
@@ -27,13 +26,7 @@ class Result:
 
     
     def save_train_depart(self, id_train, time, id_line):
-        """find the train in trains[], add this action in its history
-
-        :param id_train: 
-        :param time: 
-        :param id_line: 
-
-        """
+        ''' find the train in trains[], add this action in its history'''
         # print(f"-> enter [save_train_depart], id={id_train}, time={time}, id_line={id_line}")
 
         train = self.find_or_add_train(id_train)    # find the train in list, or add one in list
@@ -45,13 +38,6 @@ class Result:
         # print("===")
 
     def save_train_start(self, id_train, time, id_station):
-        """
-
-        :param id_train: 
-        :param time: 
-        :param id_station: 
-
-        """
         # print(f"-> enter [save_train_start], id={id_train}, time={time}, id_line={id_station}")
 
         # for i in self.trains:
@@ -71,13 +57,6 @@ class Result:
         # print("===")
 
     def save_passenger_board(self, id_passenger, time, id_train):
-        """
-
-        :param id_passenger: 
-        :param time: 
-        :param id_train: 
-
-        """
         # print(f"-> enter [save_passenger_board], id={id_passenger}, time={time}, id_line={id_train}")
         p = self.find_or_add_passenger(id_passenger)
         p.add_board(time = time, train_id = id_train)
@@ -89,12 +68,6 @@ class Result:
         # print("===")
 
     def save_passenger_detrain(self, id_passenger, time):
-        """
-
-        :param id_passenger: 
-        :param time: 
-
-        """
         # print(f"-> enter [save_passenger_detrain], id={id_passenger}, time={time}")
         p = self.find_or_add_passenger(id_passenger)
         p.add_detrain(time = time)
@@ -105,13 +78,7 @@ class Result:
         # print("===")
     
     def find_or_add_train(self, id_train:int)->Train:
-        """find the train in the trains[], if not exist, create one
-
-        :param id_train: 
-        :type id_train: int
-        :rtype: Train
-
-        """
+        '''find the train in the trains[], if not exist, create one'''
         # print("*-> enter [find_or_add_train]")
 
         # for i in self.trains:
@@ -154,13 +121,7 @@ class Result:
             return train
 
     def find_or_add_passenger(self, id_passenger:int)->Passenger:
-        """find the train in the trains[], if not exist, create one, currently cannot deduplicate
-
-        :param id_passenger: 
-        :type id_passenger: int
-        :rtype: Passenger
-
-        """
+        '''find the train in the trains[], if not exist, create one, currently cannot deduplicate'''
         # print("*-> enter [find_or_add_passenger]")
         if id_passenger in self.id_passengers:                                      # already exist
             find_result = filter(lambda p: p.id == id_passenger, self.passengers)   # find it
@@ -183,12 +144,7 @@ class Result:
             return p
 
     def add_passenger(self, passenger:Passenger):
-        """add a Passanger in list, if already exist(with same id), merge the history
-
-        :param passenger: 
-        :type passenger: Passenger
-
-        """
+        '''add a Passanger in list, if already exist(with same id), merge the history'''
         '''also save the id in a Set, for easily to check if some exist'''
         '''if you need to add a P only with id, please use find_or_add_passenger'''
         if passenger.id in self.id_passengers:          # already exist
@@ -203,12 +159,6 @@ class Result:
             self.passengers.sort(key=lambda x : x.id)
 
     def add_train(self,train:Train):
-        """
-
-        :param train: 
-        :type train: Train
-
-        """
         if train.id in self.id_trains:
             self.find_or_add_train(train.id).merge(train)
         else:
@@ -219,41 +169,21 @@ class Result:
             self.trains.sort(key=lambda x : x.id)
 
     def passengers_add_from_input(self, input:Input):
-        """from input add all passengers
-
-        :param input: 
-        :type input: Input
-
-        """
+        '''from input add all passengers'''
         for passenger in input.Passengers:
             self.add_passenger(passenger)
         
     def passengers_read_from_input(self, input:Input):
-        """directly read all passengers from input.passengers
-
-        :param input: 
-        :type input: Input
-
-        """
+        '''directly read all passengers from input.passengers'''
         self.passengers = input.Passengers
 
     def train_add_from_input(self, input:Input):
-        """from input add all passengers
-
-        :param input: 
-        :type input: Input
-
-        """
+        '''from input add all passengers'''
         for train in input.Trains:
             self.add_train(train)
         
     def train_read_from_input(self, input:Input):
-        """directly read all passengers from input.passengers
-
-        :param input: 
-        :type input: Input
-
-        """
+        '''directly read all passengers from input.passengers'''
         self.trains = input.Trains
 
 
@@ -261,7 +191,6 @@ class Result:
 #%% saving methods
 
     def to_output_text(self):
-        
         result = ""
         for t in self.trains:
             result += f"[Train:{t.get_id_str()}]\n"
@@ -276,7 +205,7 @@ class Result:
         return result
 
     def to_file_same(self):
-        """save output file in SAME file output"""
+        ''' save output file in SAME file output '''
         path = './output.txt'
         state = False
         file = open(path, 'w')  
@@ -286,12 +215,9 @@ class Result:
         return state
 
     def to_file(self, folder = "result"):
-        """save output format in local file
+        ''' save output format in local file 
         parameter: folder: the folder to save this file, default is "result"
-
-        :param folder:  (Default value = "result")
-
-        """
+        '''
         dir_name = str(folder)
         path = self.path_generator(folder = dir_name)
         state = False
@@ -306,12 +232,7 @@ class Result:
         return state
 
     def path_generator(self, folder = "result") -> str:
-        """generate a path for local file
-
-        :param folder:  (Default value = "result")
-        :rtype: str
-
-        """
+        ''' generate a path for local file '''
         dir_name = str(folder)
         path = "./" + dir_name + "/Output"
         path = path +"-"+ time.strftime("%y%m%d-%H%M%S",time.localtime(time.time()))

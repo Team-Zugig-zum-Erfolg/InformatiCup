@@ -1,5 +1,4 @@
 class Station:
-  
   # station: str(ID), int capacity
   id:int = 0
   capacity:int = 0
@@ -9,56 +8,29 @@ class Station:
     self.capacity = capacity
   
   def to_list(self):
-   
     return [self.id, self.capacity]
 
   def to_str_input(self)->str:
-    """
-
-
-    :rtype: str
-
-    """
     output = " ".join([self.get_id_str(),str(self.capacity)])
     return output
 
   def get_id_str(self)->str:
-    """
-
-
-    :rtype: str
-
-    """
     out = "S" + str(self.id)
     return out
 
   def get_id(self):
-    """ """
     return self.id
   
   def set_id(self,id:int):
-    """
-
-    :param id: 
-    :type id: int
-
-    """
     if type(id) != int:
       return False
     self.id = id
     return True
   
   def get_capacity(self):
-    """ """
     return self.capacity
   
   def set_capacity(self,capacity:int):
-    """
-
-    :param capacity: 
-    :type capacity: int
-
-    """
     if type(capacity) != int:
       return False
     self.capacity = capacity

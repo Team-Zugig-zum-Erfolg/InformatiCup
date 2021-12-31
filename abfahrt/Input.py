@@ -9,7 +9,6 @@ import sys
 
 
 class Input:
-    """ """
     star_station = Station(id=-1, capacity=999)   # the "*" station
     Stations: List["Station"] = []
     Lines: List["Line"] = []
@@ -17,16 +16,9 @@ class Input:
     Passengers: List["Passenger"] = []
 
     def get_star_station(self):
-        """ """
         return self.star_station
 
     def find_station(self, id) -> Station:
-        """
-
-        :param id: 
-        :rtype: Station
-
-        """
         # station may be none, if input is *
         find = list(filter(lambda t: t.id == id, self.Stations))
         if(len(find) > 0):
@@ -39,12 +31,6 @@ class Input:
             return None
 
     def find_line(self, id) -> Line:
-        """
-
-        :param id: 
-        :rtype: Line
-
-        """
         find = list(filter(lambda t: t.id == id, self.Lines))
         if(len(find) > 0):
             return find[0]  # assume there are no duplications
@@ -52,12 +38,6 @@ class Input:
             return None
 
     def find_train(self, id) -> Train:
-        """
-
-        :param id: 
-        :rtype: Train
-
-        """
         find = list(filter(lambda t: t.id == id, self.Trains))
         if(len(find) > 0):
             return find[0]  # assume there are no duplications
@@ -65,12 +45,6 @@ class Input:
             return None
 
     def find_passenger(self, id) -> Passenger:
-        """
-
-        :param id: 
-        :rtype: Passenger
-
-        """
         find = list(filter(lambda t: t.id == id, self.Passengers))
         if(len(find) > 0):
             return find[0]  # assume there are no duplications
@@ -82,14 +56,6 @@ class Input:
     # check duplication
 
     def add_station(self, id: str, capacity: str):
-        """
-
-        :param id: 
-        :type id: str
-        :param capacity: 
-        :type capacity: str
-
-        """
         # station: int(ID), int capacity
         id = _string_to_int(id)
         station = self.find_station(id)
@@ -100,20 +66,6 @@ class Input:
         # false: append
 
     def add_line(self, id: str, start_id: str, end_id: str, length: str, capacity: str):
-        """
-
-        :param id: 
-        :type id: str
-        :param start_id: 
-        :type start_id: str
-        :param end_id: 
-        :type end_id: str
-        :param length: 
-        :type length: str
-        :param capacity: 
-        :type capacity: str
-
-        """
         id = _string_to_int(id)
         line = self.find_line(id)
         if not line:
@@ -124,18 +76,6 @@ class Input:
         # Strecken: int(ID) station(Anfang) station(Ende) dec(Länge) int(Kapazität)
 
     def add_train(self, id: str, start_id: str, speed: str, capacity: str):
-        """
-
-        :param id: 
-        :type id: str
-        :param start_id: 
-        :type start_id: str
-        :param speed: 
-        :type speed: str
-        :param capacity: 
-        :type capacity: str
-
-        """
         # Züge: int(ID) station(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
         id = _string_to_int(id)
         train = self.find_train(id)
@@ -149,20 +89,6 @@ class Input:
                 # assume that this station exist
 
     def add_passenger(self, id: str, start_id: str, end_id: str, size: str, target: str):
-        """
-
-        :param id: 
-        :type id: str
-        :param start_id: 
-        :type start_id: str
-        :param end_id: 
-        :type end_id: str
-        :param size: 
-        :type size: str
-        :param target: 
-        :type target: str
-
-        """
         # Passagiere: int(ID) station(Startbahnhof) station(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
         id = _string_to_int(id)
         passenger = self.find_passenger(id)
@@ -172,7 +98,7 @@ class Input:
                 start_id)), end_station=self.find_station(_string_to_int(end_id)), group_size=int(size), target_time=int(target)))
 
     def from_stdin(self):
-        """read input from stdin"""
+        ''' read input from stdin '''
         lines = sys.stdin.readlines()
         mylines = []  # Declare an empty list.
 
@@ -183,28 +109,19 @@ class Input:
         return self.parse_lines(mylines)
 
     def if_station_exist():
-        """ """
         pass
 
     def if_line_exist():
-        """ """
         pass
 
     def if_train_exist():
-        """ """
         pass
 
     def if_passenger_exist():
-        """ """
         pass
 
     def to_input_text(self) -> str:
-        """
-
-
-        :rtype: str
-
-        """
+        ''' return a string of input in format '''
         text = "# Bahnhöfe: str(ID) \n [Stations] \n"
         for station in self.Stations:
             text = text + station.to_str_input() + "\n"
@@ -234,13 +151,7 @@ class Input:
         return text
 
     def to_input_file(self, path: str) -> bool:
-        """save input format in local file
-
-        :param path: 
-        :type path: str
-        :rtype: bool
-
-        """
+        ''' save input format in local file '''
         state = False
         file = open(path, 'w')
         file.write(self.to_input_text())
@@ -249,24 +160,14 @@ class Input:
         return state
 
     def path_generator(self) -> str:
-        """generate a path for local file
-
-
-        :rtype: str
-
-        """
+        ''' generate a path for local file '''
         filename = "Input-" + \
             time.strftime("%y%m%d-%H%M%S",
                           time.localtime(time.time())) + ".txt"
         return filename
 
     def from_file(self, path: str):
-        """load input from local file
-
-        :param path: 
-        :type path: str
-
-        """
+        ''' load input from local file '''
         mylines = []  # Declare an empty list.
         # Open lorem.txt for reading text.
         with open(path, "rt") as myfile:
@@ -278,12 +179,7 @@ class Input:
         return self.parse_lines(mylines)
 
     def parse_lines(self, lines: list):
-        """this is used in from_input(), from_input_stdin()
-
-        :param lines: 
-        :type lines: list
-
-        """
+        ''' this is used in from_input(), from_input_stdin()'''
         i = 0
         while(i < len(lines)-1):
             if lines[i] == ("[Stations]"):
@@ -326,7 +222,7 @@ class Input:
         return self.Stations, self.Lines, self.Trains, self.Passengers
 
     def print_input(self):
-        """print information of input"""
+        ''' print information of input '''
         print("---------------")
         print("| * printing input started ...")
         print(f"| * Stations: [{len(self.Stations)}]")
@@ -356,13 +252,6 @@ class Input:
 
 # helper methods
 def _string_to_int(string: str) -> int:
-    """
-
-    :param string: 
-    :type string: str
-    :rtype: int
-
-    """
     r = re.findall('\d+', string)
     if (len(r) > 0):
         return int(r[0])
@@ -371,13 +260,6 @@ def _string_to_int(string: str) -> int:
 
 
 def _string_to_float(string: str) -> float:
-    """
-
-    :param string: 
-    :type string: str
-    :rtype: float
-
-    """
     r = re.findall('\d+', string)
     if (len(r) > 0):
         return float(r[0])

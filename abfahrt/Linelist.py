@@ -1,7 +1,6 @@
 from abfahrt.classes.TrainInLine import TrainInLine
 
 class Linelist:
-    """ """
     lines = []  # the lines with capacities
 
     def __init__(self, linelist):
@@ -15,12 +14,6 @@ class Linelist:
             line_number = line_number + 1
 
     def compare_free(self, train_in_line: TrainInLine):
-        """
-
-        :param train_in_line: 
-        :type train_in_line: TrainInLine
-
-        """
 
         earliest_leave_time = -1
         line_capacities = self.lines[train_in_line.line_id]
@@ -55,30 +48,12 @@ class Linelist:
 
     @staticmethod
     def _train_in_line_is_full(train_in_line, start, end):
-        """
-
-        :param train_in_line: 
-        :param start: 
-        :param end: 
-
-        """
         return ((train_in_line.end > start >= train_in_line.start) or
                 (train_in_line.start < end < train_in_line.end) or (start <= train_in_line.start and train_in_line.end <= end and (train_in_line.start != train_in_line.end or start != end)))
 
     @staticmethod
     def _train_in_line_pos(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start, end,
                            earliest_leave_time):
-        """
-
-        :param front_train_in_line: 
-        :type front_train_in_line: TrainInLine
-        :param back_train_in_line: 
-        :type back_train_in_line: TrainInLine
-        :param start: 
-        :param end: 
-        :param earliest_leave_time: 
-
-        """
         distance_s_e = end - start
         distance_between_trains = back_train_in_line.start - front_train_in_line.end
         if distance_s_e + 2 <= distance_between_trains:
@@ -88,27 +63,11 @@ class Linelist:
 
     @staticmethod
     def _train_in_line_between(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start, end):
-        """
-
-        :param front_train_in_line: 
-        :type front_train_in_line: TrainInLine
-        :param back_train_in_line: 
-        :type back_train_in_line: TrainInLine
-        :param start: 
-        :param end: 
-
-        """
         dis = back_train_in_line.start - front_train_in_line.end
         dis_needed = end - start
         return dis_needed <= dis
 
     def add_new_train_in_line(self, train_in_line: TrainInLine):
-        """
-
-        :param train_in_line: 
-        :type train_in_line: TrainInLine
-
-        """
 
         capacity_number = 0
         for capacity in self.lines[train_in_line.line_id]:
@@ -136,11 +95,6 @@ class Linelist:
         return False
 
     def read_trains_from_line(self, line_number):
-        """
-
-        :param line_number: 
-
-        """
         trains = []
         for capacity in self.lines[line_number]:
             for train_in_line in capacity:

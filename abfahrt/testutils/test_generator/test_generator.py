@@ -3,10 +3,8 @@ import subprocess, argparse, platform
 from abfahrt.Generator import Generator
 
 class test_generator:
-    """ """
 
     def run(self):
-        """ """
 
         generator = Generator()
         test_number = 0

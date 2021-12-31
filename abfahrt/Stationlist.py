@@ -15,7 +15,6 @@ S_CAPACITY = 1
 
 
 class Stationlist:
-    
     stations = []  # the stations with capacities
 
     def __init__(self, stationlist, trainlist):
@@ -45,11 +44,6 @@ class Stationlist:
 
     @staticmethod
     def _capacity_is_full(capacity):
-        """
-
-        :param capacity: 
-
-        """
 
         for _train_in_station in capacity:
             # and _train_in_station.arrive_train_time <= train_in_station.arrive_train_time + 1:
@@ -58,12 +52,6 @@ class Stationlist:
         return False
 
     def compare_free_place(self, train_in_station: TrainInStation):
-        """
-
-        :param train_in_station: 
-        :type train_in_station: TrainInStation
-
-        """
         station_capacities = self.stations[train_in_station.station_id]
         capacity_minimal_times = []
 
@@ -126,15 +114,6 @@ class Stationlist:
     @staticmethod
     def _train_in_station_is_free(front_train_leave_time, back_train_in_station: TrainInStation,
                                   in_station_time, leave_station_time):
-        """
-
-        :param front_train_leave_time: 
-        :param back_train_in_station: 
-        :type back_train_in_station: TrainInStation
-        :param in_station_time: 
-        :param leave_station_time: 
-
-        """
         # train_in_station[] = [out, in, train_Id, leave]
         if front_train_leave_time == None:
             return False
@@ -144,15 +123,6 @@ class Stationlist:
     @staticmethod
     def _train_in_station_pos(front_train_in_station: TrainInStation, back_train_in_station: TrainInStation,
                               earliest_leave_time):
-        """
-
-        :param front_train_in_station: 
-        :type front_train_in_station: TrainInStation
-        :param back_train_in_station: 
-        :type back_train_in_station: TrainInStation
-        :param earliest_leave_time: 
-
-        """
         distance_s_e = 1
         if front_train_in_station.leave_time is not None:
             leave_time = front_train_in_station.leave_time
@@ -166,12 +136,6 @@ class Stationlist:
 
     @staticmethod
     def _train_in_capacity(capacity, train):
-        """
-
-        :param capacity: 
-        :param train: 
-
-        """
         if not train:
             return False
         for train_in_station in capacity:
@@ -180,14 +144,6 @@ class Stationlist:
         return False
 
     def add_new_train_in_station(self, train_in_station: TrainInStation, result, train_to_replace=False):
-        """
-
-        :param train_in_station: 
-        :type train_in_station: TrainInStation
-        :param result: 
-        :param train_to_replace:  (Default value = False)
-
-        """
         global TRAIN_NOT_IN_STATION
         enable, delay_time = self.compare_free_place(train_in_station)
         if not enable:
@@ -256,14 +212,6 @@ class Stationlist:
             return True
 
     def add_train_leave_time(self, train, leave_time, station_number, result):
-        """
-
-        :param train: 
-        :param leave_time: 
-        :param station_number: 
-        :param result: 
-
-        """
 
         capacity_number = 0
         found = 0
@@ -282,12 +230,6 @@ class Stationlist:
         return True
 
     def read_trains_from_station(self, station_number, also_not_in_station_trains=True):
-        """
-
-        :param station_number: 
-        :param also_not_in_station_trains:  (Default value = True)
-
-        """
         trains = []
         start_times = []
         one_empty_capacity = 0
@@ -320,12 +262,6 @@ class Stationlist:
 
     @staticmethod
     def train_leave_time(train_in_station: TrainInStation):
-        """
-
-        :param train_in_station: 
-        :type train_in_station: TrainInStation
-
-        """
         if train_in_station.leave_time is None:
             return train_in_station.passenger_in_train_time
         else:
