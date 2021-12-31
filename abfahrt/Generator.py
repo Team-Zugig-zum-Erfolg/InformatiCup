@@ -1,5 +1,9 @@
+# This module implements pseudo-random number generators for various distributions. (https://docs.python.org/3/library/random.html)
 import random
+
+
 from abfahrt.classes.Passenger import Passenger
+
 
 class Generator:
 

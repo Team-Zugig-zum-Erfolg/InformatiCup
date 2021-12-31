@@ -1,8 +1,12 @@
-from abfahrt.classes.Station import Station
-from abfahrt.classes.TrainInStation import TrainInStation
+# This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
 import sys
 
+
+from abfahrt.classes.Station import Station
+from abfahrt.classes.TrainInStation import TrainInStation
 from abfahrt.Result import Result
+
+
 
 TRAIN_NOT_IN_STATION = []
 T_ID = 0

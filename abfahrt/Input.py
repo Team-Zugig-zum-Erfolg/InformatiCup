@@ -1,11 +1,20 @@
+# This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
 from typing import List
+
+# This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)
+import time
+
+# This module provides regular expression matching operations similar to those found in Perl. (https://docs.python.org/3/library/re.html)
+import re
+
+# This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
+import sys
+
+
 from abfahrt.classes.Station import Station
 from abfahrt.classes.Line import Line
 from abfahrt.classes.Passenger import Passenger
 from abfahrt.classes.Train import Train
-import time
-import re
-import sys
 
 
 class Input:

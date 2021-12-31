@@ -1,6 +1,15 @@
-import subprocess, argparse, platform
+# The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes. This module intends to replace several older modules and functions. (https://docs.python.org/3/library/subprocess.html)
+import subprocess
+
+#The argparse module makes it easy to write user-friendly command-line interfaces. The program defines what arguments it requires, and argparse will figure out how to parse those out of sys.argv. The argparse module also automatically generates help and usage messages and issues errors when users give the program invalid arguments. (https://docs.python.org/3/library/argparse.html)
+import argparse
+
+#Returns the system/OS name, such as 'Linux', 'Darwin', 'Java', 'Windows'. An empty string is returned if the value cannot be determined. (https://docs.python.org/3/library/platform.html)
+from platform import system
+
 
 from abfahrt.Generator import Generator
+
 
 class test_generator:
 
@@ -68,20 +77,6 @@ class test_generator:
 
         args = parser.parse_args()
     
-     #  if(args.input == ""):
-     #       print("use --help for more informations or check documentation")
-     #       sys.exit()
-
-   #     if(args.input != ""):  
-   #         command = args.input.split(',')
-                            
-    #    if len(command) < 11:
-    #        print("error, to few arguments")
-    #        sys.exit()
-   #     if len(command) > 11:
-    #        print("error, to many arguments")
-    #        sys.exit()
-
         test_amount = args.test_amount
 
         for i in range(test_amount):
@@ -91,10 +86,10 @@ class test_generator:
             
             generator.random_input_generate_file(args.size_stations, args.size_lines, args.size_trains, args.size_passengers, args.station_capacity_max, args.line_capacity_max, args.line_length_max, args.train_capacity_max, args.passenger_group_size_max, args.passenger_target_round)
         
-            if platform.system() == "Linux":
+            if system() == "Linux":
                 p1 = subprocess.run('python3 -m abfahrt < output_generated.txt', capture_output=True,shell=True)
             
-            elif platform.system() == "Windows":
+            elif system() == "Windows":
                 p1 = subprocess.run('python -m abfahrt < output_generated.txt', capture_output=True,shell=True)
             else:
                 return
@@ -103,11 +98,10 @@ class test_generator:
                 print("Error in test: "+str(test_number))
                 break
             
-
-            if platform.system() == "Linux":
+            if system() == "Linux":
                 p2 = subprocess.run('"./abfahrt/simulator/Bahn-Simulator.exe" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
             
-            elif platform.system() == "Windows":
+            elif system() == "Windows":
                 p2 = subprocess.run('"abfahrt/simulator/Bahn-Simulator.exe" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
             else:
                 return
@@ -119,4 +113,3 @@ class test_generator:
                 break
 
         print("Successful tests: "+str(test_number)+"/"+str(test_amount))
-

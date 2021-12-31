@@ -72,5 +72,3 @@ def main():
     print(result.to_output_text())
     result.to_file_same()
     return
-
-

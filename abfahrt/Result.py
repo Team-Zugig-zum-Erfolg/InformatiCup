@@ -1,10 +1,17 @@
+# This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
 from typing import List
+
+# This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)
+import time
+
+# This module provides a portable way of using operating system dependent functionality. If you just want to read or write a file see open(), if you want to manipulate paths, see the os.path module, and if you want to read all the lines in all the files on the command line see the fileinput module. For creating temporary files and directories see the tempfile module, and for high-level file and directory handling see the shutil module. (https://docs.python.org/3/library/os.html)
+import os
+
+
 from abfahrt.classes.Passenger import Passenger
 from abfahrt.classes.Train import Train
 from abfahrt.classes.Station import Station
 from abfahrt.Input import Input
-import time
-import os
 
 
 class Result:

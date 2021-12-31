@@ -1,6 +1,13 @@
+# The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes. This module intends to replace several older modules and functions. (https://docs.python.org/3/library/subprocess.html)
 import subprocess
+
+# This module provides a portable way of using operating system dependent functionality. If you just want to read or write a file see open(), if you want to manipulate paths, see the os.path module, and if you want to read all the lines in all the files on the command line see the fileinput module. For creating temporary files and directories see the tempfile module, and for high-level file and directory handling see the shutil module. (https://docs.python.org/3/library/os.html)
 import os
-import platform
+
+#Returns the system/OS name, such as 'Linux', 'Darwin', 'Java', 'Windows'. An empty string is returned if the value cannot be determined. (https://docs.python.org/3/library/platform.html)
+from platform import system
+
+# This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)
 import time
 
 files_test = os.listdir('abfahrt/testfiles/')
@@ -23,10 +30,10 @@ class test_simulator:
         for i in range(len(files_test)):
             print('========' + files_test[i] + '========')
             start_time = time.time()
-            if platform.system() == "Linux":
+            if system() == "Linux":
                 p1 = subprocess.run(
                     'python3 -m abfahrt < abfahrt/testfiles/' + files_test[i], capture_output=True, shell=True)
-            elif platform.system() == "Windows":
+            elif system() == "Windows":
                 p1 = subprocess.run(
                     'python -m abfahrt < abfahrt/testfiles/' + files_test[i], capture_output=True, shell=True)
             else:
@@ -37,10 +44,10 @@ class test_simulator:
                     Errlist.append(files_test[i])
                     continue
             # print('====' + files_test[i] + '++++gotest' '====')
-            if platform.system() == "Linux":
+            if system() == "Linux":
                 p2 = subprocess.run('"./abfahrt/simulator/bahn-simulator" -input abfahrt/testfiles/' +
                                     files_test[i] + ' -output output.txt -verbose', stdout=subprocess.PIPE, shell=True, cwd=".")
-            elif platform.system() == "Windows":
+            elif system() == "Windows":
                 p2 = subprocess.run('"abfahrt/simulator/bahn-simulator.exe" -input abfahrt/testfiles/' +
                                     files_test[i] + ' -output output.txt -verbose', stdout=subprocess.PIPE, shell=True, cwd=".")
             else:
