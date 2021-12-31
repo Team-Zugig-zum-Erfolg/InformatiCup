@@ -1,6 +1,7 @@
 
 *.pyc
 *.xml
+*.json
 Output*.txt
 output*.txt
 abfahrt/Result/*.txt
