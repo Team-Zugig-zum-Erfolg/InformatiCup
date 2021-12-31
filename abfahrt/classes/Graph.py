@@ -21,6 +21,26 @@ class Graph:
         self.edges[fromNode].remove(toNode)
 
     @staticmethod
+    def dfs(graph, v, visited):
+        visited[v] = True
+        for u in graph.edges[v]:
+            if not visited[u]:
+                Graph.dfs(graph, u, visited)
+
+    @staticmethod
+    def is_connected(graph):
+        visited = [True]
+        for i in range(len(graph.nodes)):
+            visited.append(False)
+        Graph.dfs(graph, 1, visited)
+        t = 0
+        for b in visited:
+            if not b:
+                return False
+            t += 1
+        return True
+
+    @staticmethod
     def shortest(v, prev_list, path_to_target):
         if prev_list[v]:
             path_to_target.append(prev_list[v])
