@@ -98,8 +98,9 @@ class test_generator:
                 print("Error in test: "+str(test_number))
                 break
             
+            
             if system() == "Linux":
-                p2 = subprocess.run('"./abfahrt/simulator/Bahn-Simulator.exe" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
+                p2 = subprocess.run('"./abfahrt/simulator/bahn-simulator" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
             
             elif system() == "Windows":
                 p2 = subprocess.run('"abfahrt/simulator/Bahn-Simulator.exe" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
