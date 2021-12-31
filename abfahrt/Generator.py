@@ -8,7 +8,6 @@ from abfahrt.classes.Line import Line
 from abfahrt.classes.Train import Train
 
 
-
 class Generator:
 
     def _list_to_class_object(self, list_properties, class_name, stations):
@@ -26,7 +25,7 @@ class Generator:
 
         return _class(*list_properties)
 
-    def random_input_generate_as_classes(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max):
+    def random_input_generate_as_classes(self, size_station=10, size_lines=20, size_trains=10, size_pa=10, sc_max=10, lc_max=2, ll_max=10, tc_max=20, pgs_max=10, ptr_max=10):
         stations = []
         lines = []
         trains = []

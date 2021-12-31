@@ -15,14 +15,19 @@ from abfahrt.classes.Station import Station
 from abfahrt.classes.Line import Line
 from abfahrt.classes.Passenger import Passenger
 from abfahrt.classes.Train import Train
+from abfahrt.Generator import Generator
 
 
 class Input:
+
     star_station = Station(id=-1, capacity=999)   # the "*" station
     Stations: List["Station"] = []
     Lines: List["Line"] = []
     Trains: List["Train"] = []
     Passengers: List["Passenger"] = []
+
+    def __init__(self):
+        self.Generator = Generator()
 
     def get_star_station(self):
         return self.star_station
@@ -105,6 +110,11 @@ class Input:
             # assume station and station already wrote in [station] section
             self.Passengers.append(Passenger(id=id, start_station=self.find_station(_string_to_int(
                 start_id)), end_station=self.find_station(_string_to_int(end_id)), group_size=int(size), target_time=int(target)))
+
+    def from_generator(self):
+
+        output = self.Generator.random_input_generate_as_classes()
+        return output
 
     def from_stdin(self):
         ''' read input from stdin '''
