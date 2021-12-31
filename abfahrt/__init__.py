@@ -5,3 +5,11 @@ from abfahrt.classes.Passenger import Passenger
 from abfahrt.classes.TrainInLine import TrainInLine
 from abfahrt.classes.TrainInStation import TrainInStation
 from abfahrt.classes.Travel import Travel
+from abfahrt.Generator import Generator
+from abfahrt.Stationlist import Stationlist
+from abfahrt.Linelist import Linelist
+from abfahrt.Groups import Groups
+from abfahrt.Input import Input
+from abfahrt.Result import Result
+from abfahrt.Plan import Plan
+from abfahrt.Travel_Center import Travel_Center
