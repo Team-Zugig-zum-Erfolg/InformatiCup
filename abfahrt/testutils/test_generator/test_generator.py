@@ -94,8 +94,6 @@ class test_generator:
             generator.random_input_generate_file(args.size_stations, args.size_lines, args.size_trains, args.size_passengers, args.station_capacity_max, args.line_capacity_max, args.line_length_max, args.train_capacity_max, args.passenger_group_size_max, args.passenger_target_round)
         
 
-            p1 = subprocess.run('python -m abfahrt < output_generated.txt', capture_output=True,shell=True)
-
             if platform.system() == "Linux":
                 p1 = subprocess.run('python3 -m abfahrt < output_generated.txt', capture_output=True,shell=True)
             
