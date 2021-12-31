@@ -3,7 +3,6 @@ from abfahrt.classes.Station import Station
 from abfahrt.classes.TrainInStation import TrainInStation
 
 
-TRAIN_NOT_IN_STATION = []
 T_ID = 0
 T_START_STATION = 1
 T_SPEED = 2
@@ -14,12 +13,13 @@ S_CAPACITY = 1
 
 
 class Stationlist:
-    stations = []  # the stations with capacities
 
     def __init__(self, stationlist, trainlist):
-        global TRAIN_NOT_IN_STATION
-        station_id = 1
+        self.stations = []  # the stations with capacities
+        self.trains_not_in_station = []
+
         self.stations.append([])
+        station_id = 1
         for station in stationlist:
             self.stations.append([])
             for i in range(0, station[S_CAPACITY]):
@@ -37,8 +37,8 @@ class Stationlist:
                     raise NameError(
                         "Error: Too many trains in station at beginning!")
             else:
-                TRAIN_NOT_IN_STATION.append(train_in_station)
-                TRAIN_NOT_IN_STATION.sort(
+                self.trains_not_in_station.append(train_in_station)
+                self.trains_not_in_station.sort(
                     key=lambda x: x.train.capacity, reverse=False)
 
     @staticmethod
@@ -143,7 +143,6 @@ class Stationlist:
         return False
 
     def add_new_train_in_station(self, train_in_station: TrainInStation, result, train_to_replace=False):
-        global TRAIN_NOT_IN_STATION
         enable, delay_time = self.compare_free_place(train_in_station)
         if not enable:
             if delay_time != -1:
@@ -152,11 +151,11 @@ class Stationlist:
                 return False
         if result is not None:
             i = 0
-            for _train_in_station in TRAIN_NOT_IN_STATION:
+            for _train_in_station in self.trains_not_in_station:
                 if _train_in_station.train == train_in_station.train:
                     result.save_train_start(
                         train_in_station.train.id, 0, train_in_station.station_id)
-                    TRAIN_NOT_IN_STATION.pop(i)
+                    self.trains_not_in_station.pop(i)
                     #self.add_train_leave_time(train_in_station.train, start_time + 1, train_in_station.station_id,result)
                     break
                 i += 1
@@ -222,7 +221,7 @@ class Stationlist:
                     return True
                 t = t + 1
             capacity_number = capacity_number + 1
-        for train_not_in_station in TRAIN_NOT_IN_STATION:
+        for train_not_in_station in self.trains_not_in_station:
             if train == train_not_in_station.train:
                 self.add_new_train_in_station(TrainInStation(
                     0, 1, train, leave_time, station_number), result)
@@ -233,7 +232,6 @@ class Stationlist:
         start_times = []
         one_empty_capacity = 0
         train_not_in_station_start_time = sys.maxsize
-        global TRAIN_NOT_IN_STATION
         for capacity in self.stations[station_number]:
             if len(capacity) > 0:
                 for i in range(len(capacity)):
@@ -248,7 +246,7 @@ class Stationlist:
                 one_empty_capacity = 1
 
         if also_not_in_station_trains:
-            for train_not_in_station in TRAIN_NOT_IN_STATION:
+            for train_not_in_station in self.trains_not_in_station:
                 # check if the station is at least to the time train_not_in_station_start_time for at least one train free
                 # only then return the train
                 if one_empty_capacity == 1:

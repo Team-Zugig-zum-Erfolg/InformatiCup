@@ -29,6 +29,9 @@ def main():
 
     groups = Groups(passengers)
 
+    if not travel_center.check_plan():
+        raise NameError("Not all stations connected!")
+
     while len(groups.route) != 0:
 
         group = groups.get_priority()

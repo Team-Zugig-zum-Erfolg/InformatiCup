@@ -20,6 +20,24 @@ class Plan:
     def removeEdge(self, fromNode, toNode):
         self.edges[fromNode].remove(toNode)
 
+    def dfs(self, v, visited):
+        visited[v] = True
+        for u in self.edges[v]:
+            if not visited[u]:
+                self.dfs(u, visited)
+
+    def is_connected(self):
+        visited = [True]
+        for i in range(len(self.nodes)):
+            visited.append(False)
+        self.dfs(1, visited)
+        t = 0
+        for b in visited:
+            if not b:
+                return False
+            t += 1
+        return True
+
     def shortest(self, v, prev_list, path_to_target):
         if prev_list[v]:
             path_to_target.append(prev_list[v])

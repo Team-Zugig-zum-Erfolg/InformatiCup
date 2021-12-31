@@ -102,6 +102,11 @@ class Travel_Center:
                     lineplans.append(newpath)
         return lineplans
 
+    def check_plan(self):
+        if self.plan.is_connected():
+            return True
+        return False
+
     def _find_lines(self, s_station_id, e_station_id):
         _, prev_list = self.plan.dijkstra(s_station_id)
         path = [e_station_id]
