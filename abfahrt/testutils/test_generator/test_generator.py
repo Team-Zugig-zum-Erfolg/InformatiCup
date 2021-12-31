@@ -98,12 +98,21 @@ class test_generator:
             
             elif platform.system() == "Windows":
                 p1 = subprocess.run('python -m abfahrt < output_generated.txt', capture_output=True,shell=True)
-                
+            else:
+                return
+
             if 'error' in p1.stderr.decode("utf-8"):
                 print("Error in test: "+str(test_number))
                 break
             
-            p2 = subprocess.run('"abfahrt/simulator/Bahn-Simulator.exe" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
+
+            if platform.system() == "Linux":
+                p2 = subprocess.run('"./abfahrt/simulator/Bahn-Simulator.exe" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
+            
+            elif platform.system() == "Windows":
+                p2 = subprocess.run('"abfahrt/simulator/Bahn-Simulator.exe" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
+            else:
+                return
 
             if('Printing score' in (p2.stdout.decode("utf-8"))):
                 print("Successful test: "+str(test_number))
