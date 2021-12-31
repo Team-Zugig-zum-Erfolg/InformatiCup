@@ -43,7 +43,7 @@ def main():
                 group_size, stationlist)
             if capacity_enable:
                 travel_center.train_move_to_start_station(
-                    start_station, trains, start_times, start_stations, stationlist, linelist, result, travel_center)
+                    start_station, trains, start_times, start_stations, stationlist, linelist, result)
             else:
                 if len(group) == 1:
                     raise NameError("Error: Capacity of all trains too low!")
@@ -71,7 +71,7 @@ def main():
         travels = [travel_fastest]
 
         travel_center.determine_and_save_shortest_travel(
-            travels, groups, group, stationlist, linelist, result, travel_center)
+            travels, groups, group, stationlist, linelist, result)
 
     print(result.to_output_text())
     result.to_file_same()

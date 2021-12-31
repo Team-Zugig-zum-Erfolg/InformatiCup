@@ -286,7 +286,7 @@ class Travel_Center:
         travel.station_time.arrive_train_time = travel.station_time.arrive_train_time + delay_time
         travel.station_time.passenger_in_train_time = travel.station_time.passenger_in_train_time + delay_time
 
-    def save_travel(self, travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center, train_to_replace=False):
+    def save_travel(self, travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result, train_to_replace=False):
         enable, _, full, _ = self.check_line_station(
             travel, stationlist, linelist, result)
         if enable or (full == True and train_to_replace):
@@ -318,7 +318,7 @@ class Travel_Center:
         else:
             return False
 
-    def determine_and_save_shortest_travel(self, travels, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
+    def determine_and_save_shortest_travel(self, travels, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result):
         save = 0
         if len(travels):
             while not save:
@@ -356,7 +356,7 @@ class Travel_Center:
                             short_travel = travel
 
                     save = self.save_travel(
-                        short_travel, groups, passengers, stationlist, linelist, result, travel_center)
+                        short_travel, groups, passengers, stationlist, linelist, result)
 
                 # travels have to be delayed first, before clearing full stations
                 elif 0 not in delay_times and -1 not in delay_times:
@@ -370,7 +370,6 @@ class Travel_Center:
                 elif self.full_stations_list_not_empty(full_station_list):
 
                     # free all FULL stations on the route of the shortest travel, so the train of the travel can pass them
-                    cleared_stations_ids = []
                     travel_short = None
                     smallest_arrive_time = sys.maxsize
                     t = 0
@@ -382,16 +381,12 @@ class Travel_Center:
                             t = i
                         i = i + 1
 
-                    if travel_short != None:
-                        for full_station in full_station_list[t]:
-                            station_to_clear = full_station[0]
-                            arrive_time = full_station[1]
-                            if station_to_clear.id in cleared_stations_ids:  # prevent clearing a station twice
-                                continue
-                            self.clear_station(station_to_clear, self.get_prev_station_in_travel(
-                                travel_short, station_to_clear), arrive_time-2, linelist, stationlist, result, travel_center, travel_short.station_times, travel_short.train)
-                            cleared_stations_ids.append(station_to_clear.id)
-                            break
+                    station_to_clear = full_station_list[t][0][0]
+                    arrive_time = full_station_list[t][0][1]
+                    self.clear_station(station_to_clear, self.get_prev_station_in_travel(
+                        travel_short, station_to_clear), arrive_time-2, linelist, stationlist, result, travel_short.station_times, travel_short.train)
+
+                    travels = [travel_short]
 
                 else:
                     raise NameError(
@@ -487,8 +482,7 @@ class Travel_Center:
                 free = free + 1
         return (free >= 2)
 
-    def clear_station(self, end_station, prev_station, arrive_time, linelist: Linelist, stationlist: Stationlist, result: Result,
-                      travel_center, stations_to_ignore, train_to_replace=None):
+    def clear_station(self, end_station, prev_station, arrive_time, linelist: Linelist, stationlist: Stationlist, result: Result, stations_to_ignore, train_to_replace=None):
         # clear station (move trains out of it to other stations)
         # clear station (move trains out of it to other stations)
 
@@ -560,7 +554,7 @@ class Travel_Center:
                         short_travel = travel
 
                 self.save_travel(
-                    short_travel, None, None, stationlist, linelist, result, travel_center)
+                    short_travel, None, None, stationlist, linelist, result)
                 available = 1
             # end_station is for at least one travel free (so not blocked)
             elif False in full_end_station or 0 not in delay_times:
@@ -579,7 +573,7 @@ class Travel_Center:
                     i = i + 1
 
                 self.save_travel(
-                    short_travel, None, None, stationlist, linelist, result, travel_center, train_to_replace)
+                    short_travel, None, None, stationlist, linelist, result, train_to_replace)
                 available = 1
             else:
                 # all neighboor stations are blocked (should actually not happen, because they are checked above)
@@ -588,9 +582,9 @@ class Travel_Center:
 
     # move a train to start station
     def train_move_to_start_station(self, start_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist,
-                                    result: Result, travel_center):
+                                    result: Result):
         save = self._train_to_station(start_station, trains, start_times, start_stations, stationlist,
-                                      linelist, result, travel_center)
+                                      linelist, result)
         return save
 
     def _remove_passing_station_trains(self, start_station, trains, start_times, stationlist: Stationlist):
@@ -673,7 +667,7 @@ class Travel_Center:
         else:
             return 1
 
-    def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist, result: Result, travel_center):
+    def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist, result: Result):
         travels = []
         trains_to_call = trains
         calling_trains_limit = Travel_Center.determine_trains_limit(
@@ -693,6 +687,6 @@ class Travel_Center:
                 start, end_station, train, start_time))
 
         self.determine_and_save_shortest_travel(
-            travels, None, None, stationlist, linelist, result, travel_center)
+            travels, None, None, stationlist, linelist, result)
 
         return True

@@ -1,5 +1,6 @@
 from abfahrt.classes.TrainInLine import TrainInLine
 
+
 class Linelist:
     lines = []  # the lines with capacities
 
@@ -25,11 +26,11 @@ class Linelist:
 
         for capacity in line_capacities:
             if train_in_line.end <= capacity[0].start:
-                return [True,-1]
+                return [True, -1]
             for train_pos in range(len(capacity) - 1):
                 if capacity[train_pos].end <= train_in_line.start and train_in_line.end <= capacity[train_pos+1].start:
                     #earliest_leave_time = Linelist._train_in_line_pos(capacity[train_pos], capacity[train_pos + 1], train_in_line.start, train_in_line.end)
-                    return [True,-1]
+                    return [True, -1]
                 elif Linelist._train_in_line_between(capacity[train_pos], capacity[train_pos + 1], train_in_line.start, train_in_line.end) == True:
                     if capacity[train_pos].end > train_in_line.start:
                         ends.append(capacity[train_pos].end)
@@ -37,8 +38,8 @@ class Linelist:
             if capacity[-1].end > train_in_line.start:
                 ends.append(capacity[-1].end)
             else:
-                return [True,-1]
-        
+                return [True, -1]
+
         cpa_end = ends[0]
         for end in ends:
             if cpa_end > end:
@@ -60,7 +61,6 @@ class Linelist:
             earliest_leave_time = front_train_in_line.end + 1
         return earliest_leave_time
 
-
     @staticmethod
     def _train_in_line_between(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start, end):
         dis = back_train_in_line.start - front_train_in_line.end
@@ -72,22 +72,30 @@ class Linelist:
         capacity_number = 0
         for capacity in self.lines[train_in_line.line_id]:
             if len(capacity) == 0:
-                self.lines[train_in_line.line_id][capacity_number].append(train_in_line)
-                self.lines[train_in_line.line_id][capacity_number].sort(key=lambda x: x.start)
+                self.lines[train_in_line.line_id][capacity_number].append(
+                    train_in_line)
+                self.lines[train_in_line.line_id][capacity_number].sort(
+                    key=lambda x: x.start)
                 return True
             if train_in_line.end <= capacity[0].start:
-                self.lines[train_in_line.line_id][capacity_number].append(train_in_line)
-                self.lines[train_in_line.line_id][capacity_number].sort(key=lambda x: x.start)
+                self.lines[train_in_line.line_id][capacity_number].append(
+                    train_in_line)
+                self.lines[train_in_line.line_id][capacity_number].sort(
+                    key=lambda x: x.start)
                 return True
             for train_pos in range(len(capacity) - 1):
                 if capacity[train_pos].end <= train_in_line.start and train_in_line.end <= capacity[train_pos+1].start:
                     #earliest_leave_time = Linelist._train_in_line_pos(capacity[train_pos], capacity[train_pos + 1], train_in_line.start, train_in_line.end)
-                    self.lines[train_in_line.line_id][capacity_number].append(train_in_line)
-                    self.lines[train_in_line.line_id][capacity_number].sort(key=lambda x: x.start)
+                    self.lines[train_in_line.line_id][capacity_number].append(
+                        train_in_line)
+                    self.lines[train_in_line.line_id][capacity_number].sort(
+                        key=lambda x: x.start)
                     return True
             if capacity[-1].end <= train_in_line.start:
-                self.lines[train_in_line.line_id][capacity_number].append(train_in_line)
-                self.lines[train_in_line.line_id][capacity_number].sort(key=lambda x: x.start)
+                self.lines[train_in_line.line_id][capacity_number].append(
+                    train_in_line)
+                self.lines[train_in_line.line_id][capacity_number].sort(
+                    key=lambda x: x.start)
                 return True
 
             capacity_number += 1
@@ -101,5 +109,3 @@ class Linelist:
                 if train_in_line.train not in trains:
                     trains.append(train_in_line.train)
         return trains
-
-
