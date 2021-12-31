@@ -7,6 +7,7 @@ from abfahrt.Travel_Center import Travel_Center
 
 
 def main():
+    
     input_ = Input()
 
     stations, lines, trains, passengers = input_.from_stdin()

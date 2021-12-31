@@ -25,8 +25,10 @@ test_stationlist.stations[2][0].append(TrainInStation(4,4,trains[1],None,2))
 test_stationlist.stations[3][0].append(TrainInStation(4,5,trains[2],5,2))
 	
 class Testing(unittest.TestCase):
+    
 
 	def test_between_two_trains(self):
+	
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[2],4,2)), [False,-1])
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[2],3,2)), [True,-1])
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(2,3,trains[2],3,2)), [True,-1])
@@ -50,6 +52,7 @@ class Testing(unittest.TestCase):
 
    		#def _train_in_station_is_free(front_train_leave_time, back_train_in_station: TrainInStation, in_station_time,leave_station_time):
 	def test_train_in_station_is_free(self):
+	
 		                                                           # arrive_train_time, passenger_in_train_time, train, leave_time, station_id
 		self.assertEqual(test_stationlist._train_in_station_is_free(5, (5, 3, trains[0], 10, 1), 3, 11), False)
 		self.assertEqual(test_stationlist._train_in_station_is_free(7, (6, 3, trains[0], 7, 1), 3, 7), False)
@@ -63,6 +66,7 @@ class Testing(unittest.TestCase):
 		self.assertEqual(test_stationlist._train_in_station_is_free(8, (7, 3, trains[2], 13, 80), 3, 12), False)
 
 	def test_train_leave_time(self):
+		
 		
 		#train_leave_time(train_in_station: TrainInStation):
 		self.assertEqual(test_stationlist.train_leave_time(TrainInStation(3,3,trains[2],4,2)), 4)	
