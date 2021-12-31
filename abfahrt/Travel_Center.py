@@ -405,13 +405,13 @@ class Travel_Center:
                             break
 
                 else:
-                    raise ValueError(
+                    raise NameError(
                         "Error: no full stations or delayable travels")
 
         else:
             # error: input is invalid, because no route was found, but all stations have to be connected with each other
             # (so this should never happen)
-            raise ValueError("Error: no travels could be found")
+            raise NameError("Error: no travels could be found")
 
     @staticmethod
     def check_passengers(route):
@@ -528,7 +528,7 @@ class Travel_Center:
                     next_station = prev_station
         if next_station == None:
             # no neighboor station is free (free = not blocked) and origin station is also not available
-            raise ValueError("clear station error: no station available")
+            raise NameError("clear station error: no station available")
 
         # get the blocking trains in the station (blocking trains = trains in the station with no leave time)
         # a station is only blocked, if all trains in the station have no leave time
@@ -604,7 +604,7 @@ class Travel_Center:
                 available = 1
             else:
                 # all neighboor stations are blocked (should actually not happen, because they are checked above)
-                raise ValueError("clear station error: no station available")
+                raise NameError("clear station error: no station available")
         return True
 
     @staticmethod  # move a train to start station

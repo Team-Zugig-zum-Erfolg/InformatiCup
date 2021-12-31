@@ -35,7 +35,7 @@ class Stationlist:
                 if available:
                     self.add_new_train_in_station(train_in_station, None)
                 else:
-                    raise ValueError(
+                    raise NameError(
                         "Error: Too many trains in station at beginning!")
             else:
                 TRAIN_NOT_IN_STATION.append(train_in_station)

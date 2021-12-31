@@ -46,7 +46,7 @@ def main():
                     start_station, trains, start_times, start_stations, stationlist, linelist, result, travel_center)
             else:
                 if len(group) == 1:
-                    raise ValueError("Error: Capacity of all trains too low!")
+                    raise NameError("Error: Capacity of all trains too low!")
                 groups.split_group(group)
             continue
 
