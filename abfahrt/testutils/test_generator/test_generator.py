@@ -21,58 +21,58 @@ class test_generator:
         parser = argparse.ArgumentParser()
         parser.add_argument('test_amount',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?',
-                            help="Use this Format with Intengers = test amount size stations size lines size trains size passengers station capacity max line capacity max line length max train capacity max passenger group size max passenger target round")
+                            help="Use this Format with Intengers = max_stations, max_lines, max_trains, max_passengers, max_capacity_station, max_capacity_line, max_length_line, max_capacity_train, max_groupsize_passenger, max_targettime_passenger")
         
-        parser.add_argument('size_stations',
+        parser.add_argument('max_stations',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?')
             
-        parser.add_argument('size_lines',
+        parser.add_argument('max_lines',
                             type= int,
-                            default = "",
+                            default = "20",
                             nargs='?')  
       
-        parser.add_argument('size_trains',
+        parser.add_argument('max_trains',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?')                
 
-        parser.add_argument('size_passengers',
+        parser.add_argument('max_passengers',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?') 
 
-        parser.add_argument('station_capacity_max',
+        parser.add_argument('max_capacity_station',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?') 
 
-        parser.add_argument('line_capacity_max',
+        parser.add_argument('max_capacity_line',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?') 
 
-        parser.add_argument('line_length_max',
+        parser.add_argument('max_length_line',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?') 
 
-        parser.add_argument('train_capacity_max',
+        parser.add_argument('max_capacity_train',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?') 
 
-        parser.add_argument('passenger_group_size_max',
+        parser.add_argument('max_groupsize_passenger',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?')                            
 
-        parser.add_argument('passenger_target_round',
+        parser.add_argument('max_targettime_passenger',
                             type= int,
-                            default = "",
+                            default = "10",
                             nargs='?') 
 
         args = parser.parse_args()
@@ -84,7 +84,7 @@ class test_generator:
             #random_input_generate_file(size_station, size_lines, size_trains, size_pa, sc_max, lc_max (lc=line capacity), ll_max (ll=line length),
             #                           tc_max (tc = train capacity), pgs_max (pgs = passenger group size), ptr_max(passenger target round))
             
-            generator.random_input_generate_file(args.size_stations, args.size_lines, args.size_trains, args.size_passengers, args.station_capacity_max, args.line_capacity_max, args.line_length_max, args.train_capacity_max, args.passenger_group_size_max, args.passenger_target_round)
+            generator.random_input_generate_file(args.max_stations, args.max_lines, args.max_trains, args.max_passengers, args.max_capacity_station, args.max_capacity_line, args.max_length_line, args.max_capacity_train, args.max_groupsize_passenger, args.max_targettime_passenger)
         
             if system() == "Linux":
                 p1 = subprocess.run('python3 -m abfahrt < output_generated.txt', capture_output=True,shell=True)
@@ -98,7 +98,7 @@ class test_generator:
                 print("Error in test: "+str(test_number))
                 break
             
-            
+
             if system() == "Linux":
                 p2 = subprocess.run('"./abfahrt/simulator/bahn-simulator" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
             
