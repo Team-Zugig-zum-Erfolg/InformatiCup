@@ -1,4 +1,4 @@
-class Graph:
+class Plan:
     def __init__(self):
         self.nodes = []
         self.edges = [[]]
@@ -20,28 +20,26 @@ class Graph:
     def removeEdge(self, fromNode, toNode):
         self.edges[fromNode].remove(toNode)
 
-    @staticmethod
-    def shortest(v, prev_list, path_to_target):
+    def shortest(self, v, prev_list, path_to_target):
         if prev_list[v]:
             path_to_target.append(prev_list[v])
-            Graph.shortest(prev_list[v], prev_list, path_to_target)
+            self.shortest(prev_list[v], prev_list, path_to_target)
         return
 
-    @staticmethod
-    def dijkstra(graph, initial):
+    def dijkstra(self, initial):
         visited = [initial]
         weight_visited = [0]
         path = [0]
 
-        for i in range(len(graph.nodes)):
+        for i in range(len(self.nodes)):
             weight_visited.append(0)
 
-        for i in range(len(graph.nodes)):
+        for i in range(len(self.nodes)):
             path.append(0)
 
         nodes = []
 
-        for current_node in graph.nodes:
+        for current_node in self.nodes:
             nodes.append(current_node)
 
         while len(nodes) > 0:
@@ -58,8 +56,8 @@ class Graph:
             nodes.remove(minNode)
             currentWeight = weight_visited[minNode]
 
-            for edge in graph.edges[minNode]:
-                weight = currentWeight + graph.distances[(minNode, edge)]
+            for edge in self.edges[minNode]:
+                weight = currentWeight + self.distances[(minNode, edge)]
                 if edge not in visited or (weight < weight_visited[edge] and edge in visited):
                     weight_visited[edge] = weight
                     visited.append(edge)
