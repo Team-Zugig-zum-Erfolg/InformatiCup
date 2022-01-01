@@ -1,4 +1,7 @@
 import sys
+from typing import List
+from typing import Tuple
+from abfahrt.classes.Train import Train
 from abfahrt.classes.Station import Station
 from abfahrt.classes.TrainInStation import TrainInStation
 
@@ -14,7 +17,7 @@ S_CAPACITY = 1
 
 class Stationlist:
 
-    def __init__(self, stations, trainlist):
+    def __init__(self, stations: List[Station], trainlist: List[Train]):
         self.stations = []  # the stations with capacities
         self.trains_not_in_station = []
         stationlist = []
@@ -45,8 +48,7 @@ class Stationlist:
                     key=lambda x: x.train.capacity, reverse=False)
 
     @staticmethod
-    def _capacity_is_full(capacity):
-
+    def _capacity_is_full(capacity: List[TrainInStation]) -> bool:
         for _train_in_station in capacity:
             # and _train_in_station.arrive_train_time <= train_in_station.arrive_train_time + 1:
             if _train_in_station.leave_time == None:

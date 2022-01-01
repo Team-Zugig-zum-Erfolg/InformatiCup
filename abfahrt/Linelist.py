@@ -2,9 +2,9 @@ from abfahrt.classes.TrainInLine import TrainInLine
 
 
 class Linelist:
-    lines = []  # the lines with capacities
 
     def __init__(self, lines):
+        self.lines = []  # the lines with capacities
         linelist = []
         for line in lines:
             linelist.append(line.to_list())

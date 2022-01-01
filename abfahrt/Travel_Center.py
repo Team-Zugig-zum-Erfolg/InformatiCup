@@ -4,7 +4,13 @@ import math
 # This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
 import sys
 
+from typing import Tuple
+from typing import List
 
+from abfahrt.Groups import Groups
+from abfahrt.classes.Passenger import Passenger
+from abfahrt.classes.Line import Line
+from abfahrt.classes.Train import Train
 from abfahrt.Stationlist import Stationlist
 from abfahrt.Linelist import Linelist
 from abfahrt.classes.Travel import Travel
@@ -32,7 +38,7 @@ T_CAPACITY = 3
 
 class Travel_Center:
 
-    def __init__(self, stations, lines, train_input_list):
+    def __init__(self, stations: list, lines: list, train_input_list: List[Train]):
         self.train_line_time_list = []
         self.line_plan = []
 
@@ -88,35 +94,12 @@ class Travel_Center:
                 math.ceil(line[L_LEN] / train.speed)-1)
         self.average_line_length = full_lines_length / len(line_input_list)
 
-    def _get_all_line_station(self, s_station_id, e_station_id, lineplan):
-        lineplan = lineplan + [s_station_id]
-        if s_station_id == e_station_id:
-            return [lineplan]
-
-        lineplans = []
-        for node in self.line_plan[s_station_id][0]:
-            found = False
-            if node not in lineplan:
-                for _lineplan in lineplans:
-                    if node in _lineplan:
-                        found = True
-                        break
-                if found == True:
-                    continue
-                if node != e_station_id and e_station_id in self.line_plan[s_station_id][0]:
-                    continue
-                newpaths = self._get_all_line_station(
-                    node, e_station_id, lineplan)
-                for newpath in newpaths:
-                    lineplans.append(newpath)
-        return lineplans
-
-    def check_plan(self):
+    def check_plan(self) -> bool:
         if self.plan.is_connected():
             return True
         return False
 
-    def _find_lines(self, s_station_id, e_station_id):
+    def _find_routes(self, s_station_id: int, e_station_id: int) -> List[List[Line]]:
         _, prev_list = self.plan.dijkstra(s_station_id)
         path = [e_station_id]
         self.plan.shortest(e_station_id, prev_list, path)
@@ -135,8 +118,8 @@ class Travel_Center:
             j += 1
         return lines
 
-    def find_best_line(self, s_station_id, e_station_id):
-        lines = self._find_lines(s_station_id, e_station_id)
+    def find_best_route(self, s_station_id: int, e_station_id: int) -> Tuple[int, List[Line]]:
+        lines = self._find_routes(s_station_id, e_station_id)
         short_len = 0
         short_line = None
         for line in lines:
@@ -148,7 +131,7 @@ class Travel_Center:
                 short_line = line
         return [short_len, short_line]
 
-    def find_only_one_line_between_stations(self, start_station_id, end_station_id):
+    def find_only_one_line_between_stations(self, start_station_id: int, end_station_id: int) -> Tuple[int, List[Line]]:
         t = 0
         line = None
         for next_station_id in self.line_plan[start_station_id][0]:
@@ -159,13 +142,13 @@ class Travel_Center:
         length = self.line_input_list[line - 1][L_LEN]
         return [length, [line]]
 
-    def time_count_length(self, start_station, end_station):
-        length, lines = self.find_best_line(start_station.id, end_station.id)
+    def time_count_length(self, start_station: Station, end_station: Station) -> int:
+        length, _ = self.find_best_route(start_station.id, end_station.id)
         return length
 
-    def time_count_train(self, start_station, end_station, train, start_time, use_one_line=False):
+    def time_count_train(self, start_station: Station, end_station: Station, train: Train, start_time: int, use_one_line: bool = False) -> Travel:
         if use_one_line == False:
-            length, lines = self.find_best_line(
+            length, lines = self.find_best_route(
                 start_station.id, end_station.id)
         else:
             length, lines = self.find_only_one_line_between_stations(
@@ -207,7 +190,7 @@ class Travel_Center:
 
         return Travel(start_time, on_board, line_time, station_time, start_station, end_station, train, station_times, length)
 
-    def get_fastest_train_by_start_times_and_route_length(self, trainlist, start_time_list, route_length):
+    def get_fastest_train_by_start_times_and_route_length(self, trainlist: List[Train], start_time_list: List[int], route_length: int) -> Tuple[Train, int]:
         train_fastest = trainlist[0]
         train_fastest_start_time = start_time_list[0]
         time_all_smallest = start_time_list[0] + \
@@ -221,9 +204,9 @@ class Travel_Center:
                 train_fastest = trainlist[count]
                 train_fastest_start_time = start_time_list[count]
 
-        return train_fastest, train_fastest_start_time
+        return [train_fastest, train_fastest_start_time]
 
-    def full_stations_list_not_empty(self, full_stations_list):
+    def full_stations_list_not_empty(self, full_stations_list: List[Tuple[Station, int]]) -> bool:
         if full_stations_list == None:
             return False
         for full_stations in full_stations_list:
@@ -231,7 +214,7 @@ class Travel_Center:
                 return True
         return False
 
-    def get_stations_by_line(self, line_id):
+    def get_stations_by_line(self, line_id: int) -> Tuple[Station, Station]:
         line = self.line_input_list[line_id-1]
         station_1 = Station(self.station_input_list[line[L_S_ID_START]-1]
                             [S_ID], self.station_input_list[line[L_S_ID_START]-1][S_CAPACITY])
@@ -239,7 +222,7 @@ class Travel_Center:
                             [S_ID], self.station_input_list[line[L_S_ID_END]-1][S_CAPACITY])
         return [station_1, station_2]
 
-    def check_line_station(self, travel: Travel, stationlist: Stationlist, linelist: Linelist, result: Result, clearing=False):
+    def check_line_station(self, travel: Travel, stationlist: Stationlist, linelist: Linelist, result: Result, clearing: bool = False) -> Tuple[bool, int, bool, List[Tuple[Station, int]]]:
         line_availables_list = []
         line_time_changes = []
         station_availables_list = []
@@ -274,13 +257,8 @@ class Travel_Center:
                 full_stations.append([next_station, clear_time])
                 s_time_change = clear_time
                 prev_station_blocked = True
-                if next_station.id == 39:
-                    print("S39 Frei ab: "+str(clear_time))
-
             else:
                 prev_station_blocked = False
-                if next_station.id == 39:
-                    print("S39 Frei ab: "+str(s_time_change))
 
             station_availables_list.append(s_available)
             station_time_changes.append(s_time_change)
@@ -318,7 +296,7 @@ class Travel_Center:
 
         return [available, delay_time, station_is_full, full_stations]
 
-    def delay_travel(self, travel: Travel, delay_time):
+    def delay_travel(self, travel: Travel, delay_time: int) -> bool:
         travel.start_time = travel.start_time + delay_time
         travel.on_board = travel.on_board + delay_time
         for i in range(0, len(travel.line_time)):
@@ -331,8 +309,9 @@ class Travel_Center:
                 travel.station_times[i].leave_time = travel.station_times[i].leave_time + delay_time
         travel.station_time.arrive_train_time = travel.station_time.arrive_train_time + delay_time
         travel.station_time.passenger_in_train_time = travel.station_time.passenger_in_train_time + delay_time
+        return True
 
-    def save_travel(self, travel: Travel, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result, train_to_replace=False):
+    def save_travel(self, travel: Travel, groups: Groups, passengers: List[Passenger], stationlist: Stationlist, linelist: Linelist, result: Result, train_to_replace: Train = None) -> bool:
         enable, _, full, _ = self.check_line_station(
             travel, stationlist, linelist, result)
         if enable or (full == True and train_to_replace):
@@ -341,8 +320,6 @@ class Travel_Center:
                 travel.train, travel.on_board, travel.start_station.id, result)
 
             for train_in_line in travel.line_time:
-                if train_in_line.line_id in [1, 166, 141]:
-                    print(train_in_line)
                 save = linelist.add_new_train_in_line(train_in_line)
                 if save:
                     result.save_train_depart(
@@ -353,12 +330,6 @@ class Travel_Center:
 
             save = stationlist.add_new_train_in_station(
                 travel.station_time, None, train_to_replace)
-
-            if not save:
-                print("Could not save "+str(travel.train) +
-                      " in "+str(travel.station_time))
-                print("stationlist: " +
-                      str(stationlist.stations[travel.station_time.station_id]))
 
             if passengers is not None:
                 groups.passengers_arrive(passengers)
@@ -372,9 +343,8 @@ class Travel_Center:
         else:
             return False
 
-    def determine_and_save_shortest_travel(self, travels, groups, passengers, stationlist: Stationlist, linelist: Linelist, result: Result):
+    def determine_and_save_shortest_travel(self, travels: List[Travel], groups: Groups, passengers: List[Passenger], stationlist: Stationlist, linelist: Linelist, result: Result) -> bool:
         save = 0
-        print("travel")
         if len(travels):
             while not save:
                 full_station_list = []
@@ -385,8 +355,6 @@ class Travel_Center:
                 # blocked = (there are only trains with leave_time=None before the train will arrive)
 
                 for travel in travels:
-                    if travel.start_station.id == 36 and travel.end_station.id == 30:
-                        print("hallo")
                     available, delay_time, full, full_stations = self.check_line_station(
                         travel, stationlist, linelist, result)
                     availables.append(available)
@@ -417,10 +385,8 @@ class Travel_Center:
 
                 # travels have to be delayed first, before clearing full stations
                 elif 0 not in delay_times and -1 not in delay_times:
-
                     i = 0
                     for travel in travels:
-                        print("delay:"+str(delay_times[i]))
                         self.delay_travel(travel, delay_times[i])
                         i += 1
 
@@ -438,38 +404,34 @@ class Travel_Center:
                             smallest_arrive_time = travel.station_time.arrive_train_time
                             t = i
                         i = i + 1
-                    print("full_station_list:"+str(full_station_list[t]))
                     station_to_clear = full_station_list[t][0][0]
                     arrive_time = full_station_list[t][0][1]
-                    if station_to_clear.id == 44:
-                        print(stationlist.stations[39])
-                        # print(stationlist.stations[44])
+
                     self.clear_station(station_to_clear, self.get_prev_station_in_travel(
                         travel_short, station_to_clear), arrive_time-2, linelist, stationlist, result, travel_short.station_times, travel_short.train, travel_short)
-                    if station_to_clear.id == 44:
-                        print(stationlist.stations[39])
-                        # print(stationlist.stations[44])
+
                     travels = [travel_short]
 
                 else:
                     raise NameError(
                         "Error: no full stations or delayable travels")
 
+            return True
         else:
             # error: input is invalid, because no route was found, but all stations have to be connected with each other
             # (so this should never happen)
             raise NameError("Error: no travels could be found")
 
-    def check_passengers(self, route):
-        start_station = route[0].start_station
-        end_station = route[0].end_station
+    def check_passengers(self, passengers: List[Passenger]) -> Tuple[Station, Station, int]:
+        start_station = passengers[0].start_station
+        end_station = passengers[0].end_station
         group_size = 0
-        for passenger in route:
+        for passenger in passengers:
             group_size = group_size + passenger.group_size
         return [start_station, end_station, group_size]
 
-    def check_train_in_station(self, start_station, group_size, stationlist: Stationlist, linelist: Linelist):
-        start_times, trains, station_current = stationlist.read_trains_from_station(
+    def check_train_in_station(self, start_station: Station, group_size: int, stationlist: Stationlist, linelist: Linelist) -> Tuple[List[int], List[Train], bool]:
+        start_times, trains, _ = stationlist.read_trains_from_station(
             start_station.id)
         capacity_enable = self._check_capacity(
             trains, group_size, start_times, None)
@@ -481,14 +443,14 @@ class Travel_Center:
         return start_times, trains, available
 
     # choose train from other station
-    def check_train_not_in_station(self, group_size, stationlist: Stationlist):
+    def check_train_not_in_station(self, group_size: int, stationlist: Stationlist) -> Tuple[List[int], List[Train], List[Station], bool]:
         start_times, trains, start_stations = self._check_trains_in_all_station(
             stationlist)
         capacity_enable = self._check_capacity(
             trains, group_size, start_times, start_stations)
         return start_times, trains, start_stations, capacity_enable
 
-    def get_neighboor_stations(self, station):
+    def get_neighboor_stations(self, station: Station) -> List[Station]:
         neighboor_stations = []
         for line in self.line_input_list:
             if line[L_S_ID_START] == station.id:
@@ -500,7 +462,7 @@ class Travel_Center:
 
         return neighboor_stations
 
-    def station_is_never_blocked(self, station, stationlist: Stationlist):
+    def station_is_never_blocked(self, station: Station, stationlist: Stationlist) -> bool:
         for capacity in stationlist.stations[station.id]:
             if len(capacity) == 0:
                 return True
@@ -512,13 +474,13 @@ class Travel_Center:
                 return True
         return False
 
-    def station_is_in_station_times_list(self, station, station_times_list):
+    def station_is_in_station_times_list(self, station: Station, station_times_list: TrainInStation) -> bool:
         for station_time in station_times_list:
             if station.id == station_time.station_id:
                 return True
         return False
 
-    def get_next_station_in_travel(self, travel, station):
+    def get_next_station_in_travel(self, travel: Travel, station: Station) -> Station:
         neighboor_stations = self.get_neighboor_stations(station)
         station_times = travel.station_times
         for i in range(1, len(station_times)):
@@ -528,7 +490,7 @@ class Travel_Center:
                         return neighboor_station
         return None
 
-    def get_prev_station_in_travel(self, travel, station):
+    def get_prev_station_in_travel(self, travel: Travel, station: Station) -> Station:
         neighboor_stations = self.get_neighboor_stations(station)
         for i in range(1, len(travel.station_times)):
             if travel.station_times[i].station_id == station.id:
@@ -537,15 +499,15 @@ class Travel_Center:
                         return neighboor_station
         return None
 
-    def station_has_more_than_one_free_capcacity(self, station, stationlist: Stationlist):
+    def station_has_more_than_one_free_capcacity(self, station: Station, stationlist: Stationlist) -> bool:
         capacities = stationlist.stations[station.id]
         free = 0
         for capacity in capacities:
             if not Stationlist._capacity_is_full(capacity):
                 free = free + 1
-        return (free >= 2)
+        return free >= 2
 
-    def check_clear_station(self, end_station, prev_station, prev_station_blocked_before, arrive_time, linelist: Linelist, stationlist: Stationlist, result: Result, stations_to_ignore, train_to_replace=None, original_travel=None):
+    def check_clear_station(self, end_station: Station, prev_station: Station, prev_station_blocked_before: bool, arrive_time: int, linelist: Linelist, stationlist: Stationlist, result: Result, stations_to_ignore: List[TrainInStation], train_to_replace: Train = None, original_travel: Travel = None) -> int:
         # clear station (move trains out of it to other stations)
 
         # get the neighboor stations of the end_station,
@@ -656,8 +618,7 @@ class Travel_Center:
                 raise NameError("clear station error: no station available")
         return True
 
-    def clear_station(self, end_station, prev_station, arrive_time, linelist: Linelist, stationlist: Stationlist, result: Result, stations_to_ignore, train_to_replace=None, original_travel=None):
-        # clear station (move trains out of it to other stations)
+    def clear_station(self, end_station: Station, prev_station: Station, arrive_time: int, linelist: Linelist, stationlist: Stationlist, result: Result, stations_to_ignore: List[TrainInStation], train_to_replace: Train = None, original_travel: Travel = None) -> int:
         # clear station (move trains out of it to other stations)
 
         # get the neighboor stations of the end_station,
@@ -668,7 +629,6 @@ class Travel_Center:
         for neighboor_station in neighboor_stations:
             if self.station_is_never_blocked(neighboor_station, stationlist) == True and (not self.station_is_in_station_times_list(neighboor_station, stations_to_ignore) or self.station_has_more_than_one_free_capcacity(neighboor_station, stationlist)):
                 next_station = neighboor_station
-                print("clear other")
                 break
         if next_station == None and prev_station != None:
             for neighboor_station in neighboor_stations:
@@ -756,8 +716,6 @@ class Travel_Center:
                 if prev_station and train_to_replace not in trains and len(trains) == prev_station.capcaity:
                     self.clear_station(prev_station, self.get_prev_station_in_travel(original_travel, prev_station),
                                        short_travel.station_time.arrive_train_time-2, linelist, stationlist, result, stations_to_ignore, train_to_replace, original_travel)
-                print("prev_station_cleared " +
-                      str(end_station)+"->"+str(next_station)+" with "+str(short_travel.train))
                 self.save_travel(
                     short_travel, None, None, stationlist, linelist, result, train_to_replace)
                 available = 1
@@ -767,13 +725,13 @@ class Travel_Center:
         return True
 
     # move a train to start station
-    def train_move_to_start_station(self, start_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist,
-                                    result: Result):
+    def train_move_to_start_station(self, start_station: Station, trains: List[Train], start_times: List[int], start_stations: List[Station], stationlist: Stationlist, linelist: Linelist,
+                                    result: Result) -> bool:
         save = self._train_to_station(start_station, trains, start_times, start_stations, stationlist,
                                       linelist, result)
         return save
 
-    def _remove_passing_station_trains(self, start_station, trains, start_times, stationlist: Stationlist):
+    def _remove_passing_station_trains(self, start_station: Station, trains: List[Train], start_times: List[int], stationlist: Stationlist) -> bool:
         capacities = stationlist.stations[start_station.id]
         i = 0
         for train in trains:
@@ -784,8 +742,9 @@ class Travel_Center:
                             if _train_in_station.arrive_train_time == _train_in_station.passenger_in_train_time:
                                 trains.remove(train)
             i = i + 1
+        return True
 
-    def _check_capacity(self, trains, group_size, start_times, start_stations):
+    def _check_capacity(self, trains: List[Train], group_size: int, start_times: List[int], start_stations: List[Station]) -> bool:
         b_capacity = False
         if len(trains) != 0:
             i = 0
@@ -802,7 +761,7 @@ class Travel_Center:
                     break
         return b_capacity
 
-    def _check_trains_in_all_station(self, stationlist: Stationlist):
+    def _check_trains_in_all_station(self, stationlist: Stationlist) -> Tuple[List[int], List[Train], List[Station]]:
         trains = []
         start_times = []
         start_stations = []
@@ -811,14 +770,13 @@ class Travel_Center:
                 i)
             for t in train:
                 trains.append(t)
-
             for s in start_time:
                 start_times.append(s)
                 start_stations.append(station)
 
         return start_times, trains, start_stations
 
-    def get_trains_with_limit_by_start_time_and_speed(self, trains, start_times, start_stations, limit):
+    def get_trains_with_limit_by_start_time_and_speed(self, trains: List[Train], start_times: List[int], start_stations: List[Station], limit: int):
         trains_limit = []
         station_times_limit = []
         start_stations_limit = []
@@ -839,7 +797,7 @@ class Travel_Center:
         return trains_limit, station_times_limit, start_stations_limit
 
     @staticmethod
-    def determine_trains_limit(stations_amount):
+    def determine_trains_limit(stations_amount: int) -> int:
         if stations_amount < 50:
             return 50
         elif stations_amount < 100:
@@ -853,7 +811,7 @@ class Travel_Center:
         else:
             return 1
 
-    def _train_to_station(self, end_station, trains, start_times, start_stations, stationlist: Stationlist, linelist: Linelist, result: Result):
+    def _train_to_station(self, end_station: Station, trains: List[Train], start_times: List[int], start_stations: List[Station], stationlist: Stationlist, linelist: Linelist, result: Result) -> bool:
         travels = []
         trains_to_call = trains
         calling_trains_limit = Travel_Center.determine_trains_limit(

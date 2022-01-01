@@ -56,6 +56,6 @@ def main():
         travel_center.determine_and_save_shortest_travel(
             travels, groups, group, stationlist, linelist, result)
 
-    # print(result.to_output_text())
+    print(result.to_output_text())
     result.to_file_same()
     return
