@@ -4,8 +4,10 @@ from abfahrt.classes.TrainInLine import TrainInLine
 class Linelist:
     lines = []  # the lines with capacities
 
-    def __init__(self, linelist):
-
+    def __init__(self, lines):
+        linelist = []
+        for line in lines:
+            linelist.append(line.to_list())
         line_number = 1
         self.lines.append([])
         for line in linelist:

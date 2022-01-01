@@ -1,21 +1,14 @@
-from abfahrt.Stationlist import Stationlist
-from abfahrt.Linelist import Linelist
-from abfahrt.Input import Input
-from abfahrt.Groups import Groups
-from abfahrt.Result import Result
-from abfahrt.Travel_Center import Travel_Center
+from abfahrt import *
 
 
-def main():
+def run():
     input_ = Input()
     result = Result()
-
     stations, lines, trains, passengers = input_.from_stdin()
 
     linelist = Linelist(lines)
     stationlist = Stationlist(stations, trains)
-    travel_center = Travel_Center(
-        stations, lines, trains)
+    travel_center = Travel_Center(stations, lines, trains)
 
     groups = Groups(passengers)
 
@@ -32,15 +25,7 @@ def main():
             start_station, group_size, stationlist, linelist)
 
         if not available:
-            start_times, trains, start_stations, capacity_enable = travel_center.check_train_not_in_station(
-                group_size, stationlist)
-            if capacity_enable:
-                travel_center.train_move_to_start_station(
-                    start_station, trains, start_times, start_stations, stationlist, linelist, result)
-            else:
-                if len(group) == 1:
-                    raise NameError("Error: Capacity of all trains too low!")
-                groups.split_group(group)
+            groups.route.remove(group)
             continue
 
         route_length = travel_center.time_count_length(
@@ -51,11 +36,15 @@ def main():
 
         travel_fastest = travel_center.time_count_train(
             start_station, end_station, train_fastest, train_fastest_start_time)
+
         travels = [travel_fastest]
 
         travel_center.determine_and_save_shortest_travel(
             travels, groups, group, stationlist, linelist, result)
 
-    # print(result.to_output_text())
+    print(result.to_output_text())
     result.to_file_same()
     return
+
+
+run()
