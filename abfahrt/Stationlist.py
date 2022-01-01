@@ -4,6 +4,7 @@ from typing import Tuple
 from abfahrt.classes.Train import Train
 from abfahrt.classes.Station import Station
 from abfahrt.classes.TrainInStation import TrainInStation
+from abfahrt.Result import Result
 
 
 T_ID = 0
@@ -50,12 +51,11 @@ class Stationlist:
     @staticmethod
     def _capacity_is_full(capacity: List[TrainInStation]) -> bool:
         for _train_in_station in capacity:
-            # and _train_in_station.arrive_train_time <= train_in_station.arrive_train_time + 1:
             if _train_in_station.leave_time == None:
                 return True
         return False
 
-    def compare_free_place(self, train_in_station: TrainInStation):
+    def compare_free_place(self, train_in_station: TrainInStation) -> Tuple[bool, int]:
         station_capacities = self.stations[train_in_station.station_id]
         capacity_minimal_times = []
 
@@ -116,17 +116,15 @@ class Stationlist:
                 return [False, -1]
 
     @staticmethod
-    def _train_in_station_is_free(front_train_leave_time, back_train_in_station: TrainInStation,
-                                  in_station_time, leave_station_time):
-        # train_in_station[] = [out, in, train_Id, leave]
+    def _train_in_station_is_free(front_train_leave_time: int, back_train_in_station: TrainInStation,
+                                  in_station_time: int, leave_station_time: int) -> bool:
         if front_train_leave_time == None:
             return False
-
         return front_train_leave_time < in_station_time and back_train_in_station.arrive_train_time > leave_station_time
 
     @staticmethod
     def _train_in_station_pos(front_train_in_station: TrainInStation, back_train_in_station: TrainInStation,
-                              earliest_leave_time):
+                              earliest_leave_time: int) -> int:
         distance_s_e = 1
         if front_train_in_station.leave_time is not None:
             leave_time = front_train_in_station.leave_time
@@ -139,7 +137,7 @@ class Stationlist:
         return earliest_leave_time
 
     @staticmethod
-    def _train_in_capacity(capacity, train):
+    def _train_in_capacity(capacity, train: Train) -> bool:
         if not train:
             return False
         for train_in_station in capacity:
@@ -147,7 +145,7 @@ class Stationlist:
                 return True
         return False
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result, train_to_replace=False):
+    def add_new_train_in_station(self, train_in_station: TrainInStation, result: Result, train_to_replace: Train = False) -> bool:
         enable, delay_time = self.compare_free_place(train_in_station)
         if not enable:
             if delay_time != -1:
@@ -214,10 +212,8 @@ class Stationlist:
                 key=lambda x: x.arrive_train_time)
             return True
 
-    def add_train_leave_time(self, train, leave_time, station_number, result):
-
+    def add_train_leave_time(self, train: Train, leave_time: int, station_number: int, result: Result) -> bool:
         capacity_number = 0
-        found = 0
         for capacity in self.stations[station_number]:
             t = 0
             for train_in_station in capacity:
@@ -232,7 +228,7 @@ class Stationlist:
                     0, 1, train, leave_time, station_number), result)
         return True
 
-    def read_trains_from_station(self, station_number, also_not_in_station_trains=True):
+    def read_trains_from_station(self, station_number: int, also_not_in_station_trains: bool = True) -> Tuple[List[int], List[Train], Station]:
         trains = []
         start_times = []
         one_empty_capacity = 0
@@ -263,7 +259,7 @@ class Stationlist:
         return start_times, trains, Station(station_number, len(self.stations[station_number]))
 
     @staticmethod
-    def train_leave_time(train_in_station: TrainInStation):
+    def train_leave_time(train_in_station: TrainInStation) -> int:
         if train_in_station.leave_time is None:
             return train_in_station.passenger_in_train_time
         else:
