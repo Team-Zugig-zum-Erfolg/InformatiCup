@@ -114,7 +114,6 @@ class Generator:
         return True
 
     def random_input_generate(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max, max_speed_train):
-
         stations = []
         lines = []
         trains = []
