@@ -18,78 +18,88 @@ class test_generator:
         generator = Generator()
         test_number = 0
         
-        parser = argparse.ArgumentParser()
-        parser.add_argument('test_amount',
-                            type= int,
-                            default = "10",
-                            nargs='?',
-                            help="Use this Format with Intengers = max_stations, max_lines, max_trains, max_passengers, max_capacity_station, max_capacity_line, max_length_line, max_capacity_train, max_groupsize_passenger, max_targettime_passenger, max_speed_train")
+        parser = argparse.ArgumentParser(
+            description="Generator der automatisch Tests für unsere Software erstellt und testet", add_help=False)
+
+        parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
+                            help='Zeigt dieses Hilfemenü an')
         
-        parser.add_argument('max_stations',
+        parser.add_argument('-test_amount',
+                            type= int,
+                            default = "10", 
+                            metavar='[int]',                        
+                            help="Anzahl der auszuführenden Tests")
+
+        parser.add_argument('-max_stations',
                             type= int,
                             default = "10",
-                            nargs='?')
+                            metavar='[int]',
+                            help="Maximale Anzahl an Bahnhöfen")
             
-        parser.add_argument('max_lines',
+        parser.add_argument('-max_lines',
                             type= int,
                             default = "20",
-                            nargs='?')  
+                            metavar='[int]',
+                            help="Maximale Anzahl an Strecken")  
       
-        parser.add_argument('max_trains',
+        parser.add_argument('-max_trains',
                             type= int,
                             default = "10",
-                            nargs='?')                
+                            metavar='[int]',
+                            help="Maximale Anzahl an Zügen")                
 
-        parser.add_argument('max_passengers',
+        parser.add_argument('-max_passengers',
                             type= int,
                             default = "10",
-                            nargs='?') 
+                            metavar='[int]',
+                            help="Maximale Anzahl an Passagieren")
 
-        parser.add_argument('max_capacity_station',
+        parser.add_argument('-max_capacity_station',
                             type= int,
                             default = "10",
-                            nargs='?') 
+                            metavar='[int]',
+                            help="Maximale Kapazität von einem Bahnhof") 
 
-        parser.add_argument('max_capacity_line',
+        parser.add_argument('-max_capacity_line',
                             type= int,
                             default = "10",
-                            nargs='?') 
+                            metavar='[int]',
+                            help="Maximale Kapazität von einer Strecke")
 
-        parser.add_argument('max_length_line',
+        parser.add_argument('-max_length_line',
                             type= int,
                             default = "10",
-                            nargs='?') 
+                            metavar='[int]',
+                            help="Maximale Länge von einer Strecke")
 
-        parser.add_argument('max_capacity_train',
+        parser.add_argument('-max_capacity_train',
                             type= int,
                             default = "10",
-                            nargs='?') 
+                            metavar='[int]',
+                            help="Maximale Kapazität von einem Zug")
 
-        parser.add_argument('max_groupsize_passenger',
+        parser.add_argument('-max_groupsize_passenger',
                             type= int,
                             default = "10",
-                            nargs='?')                            
+                            metavar='[int]',
+                            help="Maximale Gruppengröße bei einem Passagier")                          
 
-        parser.add_argument('max_targettime_passenger',
+        parser.add_argument('-max_targettime_passenger',
                             type= int,
                             default = "10",
-                            nargs='?') 
+                            metavar='[int]',
+                            help="Maximale Zielzeit bzw. -runde bei einem Passagier")
 
-        parser.add_argument('max_speed_train',
+        parser.add_argument('-max_speed_train',
                             type= int,
                             default = "10",
-                            nargs='?') 
-
+                            metavar='[int]',
+                            help="Maximale Geschwindigkeit von einem Zug")
 
         args = parser.parse_args()
     
-        test_amount = args.test_amount
-
-        for i in range(test_amount):
+        for i in range(args.test_amount):
             test_number += 1
-            #random_input_generate_file(size_station, size_lines, size_trains, size_pa, sc_max, lc_max (lc=line capacity), ll_max (ll=line length),
-            #                           tc_max (tc = train capacity), pgs_max (pgs = passenger group size), ptr_max(passenger target round))
-            
             generator.random_input_generate_file(args.max_stations, args.max_lines, args.max_trains, args.max_passengers, args.max_capacity_station, args.max_capacity_line, args.max_length_line, args.max_capacity_train, args.max_groupsize_passenger, args.max_targettime_passenger, args.max_speed_train)
         
             if system() == "Linux":
@@ -119,4 +129,4 @@ class test_generator:
                 print("Error in test: "+str(test_number))
                 break
 
-        print("Successful tests: "+str(test_number)+"/"+str(test_amount))
+        print("Successful tests: "+str(test_number)+"/"+str(args.test_amount))
