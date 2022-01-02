@@ -46,6 +46,14 @@ def main():
         route_length = travel_center.time_count_length(
             start_station, end_station)
 
+        if not travel_center.check_valid_train_exist_in_stations(groups.max_size):
+            start_times, trainlist, start_stations, capacity_enable = travel_center.check_train_not_in_station(
+                groups.max_size)
+            if capacity_enable:
+                travel_center.train_move_to_start_station(
+                    start_station, trainlist, start_times, start_stations)
+            continue
+
         train_fastest, train_fastest_start_time = travel_center.get_fastest_train_by_start_times_and_route_length(
             trainlist, start_time_list, route_length)
 

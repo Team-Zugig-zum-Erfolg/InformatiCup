@@ -146,7 +146,7 @@ class Stationlist:
                 return True
         return False
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, train_to_replace: Train = False) -> bool:
+    def add_new_train_in_station(self, train_in_station: TrainInStation, train_to_replace=None) -> bool:
         enable, delay_time = self.compare_free_place(train_in_station)
         if not enable:
             if delay_time != -1:
@@ -228,7 +228,7 @@ class Stationlist:
                     0, 1, train, leave_time, station_number))
         return True
 
-    def read_trains_from_station(self, station_number: int, also_not_in_station_trains: bool = True) -> Tuple[List[int], List[Train], Station]:
+    def read_trains_from_station(self, station_number: int, also_not_in_station_trains=True) -> Tuple[List[int], List[Train], Station]:
         trains = []
         start_times = []
         one_empty_capacity = 0

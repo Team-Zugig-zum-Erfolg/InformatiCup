@@ -13,9 +13,12 @@ class Groups:
         self.route = []
         if type(passengers) != list:
             return
+        self.max_size = 0
         for passenger in passengers:
             route_number = 0
             added = 0
+            if self.max_size < passenger.group_size:
+                self.max_size = passenger.group_size
             for route_searched in self.route:
                 if route_searched[0].start_station == passenger.start_station and route_searched[0].end_station == passenger.end_station:
                     self.route[route_number].append(passenger)
