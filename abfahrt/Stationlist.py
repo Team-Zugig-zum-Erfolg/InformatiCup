@@ -18,8 +18,9 @@ S_CAPACITY = 1
 
 class Stationlist:
 
-    def __init__(self, stations: List[Station], trainlist: List[Train]):
+    def __init__(self, stations: List[Station], trainlist: List[Train], result: Result):
         self.stations = []  # the stations with capacities
+        self.result = result
         self.trains_not_in_station = []
         stationlist = []
         for station in stations:
@@ -137,7 +138,7 @@ class Stationlist:
         return earliest_leave_time
 
     @staticmethod
-    def _train_in_capacity(capacity, train: Train) -> bool:
+    def _train_in_capacity(capacity: List[TrainInStation], train: Train) -> bool:
         if not train:
             return False
         for train_in_station in capacity:
@@ -145,21 +146,20 @@ class Stationlist:
                 return True
         return False
 
-    def add_new_train_in_station(self, train_in_station: TrainInStation, result: Result, train_to_replace: Train = False) -> bool:
+    def add_new_train_in_station(self, train_in_station: TrainInStation, train_to_replace: Train = False) -> bool:
         enable, delay_time = self.compare_free_place(train_in_station)
         if not enable:
             if delay_time != -1:
                 return False
             elif not train_to_replace:
                 return False
-        if result is not None:
+        if self.result:
             i = 0
             for _train_in_station in self.trains_not_in_station:
                 if _train_in_station.train == train_in_station.train:
-                    result.save_train_start(
+                    self.result.save_train_start(
                         train_in_station.train.id, 0, train_in_station.station_id)
                     self.trains_not_in_station.pop(i)
-                    #self.add_train_leave_time(train_in_station.train, start_time + 1, train_in_station.station_id,result)
                     break
                 i += 1
         capacity_pos = 0
@@ -212,7 +212,7 @@ class Stationlist:
                 key=lambda x: x.arrive_train_time)
             return True
 
-    def add_train_leave_time(self, train: Train, leave_time: int, station_number: int, result: Result) -> bool:
+    def add_train_leave_time(self, train: Train, leave_time: int, station_number: int) -> bool:
         capacity_number = 0
         for capacity in self.stations[station_number]:
             t = 0
@@ -225,7 +225,7 @@ class Stationlist:
         for train_not_in_station in self.trains_not_in_station:
             if train == train_not_in_station.train:
                 self.add_new_train_in_station(TrainInStation(
-                    0, 1, train, leave_time, station_number), result)
+                    0, 1, train, leave_time, station_number))
         return True
 
     def read_trains_from_station(self, station_number: int, also_not_in_station_trains: bool = True) -> Tuple[List[int], List[Train], Station]:

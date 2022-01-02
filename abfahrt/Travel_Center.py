@@ -321,7 +321,7 @@ class Travel_Center:
         if enable or (full == True and train_to_replace):
 
             self.stationlist.add_train_leave_time(
-                travel.train, travel.on_board, travel.start_station.id, self.result)
+                travel.train, travel.on_board, travel.start_station.id)
 
             for train_in_line in travel.line_time:
                 save = self.linelist.add_new_train_in_line(train_in_line)
@@ -331,12 +331,12 @@ class Travel_Center:
 
             for train_in_station in travel.station_times[1:len(travel.station_times)-1]:
                 self.stationlist.add_new_train_in_station(
-                    train_in_station, None)
+                    train_in_station)
 
             save = self.stationlist.add_new_train_in_station(
-                travel.station_time, None, train_to_replace)
+                travel.station_time, train_to_replace)
 
-            if passengers is not None:
+            if passengers:
                 groups.passengers_arrive(passengers)
                 for passenger in passengers:
                     self.result.save_passenger_board(

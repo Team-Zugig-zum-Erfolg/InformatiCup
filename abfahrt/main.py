@@ -13,7 +13,7 @@ def main():
     stations, lines, trains, passengers = input_.from_stdin()
 
     linelist = Linelist(lines)
-    stationlist = Stationlist(stations, trains)
+    stationlist = Stationlist(stations, trains, result)
     travel_center = Travel_Center(
         stations, lines, trains, stationlist, linelist, result)
 
