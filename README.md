@@ -14,6 +14,17 @@ test_simulator:
 
 python -m abfahrt.testutils.test_simulator
 
+Example only one Test:
+
+python -m abfahrt.testutils.test_simulator -singletest test_1.txt
+
+Example Verbose:
+
+python -m abfahrt.testutils.test_simulator -verbose
+
+Example soft:
+
+python -m abfahrt.testutils.test_simulator -soft
 
 test_generator:
 
