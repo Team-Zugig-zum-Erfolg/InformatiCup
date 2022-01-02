@@ -78,17 +78,17 @@ class Travel_Center:
             self.line_plan.append([])
             self.line_plan[station[S_ID]].append([])
             self.line_plan[station[S_ID]].append([])
-            self.plan.addNode(station[S_ID])
+            self.plan.add_node(station[S_ID])
             for line in line_input_list:
                 if line[L_S_ID_START] == station[S_ID]:
                     self.line_plan[station[S_ID]][0].append(line[L_S_ID_END])
                     self.line_plan[station[S_ID]][1].append(line[L_ID])
-                    self.plan.addEdge(
+                    self.plan.add_edge(
                         station[S_ID], line[L_S_ID_END], line[L_LEN])
                 elif line[L_S_ID_END] == station[S_ID]:
                     self.line_plan[station[S_ID]][0].append(line[L_S_ID_START])
                     self.line_plan[station[S_ID]][1].append(line[L_ID])
-                    self.plan.addEdge(
+                    self.plan.add_edge(
                         station[S_ID], line[L_S_ID_START], line[L_LEN])
 
         full_lines_length = 0
@@ -105,9 +105,8 @@ class Travel_Center:
 
     def _find_routes(self, s_station_id: int, e_station_id: int) -> List[List[Line]]:
         _, prev_list = self.plan.dijkstra(s_station_id)
-        path = [e_station_id]
-        self.plan.shortest(e_station_id, prev_list, path)
-        lineplans = [path[::-1]]
+        path = self.plan.get_shortest_path(prev_list, e_station_id)
+        lineplans = [path]
         lines = []
         j = 0
         for lineplan in lineplans:

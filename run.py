@@ -26,7 +26,7 @@ def run():
             start_station, group_size)
 
         if not available:
-            groups.route.remove(group)
+            groups.passengers_arrive(group)
             continue
 
         route_length = travel_center.time_count_length(

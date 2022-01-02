@@ -1,32 +1,36 @@
+from typing import List
+from typing import Tuple
+
+
 class Plan:
     def __init__(self):
         self.nodes = []
         self.edges = [[]]
         self.distances = {}
 
-    def addNode(self, value):
-        self.nodes.append(value)
+    def add_node(self, node_id: int):
+        self.nodes.append(node_id)
 
-    def addEdge(self, fromNode, toNode, distance):
-        if fromNode <= len(self.edges)-1:
-            self.edges[fromNode].append(toNode)
-            self.distances[(fromNode, toNode)] = distance
+    def add_edge(self, from_node_id: int, to_node_id: int, length: int):
+        if from_node_id <= len(self.edges)-1:
+            self.edges[from_node_id].append(to_node_id)
+            self.distances[(from_node_id, to_node_id)] = length
         else:
-            for i in range(len(self.edges), fromNode+1):
+            for i in range(len(self.edges), from_node_id+1):
                 self.edges.append([])
-            self.edges[fromNode].append(toNode)
-            self.distances[(fromNode, toNode)] = distance
+            self.edges[from_node_id].append(to_node_id)
+            self.distances[(from_node_id, to_node_id)] = length
 
-    def removeEdge(self, fromNode, toNode):
-        self.edges[fromNode].remove(toNode)
+    def remove_edge(self, from_node_id: int, to_node_id: int):
+        self.edges[from_node_id].remove(to_node_id)
 
-    def dfs(self, v, visited):
+    def dfs(self, v: int, visited: List[int]):
         visited[v] = True
         for u in self.edges[v]:
             if not visited[u]:
                 self.dfs(u, visited)
 
-    def is_connected(self):
+    def is_connected(self) -> bool:
         visited = [True]
         for i in range(len(self.nodes)):
             visited.append(False)
@@ -38,19 +42,23 @@ class Plan:
             t += 1
         return True
 
-    def shortest(self, v, prev_list, path_to_target):
-        if prev_list[v]:
-            path_to_target.append(prev_list[v])
-            self.shortest(prev_list[v], prev_list, path_to_target)
-        return
+    def get_shortest_path(self, prev_list: List[int], target_id: int) -> List[int]:
+        path = [target_id]
+        self.shortest(target_id, prev_list, path)
+        return path[::-1]
 
-    def dijkstra(self, initial):
-        visited = [initial]
-        weight_visited = [0]
+    def shortest(self, target_id: int, prev_list: List[int], path_to_target: List[int]):
+        if prev_list[target_id]:
+            path_to_target.append(prev_list[target_id])
+            self.shortest(prev_list[target_id], prev_list, path_to_target)
+
+    def dijkstra(self, start_id: int) -> Tuple[List[int], List[int]]:
+        visited = [start_id]
+        length_visited = [0]
         path = [0]
 
         for i in range(len(self.nodes)):
-            weight_visited.append(0)
+            length_visited.append(0)
 
         for i in range(len(self.nodes)):
             path.append(0)
@@ -61,24 +69,24 @@ class Plan:
             nodes.append(current_node)
 
         while len(nodes) > 0:
-            minNode = None
+            min_node = None
             for node in nodes:
                 if node in visited:
-                    if minNode is None:
-                        minNode = node
-                    elif weight_visited[node] < weight_visited[minNode]:
-                        minNode = node
-            if minNode is None:
+                    if min_node is None:
+                        min_node = node
+                    elif length_visited[node] < length_visited[min_node]:
+                        min_node = node
+            if min_node is None:
                 break
 
-            nodes.remove(minNode)
-            currentWeight = weight_visited[minNode]
+            nodes.remove(min_node)
+            currentWeight = length_visited[min_node]
 
-            for edge in self.edges[minNode]:
-                weight = currentWeight + self.distances[(minNode, edge)]
-                if edge not in visited or (weight < weight_visited[edge] and edge in visited):
-                    weight_visited[edge] = weight
+            for edge in self.edges[min_node]:
+                length = currentWeight + self.distances[(min_node, edge)]
+                if edge not in visited or (length < length_visited[edge] and edge in visited):
+                    length_visited[edge] = length
                     visited.append(edge)
-                    path[edge] = minNode
+                    path[edge] = min_node
 
         return visited, path
