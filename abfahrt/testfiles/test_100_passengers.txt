@@ -17,7 +17,7 @@ L8 S4 S5 4.85683 1
 
 [Trains]
 T1 S3 1.18571 7
-T5 S4 7 7
+T2 S4 7 7
 
 [Passengers]
 P1 S3 S2 3 127
