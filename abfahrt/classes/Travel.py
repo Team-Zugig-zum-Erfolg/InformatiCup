@@ -1,9 +1,10 @@
 from abfahrt.classes.TrainInLine import TrainInLine
 from abfahrt.classes.TrainInStation import TrainInStation
+from abfahrt.classes.Train import Train
 
 class Travel:
-    def __init__(self, start_time, on_board, line_time, station_time: TrainInStation, start_station,
-                 end_station, train, station_times, length):
+    def __init__(self, start_time, on_board, line_time, station_time, start_station,
+                 end_station, train:Train, station_times, length):
         self.start_time = start_time
         self.on_board = on_board
         self.line_time = line_time
