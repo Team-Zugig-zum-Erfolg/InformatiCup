@@ -1,5 +1,9 @@
+from abfahrt.classes.Train import Train
+from abfahrt.classes.Station import Station
+
+
 class TrainInStation:
-    def __init__(self, arrive_train_time, passenger_in_train_time, train, leave_time, station_id):
+    def __init__(self, arrive_train_time, passenger_in_train_time, train:Train, leave_time, station_id:Station):
         self.arrive_train_time = arrive_train_time
         self.passenger_in_train_time = passenger_in_train_time
         self.train = train

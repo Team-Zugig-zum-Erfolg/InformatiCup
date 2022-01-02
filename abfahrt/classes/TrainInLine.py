@@ -1,5 +1,9 @@
+from abfahrt.classes.Train import Train
+from abfahrt.classes.Line import Line
+
+
 class TrainInLine:
-    def __init__(self, train, start, end, line_id):
+    def __init__(self, train:Train, start, end, line_id:Line):
         self.train = train
         self.start = start
         self.end = end
