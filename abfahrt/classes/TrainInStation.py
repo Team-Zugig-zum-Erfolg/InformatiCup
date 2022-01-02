@@ -3,7 +3,7 @@ from abfahrt.classes.Station import Station
 
 
 class TrainInStation:
-    def __init__(self, arrive_train_time, passenger_in_train_time, train:Train, leave_time, station_id:Station):
+    def __init__(self, arrive_train_time: int, passenger_in_train_time: int, train: Train, leave_time: int, station_id: int):
         self.arrive_train_time = arrive_train_time
         self.passenger_in_train_time = passenger_in_train_time
         self.train = train
