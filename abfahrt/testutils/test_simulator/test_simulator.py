@@ -67,6 +67,7 @@ class test_simulator:
                 print("Time: "+str(round(((end_time-start_time)/60), 4))+" min")
                 tests_completed += 1
             else:
+                print("Error")
                 Errlist.append(files_test[i])
 
         print('\nFiles tested:')
