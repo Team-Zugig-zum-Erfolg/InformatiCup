@@ -7,8 +7,9 @@ def run():
     stations, lines, trains, passengers = input_.from_stdin()
 
     linelist = Linelist(lines)
-    stationlist = Stationlist(stations, trains)
-    travel_center = Travel_Center(stations, lines, trains)
+    stationlist = Stationlist(stations, trains, result)
+    travel_center = Travel_Center(
+        stations, lines, trains, stationlist, linelist, result)
 
     groups = Groups(passengers)
 
@@ -22,7 +23,7 @@ def run():
         start_station, end_station, group_size = travel_center.check_passengers(
             group)
         start_time_list, trainlist, available = travel_center.check_train_in_station(
-            start_station, group_size, stationlist, linelist)
+            start_station, group_size)
 
         if not available:
             groups.route.remove(group)
@@ -40,10 +41,9 @@ def run():
         travels = [travel_fastest]
 
         travel_center.determine_and_save_shortest_travel(
-            travels, groups, group, stationlist, linelist, result)
+            travels, groups, group)
 
     print(result.to_output_text())
-    result.to_file_same()
     return
 
 
