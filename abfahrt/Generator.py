@@ -25,14 +25,14 @@ class Generator:
 
         return _class(*list_properties)
 
-    def random_input_generate_as_classes(self, size_station=10, size_lines=20, size_trains=10, size_pa=10, sc_max=10, lc_max=2, ll_max=10, tc_max=20, pgs_max=10, ptr_max=10):
+    def random_input_generate_as_classes(self, size_station=10, size_lines=20, size_trains=10, size_pa=10, sc_max=10, lc_max=2, ll_max=10, tc_max=20, pgs_max=10, ptr_max=10, max_speed_train=10):
         stations = []
         lines = []
         trains = []
         passengers = []
 
         output = self.random_input_generate(
-            size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max)
+            size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max, max_speed_train)
 
         for i in range(len(output[0])):
             stations.append(self._list_to_class_object(
@@ -259,7 +259,7 @@ class Generator:
             if check == 1:
                 break
 
-        train_speed = random.randint(1, max_speed_train)
+        train_speed = round(random.uniform(1, max_speed_train), 2)
         train_capacity = random.randint(1, train_capacity_max)
 
         return [train_id, train_start_station, train_speed, train_capacity]
