@@ -52,9 +52,9 @@ class Generator:
 
         return [stations, lines, trains, passengers]
 
-    def random_input_generate_file(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max):
+    def random_input_generate_file(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max, max_speed_train):
         output = self.random_input_generate(
-            size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max)
+            size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max, max_speed_train)
 
         out_file = open("output_generated.txt", "w")
 
@@ -113,7 +113,7 @@ class Generator:
             t += 1
         return True
 
-    def random_input_generate(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max):
+    def random_input_generate(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max, max_speed_train):
 
         stations = []
         lines = []
@@ -137,7 +137,7 @@ class Generator:
 
         for i in range(1, size_trains+1):
             trains.append(self.random_train_generate(
-                i, stations, trains, tc_max))
+                i, stations, trains, tc_max, max_speed_train))
 
         for i in range(1, size_pa+1):
             passengers.append(self.random_passenger_generate(
@@ -157,7 +157,7 @@ class Generator:
                     trains = []
                     for i in range(1, size_trains+1):
                         trains.append(self.random_train_generate(
-                            i, stations, trains, tc_max))
+                            i, stations, trains, tc_max, max_speed_train))
                     again = 1
                     break
 
@@ -237,7 +237,7 @@ class Generator:
 
         return [line_id, line_start, line_end, line_length, line_capacity]
 
-    def random_train_generate(self, number, stations, trains, train_capacity_max):
+    def random_train_generate(self, number, stations, trains, train_capacity_max, max_speed_train):
 
         size_stations = len(stations)
         train_id = "T" + str(number)
@@ -259,7 +259,7 @@ class Generator:
             if check == 1:
                 break
 
-        train_speed = round(random.uniform(1, 10), 2)
+        train_speed = random.randint(1, max_speed_train)
         train_capacity = random.randint(1, train_capacity_max)
 
         return [train_id, train_start_station, train_speed, train_capacity]

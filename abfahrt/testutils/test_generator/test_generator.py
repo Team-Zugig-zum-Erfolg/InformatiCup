@@ -23,7 +23,7 @@ class test_generator:
                             type= int,
                             default = "10",
                             nargs='?',
-                            help="Use this Format with Intengers = max_stations, max_lines, max_trains, max_passengers, max_capacity_station, max_capacity_line, max_length_line, max_capacity_train, max_groupsize_passenger, max_targettime_passenger")
+                            help="Use this Format with Intengers = max_stations, max_lines, max_trains, max_passengers, max_capacity_station, max_capacity_line, max_length_line, max_capacity_train, max_groupsize_passenger, max_targettime_passenger, max_speed_train")
         
         parser.add_argument('max_stations',
                             type= int,
@@ -75,6 +75,12 @@ class test_generator:
                             default = "10",
                             nargs='?') 
 
+        parser.add_argument('max_speed_train',
+                            type= int,
+                            default = "10",
+                            nargs='?') 
+
+
         args = parser.parse_args()
     
         test_amount = args.test_amount
@@ -84,7 +90,7 @@ class test_generator:
             #random_input_generate_file(size_station, size_lines, size_trains, size_pa, sc_max, lc_max (lc=line capacity), ll_max (ll=line length),
             #                           tc_max (tc = train capacity), pgs_max (pgs = passenger group size), ptr_max(passenger target round))
             
-            generator.random_input_generate_file(args.max_stations, args.max_lines, args.max_trains, args.max_passengers, args.max_capacity_station, args.max_capacity_line, args.max_length_line, args.max_capacity_train, args.max_groupsize_passenger, args.max_targettime_passenger)
+            generator.random_input_generate_file(args.max_stations, args.max_lines, args.max_trains, args.max_passengers, args.max_capacity_station, args.max_capacity_line, args.max_length_line, args.max_capacity_train, args.max_groupsize_passenger, args.max_targettime_passenger, args.max_speed_train)
         
             if system() == "Linux":
                 p1 = subprocess.run('python3 -m abfahrt < output_generated.txt', capture_output=True,shell=True)
