@@ -800,7 +800,7 @@ class Travel_Center:
         station_times_limit = []
         start_stations_limit = []
         average_path_length = (
-            len(self.station_input_list)/2) * self.average_line_length
+            (len(self.station_input_list)-1)/2) * self.average_line_length
         average_times_train_arriving = []
         for i in range(len(trains)):
             average_times_train_arriving.append(
