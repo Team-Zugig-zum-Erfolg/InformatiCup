@@ -18,8 +18,10 @@ class test_generator:
         generator = Generator()
         test_number = 0
         
-        parser = argparse.ArgumentParser(
-            description="Generator der automatisch Tests für unsere Software erstellt und testet", add_help=False)
+        parser = argparse.ArgumentParser(usage=argparse.SUPPRESS,
+                formatter_class=lambda prog: argparse.HelpFormatter(
+                    prog, max_help_position=80, width=130), description="Generator der automatisch Tests für unsere Software erstellt und testet", add_help=False)
+
 
         parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
                             help='Zeigt dieses Hilfemenü an')
