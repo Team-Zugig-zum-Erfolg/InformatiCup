@@ -96,6 +96,15 @@ class test_generator:
                             metavar='[int]',
                             help="Maximale Geschwindigkeit von einem Zug")
 
+        parser.add_argument('-verbose',
+                            action='store_true',
+                            help="Zeigt die vollständige Ausgabe an")
+
+        parser.add_argument('-soft',
+                            action='store_true',
+                            help="Stoppt das Testen bei einem Fehler")
+
+
         args = parser.parse_args()
     
         for i in range(args.test_amount):
@@ -110,10 +119,14 @@ class test_generator:
             else:
                 return
 
+            if args.verbose:
+                print(p1.stdout.decode("utf-8"))
+
+
             if 'error' in p1.stderr.decode("utf-8"):
                 print("Error in test: "+str(test_number))
-                break
-            
+                if args.soft:
+                    break
 
             if system() == "Linux":
                 p2 = subprocess.run('"./abfahrt/simulator/bahn-simulator" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
@@ -122,11 +135,14 @@ class test_generator:
                 p2 = subprocess.run('"abfahrt/simulator/Bahn-Simulator.exe" -input output_generated.txt -output output.txt -verbose', stdout=subprocess.PIPE, shell=True)
             else:
                 return
+            if args.verbose:
+                print(p2.stdout.decode("utf-8"))
 
             if('Printing score' in (p2.stdout.decode("utf-8"))):
                 print("Successful test: "+str(test_number))
             else:
                 print("Error in test: "+str(test_number))
-                break
+                if args.soft:
+                    break
 
         print("Successful tests: "+str(test_number)+"/"+str(args.test_amount))
