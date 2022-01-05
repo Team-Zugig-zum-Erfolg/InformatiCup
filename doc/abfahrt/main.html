@@ -74,7 +74,8 @@
     <span class="n">groups</span> <span class="o">=</span> <span class="n">Groups</span><span class="p">(</span><span class="n">passengers</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">travel_center</span><span class="o">.</span><span class="n">check_plan</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;Not all stations connected!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: Not all stations connected!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
 
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">route</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
 
@@ -150,7 +151,8 @@
     <span class="n">groups</span> <span class="o">=</span> <span class="n">Groups</span><span class="p">(</span><span class="n">passengers</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">travel_center</span><span class="o">.</span><span class="n">check_plan</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;Not all stations connected!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: Not all stations connected!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
 
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">route</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
 

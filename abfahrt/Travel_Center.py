@@ -488,7 +488,6 @@ class Travel_Center:
             passengers (List[Passenger]): passengers for the travels
 
         Raises:
-            NameError: if no travels could be found
             NameError: if for every travel no station is blocked and the delay time is 0
 
         Returns:
@@ -570,7 +569,7 @@ class Travel_Center:
         else:
             # error: input is invalid, because no route was found, but all stations have to be connected with each other
             # (so this should never happen)
-            raise NameError("Error: no travels could be found")
+            return False
 
     def check_valid_train_exist_in_stations(self, max_group_size) -> bool:
         """
