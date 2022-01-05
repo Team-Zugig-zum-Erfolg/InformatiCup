@@ -47,8 +47,11 @@ class test_simulator:
 
         args = parser.parse_args()
 
-        if args.singletest:
+        if args.singletest and args.singletest in self.files_test:
             self.files_test = [args.singletest]
+        else:
+            print("Eingabedatei existiert nicht!")
+            return
 
         for i in range(len(self.files_test)):
             error = False
