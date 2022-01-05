@@ -99,11 +99,27 @@ class Travel_Center:
         self.average_line_length = full_lines_length / len(line_input_list)
 
     def check_plan(self) -> bool:
+        """
+        Checks if all stations of the plan are connected via at least one route
+
+        Returns:
+            bool: status of plan, true = valid, false = invalid
+        """
         if self.plan.is_connected():
             return True
         return False
 
-    def _find_routes(self, s_station_id: int, e_station_id: int) -> List[List[Line]]:
+    def find_routes(self, s_station_id: int, e_station_id: int) -> List[List[Line]]:
+        """
+        Determines the shortest line route between two stations calculated by dijkstra
+
+        Args:
+            s_station_id (int): the start station
+            e_station_id (int): the end station
+
+        Returns:
+            Tuple[List[Line]]: lines of the route
+        """
         _, prev_list = self.plan.dijkstra(s_station_id)
         path = self.plan.get_shortest_path(prev_list, e_station_id)
         lineplans = [path]
@@ -122,7 +138,17 @@ class Travel_Center:
         return lines
 
     def find_best_route(self, s_station_id: int, e_station_id: int) -> Tuple[int, List[Line]]:
-        lines = self._find_routes(s_station_id, e_station_id)
+        """
+        Determines the length and the shortest line route between two stations
+
+        Args:
+            s_station_id (int): start station id
+            e_station_id (int): end station id
+
+        Returns:
+            Tuple[int, List[Line]]: length, lines
+        """
+        lines = self.find_routes(s_station_id, e_station_id)
         short_len = 0
         short_line = None
         for line in lines:
