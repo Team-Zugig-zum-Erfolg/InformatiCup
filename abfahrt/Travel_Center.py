@@ -7,6 +7,8 @@ import sys
 from typing import Tuple
 from typing import List
 
+from decimal import Decimal
+
 from abfahrt.Groups import Groups
 from abfahrt.classes.Passenger import Passenger
 from abfahrt.classes.Line import Line
@@ -70,7 +72,7 @@ class Travel_Center:
             self.train_line_time_list[train.id].append(0)
             for line in line_input_list:
                 self.train_line_time_list[train.id].append(
-                    math.ceil(line[L_LEN] / train.speed)-1)
+                    math.ceil(Decimal.from_float(line[L_LEN]) / Decimal.from_float(train.speed))-1)
 
         self.line_plan.append([])
         self.line_plan[0].append([])
@@ -94,8 +96,6 @@ class Travel_Center:
         full_lines_length = 0
         for line in line_input_list:
             full_lines_length += line[L_LEN]
-            self.train_line_time_list[train.id].append(
-                math.ceil(line[L_LEN] / train.speed)-1)
         self.average_line_length = full_lines_length / len(line_input_list)
 
     def check_plan(self) -> bool:

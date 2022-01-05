@@ -198,13 +198,6 @@ class Input:
                 while(True):
                     i += 1
                     parameters = lines[i].split(" ")
-
-                    if len(parameters[2]) > 16:
-                        Float = parameters[2].split(".")
-                        if len(Float[1]) > 16:
-                            parameters[2] = float(
-                                parameters[2]) - 0.0000000000000001
-
                     self.add_train(
                         id=parameters[0], start_id=parameters[1], speed=parameters[2], capacity=parameters[3])
                     if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
