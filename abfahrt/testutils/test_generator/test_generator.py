@@ -36,25 +36,25 @@ class test_generator:
                             type= int,
                             default = "10",
                             metavar='[int]',
-                            help="Maximale Anzahl an Bahnhöfen")
+                            help="Anzahl an Bahnhöfen")
             
         parser.add_argument('-number_lines',
                             type= int,
                             default = "20",
                             metavar='[int]',
-                            help="Maximale Anzahl an Strecken")  
+                            help="Anzahl an Strecken")  
       
         parser.add_argument('-number_trains',
                             type= int,
                             default = "10",
                             metavar='[int]',
-                            help="Maximale Anzahl an Zügen")                
+                            help="Anzahl an Zügen")                
 
         parser.add_argument('-number_passengers',
                             type= int,
                             default = "10",
                             metavar='[int]',
-                            help="Maximale Anzahl an Passagieren")
+                            help="Anzahl an Passagieren")
 
         parser.add_argument('-max_capacity_station',
                             type= int,
