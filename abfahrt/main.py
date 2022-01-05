@@ -20,7 +20,8 @@ def main():
     groups = Groups(passengers)
 
     if not travel_center.check_plan():
-        raise NameError("Not all stations connected!")
+        print("INVALID INPUT: Not all stations connected!")
+        return
 
     while len(groups.route) != 0:
 
