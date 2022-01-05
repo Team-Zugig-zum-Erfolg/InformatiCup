@@ -32,25 +32,25 @@ class test_generator:
                             metavar='[int]',                        
                             help="Anzahl der auszuführenden Tests")
 
-        parser.add_argument('-max_stations',
+        parser.add_argument('-number_stations',
                             type= int,
                             default = "10",
                             metavar='[int]',
                             help="Maximale Anzahl an Bahnhöfen")
             
-        parser.add_argument('-max_lines',
+        parser.add_argument('-number_lines',
                             type= int,
                             default = "20",
                             metavar='[int]',
                             help="Maximale Anzahl an Strecken")  
       
-        parser.add_argument('-max_trains',
+        parser.add_argument('-number_trains',
                             type= int,
                             default = "10",
                             metavar='[int]',
                             help="Maximale Anzahl an Zügen")                
 
-        parser.add_argument('-max_passengers',
+        parser.add_argument('-number_passengers',
                             type= int,
                             default = "10",
                             metavar='[int]',
@@ -111,7 +111,7 @@ class test_generator:
     
         for i in range(args.test_amount):
             test_number += 1
-            generator.random_input_generate_file(args.max_stations, args.max_lines, args.max_trains, args.max_passengers, args.max_capacity_station, args.max_capacity_line, args.max_length_line, args.max_capacity_train, args.max_groupsize_passenger, args.max_targettime_passenger, args.max_speed_train)
+            generator.random_input_generate_file(args.number_stations, args.number_lines, args.number_trains, args.number_passengers, args.max_capacity_station, args.max_capacity_line, args.max_length_line, args.max_capacity_train, args.max_groupsize_passenger, args.max_targettime_passenger, args.max_speed_train)
         
             if system() == "Linux":
                 p1 = subprocess.run('python3 -m abfahrt < output_generated.txt', capture_output=True,shell=True)
