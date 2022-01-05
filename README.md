@@ -34,4 +34,4 @@ Example:
 python -m abfahrt.testutils.test_generator
 
 
-python -m abfahrt.testutils.test_generator -test_amount 10 -max_stations 10 -max_lines 20 -max_trains 10 -max_passengers 10 -max_capacity_station 10 -max_capacity_line 10 -max_length_line 10 -max_capacity_train 10 -max_groupsize_passenger 10 -max_targettime_passenger 10 -max_speed_train 10
+python -m abfahrt.testutils.test_generator -test_amount 10 -number_stations 10 -number_lines 20 -number_trains 10 -number_passengers 10 -max_capacity_station 10 -max_capacity_line 10 -max_length_line 10 -max_capacity_train 10 -max_groupsize_passenger 10 -max_targettime_passenger 10 -max_speed_train 10
