@@ -49,7 +49,7 @@ class test_simulator:
 
         if args.singletest and args.singletest in self.files_test:
             self.files_test = [args.singletest]
-        else:
+        elif args.singletest:
             print("Eingabedatei existiert nicht!")
             return
 
