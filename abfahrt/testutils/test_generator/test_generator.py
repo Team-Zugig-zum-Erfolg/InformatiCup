@@ -16,7 +16,8 @@ class test_generator:
     def run(self):
 
         generator = Generator()
-        test_number = 0
+        test_number = 1
+        test_success = 0
         
         parser = argparse.ArgumentParser(usage=argparse.SUPPRESS,
                 formatter_class=lambda prog: argparse.HelpFormatter(
@@ -110,7 +111,7 @@ class test_generator:
         args = parser.parse_args()
     
         for i in range(args.test_amount):
-            test_number += 1
+            
             generator.random_input_generate_file(args.number_stations, args.number_lines, args.number_trains, args.number_passengers, args.max_capacity_station, args.max_capacity_line, args.max_length_line, args.max_capacity_train, args.max_groupsize_passenger, args.max_targettime_passenger, args.max_speed_train)
         
             if system() == "Linux":
@@ -141,10 +142,12 @@ class test_generator:
                 print(p2.stdout.decode("utf-8"))
 
             if('Printing score' in (p2.stdout.decode("utf-8"))):
+                test_success += 1
                 print("Successful test: "+str(test_number))
             else:
                 print("Error in test: "+str(test_number))
                 if args.soft:
                     break
+            test_number += 1
 
-        print("Successful tests: "+str(test_number)+"/"+str(args.test_amount))
+        print("Successful tests: "+str(test_success)+"/"+str(args.test_amount))
