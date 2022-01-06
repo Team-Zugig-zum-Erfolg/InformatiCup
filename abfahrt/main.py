@@ -20,7 +20,8 @@ def main():
     groups = Groups(passengers)
 
     if not travel_center.check_plan():
-        raise NameError("Not all stations connected!")
+        print("INVALID INPUT: Not all stations connected!")
+        return
 
     while len(groups.route) != 0:
 
@@ -39,7 +40,8 @@ def main():
                     start_station, trains, start_times, start_stations)
             else:
                 if len(group) == 1:
-                    raise NameError("Error: Capacity of all trains too low!")
+                    print("INVALID INPUT: capacity of all trains too low!")
+                    return
                 groups.split_group(group)
             continue
 
@@ -52,6 +54,9 @@ def main():
             if capacity_enable:
                 travel_center.train_move_to_start_station(
                     start_station, trainlist, start_times, start_stations)
+            else:
+                print("INVALID INPUT: capacity of all trains too low!")
+                return
             continue
 
         train_fastest, train_fastest_start_time = travel_center.get_fastest_train_by_start_times_and_route_length(

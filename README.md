@@ -2,6 +2,11 @@
 
 Team Arbeit Informati Cup
 
+
+doc:
+
+python -m pdoc -o ./doc -d google abfahrt
+
 main:
 
 python -m abfahrt [< input.txt]
