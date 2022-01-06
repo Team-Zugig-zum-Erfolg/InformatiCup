@@ -12,6 +12,10 @@ def main():
 
     stations, lines, trains, passengers = input_.from_stdin()
 
+    if input_.check_input() == False:
+        print("INVALID INPUT: Not enough or valid objects given!")
+        return
+
     linelist = Linelist(lines)
     stationlist = Stationlist(stations, trains, result)
     travel_center = Travel_Center(
