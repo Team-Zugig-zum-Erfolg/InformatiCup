@@ -21,7 +21,7 @@ from abfahrt.Generator import Generator
 class Input:
 
     def __init__(self):
-        self.star_station = Station(id=-1, capacity=999)   # the "*" station
+        self.star_station = Station(id=-1, capacity=sys.maxsize)   # the "*" station
         self.Stations: List["Station"] = []
         self.Lines: List["Line"] = []
         self.Trains: List["Train"] = []
@@ -173,44 +173,262 @@ class Input:
             mylines.append("")
         return self.parse_lines(mylines)
 
+    def check_station(self, parameters:List)->bool:
+        ''' used in parse_lines(), check logic and syntax of input station 
+        regulation:
+            1. if it contains less or more parameter then the format (int)ID, (int)capacity
+            2. if format of id is not "S1", like "asdad123asdasd", or "station1"
+            3. if capacity < 0
+            4. p[1] is int
+        '''
+        if len(parameters) != 2:
+            # print("parameter < 2")
+            return False
+
+        if parameters[0][0] != "S":
+            # print("first letter not S")
+            return False
+        if not parameters[0][1:].isdigit():
+            print(parameters[0][1:])
+            # print("not number")
+            return False
+
+        if not parameters[1].isdigit():
+            # print("capacity not number")
+            return False
+        if _string_to_int(parameters[1]) < 0:
+            # print("wrong capacity")
+            return False
+        return True
+    
+    def check_line(self, parameters:List)->bool:
+        ''' used in parse_lines(), check logic and syntax of input line 
+        [0]str(ID) [1]str(Anfang) [2]str(Ende) [3]dec(Länge) [4]int(Kapazität)
+        regulation:
+            1. if the parameters less or more than 5
+            2. if the id not in format "L1"
+            3. if the id of stations not in format "S1"
+            4. if the starting and end station not exist
+            5. if length < 0
+            6. if capacity < 0
+            7. if length is not double
+            8. if capacity is not int
+        '''
+        if len(parameters) != 5:
+            # print("parameter < 5")
+            return False
+        if parameters[0][0] != "L":
+            # print("first letter not L")
+            return False
+
+        if not parameters[0][1:].isdigit():
+            # print(parameters[0][1:])
+            # print("L1 not number")
+            return False
+
+        if parameters[1][0] != "S":
+            # print("start station not S")
+            return False
+        if not parameters[1][1:].isdigit():
+            # print(parameters[1][1:])
+            # print("start station not number")
+            return False
+
+        if parameters[2][0] != "S":
+            # print("end station not S")
+            return False
+        if not parameters[2][1:].isdigit():
+            # print(parameters[2][1:])
+            # print("end station not number")
+            return False
+
+        if self.find_station(_string_to_int(parameters[1])) == None:
+            # print("station not exist")
+            return False
+        if self.find_station(_string_to_int(parameters[2])) == None:
+            # print("station not exist")
+            return False
+
+        if not _isDouble(parameters[3]): # length should be double 
+            # print("length not number")
+            return False
+        if _string_to_int(parameters[3]) < 0:
+            # print("length length")
+            return False
+
+        if not parameters[4].isdigit():
+            # print("capacity not number")
+            return False
+        if _string_to_int(parameters[4]) < 0:
+            # print("wrong capacity")
+            return False
+        return True
+
+    def check_train(self, parameters:List)->bool:
+        ''' used in parse_lines(), check logic and syntax of input train 
+        0 str(ID) 1 str(Startbahnhof)/* 2 dec(Geschwindigkeit) 3 int(Kapazität)
+        regulation:
+            1. if the parameters less or more than 4
+            2. if the id not in format "T1"
+            3. if the id of station not in format "S1" or not "*"
+            4. if the station does not exist
+            5. if speed < 0
+            6. if capacity < 0
+        '''
+        if len(parameters) != 4:
+            # print("parameter < 4")
+            return False
+
+        if parameters[0][0] != "T":
+            # print("first letter not T")
+            return False
+        if not parameters[0][1:].isdigit():
+            # print(parameters[0][1:])
+            # print("T1 not number")
+            return False
+        
+        if parameters[1] != "*":
+            if parameters[1][0] != "S" or not parameters[1][1:].isdigit():
+                # print("start station not S or not number or not *")
+                return False
+            else:
+                if self.find_station(_string_to_int(parameters[1])) == None:
+                    return False
+        
+        if not _isDouble(parameters[2]): # speed should be double
+            # print("speed not number")
+            return False
+        if _string_to_int(parameters[2]) < 0:
+            # print("wrong speed")
+            return False
+
+        if not parameters[3].isdigit():
+            # print("capacity not number")
+            return False
+        if _string_to_int(parameters[3]) < 0:
+            # print("wrong capacity")
+            return False
+
+        return True
+
+    def check_passenger(self, parameters:List)->bool:
+        ''' used in parse_lines(), check logic and syntax of input passenger 
+        0 str(ID) 1 str(Startbahnhof) 2 str(Zielbahnhof) 3 int(Gruppengröße) 4 int(Ankunftszeit)
+        regulation:
+            1. if the parameters less or more than 5
+            2. if the id not in format "P1"
+            3. if the id of stations not in format "S1"
+            4. if the stations does not exist
+            5. if size < 0
+            6. if time < 0
+            7. size int
+            8. time int
+        '''
+        if len(parameters) != 5:
+            # print("parameter < 5")
+            return False
+        if parameters[0][0] != "P":
+            # print("first letter not P")
+            return False
+        if not parameters[0][1:].isdigit():
+            # print(parameters[0][1:])
+            # print("P1 not number")
+            return False
+
+        if parameters[1][0] != "S":
+            # print("start station not S")
+            return False
+        if not parameters[1][1:].isdigit():
+            # print(parameters[1][1:])
+            # print("start station not number")
+            return False
+        if parameters[2][0] != "S":
+            # print("end station not S")
+            return False
+        if not parameters[2][1:].isdigit():
+            # print(parameters[2][1:])
+            # print("end station not number")
+            return False
+        if self.find_station(_string_to_int(parameters[1])) == None:
+            return False
+        if self.find_station(_string_to_int(parameters[2])) == None:
+            return False
+
+        if not parameters[3].isdigit():
+            # print("size not number")
+            return False
+        if _string_to_int(parameters[3]) < 0:
+            # print("wrong size")
+            return False
+
+        if not parameters[4].isdigit():
+            # print("time not number")
+            return False
+        if _string_to_int(parameters[4]) < 0:
+            # print("wrong time")
+            return False
+
+        return True
+
+    def check_input(self)->bool:
+        ''' check the logic of all input 
+        regulation:
+            1. if there are only 1 station
+            software will be stop
+        Note:
+            1. if the stations, that are used in lines, don't exist
+            2. if the stations, that are used in trains, don't exist
+            3. if the stations, that are used in passengers, don't exist
+            the line, train and passenger will not be added in input.
+            
+        '''
+        if len(self.Stations) < 2:
+            return False
+
+        return True
+
     def parse_lines(self, lines: list):
-        ''' this is used in from_input(), from_input_stdin() to parse a line read from file or stdin'''
+        ''' this is used in from_input(), from_input_stdin() to parse a line read from file or stdin. The lines here means a list of line from text'''
         i = 0
         while(i < len(lines)-1):
             if lines[i] == ("[Stations]"):
                 while(True):
                     i += 1
                     parameters = lines[i].split(" ")
-                    self.add_station(id=parameters[0], capacity=parameters[1])
-                    if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
-                        break
+                    if self.check_station(parameters):
+                        self.add_station(id=parameters[0], capacity=parameters[1])
+                        if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
+                            break
 
             if lines[i] == ("[Lines]"):
                 while(True):
                     i += 1
                     parameters = lines[i].split(" ")
-                    self.add_line(id=parameters[0], start_id=parameters[1],
-                                  end_id=parameters[2], length=parameters[3], capacity=parameters[4])
-                    if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
-                        break
+                    if self.check_line(parameters):
+                        self.add_line(id=parameters[0], start_id=parameters[1],
+                                    end_id=parameters[2], length=parameters[3], capacity=parameters[4])
+                        if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
+                            break
 
             if lines[i] == ("[Trains]"):
                 while(True):
                     i += 1
                     parameters = lines[i].split(" ")
-                    self.add_train(
-                        id=parameters[0], start_id=parameters[1], speed=parameters[2], capacity=parameters[3])
-                    if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
-                        break
+                    if self.check_train(parameters):
+                        self.add_train(
+                            id=parameters[0], start_id=parameters[1], speed=parameters[2], capacity=parameters[3])
+                        if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
+                            break
 
             if lines[i] == ("[Passengers]"):
                 while(True):
                     i += 1
                     parameters = lines[i].split(" ")
-                    self.add_passenger(id=parameters[0], start_id=parameters[1],
-                                       end_id=parameters[2], size=parameters[3], target=parameters[4])
-                    if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
-                        break
+                    if self.check_passenger(parameters):
+                        self.add_passenger(id=parameters[0], start_id=parameters[1],
+                                        end_id=parameters[2], size=parameters[3], target=parameters[4])
+                        if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
+                            break
                 break
             i += 1
         return self.Stations, self.Lines, self.Trains, self.Passengers
@@ -252,3 +470,14 @@ def _string_to_int(string: str) -> int:
         return int(r[0])
     else:
         return 0
+
+def _isDouble(string: str) -> bool:
+    ''' check if string is double '''
+    s=string.split('.')
+    if len(s)>2:
+      return False
+    else:   # [].[] or []
+      for si in s:
+          if not si.isdigit():
+              return False
+      return True
