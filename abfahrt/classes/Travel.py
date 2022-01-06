@@ -1,11 +1,12 @@
 from typing import List
+# This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
 from typing import Tuple
+# These can be used as types in annotations using [], each having a unique syntax. (https://docs.python.org/3/library/typing.html)
 
 from abfahrt.classes.Station import Station
 from abfahrt.classes.TrainInLine import TrainInLine
 from abfahrt.classes.TrainInStation import TrainInStation
 from abfahrt.classes.Train import Train
-
 
 class Travel:
     def __init__(self, start_time: int, on_board: int, line_time: List[TrainInLine], station_time: TrainInStation, start_station: Station,

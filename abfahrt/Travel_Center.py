@@ -4,8 +4,10 @@ import math
 # This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
 import sys
 
-from typing import Tuple
 from typing import List
+# This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
+from typing import Tuple
+# These can be used as types in annotations using [], each having a unique syntax. (https://docs.python.org/3/library/typing.html)
 
 from decimal import Decimal
 
@@ -22,7 +24,6 @@ from abfahrt.classes.Station import Station
 from abfahrt.Plan import Plan
 from abfahrt.Result import Result
 
-
 L_ID = 0
 L_S_ID_START = 1
 L_S_ID_END = 2
@@ -36,7 +37,6 @@ T_ID = 0
 T_S_ID = 1
 T_SPEED = 2
 T_CAPACITY = 3
-
 
 class Travel_Center:
 

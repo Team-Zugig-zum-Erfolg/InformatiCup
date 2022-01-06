@@ -1,5 +1,8 @@
 import sys
+# This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
 from typing import List
+
+
 from typing import Tuple
 from abfahrt.classes.Train import Train
 from abfahrt.classes.Station import Station

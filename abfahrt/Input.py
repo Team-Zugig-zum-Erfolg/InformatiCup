@@ -10,13 +10,11 @@ import re
 # This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
 import sys
 
-
 from abfahrt.classes.Station import Station
 from abfahrt.classes.Line import Line
 from abfahrt.classes.Passenger import Passenger
 from abfahrt.classes.Train import Train
 from abfahrt.Generator import Generator
-
 
 class Input:
 

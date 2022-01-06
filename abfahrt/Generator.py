@@ -1,12 +1,10 @@
 # This module implements pseudo-random number generators for various distributions. (https://docs.python.org/3/library/random.html)
 import random
 
-
 from abfahrt.classes.Passenger import Passenger
 from abfahrt.classes.Station import Station
 from abfahrt.classes.Line import Line
 from abfahrt.classes.Train import Train
-
 
 class Generator:
 
