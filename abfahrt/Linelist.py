@@ -22,6 +22,15 @@ class Linelist:
             line_number = line_number + 1
 
     def compare_free(self, train_in_line: TrainInLine) -> bool:
+        """
+        Checks if the given TrainInLine object can inserted into the line
+
+        Args:
+            train_in_line (TrainInLine): the TrainInLine object
+
+        Returns:
+            bool: True, if the TrainInLine object can be inserted, else False
+        """
         earliest_leave_time = -1
         line_capacities = self.lines[train_in_line.line_id]
 
@@ -53,26 +62,33 @@ class Linelist:
         return [False, earliest_leave_time]
 
     @staticmethod
-    def _train_in_line_is_full(train_in_line: TrainInLine, start: int, end: int) -> bool:
-        return ((train_in_line.end > start >= train_in_line.start) or
-                (train_in_line.start < end < train_in_line.end) or (start <= train_in_line.start and train_in_line.end <= end and (train_in_line.start != train_in_line.end or start != end)))
-
-    @staticmethod
-    def _train_in_line_pos(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start: int, end: int,
-                           earliest_leave_time: int) -> int:
-        distance_s_e = end - start
-        distance_between_trains = back_train_in_line.start - front_train_in_line.end
-        if distance_s_e + 2 <= distance_between_trains:
-            earliest_leave_time = front_train_in_line.end + 1
-        return earliest_leave_time
-
-    @staticmethod
     def _train_in_line_between(front_train_in_line: TrainInLine, back_train_in_line: TrainInLine, start: int, end: int) -> bool:
+        """
+        Checks if a given time range is free/can be inserted between two TrainInLine objects
+
+        Args:
+            front_train_in_line (TrainInLine): first TrainInLine object
+            back_train_in_line (TrainInLine): second TrainInLine object
+            start (int): start of time range
+            end (int): end of time range
+
+        Returns:
+            bool: True, if the time range is free/possible, else False
+        """
         dis = back_train_in_line.start - front_train_in_line.end
         dis_needed = end - start
         return dis_needed <= dis
 
     def add_new_train_in_line(self, train_in_line: TrainInLine) -> bool:
+        """
+        Inserts a TrainInLine object into the right/best fitting capacity of the line
+
+        Args:
+            train_in_line (TrainInLine): the TrainInLine object
+
+        Returns:
+            bool: True, if inserting was successful, else False
+        """
         capacity_number = 0
         for capacity in self.lines[train_in_line.line_id]:
             if len(capacity) == 0:
@@ -105,6 +121,15 @@ class Linelist:
         return False
 
     def read_trains_from_line(self, line_number: int) -> List[Train]:
+        """
+        Restrieves the trains from a line
+
+        Args:
+            line_number (int): id of the line
+
+        Returns:
+            List[Train]: trains in the line
+        """
         trains = []
         for capacity in self.lines[line_number]:
             for train_in_line in capacity:
