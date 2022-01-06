@@ -1,9 +1,7 @@
-# This module provides access to the mathematical functions defined by the C standard. (https://docs.python.org/3/library/math.html)
 import math
-
-# This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
+# This module provides access to the mathematical functions defined by the C standard. (https://docs.python.org/3/library/math.html)
 import sys
-
+# This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
 from typing import List
 # This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
 from typing import Tuple

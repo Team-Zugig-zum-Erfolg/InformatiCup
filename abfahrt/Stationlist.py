@@ -1,14 +1,14 @@
 import sys
-# This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
-from typing import List
+# This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
 
+from typing import List
+# This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
 
 from typing import Tuple
 from abfahrt.classes.Train import Train
 from abfahrt.classes.Station import Station
 from abfahrt.classes.TrainInStation import TrainInStation
 from abfahrt.Result import Result
-
 
 T_ID = 0
 T_START_STATION = 1
@@ -17,7 +17,6 @@ T_CAPACITY = 3
 
 S_ID = 0
 S_CAPACITY = 1
-
 
 class Stationlist:
 
