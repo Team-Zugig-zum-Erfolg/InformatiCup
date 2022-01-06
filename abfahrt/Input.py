@@ -175,7 +175,7 @@ class Input:
         return self.parse_lines(mylines)
 
     def check_station(self, parameters: List) -> bool:
-        ''' used in parse_lines(), check logic and syntax of input station 
+        ''' used in parse_lines(), check logic and syntax of input station
         regulation:
             1. if it contains less or more parameter then the format (int)ID, (int)capacity
             2. if format of id is not "S1", like "asdad123asdasd", or "station1"
@@ -203,7 +203,7 @@ class Input:
         return True
 
     def check_line(self, parameters: List) -> bool:
-        ''' used in parse_lines(), check logic and syntax of input line 
+        ''' used in parse_lines(), check logic and syntax of input line
         [0]str(ID) [1]str(Anfang) [2]str(Ende) [3]dec(Länge) [4]int(Kapazität)
         regulation:
             1. if the parameters less or more than 5
@@ -266,7 +266,7 @@ class Input:
         return True
 
     def check_train(self, parameters: List) -> bool:
-        ''' used in parse_lines(), check logic and syntax of input train 
+        ''' used in parse_lines(), check logic and syntax of input train
         0 str(ID) 1 str(Startbahnhof)/* 2 dec(Geschwindigkeit) 3 int(Kapazität)
         regulation:
             1. if the parameters less or more than 4
@@ -296,7 +296,8 @@ class Input:
                 if self.find_station(_string_to_int(parameters[1])) == None:
                     return False
 
-        if not _isDouble(parameters[2]):  # speed should be double
+        # speed should be double
+        if not _isDouble(parameters[2]):
             # print("speed not number")
             return False
         if _string_to_int(parameters[2]) < 0:
@@ -313,7 +314,7 @@ class Input:
         return True
 
     def check_passenger(self, parameters: List) -> bool:
-        ''' used in parse_lines(), check logic and syntax of input passenger 
+        ''' used in parse_lines(), check logic and syntax of input passenger
         0 str(ID) 1 str(Startbahnhof) 2 str(Zielbahnhof) 3 int(Gruppengröße) 4 int(Ankunftszeit)
         regulation:
             1. if the parameters less or more than 5
@@ -372,7 +373,7 @@ class Input:
         return True
 
     def check_input(self) -> bool:
-        ''' check the logic of all input 
+        ''' check the logic of all input
         regulation:
             1. if there are only 1 station or no line
             software will be stop
@@ -389,6 +390,9 @@ class Input:
         if len(self.Lines) < 1:
             return False
 
+        if len(self.Trains) < 1:
+            return False
+
         return True
 
     def parse_lines(self, lines: list):
@@ -397,52 +401,44 @@ class Input:
         while(i < len(lines)-1):
             if lines[i] == ("[Stations]"):
                 while(True):
-                    if('[' in lines[i+1]) and (']' in lines[i+1]):
+                    if("" == lines[i+1]) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
                         break
                     i += 1
                     parameters = lines[i].split(" ")
                     if self.check_station(parameters):
                         self.add_station(
                             id=parameters[0], capacity=parameters[1])
-                        if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
-                            break
 
             if lines[i] == ("[Lines]"):
                 while(True):
-                    if('[' in lines[i+1]) and (']' in lines[i+1]):
+                    if("" == lines[i+1]) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
                         break
                     i += 1
                     parameters = lines[i].split(" ")
                     if self.check_line(parameters):
                         self.add_line(id=parameters[0], start_id=parameters[1],
                                       end_id=parameters[2], length=parameters[3], capacity=parameters[4])
-                        if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
-                            break
 
             if lines[i] == ("[Trains]"):
                 while(True):
-                    if('[' in lines[i+1]) and (']' in lines[i+1]):
+                    if("" == lines[i+1]) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
                         break
                     i += 1
                     parameters = lines[i].split(" ")
                     if self.check_train(parameters):
                         self.add_train(
                             id=parameters[0], start_id=parameters[1], speed=parameters[2], capacity=parameters[3])
-                        if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
-                            break
 
             if lines[i] == ("[Passengers]"):
                 while(True):
-                    if('[' in lines[i+1]) and (']' in lines[i+1]):
+                    if("" == lines[i+1]) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
                         break
                     i += 1
                     parameters = lines[i].split(" ")
                     if self.check_passenger(parameters):
                         self.add_passenger(id=parameters[0], start_id=parameters[1],
                                            end_id=parameters[2], size=parameters[3], target=parameters[4])
-                        if(('#' in lines[i+1]) or ("" == lines[i+1])) or ('[' in lines[i+1]) or (']' in lines[i+1]):
-                            break
-                break
+
             i += 1
         return self.Stations, self.Lines, self.Trains, self.Passengers
 
