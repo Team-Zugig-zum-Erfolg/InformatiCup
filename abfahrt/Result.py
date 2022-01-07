@@ -28,112 +28,96 @@ class Result:
 
     trains: List[Train] = []
     passengers: List[Passenger] = []
-
     id_trains: set = set()
     id_passengers: set = set()
 
     def save_train_depart(self, id_train, time, id_line):
-        ''' find the train in trains[], add this action in its history'''
-        # print(f"-> enter [save_train_depart], id={id_train}, time={time}, id_line={id_line}")
+        """
+        find the train in trains[], add this action in its history
 
+        Args:
+            id_train (int): id of the train
+            time (int): depart time of the train
+            id_line (int): id of the line
+        """
         # find the train in list, or add one in list
         train = self.find_or_add_train(id_train)
         train.add_depart(time=time, line_id=id_line)
-        # print(" - save_train_depart:", train.id)
-        # print(" - location:", id(train))
-        # for i in self.trains:
-        #     print(" + train: ", i.id," history: ", i.history)
-        # print("===")
 
     def save_train_start(self, id_train, time, id_station):
-        # print(f"-> enter [save_train_start], id={id_train}, time={time}, id_line={id_station}")
+        """
+        find the train in trains[], add this action in its history
 
-        # for i in self.trains:
-        #     print(" + train: ", i.id," history: ", i.history)
-
+        Args:
+            id_train (int): id of the train
+            time (int): time of start
+            id_station (int): id of the station
+        """
         train = self.find_or_add_train(id_train)
-
-        # for i in self.trains:
-        #     print(" + train: ", i.id," history: ", i.history)
-
         train.add_start(time=time, station_id=id_station)
 
-        # print(" - save_train_start:", train.id)
-        # print(" - location:", id(train))
-        # for i in self.trains:
-        #     print(" + train: ", i.id," history: ", i.history)
-        # print("===")
-
     def save_passenger_board(self, id_passenger, time, id_train):
-        # print(f"-> enter [save_passenger_board], id={id_passenger}, time={time}, id_line={id_train}")
+        """
+        find the passenger in passenger[], add this action in its history
+
+        Args:
+            id_passenger (int): id of the passenger
+            time (int): time of board
+            id_train (int): id of the train
+        """
         p = self.find_or_add_passenger(id_passenger)
         p.add_board(time=time, train_id=id_train)
 
-        # print(" - save_passenger_board:", p.id)
-        # print(" - location:", id(p))
-        # for i in self.passengers:
-        #     print(" - passenger: ", i.id," history: ", i.history)
-        # print("===")
-
     def save_passenger_detrain(self, id_passenger, time):
-        # print(f"-> enter [save_passenger_detrain], id={id_passenger}, time={time}")
+        """
+        find the passenger in passenger[], add this action in its history
+
+        Args:
+            id_passenger (int): id of the passenger
+            time (int): time of detrain
+        """
         p = self.find_or_add_passenger(id_passenger)
         p.add_detrain(time=time)
-        # print(" - save_passenger_detrain:", p.id)
-        # print(" - location:", id(p))
-        # for i in self.passengers:
-        #     print(" - passenger: ", i.id," history: ", i.history)
-        # print("===")
 
     def find_or_add_train(self, id_train: int) -> Train:
-        '''find the train in the trains[], if not exist, create one'''
-        # print("*-> enter [find_or_add_train]")
+        """
+        find the train in the trains[], if not exist, create one
 
-        # for i in self.trains:
-        #     print(" + train: ", i.id," history: ", i.history)
+        Args:
+            id_train (int): the id of the train
 
+        Returns:
+            train: the found train
+        """
         # currently cannot deal with duplication
         if id_train in self.id_trains:                                      # already exist
-            # print(f" -- train id [{id_train}] exist")
             find_result = filter(lambda t: t.id == id_train,
                                  self.trains)   # find it
             # convert to list
             found_train = list(find_result)
-            # print(f" -- train id [{id_train}] found with id [{found_train[0].id}]")
             if len(found_train) == 1:
-                # print(" -- [find] location: ", id(found_train[0]))
                 return found_train[0]
             else:   # duplication
-                # print(f"* <!> [Warning] from Result: there train [{id_train}] is duplicated, \n! * there are [{len(found_train)}] such trains in [trains]")
-                # self.handle_duplication_train()
                 return found_train[0]
         else:   # train not exist, add one
-            # print(f" -- id [{id_train}] not exist, now added")
-            # for i in self.trains:
-            #     print(" + train: ", i.id," history: ", i.history)
             train = Train(id_train, Station(0, 0), 0.0, 0)  # new train
-            # print(" -- new train history",train.history)
-            # for i in self.trains:
-            #     print(" + train: ", i.id," history: ", i.history)
-            # add in set() ids, to record the id in a set (there are no duplication)
             self.id_trains.add(id_train)
-            # for i in self.trains:
-            #     print(" + train: ", i.id," history: ", i.history)
-
             self.trains.append(train)
-            # for i in self.trains:
-            #     print(" + train: ", i.id," history: ", i.history)
-            # print(f" -- train id [{id_train}] added with id [{train.id}]")
-            # print(" -- [find] location: ", id(train))
-
             # sort the trains list
             self.trains.sort(key=lambda x: x.id)
 
             return train
 
     def find_or_add_passenger(self, id_passenger: int) -> Passenger:
-        '''find the train in the trains[], if not exist, create one, currently cannot deduplicate'''
-        # print("*-> enter [find_or_add_passenger]")
+        """
+        find the passenger in the passengers[], if not exist, create one, currently cannot deduplicate
+
+        Args:
+            id_passenger (int): the id of the passenger
+
+        Returns:
+            passenger: the found passenger
+        """
         if id_passenger in self.id_passengers:                                      # already exist
             find_result = filter(
                 lambda p: p.id == id_passenger, self.passengers)   # find it
@@ -157,9 +141,15 @@ class Result:
             return p
 
     def add_passenger(self, passenger: Passenger):
-        '''add a Passanger in list, if already exist(with same id), merge the history'''
-        '''also save the id in a Set, for easily to check if some exist'''
-        '''if you need to add a P only with id, please use find_or_add_passenger'''
+        """
+        add a Passanger in list, if already exist(with same id), merge the history
+        also save the id in a Set, for easily to check if some exist
+        if you need to add a P only with id, please use find_or_add_passenger
+
+        Args:
+            passenger (Passenger): a passenger
+        """
+
         if passenger.id in self.id_passengers:          # already exist
             # passenger already exists, only need to merge history
             self.find_or_add_passenger(passenger.id).merge(passenger)
@@ -177,32 +167,43 @@ class Result:
         else:
             self.trains.append(train)
             self.id_trains.add(train.id)
-
             # sort the trains list
             self.trains.sort(key=lambda x: x.id)
 
     def passengers_add_from_input(self, input: Input):
-        '''from input add all passengers'''
+        """
+        from input add all passengers
+        """
         for passenger in input.Passengers:
             self.add_passenger(passenger)
 
     def passengers_read_from_input(self, input: Input):
-        '''directly read all passengers from input.passengers'''
+        """
+        directly read all passengers from input.passengers
+        """
         self.passengers = input.Passengers
 
     def train_add_from_input(self, input: Input):
-        '''from input add all passengers'''
+        """
+        from input add all passengers
+        """
         for train in input.Trains:
             self.add_train(train)
 
     def train_read_from_input(self, input: Input):
-        '''directly read all passengers from input.passengers'''
+        """
+        directly read all passengers from input.passengers
+        """
         self.trains = input.Trains
 
-
-# %% saving methods
-
+    # saving methods
     def to_output_text(self):
+        """
+        create the output text
+
+        Returns:
+            result: the output text
+        """
         result = ""
         for t in self.trains:
             result += f"[Train:{t.get_id_str()}]\n"
@@ -217,7 +218,12 @@ class Result:
         return result
 
     def to_file_same(self):
-        ''' save output file in SAME file output '''
+        """
+        save output file in SAME file output
+
+        Returns:
+            state: true if successfully
+        """
         path = './output.txt'
         state = False
         file = open(path, 'w')
@@ -227,9 +233,15 @@ class Result:
         return state
 
     def to_file(self, folder="result"):
-        ''' save output format in local file 
-        parameter: folder: the folder to save this file, default is "result"
-        '''
+        """
+        save output format in local file 
+
+        Args:
+            folder: folder: the folder to save this file, default is "result"
+
+        Returns:
+            state: true if successfully
+        """
         dir_name = str(folder)
         path = self.path_generator(folder=dir_name)
         state = False
@@ -244,12 +256,15 @@ class Result:
         return state
 
     def path_generator(self, folder="result") -> str:
-        ''' generate a path for local file '''
+        """
+        generate a path for local file: "year month day - hour minute second.txt"
+
+        Returns:
+            filename (str): the generated filename
+        """
         dir_name = str(folder)
         path = "./" + dir_name + "/Output"
         path = path + "-" + \
             time.strftime("%y%m%d-%H%M%S", time.localtime(time.time()))
         path = path + ".txt"
-        # filename = "Output-" + time.strftime("%y%m%d-%H%M%S",time.localtime(time.time())) + ".txt"
-        # return filename
         return path
