@@ -5,15 +5,17 @@ from abfahrt.Groups import Groups
 from abfahrt.Result import Result
 from abfahrt.Travel_Center import Travel_Center
 
+
 def main():
     input_ = Input()
-    result = Result()
 
     stations, lines, trains, passengers = input_.from_stdin()
 
     if input_.check_input() == False:
         print("INVALID INPUT: Not enough or invalid objects given!")
         return
+
+    result = Result(input_)
 
     linelist = Linelist(lines)
     stationlist = Stationlist(stations, trains, result)
