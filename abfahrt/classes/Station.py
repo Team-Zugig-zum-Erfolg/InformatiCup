@@ -8,13 +8,31 @@ class Station:
     self.capacity = capacity
   
   def to_list(self):
+    """
+    convert to list
+
+    Returns:
+        the list of information
+    """
     return [self.id, self.capacity]
 
   def to_str_input(self)->str:
+    """
+    this method is used for input, generate information of one passenger
+
+    Returns:
+        output: string of information
+    """
     output = " ".join([self.get_id_str(),str(self.capacity)])
     return output
 
   def get_id_str(self)->str:
+    """
+    get the str(id) with S
+
+    Returns:
+        out: string of information
+    """
     out = "S" + str(self.id)
     return out
 

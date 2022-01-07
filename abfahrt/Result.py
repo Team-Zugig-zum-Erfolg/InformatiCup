@@ -17,19 +17,27 @@ from abfahrt.Input import Input
 
 
 class Result:
-    # Format
-    # [Train T1]
-    # 0 Start S2
-    # 2 Depart L1
-    # 3 Depart L2
-    # [Passenger P1]
-    # 1 Board T2
-    # 6 Detrain
 
-    trains: List[Train] = []
-    passengers: List[Passenger] = []
-    id_trains: set = set()
-    id_passengers: set = set()
+    def __init__(self, input_instance: Input):
+        self.trains = input_instance.Trains
+        self.passengers = input_instance.Passengers
+
+        self.input = input_instance
+
+        self.id_trains: set = set()
+        self.id_passengers: set = set()
+
+    def get_str_by_id_line(self, id):
+        return list(self.input.str_ids_lines.keys())[list(self.input.str_ids_lines.values()).index(id)]
+
+    def get_str_by_id_station(self, id):
+        return list(self.input.str_ids_stations.keys())[list(self.input.str_ids_stations.values()).index(id)]
+
+    def get_str_by_id_train(self, id):
+        return list(self.input.str_ids_trains.keys())[list(self.input.str_ids_trains.values()).index(id)]
+
+    def get_str_by_id_passenger(self, id):
+        return list(self.input.str_ids_passengers.keys())[list(self.input.str_ids_passengers.values()).index(id)]
 
     def save_train_depart(self, id_train, time, id_line):
         """
@@ -41,8 +49,8 @@ class Result:
             id_line (int): id of the line
         """
         # find the train in list, or add one in list
-        train = self.find_or_add_train(id_train)
-        train.add_depart(time=time, line_id=id_line)
+        train = self.trains[id_train-1]
+        train.add_depart(time=time, line=self.get_str_by_id_line(id_line))
 
     def save_train_start(self, id_train, time, id_station):
         """
@@ -53,8 +61,9 @@ class Result:
             time (int): time of start
             id_station (int): id of the station
         """
-        train = self.find_or_add_train(id_train)
-        train.add_start(time=time, station_id=id_station)
+        train = self.trains[id_train-1]
+        train.add_start(
+            time=time, station=self.get_str_by_id_station(id_station))
 
     def save_passenger_board(self, id_passenger, time, id_train):
         """
@@ -65,8 +74,8 @@ class Result:
             time (int): time of board
             id_train (int): id of the train
         """
-        p = self.find_or_add_passenger(id_passenger)
-        p.add_board(time=time, train_id=id_train)
+        p = self.passengers[id_passenger-1]
+        p.add_board(time=time, train=self.get_str_by_id_train(id_train))
 
     def save_passenger_detrain(self, id_passenger, time):
         """
@@ -76,7 +85,7 @@ class Result:
             id_passenger (int): id of the passenger
             time (int): time of detrain
         """
-        p = self.find_or_add_passenger(id_passenger)
+        p = self.passengers[id_passenger-1]
         p.add_detrain(time=time)
 
     def find_or_add_train(self, id_train: int) -> Train:
@@ -149,7 +158,7 @@ class Result:
         Args:
             passenger (Passenger): a passenger
         """
-
+        
         if passenger.id in self.id_passengers:          # already exist
             # passenger already exists, only need to merge history
             self.find_or_add_passenger(passenger.id).merge(passenger)
@@ -206,12 +215,12 @@ class Result:
         """
         result = ""
         for t in self.trains:
-            result += f"[Train:{t.get_id_str()}]\n"
+            result += f"[Train:{self.get_str_by_id_train(t.id)}]\n"
             result += t.to_str_output()
             result += "\n"
             result += "\n"
         for p in self.passengers:
-            result += f"[Passenger:{p.get_id_str()}]\n"
+            result += f"[Passenger:{self.get_str_by_id_passenger(p.id)}]\n"
             result += p.to_str_output()
             result += "\n"
             result += "\n"

@@ -10,7 +10,6 @@ class Line:
   length:int = 0
 
   def __init__(self, id:int,start:Station, end:Station, length:float, capacity:int):
-    ''' a constructor with start'''
     self.id = id # int
     self.start = start
     self.end = end
@@ -18,15 +17,31 @@ class Line:
     self.length = length
   
   def to_list(self):
+    """
+    convert to list
+
+    Returns:
+        [self.id, self.start.id, self.end.id, self.length, self.capacity]: a list of values
+    """
     return [self.id, self.start.id, self.end.id, self.length, self.capacity]
 
   def to_str_input(self):
-    '''this method is used for input, generate information of one line'''
+    """
+    this method is used for input, generate information of one line
+
+    Returns:
+        output: string of information
+    """
     output = " ".join([self.get_id_str(), self.start.get_id_str(), self.end.get_id_str() ,str(self.length),str(self.capacity)])
     return output
 
   def get_id_str(self)->str:
-    ''' return the id of line with L, like "L1" '''
+    """
+    get the str(id)
+
+    Returns:
+        out: string of information
+    """
     out = "L" + str(self.id)
     return out
     

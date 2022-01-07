@@ -31,6 +31,11 @@ class Input:
         self.Passengers: List["Passenger"] = []
         self.Generator = Generator()
 
+        self.str_ids_stations = {}
+        self.str_ids_lines = {}
+        self.str_ids_trains = {}
+        self.str_ids_passengers = {}
+
     def get_star_station(self):
         """
         return the assumed station for the star-train
@@ -39,6 +44,39 @@ class Input:
             a assumed star_station
         """
         return self.star_station
+
+    def check_station_str(self, name: str, insert=False) -> int:
+        if name in self.str_ids_stations:
+            return self.str_ids_stations[name]
+        elif insert:
+            self.str_ids_stations[name] = len(self.str_ids_stations)+1
+            return self.str_ids_stations[name]
+        return None
+
+    def check_line_str(self, name, insert=False):
+        if name in self.str_ids_lines:
+            return self.str_ids_lines[name]
+        elif insert:
+            self.str_ids_lines[name] = len(self.str_ids_lines)+1
+            return self.str_ids_lines[name]
+        return None
+
+    def check_train_str(self, name, insert=False):
+        if name in self.str_ids_trains:
+            return self.str_ids_trains[name]
+        elif insert:
+            self.str_ids_trains[name] = len(self.str_ids_trains)+1
+            return self.str_ids_trains[name]
+        return None
+
+    def check_passenger_str(self, name, insert=False):
+        if name in self.str_ids_passengers:
+            return self.str_ids_passengers[name]
+        elif insert:
+            self.str_ids_passengers[name] = len(self.str_ids_passengers)+1
+            return self.str_ids_passengers[name]
+        return None
+
 
     def find_station(self, id) -> Station:
         """
@@ -65,7 +103,7 @@ class Input:
 
         Returns:
             the line or None
-        """
+        """        
         find = list(filter(lambda t: t.id == id, self.Lines))
         if(len(find) > 0):
             return find[0]  # assume there are no duplications
@@ -111,7 +149,7 @@ class Input:
             id (str): id of station
             capacity (str): capacity of station
         """
-        id = _string_to_int(id)
+        id = self.check_station_str(id, True)
         station = self.find_station(id)
         if not station:  # a station is not founded
             self.Stations.append(Station(id=id, capacity=int(capacity)))
@@ -127,11 +165,11 @@ class Input:
             length (str): the length of the line
             capacity (str): capacity of line
         """
-        id = _string_to_int(id)
+        id = self.check_line_str(id, True)
         line = self.find_line(id)
         if not line:
-            self.Lines.append(Line(id=id, start=self.find_station(_string_to_int(start_id)), end=self.find_station(
-                _string_to_int(end_id)), length=float(length), capacity=int(capacity)))
+            self.Lines.append(Line(id=id, start=self.find_station(self.check_station_str(start_id)), end=self.find_station(
+                self.check_station_str(end_id)), length=float(length), capacity=int(capacity)))
 
     def add_train(self, id: str, start_id: str, speed: str, capacity: str):
         """
@@ -143,7 +181,7 @@ class Input:
             speed (str): the speed of the train
             capacity (str): capacity of train
         """
-        id = _string_to_int(id)
+        id = self.check_train_str(id, True)
         train = self.find_train(id)
         if not train:           # there are no such train duplicated
             if start_id == "*":  # a star train
@@ -151,7 +189,7 @@ class Input:
                     speed), capacity=int(capacity)))
             else:               # a normal train
                 self.Trains.append(Train(id=id, start_station=self.find_station(
-                    _string_to_int(start_id)), speed=float(speed), capacity=int(capacity)))
+                    self.check_station_str(start_id)), speed=float(speed), capacity=int(capacity)))
 
     def add_passenger(self, id: str, start_id: str, end_id: str, size: str, target: str):
         """
@@ -164,12 +202,12 @@ class Input:
             size (str): the size of the passenger
             target (str): target time of the passenger
         """
-        id = _string_to_int(id)
+        id = self.check_passenger_str(id, True)
         passenger = self.find_passenger(id)
         if not passenger:
             # assume station and station already wrote in [station] section
-            self.Passengers.append(Passenger(id=id, start_station=self.find_station(_string_to_int(
-                start_id)), end_station=self.find_station(_string_to_int(end_id)), group_size=int(size), target_time=int(target)))
+            self.Passengers.append(Passenger(id=id, start_station=self.find_station(self.check_station_str(
+                start_id)), end_station=self.find_station(self.check_station_str(end_id)), group_size=int(size), target_time=int(target)))
 
     def from_generator(self):
         """
@@ -179,7 +217,7 @@ class Input:
             output: the generated input
         """
         output = self.Generator.random_input_generate_as_classes()
-        return 
+        return output
 
     def from_stdin(self):
         """
@@ -296,12 +334,11 @@ class Input:
             # print("parameter < 2")
             return False
 
-        if parameters[0][0] != "S":
+        if parameters[0][0] == "#":
             # print("first letter not S")
             return False
-        if not parameters[0][1:].isdigit():
-            print(parameters[0][1:])
-            # print("not number")
+
+        if self.check_station_str(parameters[0]):
             return False
 
         if not parameters[1].isdigit():
@@ -335,35 +372,17 @@ class Input:
         if len(parameters) != 5:
             # print("parameter < 5")
             return False
-        if parameters[0][0] != "L":
+        if parameters[0][0] == "#":
             # print("first letter not L")
             return False
 
-        if not parameters[0][1:].isdigit():
-            # print(parameters[0][1:])
-            # print("L1 not number")
+        if self.check_line_str(parameters[0]):
             return False
 
-        if parameters[1][0] != "S":
-            # print("start station not S")
-            return False
-        if not parameters[1][1:].isdigit():
-            # print(parameters[1][1:])
-            # print("start station not number")
-            return False
-
-        if parameters[2][0] != "S":
-            # print("end station not S")
-            return False
-        if not parameters[2][1:].isdigit():
-            # print(parameters[2][1:])
-            # print("end station not number")
-            return False
-
-        if self.find_station(_string_to_int(parameters[1])) == None:
+        if self.find_station(self.check_station_str(parameters[1])) == None:
             # print("station not exist")
             return False
-        if self.find_station(_string_to_int(parameters[2])) == None:
+        if self.find_station(self.check_station_str(parameters[2])) == None:
             # print("station not exist")
             return False
 
@@ -405,21 +424,16 @@ class Input:
             # print("parameter < 4")
             return False
 
-        if parameters[0][0] != "T":
+        if parameters[0][0] == "#":
             # print("first letter not T")
             return False
-        if not parameters[0][1:].isdigit():
-            # print(parameters[0][1:])
-            # print("T1 not number")
+
+        if self.check_train_str(parameters[0]):
             return False
 
         if parameters[1] != "*":
-            if parameters[1][0] != "S" or not parameters[1][1:].isdigit():
-                # print("start station not S or not number or not *")
+            if self.find_station(self.check_station_str(parameters[1])) == None:
                 return False
-            else:
-                if self.find_station(_string_to_int(parameters[1])) == None:
-                    return False
 
         # speed should be double
         if not _isDouble(parameters[2]):
@@ -462,31 +476,16 @@ class Input:
         if len(parameters) != 5:
             # print("parameter < 5")
             return False
-        if parameters[0][0] != "P":
+        if parameters[0][0] == "#":
             # print("first letter not P")
             return False
-        if not parameters[0][1:].isdigit():
-            # print(parameters[0][1:])
-            # print("P1 not number")
+
+        if self.check_passenger_str(parameters[0]):
             return False
 
-        if parameters[1][0] != "S":
-            # print("start station not S")
+        if self.find_station(self.check_station_str(parameters[1])) == None:
             return False
-        if not parameters[1][1:].isdigit():
-            # print(parameters[1][1:])
-            # print("start station not number")
-            return False
-        if parameters[2][0] != "S":
-            # print("end station not S")
-            return False
-        if not parameters[2][1:].isdigit():
-            # print(parameters[2][1:])
-            # print("end station not number")
-            return False
-        if self.find_station(_string_to_int(parameters[1])) == None:
-            return False
-        if self.find_station(_string_to_int(parameters[2])) == None:
+        if self.find_station(self.check_station_str(parameters[2])) == None:
             return False
 
         if not parameters[3].isdigit():
@@ -549,52 +548,60 @@ class Input:
         while(i < len(lines)-1):
             if lines[i] == ("[Stations]"):
                 while(True):
-                    if("" == lines[i+1]) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
+                    if(i+1 >= len(lines)-1) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
                         break
                     i += 1
                     parameters = lines[i].split(" ")
                     if self.check_station(parameters):
                         self.add_station(
                             id=parameters[0], capacity=parameters[1])
+            i += 1
 
+        i = 0
+        while(i < len(lines)-1):
             if lines[i] == ("[Lines]"):
                 while(True):
-                    if("" == lines[i+1]) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
+                    if(i+1 >= len(lines)-1) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
                         break
                     i += 1
                     parameters = lines[i].split(" ")
                     if self.check_line(parameters):
                         self.add_line(id=parameters[0], start_id=parameters[1],
                                       end_id=parameters[2], length=parameters[3], capacity=parameters[4])
+            i += 1
 
+        i = 0
+        while(i < len(lines)-1):
             if lines[i] == ("[Trains]"):
                 while(True):
-                    if("" == lines[i+1]) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
+                    if(i+1 >= len(lines)-1) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
                         break
                     i += 1
                     parameters = lines[i].split(" ")
                     if self.check_train(parameters):
                         self.add_train(
                             id=parameters[0], start_id=parameters[1], speed=parameters[2], capacity=parameters[3])
+            i += 1
 
+        i = 0
+        while(i < len(lines)-1):
             if lines[i] == ("[Passengers]"):
                 while(True):
-                    if("" == lines[i+1]) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
+                    if(i+1 >= len(lines)-1) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
                         break
                     i += 1
                     parameters = lines[i].split(" ")
                     if self.check_passenger(parameters):
                         self.add_passenger(id=parameters[0], start_id=parameters[1],
                                            end_id=parameters[2], size=parameters[3], target=parameters[4])
-
             i += 1
+
         return self.Stations, self.Lines, self.Trains, self.Passengers
 
     def print_input(self):
         """
         print information of input
         """
-        '''  '''
         print("---------------")
         print("| * printing input started ...")
         print(f"| * Stations: [{len(self.Stations)}]")
