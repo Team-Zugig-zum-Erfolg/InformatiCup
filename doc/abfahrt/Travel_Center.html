@@ -115,6 +115,15 @@
                                 <a class="function" href="#Travel_Center.train_move_to_start_station">train_move_to_start_station</a>
                         </li>
                         <li>
+                                <a class="function" href="#Travel_Center.remove_passing_station_trains">remove_passing_station_trains</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Travel_Center.check_capacity">check_capacity</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Travel_Center.check_trains_in_all_station">check_trains_in_all_station</a>
+                        </li>
+                        <li>
                                 <a class="function" href="#Travel_Center.get_trains_with_limit_by_start_time_and_speed">get_trains_with_limit_by_start_time_and_speed</a>
                         </li>
                         <li>
@@ -139,17 +148,22 @@
                     <h1 class="modulename">
 <a href="./../abfahrt.html">abfahrt</a><wbr>.Travel_Center    </h1>
 
-                
+                        <div class="docstring"><p>This is Travel_Center for managing travels and routes</p>
+</div>
+
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="c1"># This module provides access to the mathematical functions defined by the C standard. (https://docs.python.org/3/library/math.html)</span>
+            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is Travel_Center for managing travels and routes</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">math</span>
-
-<span class="c1"># This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)</span>
+<span class="c1"># This module provides access to the mathematical functions defined by the C standard. (https://docs.python.org/3/library/math.html)</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="c1"># This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="c1"># This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="c1"># These can be used as types in annotations using [], each having a unique syntax. (https://docs.python.org/3/library/typing.html)</span>
 
 <span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
 
@@ -165,7 +179,6 @@
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Station</span> <span class="kn">import</span> <span class="n">Station</span>
 <span class="kn">from</span> <span class="nn">abfahrt.Plan</span> <span class="kn">import</span> <span class="n">Plan</span>
 <span class="kn">from</span> <span class="nn">abfahrt.Result</span> <span class="kn">import</span> <span class="n">Result</span>
-
 
 <span class="n">L_ID</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">L_S_ID_START</span> <span class="o">=</span> <span class="mi">1</span>
@@ -185,6 +198,9 @@
 <span class="k">class</span> <span class="nc">Travel_Center</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">train_input_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">stationlist</span><span class="p">:</span> <span class="n">Stationlist</span><span class="p">,</span> <span class="n">linelist</span><span class="p">:</span> <span class="n">Linelist</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">Result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Travel_Center</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_line_time_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_plan</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -715,13 +731,13 @@
             <span class="c1"># (so this should never happen)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">check_valid_train_exist_in_stations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_group_size</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">check_valid_train_exist_in_stations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if there is at least on train in at least one station, with a</span>
 <span class="sd">        capacity &gt;= max_group_size</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            max_group_size ([type]): group size of passengers with biggest group size</span>
+<span class="sd">            max_group_size (int): group size of passengers with biggest group size</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True, if there is a valid train for the group size, else False</span>
@@ -737,6 +753,15 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">check_passengers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passengers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Station</span><span class="p">,</span> <span class="n">Station</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the start and end station of the passengers route and their group size</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            passengers (List[Passenger]): passengers to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[Station, Station, int]: start station, end station, group size</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start_station</span> <span class="o">=</span> <span class="n">passengers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_station</span>
         <span class="n">end_station</span> <span class="o">=</span> <span class="n">passengers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">end_station</span>
         <span class="n">group_size</span> <span class="o">=</span> <span class="mi">0</span>
@@ -745,11 +770,22 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">start_station</span><span class="p">,</span> <span class="n">end_station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">check_train_in_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the trains with a valid capacity in a station, for a specific group size </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): start station</span>
+<span class="sd">            group_size (int): group size to check, same as the min capacity of every train</span>
+<span class="sd">            include_not_in_station_trains (bool, optional): If True, also trains with no start station will be checked for starting at the station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], bool]: start times of the trains, trains, trains found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">read_trains_from_station</span><span class="p">(</span>
             <span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="p">)</span>
-        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_capacity</span><span class="p">(</span>
+        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_capacity</span><span class="p">(</span>
             <span class="n">trains</span><span class="p">,</span> <span class="n">group_size</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_remove_passing_station_trains</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_passing_station_trains</span><span class="p">(</span>
             <span class="n">start_station</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_times</span><span class="p">)</span>
         <span class="n">available</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trains</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -758,13 +794,33 @@
 
     <span class="c1"># choose train from other station</span>
     <span class="k">def</span> <span class="nf">check_train_not_in_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
-        <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_trains_in_all_station</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the trains with a valid capacity for a specifc group size in all</span>
+<span class="sd">        stations of the whole plan</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group_size (int): group size, same as the min capacity of the trains</span>
+<span class="sd">            include_not_in_station_trains (bool, optional): If True, also trains with no start station will be checked for starting at the station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], List[Station], bool]: start times of the trains, trains, start stations of the trains, trains found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_trains_in_all_station</span><span class="p">(</span>
             <span class="n">include_not_in_station_trains</span><span class="p">)</span>
-        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_capacity</span><span class="p">(</span>
+        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_capacity</span><span class="p">(</span>
             <span class="n">trains</span><span class="p">,</span> <span class="n">group_size</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">,</span> <span class="n">capacity_enable</span>
 
     <span class="k">def</span> <span class="nf">get_neighboor_stations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves all neighboor stations of a station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station for getting the neighboor stations</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Station]: neighboor stations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">neighboor_stations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_input_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">L_S_ID_START</span><span class="p">]</span> <span class="o">==</span> <span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
@@ -777,6 +833,15 @@
         <span class="k">return</span> <span class="n">neighboor_stations</span>
 
     <span class="k">def</span> <span class="nf">station_is_never_blocked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a station is not blocked at least for one capacity</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if not blocked for one or more capacities, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">]:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
@@ -789,12 +854,32 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">station_is_in_station_times_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">station_times_list</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a station is in a list of TrainInStation entities/objects </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station to find/check in the list</span>
+<span class="sd">            station_times_list (TrainInStation): list of TrainInStation entities/objects</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the station was found, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">station_time</span> <span class="ow">in</span> <span class="n">station_times_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">station</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">station_time</span><span class="o">.</span><span class="n">station_id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">get_next_station_in_travel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">travel</span><span class="p">:</span> <span class="n">Travel</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Station</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the next station after a specific station on the route of a travel</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            travel (Travel): travel with the route</span>
+<span class="sd">            station (Station): station for getting the next station on the route</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Station: next station or None, if the no next station was found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">neighboor_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_neighboor_stations</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
         <span class="n">station_times</span> <span class="o">=</span> <span class="n">travel</span><span class="o">.</span><span class="n">station_times</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">station_times</span><span class="p">)):</span>
@@ -805,6 +890,16 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">get_prev_station_in_travel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">travel</span><span class="p">:</span> <span class="n">Travel</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Station</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the previous station bevor a specific station on the route of a travel</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            travel (Travel): travel with the route</span>
+<span class="sd">            station (Station): station for getting the previous station on the route</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Station: previous station or None, if the no previous station was found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">neighboor_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_neighboor_stations</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">travel</span><span class="o">.</span><span class="n">station_times</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">travel</span><span class="o">.</span><span class="n">station_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">station_id</span> <span class="o">==</span> <span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
@@ -814,6 +909,15 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">station_has_more_than_one_free_capcacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a station has more than one free/not blocked capacities </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the station has more than one free capacity, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
         <span class="n">free</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="n">capacities</span><span class="p">:</span>
@@ -822,7 +926,24 @@
         <span class="k">return</span> <span class="n">free</span> <span class="o">&gt;=</span> <span class="mi">2</span>
 
     <span class="k">def</span> <span class="nf">check_clear_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">prev_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">prev_station_blocked_before</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">arrive_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stations_to_ignore</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">],</span> <span class="n">train_to_replace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_travel</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="c1"># clear station (move trains out of it to other stations)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the earliest possible clearing time for a station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_station (Station): station to check for clearing</span>
+<span class="sd">            prev_station (Station): previous station on the travel route</span>
+<span class="sd">            prev_station_blocked_before (bool): blocking status of the previous station</span>
+<span class="sd">            arrive_time (int): time/round the train of the travel wants to arrive at the station to clear</span>
+<span class="sd">            stations_to_ignore (List[TrainInStation]): list of TrainInStation objects which includes all stations to ignore for clearing</span>
+<span class="sd">            train_to_replace ([type], optional): the train which wants arrive at the station to clear. Defaults to None.</span>
+<span class="sd">            original_travel ([type], optional): the travel of the train which wants arrive at the station to clear. Defaults to None.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NameError: if no station for clearing is available</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: earliest possible clearing time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># get the neighboor stations of the target_station,</span>
         <span class="c1"># so the blocking trains in the target_station can be moved to one of the free</span>
@@ -933,6 +1054,24 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">clear_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">prev_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">arrive_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stations_to_ignore</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">],</span> <span class="n">train_to_replace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_travel</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears a station at the earliest possible clearing time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_station (Station): station to check for clearing</span>
+<span class="sd">            prev_station (Station): previous station on the travel route</span>
+<span class="sd">            arrive_time (int): time/round the train of the travel wants to arrive at the station to clear</span>
+<span class="sd">            stations_to_ignore (List[TrainInStation]): list of TrainInStation objects which includes all stations to ignore for clearing</span>
+<span class="sd">            train_to_replace ([type], optional): the train which wants arrive at the station to clear. Defaults to None.</span>
+<span class="sd">            original_travel ([type], optional): the travel of the train which wants arrive at the station to clear. Defaults to None.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NameError: if no station for clearing is available</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if station was cleared successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># clear station (move trains out of it to other stations)</span>
 
         <span class="c1"># get the neighboor stations of the target_station,</span>
@@ -1037,11 +1176,34 @@
 
     <span class="c1"># move a train to start station</span>
     <span class="k">def</span> <span class="nf">train_move_to_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the fastest train by given trains and start times to a specific station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): station to move the fastest train</span>
+<span class="sd">            trains (List[Train]): possible trains</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if moving train was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_to_station</span><span class="p">(</span>
             <span class="n">start_station</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">save</span>
 
-    <span class="k">def</span> <span class="nf">_remove_passing_station_trains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">remove_passing_station_trains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all trains from given trains which just pass a specific station from a time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): station to check for passing trains</span>
+<span class="sd">            trains (List[Train]): trains to check</span>
+<span class="sd">            start_times (List[int]): start time of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">train</span> <span class="ow">in</span> <span class="n">trains</span><span class="p">:</span>
@@ -1051,10 +1213,23 @@
                         <span class="k">if</span> <span class="n">start_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">:</span>
                             <span class="k">if</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">==</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">passenger_in_train_time</span><span class="p">:</span>
                                 <span class="n">trains</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="kc">True</span>
+                                <span class="n">start_times</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">_check_capacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">check_capacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks capacity of given trains and removes them if they have an invalid capacity</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            trains (List[Train]): trains to check</span>
+<span class="sd">            group_size (int): min capacity a train should have</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if at least one train with valid capacity was found, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b_capacity</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trains</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1071,7 +1246,16 @@
                     <span class="k">break</span>
         <span class="k">return</span> <span class="n">b_capacity</span>
 
-    <span class="k">def</span> <span class="nf">_check_trains_in_all_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">check_trains_in_all_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves trains of all stations of the whole plan</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            include_not_in_station_trains (bool, optional): True, if also trains with no start station should be included/checked for starting at a station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], List[Station]]: start times of the valid trains, valid trains, starst stations of the valid trains</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_stations</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1086,7 +1270,19 @@
 
         <span class="k">return</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span>
 
-    <span class="k">def</span> <span class="nf">get_trains_with_limit_by_start_time_and_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_trains_with_limit_by_start_time_and_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the fastest/earliest trains under a limit for moving over an average route</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            trains (List[Train]): trains</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+<span class="sd">            limit (int): limits the returning trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[Train],List[int],List[Station]]: fastest/earlist trains, start times, start stations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains_limit</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">station_times_limit</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_stations_limit</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1108,6 +1304,16 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">determine_trains_limit</span><span class="p">(</span><span class="n">stations_amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines/sets the limit of calling trains by the amount of stations</span>
+<span class="sd">        Used for optimizing the whole calculation time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stations_amount (int): amount of stations in the plan</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: limit of calling trains</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">stations_amount</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">50</span>
         <span class="k">elif</span> <span class="n">stations_amount</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
@@ -1122,6 +1328,19 @@
             <span class="k">return</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">_train_to_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the fastest train by given trains and start times to a specific station</span>
+<span class="sd">        Used as a helper function</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): station to move the fastest train</span>
+<span class="sd">            trains (List[Train]): possible trains</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if moving train was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">travels</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">trains_to_call</span> <span class="o">=</span> <span class="n">trains</span>
         <span class="n">calling_trains_limit</span> <span class="o">=</span> <span class="n">Travel_Center</span><span class="o">.</span><span class="n">determine_trains_limit</span><span class="p">(</span>
@@ -1163,6 +1382,9 @@
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Travel_Center</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">train_input_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">stationlist</span><span class="p">:</span> <span class="n">Stationlist</span><span class="p">,</span> <span class="n">linelist</span><span class="p">:</span> <span class="n">Linelist</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">Result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Travel_Center</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_line_time_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_plan</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -1693,13 +1915,13 @@
             <span class="c1"># (so this should never happen)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">check_valid_train_exist_in_stations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_group_size</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">check_valid_train_exist_in_stations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if there is at least on train in at least one station, with a</span>
 <span class="sd">        capacity &gt;= max_group_size</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            max_group_size ([type]): group size of passengers with biggest group size</span>
+<span class="sd">            max_group_size (int): group size of passengers with biggest group size</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True, if there is a valid train for the group size, else False</span>
@@ -1715,6 +1937,15 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">check_passengers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passengers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Station</span><span class="p">,</span> <span class="n">Station</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the start and end station of the passengers route and their group size</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            passengers (List[Passenger]): passengers to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[Station, Station, int]: start station, end station, group size</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start_station</span> <span class="o">=</span> <span class="n">passengers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_station</span>
         <span class="n">end_station</span> <span class="o">=</span> <span class="n">passengers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">end_station</span>
         <span class="n">group_size</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1723,11 +1954,22 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">start_station</span><span class="p">,</span> <span class="n">end_station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">check_train_in_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the trains with a valid capacity in a station, for a specific group size </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): start station</span>
+<span class="sd">            group_size (int): group size to check, same as the min capacity of every train</span>
+<span class="sd">            include_not_in_station_trains (bool, optional): If True, also trains with no start station will be checked for starting at the station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], bool]: start times of the trains, trains, trains found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">read_trains_from_station</span><span class="p">(</span>
             <span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="p">)</span>
-        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_capacity</span><span class="p">(</span>
+        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_capacity</span><span class="p">(</span>
             <span class="n">trains</span><span class="p">,</span> <span class="n">group_size</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_remove_passing_station_trains</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_passing_station_trains</span><span class="p">(</span>
             <span class="n">start_station</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_times</span><span class="p">)</span>
         <span class="n">available</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trains</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -1736,13 +1978,33 @@
 
     <span class="c1"># choose train from other station</span>
     <span class="k">def</span> <span class="nf">check_train_not_in_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
-        <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_trains_in_all_station</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the trains with a valid capacity for a specifc group size in all</span>
+<span class="sd">        stations of the whole plan</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group_size (int): group size, same as the min capacity of the trains</span>
+<span class="sd">            include_not_in_station_trains (bool, optional): If True, also trains with no start station will be checked for starting at the station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], List[Station], bool]: start times of the trains, trains, start stations of the trains, trains found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_trains_in_all_station</span><span class="p">(</span>
             <span class="n">include_not_in_station_trains</span><span class="p">)</span>
-        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_capacity</span><span class="p">(</span>
+        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_capacity</span><span class="p">(</span>
             <span class="n">trains</span><span class="p">,</span> <span class="n">group_size</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">,</span> <span class="n">capacity_enable</span>
 
     <span class="k">def</span> <span class="nf">get_neighboor_stations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves all neighboor stations of a station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station for getting the neighboor stations</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Station]: neighboor stations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">neighboor_stations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_input_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">L_S_ID_START</span><span class="p">]</span> <span class="o">==</span> <span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
@@ -1755,6 +2017,15 @@
         <span class="k">return</span> <span class="n">neighboor_stations</span>
 
     <span class="k">def</span> <span class="nf">station_is_never_blocked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a station is not blocked at least for one capacity</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if not blocked for one or more capacities, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">]:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
@@ -1767,12 +2038,32 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">station_is_in_station_times_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">station_times_list</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a station is in a list of TrainInStation entities/objects </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station to find/check in the list</span>
+<span class="sd">            station_times_list (TrainInStation): list of TrainInStation entities/objects</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the station was found, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">station_time</span> <span class="ow">in</span> <span class="n">station_times_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">station</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">station_time</span><span class="o">.</span><span class="n">station_id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">get_next_station_in_travel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">travel</span><span class="p">:</span> <span class="n">Travel</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Station</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the next station after a specific station on the route of a travel</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            travel (Travel): travel with the route</span>
+<span class="sd">            station (Station): station for getting the next station on the route</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Station: next station or None, if the no next station was found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">neighboor_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_neighboor_stations</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
         <span class="n">station_times</span> <span class="o">=</span> <span class="n">travel</span><span class="o">.</span><span class="n">station_times</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">station_times</span><span class="p">)):</span>
@@ -1783,6 +2074,16 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">get_prev_station_in_travel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">travel</span><span class="p">:</span> <span class="n">Travel</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Station</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the previous station bevor a specific station on the route of a travel</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            travel (Travel): travel with the route</span>
+<span class="sd">            station (Station): station for getting the previous station on the route</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Station: previous station or None, if the no previous station was found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">neighboor_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_neighboor_stations</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">travel</span><span class="o">.</span><span class="n">station_times</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">travel</span><span class="o">.</span><span class="n">station_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">station_id</span> <span class="o">==</span> <span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
@@ -1792,6 +2093,15 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">station_has_more_than_one_free_capcacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a station has more than one free/not blocked capacities </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the station has more than one free capacity, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
         <span class="n">free</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="n">capacities</span><span class="p">:</span>
@@ -1800,7 +2110,24 @@
         <span class="k">return</span> <span class="n">free</span> <span class="o">&gt;=</span> <span class="mi">2</span>
 
     <span class="k">def</span> <span class="nf">check_clear_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">prev_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">prev_station_blocked_before</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">arrive_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stations_to_ignore</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">],</span> <span class="n">train_to_replace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_travel</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="c1"># clear station (move trains out of it to other stations)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the earliest possible clearing time for a station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_station (Station): station to check for clearing</span>
+<span class="sd">            prev_station (Station): previous station on the travel route</span>
+<span class="sd">            prev_station_blocked_before (bool): blocking status of the previous station</span>
+<span class="sd">            arrive_time (int): time/round the train of the travel wants to arrive at the station to clear</span>
+<span class="sd">            stations_to_ignore (List[TrainInStation]): list of TrainInStation objects which includes all stations to ignore for clearing</span>
+<span class="sd">            train_to_replace ([type], optional): the train which wants arrive at the station to clear. Defaults to None.</span>
+<span class="sd">            original_travel ([type], optional): the travel of the train which wants arrive at the station to clear. Defaults to None.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NameError: if no station for clearing is available</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: earliest possible clearing time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># get the neighboor stations of the target_station,</span>
         <span class="c1"># so the blocking trains in the target_station can be moved to one of the free</span>
@@ -1911,6 +2238,24 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">clear_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">prev_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">arrive_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stations_to_ignore</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">],</span> <span class="n">train_to_replace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_travel</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears a station at the earliest possible clearing time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_station (Station): station to check for clearing</span>
+<span class="sd">            prev_station (Station): previous station on the travel route</span>
+<span class="sd">            arrive_time (int): time/round the train of the travel wants to arrive at the station to clear</span>
+<span class="sd">            stations_to_ignore (List[TrainInStation]): list of TrainInStation objects which includes all stations to ignore for clearing</span>
+<span class="sd">            train_to_replace ([type], optional): the train which wants arrive at the station to clear. Defaults to None.</span>
+<span class="sd">            original_travel ([type], optional): the travel of the train which wants arrive at the station to clear. Defaults to None.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NameError: if no station for clearing is available</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if station was cleared successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># clear station (move trains out of it to other stations)</span>
 
         <span class="c1"># get the neighboor stations of the target_station,</span>
@@ -2015,11 +2360,34 @@
 
     <span class="c1"># move a train to start station</span>
     <span class="k">def</span> <span class="nf">train_move_to_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the fastest train by given trains and start times to a specific station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): station to move the fastest train</span>
+<span class="sd">            trains (List[Train]): possible trains</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if moving train was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_to_station</span><span class="p">(</span>
             <span class="n">start_station</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">save</span>
 
-    <span class="k">def</span> <span class="nf">_remove_passing_station_trains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">remove_passing_station_trains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all trains from given trains which just pass a specific station from a time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): station to check for passing trains</span>
+<span class="sd">            trains (List[Train]): trains to check</span>
+<span class="sd">            start_times (List[int]): start time of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">train</span> <span class="ow">in</span> <span class="n">trains</span><span class="p">:</span>
@@ -2029,10 +2397,23 @@
                         <span class="k">if</span> <span class="n">start_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">:</span>
                             <span class="k">if</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">==</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">passenger_in_train_time</span><span class="p">:</span>
                                 <span class="n">trains</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="kc">True</span>
+                                <span class="n">start_times</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">_check_capacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">check_capacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks capacity of given trains and removes them if they have an invalid capacity</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            trains (List[Train]): trains to check</span>
+<span class="sd">            group_size (int): min capacity a train should have</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if at least one train with valid capacity was found, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b_capacity</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trains</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -2049,7 +2430,16 @@
                     <span class="k">break</span>
         <span class="k">return</span> <span class="n">b_capacity</span>
 
-    <span class="k">def</span> <span class="nf">_check_trains_in_all_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">check_trains_in_all_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves trains of all stations of the whole plan</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            include_not_in_station_trains (bool, optional): True, if also trains with no start station should be included/checked for starting at a station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], List[Station]]: start times of the valid trains, valid trains, starst stations of the valid trains</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_stations</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2064,7 +2454,19 @@
 
         <span class="k">return</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span>
 
-    <span class="k">def</span> <span class="nf">get_trains_with_limit_by_start_time_and_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_trains_with_limit_by_start_time_and_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the fastest/earliest trains under a limit for moving over an average route</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            trains (List[Train]): trains</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+<span class="sd">            limit (int): limits the returning trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[Train],List[int],List[Station]]: fastest/earlist trains, start times, start stations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains_limit</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">station_times_limit</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_stations_limit</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2086,6 +2488,16 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">determine_trains_limit</span><span class="p">(</span><span class="n">stations_amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines/sets the limit of calling trains by the amount of stations</span>
+<span class="sd">        Used for optimizing the whole calculation time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stations_amount (int): amount of stations in the plan</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: limit of calling trains</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">stations_amount</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">50</span>
         <span class="k">elif</span> <span class="n">stations_amount</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
@@ -2100,6 +2512,19 @@
             <span class="k">return</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">_train_to_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the fastest train by given trains and start times to a specific station</span>
+<span class="sd">        Used as a helper function</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): station to move the fastest train</span>
+<span class="sd">            trains (List[Train]): possible trains</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if moving train was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">travels</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">trains_to_call</span> <span class="o">=</span> <span class="n">trains</span>
         <span class="n">calling_trains_limit</span> <span class="o">=</span> <span class="n">Travel_Center</span><span class="o">.</span><span class="n">determine_trains_limit</span><span class="p">(</span>
@@ -2145,6 +2570,9 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">train_input_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">stationlist</span><span class="p">:</span> <span class="n">Stationlist</span><span class="p">,</span> <span class="n">linelist</span><span class="p">:</span> <span class="n">Linelist</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">Result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Travel_Center</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_line_time_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_plan</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -2205,7 +2633,9 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Initializing Travel_Center</p>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.check_plan" class="classattr">
@@ -2234,8 +2664,11 @@
 
             <div class="docstring"><p>Checks if all stations of the plan are connected via at least one route</p>
 
-<p>Returns:
-    bool: status of plan, true = valid, false = invalid</p>
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: status of plan, true = valid, false = invalid</p>
+</blockquote>
 </div>
 
 
@@ -2287,12 +2720,18 @@
 
             <div class="docstring"><p>Determines the shortest line route between two stations calculated by dijkstra</p>
 
-<p>Args:
-    s_station_id (int): the start station
-    e_station_id (int): the end station</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Tuple[List[Line]]: lines of the route</p>
+<ul>
+<li><strong>s_station_id (int):</strong>  the start station</li>
+<li><strong>e_station_id (int):</strong>  the end station</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[List[Line]]: lines of the route</p>
+</blockquote>
 </div>
 
 
@@ -2339,12 +2778,18 @@
 
             <div class="docstring"><p>Determines the length and the shortest line route between two stations</p>
 
-<p>Args:
-    s_station_id (int): start station id
-    e_station_id (int): end station id</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Tuple[int, List[Line]]: length, lines</p>
+<ul>
+<li><strong>s_station_id (int):</strong>  start station id</li>
+<li><strong>e_station_id (int):</strong>  end station id</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[int, List[Line]]: length, lines</p>
+</blockquote>
 </div>
 
 
@@ -2389,12 +2834,18 @@
 
             <div class="docstring"><p>Find the line which connects two stations with each other</p>
 
-<p>Args:
-    start_station_id (int): start station id
-    end_station_id (int): end station id</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Tuple[int, List[Line]]: line length, line in list</p>
+<ul>
+<li><strong>start_station_id (int):</strong>  start station id</li>
+<li><strong>end_station_id (int):</strong>  end station id</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[int, List[Line]]: line length, line in list</p>
+</blockquote>
 </div>
 
 
@@ -2432,12 +2883,18 @@
 
             <div class="docstring"><p>Find the shortest route and its length by using dijkstra</p>
 
-<p>Args:
-    start_station (Station): start station
-    end_station (Station): end station</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    int: length of the shortest route</p>
+<ul>
+<li><strong>start_station (Station):</strong>  start station</li>
+<li><strong>end_station (Station):</strong>  end station</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>int: length of the shortest route</p>
+</blockquote>
 </div>
 
 
@@ -2527,15 +2984,21 @@
             <div class="docstring"><p>Find the shortest route by using dijkstra and creating a travel for the specific
 train at a specific start time</p>
 
-<p>Args:
-    start_station (Station): start station
-    end_station (Station): end station
-    train (Train): train for creating the travel
-    start_time (int): start time of the travel
-    use_one_line (bool, optional): Find and use only an one line route. Defaults to False.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Travel: travel with the train and beginning at the start time</p>
+<ul>
+<li><strong>start_station (Station):</strong>  start station</li>
+<li><strong>end_station (Station):</strong>  end station</li>
+<li><strong>train (Train):</strong>  train for creating the travel</li>
+<li><strong>start_time (int):</strong>  start time of the travel</li>
+<li><strong>use_one_line (bool, optional):</strong>  Find and use only an one line route. Defaults to False.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Travel: travel with the train and beginning at the start time</p>
+</blockquote>
 </div>
 
 
@@ -2589,13 +3052,19 @@ train at a specific start time</p>
             <div class="docstring"><p>Get the fastest/eraliest train, if there are multiple trains with different possible start times
 and a specific route length</p>
 
-<p>Args:
-    trainlist (List[Train]): trains
-    start_time_list (List[int]): start times of the trains
-    route_length (int): length of the route</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Tuple[Train, int]: the earliest train at the target, the start time of this train</p>
+<ul>
+<li><strong>trainlist (List[Train]):</strong>  trains</li>
+<li><strong>start_time_list (List[int]):</strong>  start times of the trains</li>
+<li><strong>route_length (int):</strong>  length of the route</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[Train, int]: the earliest train at the target, the start time of this train</p>
+</blockquote>
 </div>
 
 
@@ -2635,11 +3104,17 @@ and a specific route length</p>
 
             <div class="docstring"><p>Just checks if the list has at least one not empty element list</p>
 
-<p>Args:
-    full_stations_list (List[Tuple[Station, int]]): list of the full station with the possible clearing time</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    bool: True if the list has at least one not empty element list, else False</p>
+<ul>
+<li><strong>full_stations_list (List[Tuple[Station, int]]):</strong>  list of the full station with the possible clearing time</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True if the list has at least one not empty element list, else False</p>
+</blockquote>
 </div>
 
 
@@ -2679,11 +3154,17 @@ and a specific route length</p>
 
             <div class="docstring"><p>Get the two stations a line is connecting</p>
 
-<p>Args:
-    line_id (int): line id</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Tuple[Station, Station]: the two stations</p>
+<ul>
+<li><strong>line_id (int):</strong>  line id</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[Station, Station]: the two stations</p>
+</blockquote>
 </div>
 
 
@@ -2793,12 +3274,18 @@ and a specific route length</p>
             <div class="docstring"><p>Checks the lines and stations for the specific times of a travel and calculates
 the smallest delay time, at which they are free, if they are not free at the current time.</p>
 
-<p>Args:
-    travel (Travel): travel for checking
-    clearing (bool, optional): True, if no full stations should be checked. Defaults to False.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Tuple[bool, int, bool, List[Tuple[Station, int]]]: whole travel is free, delay time, end station is full, full stations on the route</p>
+<ul>
+<li><strong>travel (Travel):</strong>  travel for checking</li>
+<li><strong>clearing (bool, optional):</strong>  True, if no full stations should be checked. Defaults to False.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[bool, int, bool, List[Tuple[Station, int]]]: whole travel is free, delay time, end station is full, full stations on the route</p>
+</blockquote>
 </div>
 
 
@@ -2842,12 +3329,18 @@ the smallest delay time, at which they are free, if they are not free at the cur
 
             <div class="docstring"><p>Delay travel by a given delay time</p>
 
-<p>Args:
-    travel (Travel): travel to delay
-    delay_time (int): delay time</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    None</p>
+<ul>
+<li><strong>travel (Travel):</strong>  travel to delay</li>
+<li><strong>delay_time (int):</strong>  delay time</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>None</p>
+</blockquote>
 </div>
 
 
@@ -2924,14 +3417,20 @@ the smallest delay time, at which they are free, if they are not free at the cur
             <div class="docstring"><p>Save a travel for the specific train and the times, in which the train is in the
 lines and stations</p>
 
-<p>Args:
-    travel (Travel): travel for saving
-    groups (Groups): groups instance for registering passengers as arrived
-    passengers (List[Passenger]): passengers of the travel
-    train_to_replace ([type], optional): the origin train, if a station is cleared. Defaults to None.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    bool: True, if the saving was successful, else False</p>
+<ul>
+<li><strong>travel (Travel):</strong>  travel for saving</li>
+<li><strong>groups (Groups):</strong>  groups instance for registering passengers as arrived</li>
+<li><strong>passengers (List[Passenger]):</strong>  passengers of the travel</li>
+<li><strong>train_to_replace ([type], optional):</strong>  the origin train, if a station is cleared. Defaults to None.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if the saving was successful, else False</p>
+</blockquote>
 </div>
 
 
@@ -3049,16 +3548,25 @@ lines and stations</p>
 
             <div class="docstring"><p>Determining the shortest travel and saving it, if it is possible </p>
 
-<p>Args:
-    travels (List[Travel]): travels to check and perhaps to save
-    groups (Groups): groups instance for registering passengers as arrived
-    passengers (List[Passenger]): passengers for the travels</p>
+<h6 id="args">Args</h6>
 
-<p>Raises:
-    NameError: if for every travel no station is blocked and the delay time is 0</p>
+<ul>
+<li><strong>travels (List[Travel]):</strong>  travels to check and perhaps to save</li>
+<li><strong>groups (Groups):</strong>  groups instance for registering passengers as arrived</li>
+<li><strong>passengers (List[Passenger]):</strong>  passengers for the travels</li>
+</ul>
 
-<p>Returns:
-    bool: True, if one travel could be saved, else False</p>
+<h6 id="raises">Raises</h6>
+
+<ul>
+<li><strong>NameError:</strong>  if for every travel no station is blocked and the delay time is 0</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if one travel could be saved, else False</p>
+</blockquote>
 </div>
 
 
@@ -3068,18 +3576,18 @@ lines and stations</p>
 
         
             <span class="def">def</span>
-            <span class="name">check_valid_train_exist_in_stations</span><span class="signature">(self, max_group_size) -&gt; bool</span>:
+            <span class="name">check_valid_train_exist_in_stations</span><span class="signature">(self, max_group_size: int) -&gt; bool</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_valid_train_exist_in_stations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_group_size</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_valid_train_exist_in_stations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if there is at least on train in at least one station, with a</span>
 <span class="sd">        capacity &gt;= max_group_size</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            max_group_size ([type]): group size of passengers with biggest group size</span>
+<span class="sd">            max_group_size (int): group size of passengers with biggest group size</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True, if there is a valid train for the group size, else False</span>
@@ -3100,11 +3608,17 @@ lines and stations</p>
             <div class="docstring"><p>Checks if there is at least on train in at least one station, with a
 capacity &gt;= max_group_size</p>
 
-<p>Args:
-    max_group_size ([type]): group size of passengers with biggest group size</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    bool: True, if there is a valid train for the group size, else False</p>
+<ul>
+<li><strong>max_group_size (int):</strong>  group size of passengers with biggest group size</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if there is a valid train for the group size, else False</p>
+</blockquote>
 </div>
 
 
@@ -3123,6 +3637,15 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_passengers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passengers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Station</span><span class="p">,</span> <span class="n">Station</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the start and end station of the passengers route and their group size</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            passengers (List[Passenger]): passengers to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[Station, Station, int]: start station, end station, group size</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start_station</span> <span class="o">=</span> <span class="n">passengers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_station</span>
         <span class="n">end_station</span> <span class="o">=</span> <span class="n">passengers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">end_station</span>
         <span class="n">group_size</span> <span class="o">=</span> <span class="mi">0</span>
@@ -3133,7 +3656,21 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Retrieves the start and end station of the passengers route and their group size</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>passengers (List[Passenger]):</strong>  passengers to check</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[Station, Station, int]: start station, end station, group size</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.check_train_in_station" class="classattr">
@@ -3152,11 +3689,22 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_train_in_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the trains with a valid capacity in a station, for a specific group size </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): start station</span>
+<span class="sd">            group_size (int): group size to check, same as the min capacity of every train</span>
+<span class="sd">            include_not_in_station_trains (bool, optional): If True, also trains with no start station will be checked for starting at the station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], bool]: start times of the trains, trains, trains found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">read_trains_from_station</span><span class="p">(</span>
             <span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="p">)</span>
-        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_capacity</span><span class="p">(</span>
+        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_capacity</span><span class="p">(</span>
             <span class="n">trains</span><span class="p">,</span> <span class="n">group_size</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_remove_passing_station_trains</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_passing_station_trains</span><span class="p">(</span>
             <span class="n">start_station</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_times</span><span class="p">)</span>
         <span class="n">available</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trains</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -3166,7 +3714,23 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Retrieves the trains with a valid capacity in a station, for a specific group size </p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>start_station (Station):</strong>  start station</li>
+<li><strong>group_size (int):</strong>  group size to check, same as the min capacity of every train</li>
+<li><strong>include_not_in_station_trains (bool, optional):</strong>  If True, also trains with no start station will be checked for starting at the station. Defaults to True.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[List[int], List[Train], bool]: start times of the trains, trains, trains found</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.check_train_not_in_station" class="classattr">
@@ -3184,16 +3748,43 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_train_not_in_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
-        <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_trains_in_all_station</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the trains with a valid capacity for a specifc group size in all</span>
+<span class="sd">        stations of the whole plan</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group_size (int): group size, same as the min capacity of the trains</span>
+<span class="sd">            include_not_in_station_trains (bool, optional): If True, also trains with no start station will be checked for starting at the station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], List[Station], bool]: start times of the trains, trains, start stations of the trains, trains found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_trains_in_all_station</span><span class="p">(</span>
             <span class="n">include_not_in_station_trains</span><span class="p">)</span>
-        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_capacity</span><span class="p">(</span>
+        <span class="n">capacity_enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_capacity</span><span class="p">(</span>
             <span class="n">trains</span><span class="p">,</span> <span class="n">group_size</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">,</span> <span class="n">capacity_enable</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>Retrieves the trains with a valid capacity for a specifc group size in all
+stations of the whole plan</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>group_size (int):</strong>  group size, same as the min capacity of the trains</li>
+<li><strong>include_not_in_station_trains (bool, optional):</strong>  If True, also trains with no start station will be checked for starting at the station. Defaults to True.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[List[int], List[Train], List[Station], bool]: start times of the trains, trains, start stations of the trains, trains found</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.get_neighboor_stations" class="classattr">
@@ -3210,6 +3801,15 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_neighboor_stations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves all neighboor stations of a station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station for getting the neighboor stations</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Station]: neighboor stations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">neighboor_stations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_input_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">L_S_ID_START</span><span class="p">]</span> <span class="o">==</span> <span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
@@ -3224,7 +3824,21 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Retrieves all neighboor stations of a station</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>station (Station):</strong>  station for getting the neighboor stations</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>List[Station]: neighboor stations</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.station_is_never_blocked" class="classattr">
@@ -3238,6 +3852,15 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">station_is_never_blocked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a station is not blocked at least for one capacity</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if not blocked for one or more capacities, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">]:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
@@ -3252,7 +3875,21 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Checks if a station is not blocked at least for one capacity</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>station (Station):</strong>  station to check</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if not blocked for one or more capacities, else False</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.station_is_in_station_times_list" class="classattr">
@@ -3270,6 +3907,16 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">station_is_in_station_times_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">station_times_list</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a station is in a list of TrainInStation entities/objects </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station to find/check in the list</span>
+<span class="sd">            station_times_list (TrainInStation): list of TrainInStation entities/objects</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the station was found, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">station_time</span> <span class="ow">in</span> <span class="n">station_times_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">station</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">station_time</span><span class="o">.</span><span class="n">station_id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
@@ -3278,7 +3925,22 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Checks if a station is in a list of TrainInStation entities/objects </p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>station (Station):</strong>  station to find/check in the list</li>
+<li><strong>station_times_list (TrainInStation):</strong>  list of TrainInStation entities/objects</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if the station was found, else False</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.get_next_station_in_travel" class="classattr">
@@ -3296,6 +3958,16 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_next_station_in_travel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">travel</span><span class="p">:</span> <span class="n">Travel</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Station</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the next station after a specific station on the route of a travel</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            travel (Travel): travel with the route</span>
+<span class="sd">            station (Station): station for getting the next station on the route</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Station: next station or None, if the no next station was found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">neighboor_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_neighboor_stations</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
         <span class="n">station_times</span> <span class="o">=</span> <span class="n">travel</span><span class="o">.</span><span class="n">station_times</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">station_times</span><span class="p">)):</span>
@@ -3308,7 +3980,22 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Retrieves the next station after a specific station on the route of a travel</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>travel (Travel):</strong>  travel with the route</li>
+<li><strong>station (Station):</strong>  station for getting the next station on the route</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Station: next station or None, if the no next station was found</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.get_prev_station_in_travel" class="classattr">
@@ -3326,6 +4013,16 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_prev_station_in_travel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">travel</span><span class="p">:</span> <span class="n">Travel</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Station</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the previous station bevor a specific station on the route of a travel</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            travel (Travel): travel with the route</span>
+<span class="sd">            station (Station): station for getting the previous station on the route</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Station: previous station or None, if the no previous station was found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">neighboor_stations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_neighboor_stations</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">travel</span><span class="o">.</span><span class="n">station_times</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">travel</span><span class="o">.</span><span class="n">station_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">station_id</span> <span class="o">==</span> <span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
@@ -3337,7 +4034,22 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Retrieves the previous station bevor a specific station on the route of a travel</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>travel (Travel):</strong>  travel with the route</li>
+<li><strong>station (Station):</strong>  station for getting the previous station on the route</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Station: previous station or None, if the no previous station was found</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.station_has_more_than_one_free_capcacity" class="classattr">
@@ -3351,6 +4063,15 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">station_has_more_than_one_free_capcacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="n">Station</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a station has more than one free/not blocked capacities </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station (Station): station to check</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the station has more than one free capacity, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
         <span class="n">free</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="n">capacities</span><span class="p">:</span>
@@ -3361,7 +4082,21 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Checks if a station has more than one free/not blocked capacities </p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>station (Station):</strong>  station to check</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if the station has more than one free capacity, else False</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.check_clear_station" class="classattr">
@@ -3384,7 +4119,24 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_clear_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">prev_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">prev_station_blocked_before</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">arrive_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stations_to_ignore</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">],</span> <span class="n">train_to_replace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_travel</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="c1"># clear station (move trains out of it to other stations)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the earliest possible clearing time for a station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_station (Station): station to check for clearing</span>
+<span class="sd">            prev_station (Station): previous station on the travel route</span>
+<span class="sd">            prev_station_blocked_before (bool): blocking status of the previous station</span>
+<span class="sd">            arrive_time (int): time/round the train of the travel wants to arrive at the station to clear</span>
+<span class="sd">            stations_to_ignore (List[TrainInStation]): list of TrainInStation objects which includes all stations to ignore for clearing</span>
+<span class="sd">            train_to_replace ([type], optional): the train which wants arrive at the station to clear. Defaults to None.</span>
+<span class="sd">            original_travel ([type], optional): the travel of the train which wants arrive at the station to clear. Defaults to None.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NameError: if no station for clearing is available</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: earliest possible clearing time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># get the neighboor stations of the target_station,</span>
         <span class="c1"># so the blocking trains in the target_station can be moved to one of the free</span>
@@ -3497,7 +4249,33 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Calculates the earliest possible clearing time for a station</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>target_station (Station):</strong>  station to check for clearing</li>
+<li><strong>prev_station (Station):</strong>  previous station on the travel route</li>
+<li><strong>prev_station_blocked_before (bool):</strong>  blocking status of the previous station</li>
+<li><strong>arrive_time (int):</strong>  time/round the train of the travel wants to arrive at the station to clear</li>
+<li><strong>stations_to_ignore (List[TrainInStation]):</strong>  list of TrainInStation objects which includes all stations to ignore for clearing</li>
+<li><strong>train_to_replace ([type], optional):</strong>  the train which wants arrive at the station to clear. Defaults to None.</li>
+<li><strong>original_travel ([type], optional):</strong>  the travel of the train which wants arrive at the station to clear. Defaults to None.</li>
+</ul>
+
+<h6 id="raises">Raises</h6>
+
+<ul>
+<li><strong>NameError:</strong>  if no station for clearing is available</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>int: earliest possible clearing time</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.clear_station" class="classattr">
@@ -3519,6 +4297,24 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">clear_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">prev_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">arrive_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stations_to_ignore</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">],</span> <span class="n">train_to_replace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_travel</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears a station at the earliest possible clearing time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_station (Station): station to check for clearing</span>
+<span class="sd">            prev_station (Station): previous station on the travel route</span>
+<span class="sd">            arrive_time (int): time/round the train of the travel wants to arrive at the station to clear</span>
+<span class="sd">            stations_to_ignore (List[TrainInStation]): list of TrainInStation objects which includes all stations to ignore for clearing</span>
+<span class="sd">            train_to_replace ([type], optional): the train which wants arrive at the station to clear. Defaults to None.</span>
+<span class="sd">            original_travel ([type], optional): the travel of the train which wants arrive at the station to clear. Defaults to None.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NameError: if no station for clearing is available</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if station was cleared successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># clear station (move trains out of it to other stations)</span>
 
         <span class="c1"># get the neighboor stations of the target_station,</span>
@@ -3624,7 +4420,32 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Clears a station at the earliest possible clearing time</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>target_station (Station):</strong>  station to check for clearing</li>
+<li><strong>prev_station (Station):</strong>  previous station on the travel route</li>
+<li><strong>arrive_time (int):</strong>  time/round the train of the travel wants to arrive at the station to clear</li>
+<li><strong>stations_to_ignore (List[TrainInStation]):</strong>  list of TrainInStation objects which includes all stations to ignore for clearing</li>
+<li><strong>train_to_replace ([type], optional):</strong>  the train which wants arrive at the station to clear. Defaults to None.</li>
+<li><strong>original_travel ([type], optional):</strong>  the travel of the train which wants arrive at the station to clear. Defaults to None.</li>
+</ul>
+
+<h6 id="raises">Raises</h6>
+
+<ul>
+<li><strong>NameError:</strong>  if no station for clearing is available</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if station was cleared successful, else False</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.train_move_to_start_station" class="classattr">
@@ -3644,6 +4465,18 @@ capacity &gt;= max_group_size</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">train_move_to_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the fastest train by given trains and start times to a specific station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): station to move the fastest train</span>
+<span class="sd">            trains (List[Train]): possible trains</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if moving train was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_to_station</span><span class="p">(</span>
             <span class="n">start_station</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">save</span>
@@ -3651,7 +4484,211 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Moves the fastest train by given trains and start times to a specific station</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>start_station (Station):</strong>  station to move the fastest train</li>
+<li><strong>trains (List[Train]):</strong>  possible trains</li>
+<li><strong>start_times (List[int]):</strong>  start times of the trains</li>
+<li><strong>start_stations (List[Station]):</strong>  start stations of the trains</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if moving train was successful, else False</p>
+</blockquote>
+</div>
+
+
+                            </div>
+                            <div id="Travel_Center.remove_passing_station_trains" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#Travel_Center.remove_passing_station_trains">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">remove_passing_station_trains</span><span class="signature">(
+    self,
+    start_station: <a href="classes/Station.html#Station">abfahrt.classes.Station.Station</a>,
+    trains: List[<a href="classes/Train.html#Train">abfahrt.classes.Train.Train</a>],
+    start_times: List[int]
+) -&gt; None</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">remove_passing_station_trains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all trains from given trains which just pass a specific station from a time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_station (Station): station to check for passing trains</span>
+<span class="sd">            trains (List[Train]): trains to check</span>
+<span class="sd">            start_times (List[int]): start time of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">train</span> <span class="ow">in</span> <span class="n">trains</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="n">capacities</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_train_in_station</span> <span class="ow">in</span> <span class="n">capacity</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">train</span> <span class="o">==</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">train</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">start_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">==</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">passenger_in_train_time</span><span class="p">:</span>
+                                <span class="n">trains</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+                                <span class="n">start_times</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Removes all trains from given trains which just pass a specific station from a time</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>start_station (Station):</strong>  station to check for passing trains</li>
+<li><strong>trains (List[Train]):</strong>  trains to check</li>
+<li><strong>start_times (List[int]):</strong>  start time of the trains</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>None</p>
+</blockquote>
+</div>
+
+
+                            </div>
+                            <div id="Travel_Center.check_capacity" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#Travel_Center.check_capacity">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">check_capacity</span><span class="signature">(
+    self,
+    trains: List[<a href="classes/Train.html#Train">abfahrt.classes.Train.Train</a>],
+    group_size: int,
+    start_times: List[int],
+    start_stations: List[<a href="classes/Station.html#Station">abfahrt.classes.Station.Station</a>]
+) -&gt; bool</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_capacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks capacity of given trains and removes them if they have an invalid capacity</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            trains (List[Train]): trains to check</span>
+<span class="sd">            group_size (int): min capacity a train should have</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if at least one train with valid capacity was found, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b_capacity</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trains</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">trains</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">capacity</span> <span class="o">&lt;</span> <span class="n">group_size</span><span class="p">:</span>
+                    <span class="n">start_times</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="n">trains</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">start_stations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">start_stations</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">b_capacity</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">trains</span><span class="p">):</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">b_capacity</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Checks capacity of given trains and removes them if they have an invalid capacity</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>trains (List[Train]):</strong>  trains to check</li>
+<li><strong>group_size (int):</strong>  min capacity a train should have</li>
+<li><strong>start_times (List[int]):</strong>  start times of the trains</li>
+<li><strong>start_stations (List[Station]):</strong>  start stations of the trains</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if at least one train with valid capacity was found, else False</p>
+</blockquote>
+</div>
+
+
+                            </div>
+                            <div id="Travel_Center.check_trains_in_all_station" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#Travel_Center.check_trains_in_all_station">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">check_trains_in_all_station</span><span class="signature">(
+    self,
+    include_not_in_station_trains=True
+) -&gt; Tuple[List[int], List[<a href="classes/Train.html#Train">abfahrt.classes.Train.Train</a>], List[<a href="classes/Station.html#Station">abfahrt.classes.Station.Station</a>]]</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_trains_in_all_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves trains of all stations of the whole plan</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            include_not_in_station_trains (bool, optional): True, if also trains with no start station should be included/checked for starting at a station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], List[Station]]: start times of the valid trains, valid trains, starst stations of the valid trains</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">start_stations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">stations</span><span class="p">)):</span>
+            <span class="n">start_time</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">station</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stationlist</span><span class="o">.</span><span class="n">read_trains_from_station</span><span class="p">(</span>
+                <span class="n">i</span><span class="p">,</span> <span class="n">include_not_in_station_trains</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">train</span><span class="p">:</span>
+                <span class="n">trains</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">start_time</span><span class="p">:</span>
+                <span class="n">start_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="n">start_stations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_stations</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Retrieves trains of all stations of the whole plan</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>include_not_in_station_trains (bool, optional):</strong>  True, if also trains with no start station should be included/checked for starting at a station. Defaults to True.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[List[int], List[Train], List[Station]]: start times of the valid trains, valid trains, starst stations of the valid trains</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.get_trains_with_limit_by_start_time_and_speed" class="classattr">
@@ -3665,12 +4702,24 @@ capacity &gt;= max_group_size</p>
     start_times: List[int],
     start_stations: List[<a href="classes/Station.html#Station">abfahrt.classes.Station.Station</a>],
     limit: int
-)</span>:
+) -&gt; Tuple[List[<a href="classes/Train.html#Train">abfahrt.classes.Train.Train</a>], List[int], List[<a href="classes/Station.html#Station">abfahrt.classes.Station.Station</a>]]</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_trains_with_limit_by_start_time_and_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_trains_with_limit_by_start_time_and_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">start_times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">start_stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the fastest/earliest trains under a limit for moving over an average route</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            trains (List[Train]): trains</span>
+<span class="sd">            start_times (List[int]): start times of the trains</span>
+<span class="sd">            start_stations (List[Station]): start stations of the trains</span>
+<span class="sd">            limit (int): limits the returning trains</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[Train],List[int],List[Station]]: fastest/earlist trains, start times, start stations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains_limit</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">station_times_limit</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_stations_limit</span> <span class="o">=</span> <span class="p">[]</span>
@@ -3693,7 +4742,24 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Calculates the fastest/earliest trains under a limit for moving over an average route</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>trains (List[Train]):</strong>  trains</li>
+<li><strong>start_times (List[int]):</strong>  start times of the trains</li>
+<li><strong>start_stations (List[Station]):</strong>  start stations of the trains</li>
+<li><strong>limit (int):</strong>  limits the returning trains</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[List[Train],List[int],List[Station]]: fastest/earlist trains, start times, start stations</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Travel_Center.determine_trains_limit" class="classattr">
@@ -3709,6 +4775,16 @@ capacity &gt;= max_group_size</p>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">determine_trains_limit</span><span class="p">(</span><span class="n">stations_amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines/sets the limit of calling trains by the amount of stations</span>
+<span class="sd">        Used for optimizing the whole calculation time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stations_amount (int): amount of stations in the plan</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: limit of calling trains</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">stations_amount</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">50</span>
         <span class="k">elif</span> <span class="n">stations_amount</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
@@ -3725,7 +4801,22 @@ capacity &gt;= max_group_size</p>
 
         </details>
 
-    
+            <div class="docstring"><p>Determines/sets the limit of calling trains by the amount of stations
+Used for optimizing the whole calculation time</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>stations_amount (int):</strong>  amount of stations in the plan</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>int: limit of calling trains</p>
+</blockquote>
+</div>
+
 
                             </div>
                 </section>

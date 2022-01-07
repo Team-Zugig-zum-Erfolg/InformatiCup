@@ -67,12 +67,18 @@
                     <h1 class="modulename">
 <a href="./../abfahrt.html">abfahrt</a><wbr>.Groups    </h1>
 
-                
+                        <div class="docstring"><p>This is Groups for managing and sorting the passengers</p>
+</div>
+
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="c1"># This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)</span>
+            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is Groups for managing and sorting the passengers</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="c1"># This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="c1"># These can be used as types in annotations using [], each having a unique syntax. (https://docs.python.org/3/library/typing.html)</span>
 
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Station</span> <span class="kn">import</span> <span class="n">Station</span>
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Line</span> <span class="kn">import</span> <span class="n">Line</span>
@@ -82,6 +88,9 @@
 <span class="k">class</span> <span class="nc">Groups</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passengers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Groups</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">passengers</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
             <span class="k">return</span>
@@ -101,6 +110,15 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">passenger</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_get_min_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the first arrival Time of the Passengers in a Group</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           int: smallest Target Round</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">for</span> <span class="n">pa</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">min</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -111,18 +129,42 @@
         <span class="k">return</span> <span class="nb">min</span>
 
     <span class="k">def</span> <span class="nf">get_priority</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the arrival time sorted from all Passengers </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Passenger (List): List of all Passengers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_min_target_round</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">passengers_arrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if Passengers in Group have arivved</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: status Passenger arrived?, true = have arrived, false = haven&#39;t arrived</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">get_passenger_with_most_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Passenger</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the Passenger from Group with the latest arrival Time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           int: largest Target Round</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">passenger_max_time</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -132,6 +174,16 @@
         <span class="k">return</span> <span class="n">passenger_max_time</span>
 
     <span class="k">def</span> <span class="nf">split_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Passengers in a Group will be splitted, if possible </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in a Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           bool: Has splitting worked?, true = splitting worked, false = splitting has not worked</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
@@ -166,6 +218,9 @@
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Groups</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passengers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Groups</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">passengers</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
             <span class="k">return</span>
@@ -185,6 +240,15 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">passenger</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_get_min_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the first arrival Time of the Passengers in a Group</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           int: smallest Target Round</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">for</span> <span class="n">pa</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">min</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -195,18 +259,42 @@
         <span class="k">return</span> <span class="nb">min</span>
 
     <span class="k">def</span> <span class="nf">get_priority</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the arrival time sorted from all Passengers </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Passenger (List): List of all Passengers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_min_target_round</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">passengers_arrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if Passengers in Group have arivved</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: status Passenger arrived?, true = have arrived, false = haven&#39;t arrived</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">get_passenger_with_most_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Passenger</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the Passenger from Group with the latest arrival Time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           int: largest Target Round</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">passenger_max_time</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -216,6 +304,16 @@
         <span class="k">return</span> <span class="n">passenger_max_time</span>
 
     <span class="k">def</span> <span class="nf">split_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Passengers in a Group will be splitted, if possible </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in a Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           bool: Has splitting worked?, true = splitting worked, false = splitting has not worked</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
@@ -247,6 +345,9 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passengers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Groups</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">passengers</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
             <span class="k">return</span>
@@ -268,7 +369,9 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Initializing Groups</p>
+</div>
+
 
                             </div>
                             <div id="Groups.get_priority" class="classattr">
@@ -282,6 +385,12 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_priority</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the arrival time sorted from all Passengers </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Passenger (List): List of all Passengers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_min_target_round</span><span class="p">)</span>
@@ -290,7 +399,15 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Get the arrival time sorted from all Passengers </p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Passenger (List): List of all Passengers</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Groups.passengers_arrive" class="classattr">
@@ -304,6 +421,15 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">passengers_arrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if Passengers in Group have arivved</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: status Passenger arrived?, true = have arrived, false = haven&#39;t arrived</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
@@ -312,7 +438,21 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Checks if Passengers in Group have arivved</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>group:</strong> [Passenger] (List): List of all Passengers in Group</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: status Passenger arrived?, true = have arrived, false = haven't arrived</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Groups.get_passenger_with_most_time" class="classattr">
@@ -329,6 +469,15 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_passenger_with_most_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Passenger</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the Passenger from Group with the latest arrival Time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           int: largest Target Round</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">passenger_max_time</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -340,7 +489,21 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Get the Passenger from Group with the latest arrival Time</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>group:</strong> [Passenger] (List): List of all Passengers in Group</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>int: largest Target Round</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Groups.split_group" class="classattr">
@@ -354,6 +517,16 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">split_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Passengers in a Group will be splitted, if possible </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group:[Passenger] (List): List of all Passengers in a Group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           bool: Has splitting worked?, true = splitting worked, false = splitting has not worked</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">route</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
@@ -373,7 +546,21 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Passengers in a Group will be splitted, if possible </p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>group:</strong> [Passenger] (List): List of all Passengers in a Group</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: Has splitting worked?, true = splitting worked, false = splitting has not worked</p>
+</blockquote>
+</div>
+
 
                             </div>
                 </section>

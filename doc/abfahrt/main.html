@@ -59,12 +59,15 @@
 <span class="kn">from</span> <span class="nn">abfahrt.Result</span> <span class="kn">import</span> <span class="n">Result</span>
 <span class="kn">from</span> <span class="nn">abfahrt.Travel_Center</span> <span class="kn">import</span> <span class="n">Travel_Center</span>
 
-
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">input_</span> <span class="o">=</span> <span class="n">Input</span><span class="p">()</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">Result</span><span class="p">()</span>
 
     <span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">passengers</span> <span class="o">=</span> <span class="n">input_</span><span class="o">.</span><span class="n">from_stdin</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">input_</span><span class="o">.</span><span class="n">check_input</span><span class="p">()</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: Not enough or invalid objects given!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
 
     <span class="n">linelist</span> <span class="o">=</span> <span class="n">Linelist</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
     <span class="n">stationlist</span> <span class="o">=</span> <span class="n">Stationlist</span><span class="p">(</span><span class="n">stations</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
@@ -94,7 +97,8 @@
                     <span class="n">start_station</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;Error: Capacity of all trains too low!&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: capacity of all trains too low!&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
                 <span class="n">groups</span><span class="o">.</span><span class="n">split_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
             <span class="k">continue</span>
 
@@ -107,6 +111,9 @@
             <span class="k">if</span> <span class="n">capacity_enable</span><span class="p">:</span>
                 <span class="n">travel_center</span><span class="o">.</span><span class="n">train_move_to_start_station</span><span class="p">(</span>
                     <span class="n">start_station</span><span class="p">,</span> <span class="n">trainlist</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: capacity of all trains too low!&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
             <span class="k">continue</span>
 
         <span class="n">train_fastest</span><span class="p">,</span> <span class="n">train_fastest_start_time</span> <span class="o">=</span> <span class="n">travel_center</span><span class="o">.</span><span class="n">get_fastest_train_by_start_times_and_route_length</span><span class="p">(</span>
@@ -143,6 +150,10 @@
 
     <span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">passengers</span> <span class="o">=</span> <span class="n">input_</span><span class="o">.</span><span class="n">from_stdin</span><span class="p">()</span>
 
+    <span class="k">if</span> <span class="n">input_</span><span class="o">.</span><span class="n">check_input</span><span class="p">()</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: Not enough or invalid objects given!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
     <span class="n">linelist</span> <span class="o">=</span> <span class="n">Linelist</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
     <span class="n">stationlist</span> <span class="o">=</span> <span class="n">Stationlist</span><span class="p">(</span><span class="n">stations</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
     <span class="n">travel_center</span> <span class="o">=</span> <span class="n">Travel_Center</span><span class="p">(</span>
@@ -171,7 +182,8 @@
                     <span class="n">start_station</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;Error: Capacity of all trains too low!&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: capacity of all trains too low!&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
                 <span class="n">groups</span><span class="o">.</span><span class="n">split_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
             <span class="k">continue</span>
 
@@ -184,6 +196,9 @@
             <span class="k">if</span> <span class="n">capacity_enable</span><span class="p">:</span>
                 <span class="n">travel_center</span><span class="o">.</span><span class="n">train_move_to_start_station</span><span class="p">(</span>
                     <span class="n">start_station</span><span class="p">,</span> <span class="n">trainlist</span><span class="p">,</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">start_stations</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: capacity of all trains too low!&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
             <span class="k">continue</span>
 
         <span class="n">train_fastest</span><span class="p">,</span> <span class="n">train_fastest_start_time</span> <span class="o">=</span> <span class="n">travel_center</span><span class="o">.</span><span class="n">get_fastest_train_by_start_times_and_route_length</span><span class="p">(</span>

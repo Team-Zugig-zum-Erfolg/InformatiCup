@@ -1,3 +1,6 @@
+"""
+    This is Travel_Center for managing travels and routes
+"""
 import math
 # This module provides access to the mathematical functions defined by the C standard. (https://docs.python.org/3/library/math.html)
 import sys
@@ -36,9 +39,13 @@ T_S_ID = 1
 T_SPEED = 2
 T_CAPACITY = 3
 
+
 class Travel_Center:
 
     def __init__(self, stations: list, lines: list, train_input_list: List[Train], stationlist: Stationlist, linelist: Linelist, result: Result):
+        """
+        Initializing Travel_Center
+        """
         self.train_line_time_list = []
         self.line_plan = []
 

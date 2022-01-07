@@ -1,3 +1,6 @@
+"""
+    This is Linelist for managing the lines
+"""
 from typing import List
 # This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
 from typing import Tuple
@@ -7,9 +10,13 @@ from abfahrt.classes.Train import Train
 from abfahrt.classes.Line import Line
 from abfahrt.classes.TrainInLine import TrainInLine
 
+
 class Linelist:
 
     def __init__(self, lines: List[Line]):
+        """
+        Initializing Linelist
+        """
         self.lines = []  # the lines with capacities
         linelist = []
         for line in lines:

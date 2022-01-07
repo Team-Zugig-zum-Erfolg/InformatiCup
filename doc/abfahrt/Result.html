@@ -115,18 +115,22 @@
                     <h1 class="modulename">
 <a href="./../abfahrt.html">abfahrt</a><wbr>.Result    </h1>
 
-                
+                        <div class="docstring"><p>This is Result for registering, saving and printing the output</p>
+</div>
+
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="c1"># This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)</span>
+            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is Result for registering, saving and printing the output</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="c1"># This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)</span>
 
-<span class="c1"># This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="c1"># This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)</span>
 
-<span class="c1"># This module provides a portable way of using operating system dependent functionality. If you just want to read or write a file see open(), if you want to manipulate paths, see the os.path module, and if you want to read all the lines in all the files on the command line see the fileinput module. For creating temporary files and directories see the tempfile module, and for high-level file and directory handling see the shutil module. (https://docs.python.org/3/library/os.html)</span>
 <span class="kn">import</span> <span class="nn">os</span>
-
+<span class="c1"># This module provides a portable way of using operating system dependent functionality. If you just want to read or write a file see open(), if you want to manipulate paths, see the os.path module, and if you want to read all the lines in all the files on the command line see the fileinput module. For creating temporary files and directories see the tempfile module, and for high-level file and directory handling see the shutil module. (https://docs.python.org/3/library/os.html)</span>
 
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Passenger</span> <span class="kn">import</span> <span class="n">Passenger</span>
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Train</span> <span class="kn">import</span> <span class="n">Train</span>
@@ -144,20 +148,19 @@
     <span class="c1"># 1 Board T2</span>
     <span class="c1"># 6 Detrain</span>
 
-    <span class="n">trains</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">passengers</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">passengers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="n">id_trains</span><span class="p">:</span><span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="n">id_passengers</span><span class="p">:</span><span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">id_trains</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">id_passengers</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
-
-    
     <span class="k">def</span> <span class="nf">save_train_depart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_train</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">id_line</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; find the train in trains[], add this action in its history&#39;&#39;&#39;</span>
         <span class="c1"># print(f&quot;-&gt; enter [save_train_depart], id={id_train}, time={time}, id_line={id_line}&quot;)</span>
 
-        <span class="n">train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_train</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>    <span class="c1"># find the train in list, or add one in list</span>
-        <span class="n">train</span><span class="o">.</span><span class="n">add_depart</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">,</span> <span class="n">line_id</span> <span class="o">=</span> <span class="n">id_line</span><span class="p">)</span>
+        <span class="c1"># find the train in list, or add one in list</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_train</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>
+        <span class="n">train</span><span class="o">.</span><span class="n">add_depart</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">line_id</span><span class="o">=</span><span class="n">id_line</span><span class="p">)</span>
         <span class="c1"># print(&quot; - save_train_depart:&quot;, train.id)</span>
         <span class="c1"># print(&quot; - location:&quot;, id(train))</span>
         <span class="c1"># for i in self.trains:</span>
@@ -175,8 +178,8 @@
         <span class="c1"># for i in self.trains:</span>
         <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
 
-        <span class="n">train</span><span class="o">.</span><span class="n">add_start</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">,</span> <span class="n">station_id</span> <span class="o">=</span> <span class="n">id_station</span><span class="p">)</span>
-        
+        <span class="n">train</span><span class="o">.</span><span class="n">add_start</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">station_id</span><span class="o">=</span><span class="n">id_station</span><span class="p">)</span>
+
         <span class="c1"># print(&quot; - save_train_start:&quot;, train.id)</span>
         <span class="c1"># print(&quot; - location:&quot;, id(train))</span>
         <span class="c1"># for i in self.trains:</span>
@@ -186,7 +189,7 @@
     <span class="k">def</span> <span class="nf">save_passenger_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">id_train</span><span class="p">):</span>
         <span class="c1"># print(f&quot;-&gt; enter [save_passenger_board], id={id_passenger}, time={time}, id_line={id_train}&quot;)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">add_board</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">,</span> <span class="n">train_id</span> <span class="o">=</span> <span class="n">id_train</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_board</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">train_id</span><span class="o">=</span><span class="n">id_train</span><span class="p">)</span>
 
         <span class="c1"># print(&quot; - save_passenger_board:&quot;, p.id)</span>
         <span class="c1"># print(&quot; - location:&quot;, id(p))</span>
@@ -197,14 +200,14 @@
     <span class="k">def</span> <span class="nf">save_passenger_detrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
         <span class="c1"># print(f&quot;-&gt; enter [save_passenger_detrain], id={id_passenger}, time={time}&quot;)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">add_detrain</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_detrain</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">)</span>
         <span class="c1"># print(&quot; - save_passenger_detrain:&quot;, p.id)</span>
         <span class="c1"># print(&quot; - location:&quot;, id(p))</span>
         <span class="c1"># for i in self.passengers:</span>
         <span class="c1">#     print(&quot; - passenger: &quot;, i.id,&quot; history: &quot;, i.history)</span>
         <span class="c1"># print(&quot;===&quot;)</span>
-    
-    <span class="k">def</span> <span class="nf">find_or_add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_train</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Train</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">find_or_add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_train</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Train</span><span class="p">:</span>
         <span class="sd">&#39;&#39;&#39;find the train in the trains[], if not exist, create one&#39;&#39;&#39;</span>
         <span class="c1"># print(&quot;*-&gt; enter [find_or_add_train]&quot;)</span>
 
@@ -214,8 +217,10 @@
         <span class="c1"># currently cannot deal with duplication</span>
         <span class="k">if</span> <span class="n">id_train</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="p">:</span>                                      <span class="c1"># already exist</span>
             <span class="c1"># print(f&quot; -- train id [{id_train}] exist&quot;)</span>
-            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="p">)</span>   <span class="c1"># find it</span>
-            <span class="n">found_train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_result</span><span class="p">)</span>                                 <span class="c1"># convert to list</span>
+            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_train</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="p">)</span>   <span class="c1"># find it</span>
+            <span class="c1"># convert to list</span>
+            <span class="n">found_train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_result</span><span class="p">)</span>
             <span class="c1"># print(f&quot; -- train id [{id_train}] found with id [{found_train[0].id}]&quot;)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_train</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="c1"># print(&quot; -- [find] location: &quot;, id(found_train[0]))</span>
@@ -228,11 +233,12 @@
             <span class="c1"># print(f&quot; -- id [{id_train}] not exist, now added&quot;)</span>
             <span class="c1"># for i in self.trains:</span>
             <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
-            <span class="n">train</span> <span class="o">=</span> <span class="n">Train</span><span class="p">(</span><span class="n">id_train</span><span class="p">,</span><span class="n">Station</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># new train</span>
+            <span class="n">train</span> <span class="o">=</span> <span class="n">Train</span><span class="p">(</span><span class="n">id_train</span><span class="p">,</span> <span class="n">Station</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># new train</span>
             <span class="c1"># print(&quot; -- new train history&quot;,train.history)</span>
             <span class="c1"># for i in self.trains:</span>
             <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>        <span class="c1"># add in set() ids, to record the id in a set (there are no duplication)</span>
+            <span class="c1"># add in set() ids, to record the id in a set (there are no duplication)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>
             <span class="c1"># for i in self.trains:</span>
             <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
 
@@ -242,35 +248,37 @@
             <span class="c1"># print(f&quot; -- train id [{id_train}] added with id [{train.id}]&quot;)</span>
             <span class="c1"># print(&quot; -- [find] location: &quot;, id(train))</span>
 
-            <span class="c1">#sort the trains list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            
+            <span class="c1"># sort the trains list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
             <span class="k">return</span> <span class="n">train</span>
 
-    <span class="k">def</span> <span class="nf">find_or_add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Passenger</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">find_or_add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Passenger</span><span class="p">:</span>
         <span class="sd">&#39;&#39;&#39;find the train in the trains[], if not exist, create one, currently cannot deduplicate&#39;&#39;&#39;</span>
         <span class="c1"># print(&quot;*-&gt; enter [find_or_add_passenger]&quot;)</span>
         <span class="k">if</span> <span class="n">id_passenger</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_passengers</span><span class="p">:</span>                                      <span class="c1"># already exist</span>
-            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="p">)</span>   <span class="c1"># find it</span>
+            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="p">)</span>   <span class="c1"># find it</span>
             <span class="n">found_p</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_result</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>                                                   <span class="c1"># found one </span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>                                                   <span class="c1"># found one</span>
                 <span class="sd">&#39;&#39;&#39;found one passenger, already saved in a list&#39;&#39;&#39;</span>
                 <span class="k">return</span> <span class="n">found_p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>                                                                   <span class="c1"># found many, duplication!</span>
                 <span class="c1"># self.handle_duplication_passenger()</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;* &lt;!&gt; [Warning] from Result: there Passenger [</span><span class="si">{</span><span class="n">id_passenger</span><span class="si">}</span><span class="s2">] is duplicated, </span><span class="se">\n</span><span class="s2">! * there are [</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span><span class="si">}</span><span class="s2">] such passengers in [passengers]&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;* &lt;!&gt; [Warning] from Result: there Passenger [</span><span class="si">{</span><span class="n">id_passenger</span><span class="si">}</span><span class="s2">] is duplicated, </span><span class="se">\n</span><span class="s2">! * there are [</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span><span class="si">}</span><span class="s2">] such passengers in [passengers]&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">found_p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>   <span class="c1"># train not exist, add one</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">Passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_passengers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-            
-            <span class="c1">#sort the passengers list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            
+
+            <span class="c1"># sort the passengers list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
             <span class="k">return</span> <span class="n">p</span>
 
-    <span class="k">def</span> <span class="nf">add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">:</span><span class="n">Passenger</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">:</span> <span class="n">Passenger</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;add a Passanger in list, if already exist(with same id), merge the history&#39;&#39;&#39;</span>
         <span class="sd">&#39;&#39;&#39;also save the id in a Set, for easily to check if some exist&#39;&#39;&#39;</span>
         <span class="sd">&#39;&#39;&#39;if you need to add a P only with id, please use find_or_add_passenger&#39;&#39;&#39;</span>
@@ -282,40 +290,39 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">passenger</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_passengers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">passenger</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-            <span class="c1">#sort the passengers list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="c1"># sort the passengers list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">train</span><span class="p">:</span><span class="n">Train</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="n">Train</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">train</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_train</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            
-            <span class="c1">#sort the trains list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">passengers_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+            <span class="c1"># sort the trains list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">passengers_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;from input add all passengers&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">passenger</span> <span class="ow">in</span> <span class="nb">input</span><span class="o">.</span><span class="n">Passengers</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="n">passenger</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">passengers_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">passengers_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;directly read all passengers from input.passengers&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">Passengers</span>
 
-    <span class="k">def</span> <span class="nf">train_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">train_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;from input add all passengers&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">train</span> <span class="ow">in</span> <span class="nb">input</span><span class="o">.</span><span class="n">Trains</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">train_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">train_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;directly read all passengers from input.passengers&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trains</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">Trains</span>
 
 
-
-<span class="c1">#%% saving methods</span>
+<span class="c1"># %% saving methods</span>
 
     <span class="k">def</span> <span class="nf">to_output_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -335,34 +342,35 @@
         <span class="sd">&#39;&#39;&#39; save output file in SAME file output &#39;&#39;&#39;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;./output.txt&#39;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>  
-        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>  
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">state</span>
 
-    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;result&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;result&quot;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; save output format in local file </span>
 <span class="sd">        parameter: folder: the folder to save this file, default is &quot;result&quot;</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">dir_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_generator</span><span class="p">(</span><span class="n">folder</span> <span class="o">=</span> <span class="n">dir_name</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_generator</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="n">dir_name</span><span class="p">)</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
             <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
             <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
-        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>  
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">state</span>
 
-    <span class="k">def</span> <span class="nf">path_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;result&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">path_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;result&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&#39;&#39;&#39; generate a path for local file &#39;&#39;&#39;</span>
         <span class="n">dir_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="n">dir_name</span> <span class="o">+</span> <span class="s2">&quot;/Output&quot;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span><span class="s2">&quot;-&quot;</span><span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> \
+            <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
         <span class="c1"># filename = &quot;Output-&quot; + time.strftime(&quot;%y%m%d-%H%M%S&quot;,time.localtime(time.time())) + &quot;.txt&quot;</span>
         <span class="c1"># return filename</span>
@@ -393,20 +401,19 @@
     <span class="c1"># 1 Board T2</span>
     <span class="c1"># 6 Detrain</span>
 
-    <span class="n">trains</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">passengers</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">passengers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Passenger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="n">id_trains</span><span class="p">:</span><span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="n">id_passengers</span><span class="p">:</span><span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">id_trains</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">id_passengers</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
-
-    
     <span class="k">def</span> <span class="nf">save_train_depart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_train</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">id_line</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; find the train in trains[], add this action in its history&#39;&#39;&#39;</span>
         <span class="c1"># print(f&quot;-&gt; enter [save_train_depart], id={id_train}, time={time}, id_line={id_line}&quot;)</span>
 
-        <span class="n">train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_train</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>    <span class="c1"># find the train in list, or add one in list</span>
-        <span class="n">train</span><span class="o">.</span><span class="n">add_depart</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">,</span> <span class="n">line_id</span> <span class="o">=</span> <span class="n">id_line</span><span class="p">)</span>
+        <span class="c1"># find the train in list, or add one in list</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_train</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>
+        <span class="n">train</span><span class="o">.</span><span class="n">add_depart</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">line_id</span><span class="o">=</span><span class="n">id_line</span><span class="p">)</span>
         <span class="c1"># print(&quot; - save_train_depart:&quot;, train.id)</span>
         <span class="c1"># print(&quot; - location:&quot;, id(train))</span>
         <span class="c1"># for i in self.trains:</span>
@@ -424,8 +431,8 @@
         <span class="c1"># for i in self.trains:</span>
         <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
 
-        <span class="n">train</span><span class="o">.</span><span class="n">add_start</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">,</span> <span class="n">station_id</span> <span class="o">=</span> <span class="n">id_station</span><span class="p">)</span>
-        
+        <span class="n">train</span><span class="o">.</span><span class="n">add_start</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">station_id</span><span class="o">=</span><span class="n">id_station</span><span class="p">)</span>
+
         <span class="c1"># print(&quot; - save_train_start:&quot;, train.id)</span>
         <span class="c1"># print(&quot; - location:&quot;, id(train))</span>
         <span class="c1"># for i in self.trains:</span>
@@ -435,7 +442,7 @@
     <span class="k">def</span> <span class="nf">save_passenger_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">id_train</span><span class="p">):</span>
         <span class="c1"># print(f&quot;-&gt; enter [save_passenger_board], id={id_passenger}, time={time}, id_line={id_train}&quot;)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">add_board</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">,</span> <span class="n">train_id</span> <span class="o">=</span> <span class="n">id_train</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_board</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">train_id</span><span class="o">=</span><span class="n">id_train</span><span class="p">)</span>
 
         <span class="c1"># print(&quot; - save_passenger_board:&quot;, p.id)</span>
         <span class="c1"># print(&quot; - location:&quot;, id(p))</span>
@@ -446,14 +453,14 @@
     <span class="k">def</span> <span class="nf">save_passenger_detrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
         <span class="c1"># print(f&quot;-&gt; enter [save_passenger_detrain], id={id_passenger}, time={time}&quot;)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">add_detrain</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_detrain</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">)</span>
         <span class="c1"># print(&quot; - save_passenger_detrain:&quot;, p.id)</span>
         <span class="c1"># print(&quot; - location:&quot;, id(p))</span>
         <span class="c1"># for i in self.passengers:</span>
         <span class="c1">#     print(&quot; - passenger: &quot;, i.id,&quot; history: &quot;, i.history)</span>
         <span class="c1"># print(&quot;===&quot;)</span>
-    
-    <span class="k">def</span> <span class="nf">find_or_add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_train</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Train</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">find_or_add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_train</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Train</span><span class="p">:</span>
         <span class="sd">&#39;&#39;&#39;find the train in the trains[], if not exist, create one&#39;&#39;&#39;</span>
         <span class="c1"># print(&quot;*-&gt; enter [find_or_add_train]&quot;)</span>
 
@@ -463,8 +470,10 @@
         <span class="c1"># currently cannot deal with duplication</span>
         <span class="k">if</span> <span class="n">id_train</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="p">:</span>                                      <span class="c1"># already exist</span>
             <span class="c1"># print(f&quot; -- train id [{id_train}] exist&quot;)</span>
-            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="p">)</span>   <span class="c1"># find it</span>
-            <span class="n">found_train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_result</span><span class="p">)</span>                                 <span class="c1"># convert to list</span>
+            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_train</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="p">)</span>   <span class="c1"># find it</span>
+            <span class="c1"># convert to list</span>
+            <span class="n">found_train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_result</span><span class="p">)</span>
             <span class="c1"># print(f&quot; -- train id [{id_train}] found with id [{found_train[0].id}]&quot;)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_train</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="c1"># print(&quot; -- [find] location: &quot;, id(found_train[0]))</span>
@@ -477,11 +486,12 @@
             <span class="c1"># print(f&quot; -- id [{id_train}] not exist, now added&quot;)</span>
             <span class="c1"># for i in self.trains:</span>
             <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
-            <span class="n">train</span> <span class="o">=</span> <span class="n">Train</span><span class="p">(</span><span class="n">id_train</span><span class="p">,</span><span class="n">Station</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># new train</span>
+            <span class="n">train</span> <span class="o">=</span> <span class="n">Train</span><span class="p">(</span><span class="n">id_train</span><span class="p">,</span> <span class="n">Station</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># new train</span>
             <span class="c1"># print(&quot; -- new train history&quot;,train.history)</span>
             <span class="c1"># for i in self.trains:</span>
             <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>        <span class="c1"># add in set() ids, to record the id in a set (there are no duplication)</span>
+            <span class="c1"># add in set() ids, to record the id in a set (there are no duplication)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>
             <span class="c1"># for i in self.trains:</span>
             <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
 
@@ -491,35 +501,37 @@
             <span class="c1"># print(f&quot; -- train id [{id_train}] added with id [{train.id}]&quot;)</span>
             <span class="c1"># print(&quot; -- [find] location: &quot;, id(train))</span>
 
-            <span class="c1">#sort the trains list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            
+            <span class="c1"># sort the trains list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
             <span class="k">return</span> <span class="n">train</span>
 
-    <span class="k">def</span> <span class="nf">find_or_add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Passenger</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">find_or_add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Passenger</span><span class="p">:</span>
         <span class="sd">&#39;&#39;&#39;find the train in the trains[], if not exist, create one, currently cannot deduplicate&#39;&#39;&#39;</span>
         <span class="c1"># print(&quot;*-&gt; enter [find_or_add_passenger]&quot;)</span>
         <span class="k">if</span> <span class="n">id_passenger</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_passengers</span><span class="p">:</span>                                      <span class="c1"># already exist</span>
-            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="p">)</span>   <span class="c1"># find it</span>
+            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="p">)</span>   <span class="c1"># find it</span>
             <span class="n">found_p</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_result</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>                                                   <span class="c1"># found one </span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>                                                   <span class="c1"># found one</span>
                 <span class="sd">&#39;&#39;&#39;found one passenger, already saved in a list&#39;&#39;&#39;</span>
                 <span class="k">return</span> <span class="n">found_p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>                                                                   <span class="c1"># found many, duplication!</span>
                 <span class="c1"># self.handle_duplication_passenger()</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;* &lt;!&gt; [Warning] from Result: there Passenger [</span><span class="si">{</span><span class="n">id_passenger</span><span class="si">}</span><span class="s2">] is duplicated, </span><span class="se">\n</span><span class="s2">! * there are [</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span><span class="si">}</span><span class="s2">] such passengers in [passengers]&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;* &lt;!&gt; [Warning] from Result: there Passenger [</span><span class="si">{</span><span class="n">id_passenger</span><span class="si">}</span><span class="s2">] is duplicated, </span><span class="se">\n</span><span class="s2">! * there are [</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span><span class="si">}</span><span class="s2">] such passengers in [passengers]&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">found_p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>   <span class="c1"># train not exist, add one</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">Passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_passengers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-            
-            <span class="c1">#sort the passengers list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            
+
+            <span class="c1"># sort the passengers list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
             <span class="k">return</span> <span class="n">p</span>
 
-    <span class="k">def</span> <span class="nf">add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">:</span><span class="n">Passenger</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">:</span> <span class="n">Passenger</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;add a Passanger in list, if already exist(with same id), merge the history&#39;&#39;&#39;</span>
         <span class="sd">&#39;&#39;&#39;also save the id in a Set, for easily to check if some exist&#39;&#39;&#39;</span>
         <span class="sd">&#39;&#39;&#39;if you need to add a P only with id, please use find_or_add_passenger&#39;&#39;&#39;</span>
@@ -531,40 +543,39 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">passenger</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_passengers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">passenger</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-            <span class="c1">#sort the passengers list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="c1"># sort the passengers list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">train</span><span class="p">:</span><span class="n">Train</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="n">Train</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">train</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_train</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            
-            <span class="c1">#sort the trains list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">passengers_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+            <span class="c1"># sort the trains list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">passengers_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;from input add all passengers&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">passenger</span> <span class="ow">in</span> <span class="nb">input</span><span class="o">.</span><span class="n">Passengers</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="n">passenger</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">passengers_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">passengers_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;directly read all passengers from input.passengers&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">Passengers</span>
 
-    <span class="k">def</span> <span class="nf">train_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">train_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;from input add all passengers&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">train</span> <span class="ow">in</span> <span class="nb">input</span><span class="o">.</span><span class="n">Trains</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">train_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">train_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;directly read all passengers from input.passengers&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trains</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">Trains</span>
 
 
-
-<span class="c1">#%% saving methods</span>
+<span class="c1"># %% saving methods</span>
 
     <span class="k">def</span> <span class="nf">to_output_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -584,34 +595,35 @@
         <span class="sd">&#39;&#39;&#39; save output file in SAME file output &#39;&#39;&#39;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;./output.txt&#39;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>  
-        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>  
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">state</span>
 
-    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;result&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;result&quot;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; save output format in local file </span>
 <span class="sd">        parameter: folder: the folder to save this file, default is &quot;result&quot;</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">dir_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_generator</span><span class="p">(</span><span class="n">folder</span> <span class="o">=</span> <span class="n">dir_name</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_generator</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="n">dir_name</span><span class="p">)</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
             <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
             <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
-        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>  
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">state</span>
 
-    <span class="k">def</span> <span class="nf">path_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;result&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">path_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;result&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&#39;&#39;&#39; generate a path for local file &#39;&#39;&#39;</span>
         <span class="n">dir_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="n">dir_name</span> <span class="o">+</span> <span class="s2">&quot;/Output&quot;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span><span class="s2">&quot;-&quot;</span><span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> \
+            <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
         <span class="c1"># filename = &quot;Output-&quot; + time.strftime(&quot;%y%m%d-%H%M%S&quot;,time.localtime(time.time())) + &quot;.txt&quot;</span>
         <span class="c1"># return filename</span>
@@ -683,8 +695,9 @@
         <span class="sd">&#39;&#39;&#39; find the train in trains[], add this action in its history&#39;&#39;&#39;</span>
         <span class="c1"># print(f&quot;-&gt; enter [save_train_depart], id={id_train}, time={time}, id_line={id_line}&quot;)</span>
 
-        <span class="n">train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_train</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>    <span class="c1"># find the train in list, or add one in list</span>
-        <span class="n">train</span><span class="o">.</span><span class="n">add_depart</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">,</span> <span class="n">line_id</span> <span class="o">=</span> <span class="n">id_line</span><span class="p">)</span>
+        <span class="c1"># find the train in list, or add one in list</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_train</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>
+        <span class="n">train</span><span class="o">.</span><span class="n">add_depart</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">line_id</span><span class="o">=</span><span class="n">id_line</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -715,7 +728,7 @@
         <span class="c1"># for i in self.trains:</span>
         <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
 
-        <span class="n">train</span><span class="o">.</span><span class="n">add_start</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">,</span> <span class="n">station_id</span> <span class="o">=</span> <span class="n">id_station</span><span class="p">)</span>
+        <span class="n">train</span><span class="o">.</span><span class="n">add_start</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">station_id</span><span class="o">=</span><span class="n">id_station</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -736,7 +749,7 @@
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">save_passenger_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">id_train</span><span class="p">):</span>
         <span class="c1"># print(f&quot;-&gt; enter [save_passenger_board], id={id_passenger}, time={time}, id_line={id_train}&quot;)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">add_board</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">,</span> <span class="n">train_id</span> <span class="o">=</span> <span class="n">id_train</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_board</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">train_id</span><span class="o">=</span><span class="n">id_train</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -757,7 +770,7 @@
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">save_passenger_detrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
         <span class="c1"># print(f&quot;-&gt; enter [save_passenger_detrain], id={id_passenger}, time={time}&quot;)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">add_detrain</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_detrain</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -775,7 +788,7 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">find_or_add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_train</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Train</span><span class="p">:</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">find_or_add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_train</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Train</span><span class="p">:</span>
         <span class="sd">&#39;&#39;&#39;find the train in the trains[], if not exist, create one&#39;&#39;&#39;</span>
         <span class="c1"># print(&quot;*-&gt; enter [find_or_add_train]&quot;)</span>
 
@@ -785,8 +798,10 @@
         <span class="c1"># currently cannot deal with duplication</span>
         <span class="k">if</span> <span class="n">id_train</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="p">:</span>                                      <span class="c1"># already exist</span>
             <span class="c1"># print(f&quot; -- train id [{id_train}] exist&quot;)</span>
-            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="p">)</span>   <span class="c1"># find it</span>
-            <span class="n">found_train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_result</span><span class="p">)</span>                                 <span class="c1"># convert to list</span>
+            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_train</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="p">)</span>   <span class="c1"># find it</span>
+            <span class="c1"># convert to list</span>
+            <span class="n">found_train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_result</span><span class="p">)</span>
             <span class="c1"># print(f&quot; -- train id [{id_train}] found with id [{found_train[0].id}]&quot;)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_train</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="c1"># print(&quot; -- [find] location: &quot;, id(found_train[0]))</span>
@@ -799,11 +814,12 @@
             <span class="c1"># print(f&quot; -- id [{id_train}] not exist, now added&quot;)</span>
             <span class="c1"># for i in self.trains:</span>
             <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
-            <span class="n">train</span> <span class="o">=</span> <span class="n">Train</span><span class="p">(</span><span class="n">id_train</span><span class="p">,</span><span class="n">Station</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># new train</span>
+            <span class="n">train</span> <span class="o">=</span> <span class="n">Train</span><span class="p">(</span><span class="n">id_train</span><span class="p">,</span> <span class="n">Station</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># new train</span>
             <span class="c1"># print(&quot; -- new train history&quot;,train.history)</span>
             <span class="c1"># for i in self.trains:</span>
             <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>        <span class="c1"># add in set() ids, to record the id in a set (there are no duplication)</span>
+            <span class="c1"># add in set() ids, to record the id in a set (there are no duplication)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_train</span><span class="p">)</span>
             <span class="c1"># for i in self.trains:</span>
             <span class="c1">#     print(&quot; + train: &quot;, i.id,&quot; history: &quot;, i.history)</span>
 
@@ -813,9 +829,9 @@
             <span class="c1"># print(f&quot; -- train id [{id_train}] added with id [{train.id}]&quot;)</span>
             <span class="c1"># print(&quot; -- [find] location: &quot;, id(train))</span>
 
-            <span class="c1">#sort the trains list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            
+            <span class="c1"># sort the trains list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
             <span class="k">return</span> <span class="n">train</span>
 </pre></div>
 
@@ -836,27 +852,29 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">find_or_add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Passenger</span><span class="p">:</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">find_or_add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Passenger</span><span class="p">:</span>
         <span class="sd">&#39;&#39;&#39;find the train in the trains[], if not exist, create one, currently cannot deduplicate&#39;&#39;&#39;</span>
         <span class="c1"># print(&quot;*-&gt; enter [find_or_add_passenger]&quot;)</span>
         <span class="k">if</span> <span class="n">id_passenger</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_passengers</span><span class="p">:</span>                                      <span class="c1"># already exist</span>
-            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="p">)</span>   <span class="c1"># find it</span>
+            <span class="n">find_result</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_passenger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="p">)</span>   <span class="c1"># find it</span>
             <span class="n">found_p</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_result</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>                                                   <span class="c1"># found one </span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>                                                   <span class="c1"># found one</span>
                 <span class="sd">&#39;&#39;&#39;found one passenger, already saved in a list&#39;&#39;&#39;</span>
                 <span class="k">return</span> <span class="n">found_p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>                                                                   <span class="c1"># found many, duplication!</span>
                 <span class="c1"># self.handle_duplication_passenger()</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;* &lt;!&gt; [Warning] from Result: there Passenger [</span><span class="si">{</span><span class="n">id_passenger</span><span class="si">}</span><span class="s2">] is duplicated, </span><span class="se">\n</span><span class="s2">! * there are [</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span><span class="si">}</span><span class="s2">] such passengers in [passengers]&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;* &lt;!&gt; [Warning] from Result: there Passenger [</span><span class="si">{</span><span class="n">id_passenger</span><span class="si">}</span><span class="s2">] is duplicated, </span><span class="se">\n</span><span class="s2">! * there are [</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">found_p</span><span class="p">)</span><span class="si">}</span><span class="s2">] such passengers in [passengers]&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">found_p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>   <span class="c1"># train not exist, add one</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">Passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Passenger</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_passengers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-            
-            <span class="c1">#sort the passengers list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            
+
+            <span class="c1"># sort the passengers list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
             <span class="k">return</span> <span class="n">p</span>
 </pre></div>
 
@@ -877,7 +895,7 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">:</span><span class="n">Passenger</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">:</span> <span class="n">Passenger</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;add a Passanger in list, if already exist(with same id), merge the history&#39;&#39;&#39;</span>
         <span class="sd">&#39;&#39;&#39;also save the id in a Set, for easily to check if some exist&#39;&#39;&#39;</span>
         <span class="sd">&#39;&#39;&#39;if you need to add a P only with id, please use find_or_add_passenger&#39;&#39;&#39;</span>
@@ -889,8 +907,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">passenger</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_passengers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">passenger</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-            <span class="c1">#sort the passengers list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="c1"># sort the passengers list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -910,15 +928,15 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">train</span><span class="p">:</span><span class="n">Train</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">add_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="n">Train</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">train</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">find_or_add_train</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_trains</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            
-            <span class="c1">#sort the trains list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+            <span class="c1"># sort the trains list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trains</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -936,7 +954,7 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">passengers_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">passengers_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;from input add all passengers&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">passenger</span> <span class="ow">in</span> <span class="nb">input</span><span class="o">.</span><span class="n">Passengers</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="n">passenger</span><span class="p">)</span>
@@ -959,7 +977,7 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">passengers_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">passengers_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;directly read all passengers from input.passengers&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">passengers</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">Passengers</span>
 </pre></div>
@@ -981,7 +999,7 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">train_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">train_add_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;from input add all passengers&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">train</span> <span class="ow">in</span> <span class="nb">input</span><span class="o">.</span><span class="n">Trains</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
@@ -1004,7 +1022,7 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">train_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span><span class="n">Input</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">train_read_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;directly read all passengers from input.passengers&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trains</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">Trains</span>
 </pre></div>
@@ -1060,8 +1078,8 @@
         <span class="sd">&#39;&#39;&#39; save output file in SAME file output &#39;&#39;&#39;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;./output.txt&#39;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>  
-        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>  
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">state</span>
@@ -1084,19 +1102,19 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;result&quot;</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;result&quot;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; save output format in local file </span>
 <span class="sd">        parameter: folder: the folder to save this file, default is &quot;result&quot;</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">dir_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_generator</span><span class="p">(</span><span class="n">folder</span> <span class="o">=</span> <span class="n">dir_name</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_generator</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="n">dir_name</span><span class="p">)</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
             <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
             <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
-        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>  
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_output_text</span><span class="p">())</span>
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">state</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">state</span>
@@ -1120,11 +1138,12 @@ parameter: folder: the folder to save this file, default is "result"</p>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">path_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;result&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">path_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;result&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&#39;&#39;&#39; generate a path for local file &#39;&#39;&#39;</span>
         <span class="n">dir_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="n">dir_name</span> <span class="o">+</span> <span class="s2">&quot;/Output&quot;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span><span class="s2">&quot;-&quot;</span><span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> \
+            <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
         <span class="c1"># filename = &quot;Output-&quot; + time.strftime(&quot;%y%m%d-%H%M%S&quot;,time.localtime(time.time())) + &quot;.txt&quot;</span>
         <span class="c1"># return filename</span>

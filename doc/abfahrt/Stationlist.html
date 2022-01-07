@@ -48,9 +48,6 @@
                         <li>
                                 <a class="function" href="#Stationlist.read_trains_from_station">read_trains_from_station</a>
                         </li>
-                        <li>
-                                <a class="function" href="#Stationlist.train_leave_time">train_leave_time</a>
-                        </li>
                 </ul>
 
             </li>
@@ -70,17 +67,25 @@
                     <h1 class="modulename">
 <a href="./../abfahrt.html">abfahrt</a><wbr>.Stationlist    </h1>
 
-                
+                        <div class="docstring"><p>This is Stationlist for managing the stations</p>
+</div>
+
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is Stationlist for managing the stations</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="c1"># This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)</span>
+
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="c1"># This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)</span>
+
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Train</span> <span class="kn">import</span> <span class="n">Train</span>
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Station</span> <span class="kn">import</span> <span class="n">Station</span>
 <span class="kn">from</span> <span class="nn">abfahrt.classes.TrainInStation</span> <span class="kn">import</span> <span class="n">TrainInStation</span>
 <span class="kn">from</span> <span class="nn">abfahrt.Result</span> <span class="kn">import</span> <span class="n">Result</span>
-
 
 <span class="n">T_ID</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">T_START_STATION</span> <span class="o">=</span> <span class="mi">1</span>
@@ -94,6 +99,9 @@
 <span class="k">class</span> <span class="nc">Stationlist</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="n">trainlist</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">result</span><span class="p">:</span> <span class="n">Result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Stationlist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stations</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># the stations with capacities</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">result</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trains_not_in_station</span> <span class="o">=</span> <span class="p">[]</span>
@@ -117,8 +125,8 @@
                 <span class="k">if</span> <span class="n">available</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">add_new_train_in_station</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
-                        <span class="s2">&quot;Error: Too many trains in station at beginning!&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: Too many trains in station at beginning!&quot;</span><span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">trains_not_in_station</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">trains_not_in_station</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
@@ -126,12 +134,30 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_capacity_is_full</span><span class="p">(</span><span class="n">capacity</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks a capacity if there is a stopped train in it</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            capacity (List[TrainInStation]): capacity, so a list of TrainInStation objects</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the capacity is full, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">_train_in_station</span> <span class="ow">in</span> <span class="n">capacity</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">compare_free_place</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a TrainInStation object can be inserted in the station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_station (TrainInStation): the TrainInStation object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[bool, int]: [True, -1] if station is free, [False, delay_time &gt; 0] if station is free in delay time, [False, -1] if station is blocked</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">station_capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">train_in_station</span><span class="o">.</span><span class="n">station_id</span><span class="p">]</span>
         <span class="n">capacity_minimal_times</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -167,7 +193,7 @@
                         <span class="n">skip_capacity</span> <span class="o">=</span> <span class="mi">1</span>
                         <span class="k">break</span>
 
-                    <span class="k">if</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="p">):</span>
                         <span class="k">return</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
                     <span class="k">elif</span> <span class="p">(</span><span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">-</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="o">-</span><span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">)</span> <span class="ow">and</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">&gt;=</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">:</span>
@@ -192,28 +218,36 @@
                 <span class="k">return</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_train_in_station_is_free</span><span class="p">(</span><span class="n">front_train_leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">back_train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">_train_in_station_is_free</span><span class="p">(</span><span class="n">front_train_leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">back_train_in_station_arrive_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
                                   <span class="n">in_station_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">leave_station_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the station is free for a given time range between two other times of trains in the station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            front_train_leave_time (int): leave_time of the first train</span>
+<span class="sd">            back_train_in_station_arrive_time (int): arrive time of the second train</span>
+<span class="sd">            in_station_time (int): time of the new train arriving at the station</span>
+<span class="sd">            leave_station_time (int): time of the new train leaving the station</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if station is free, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">front_train_leave_time</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="n">front_train_leave_time</span> <span class="o">&lt;</span> <span class="n">in_station_time</span> <span class="ow">and</span> <span class="n">back_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">&gt;</span> <span class="n">leave_station_time</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_train_in_station_pos</span><span class="p">(</span><span class="n">front_train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">,</span> <span class="n">back_train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">,</span>
-                              <span class="n">earliest_leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="n">distance_s_e</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">front_train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">leave_time</span> <span class="o">=</span> <span class="n">front_train_in_station</span><span class="o">.</span><span class="n">leave_time</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">leave_time</span> <span class="o">=</span> <span class="n">front_train_in_station</span><span class="o">.</span><span class="n">passenger_in_train_time</span>
-
-        <span class="n">distance_between_trains</span> <span class="o">=</span> <span class="n">back_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">-</span> <span class="n">leave_time</span>
-        <span class="k">if</span> <span class="n">distance_s_e</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">distance_between_trains</span><span class="p">:</span>
-            <span class="n">earliest_leave_time</span> <span class="o">=</span> <span class="n">leave_time</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">earliest_leave_time</span>
+        <span class="k">return</span> <span class="n">front_train_leave_time</span> <span class="o">&lt;</span> <span class="n">in_station_time</span> <span class="ow">and</span> <span class="n">back_train_in_station_arrive_time</span> <span class="o">&gt;</span> <span class="n">leave_station_time</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_train_in_capacity</span><span class="p">(</span><span class="n">capacity</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">],</span> <span class="n">train</span><span class="p">:</span> <span class="n">Train</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a train is in a specific capacity</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            capacity (List[TrainInStation]): capacity, so a list of TrainInStation objects</span>
+<span class="sd">            train (Train): train to search in the capacity</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the train was found, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">train</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">train_in_station</span> <span class="ow">in</span> <span class="n">capacity</span><span class="p">:</span>
@@ -222,6 +256,16 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">add_new_train_in_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">,</span> <span class="n">train_to_replace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inserts a new TrainInStation objects in the right/best fitting capacity of the station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_station (TrainInStation): TrainInStation object to insert</span>
+<span class="sd">            train_to_replace ([type], optional): train in the station which should replaced with the new train. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if inserting was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">enable</span><span class="p">,</span> <span class="n">delay_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare_free_place</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">enable</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">delay_time</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -256,7 +300,7 @@
             <span class="n">last_train_in_station</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">last_train_in_station</span><span class="p">):</span>
                 <span class="n">leave_time</span> <span class="o">=</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span>
-                <span class="k">if</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="k">if</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span>
                                                                                                  <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="p">):</span>
                     <span class="n">finish</span> <span class="o">=</span> <span class="mi">1</span>
                     <span class="k">break</span>
@@ -288,6 +332,17 @@
             <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">add_train_leave_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="n">Train</span><span class="p">,</span> <span class="n">leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">station_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds the leave time of a stopped train in a specific station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train (Train): train to add the leave time</span>
+<span class="sd">            leave_time (int): the leave time</span>
+<span class="sd">            station_number (int): the id/number of the station</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if adding was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacity_number</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station_number</span><span class="p">]:</span>
             <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
@@ -304,6 +359,16 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">read_trains_from_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">also_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">Station</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the stopped trains at a station and the possible start/leave times</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station_number (int): the id/number of the station</span>
+<span class="sd">            also_not_in_station_trains (bool, optional): True if also trains with no start station should be checked for starting at the station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], Station]: start time of the trains, trains in the station, the station as object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">one_empty_capacity</span> <span class="o">=</span> <span class="mi">0</span>
@@ -332,13 +397,6 @@
                     <span class="n">start_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">Station</span><span class="p">(</span><span class="n">station_number</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station_number</span><span class="p">]))</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">train_leave_time</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">passenger_in_train_time</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span>
 </pre></div>
 
         </details>
@@ -358,6 +416,9 @@
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Stationlist</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="n">trainlist</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">result</span><span class="p">:</span> <span class="n">Result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Stationlist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stations</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># the stations with capacities</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">result</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trains_not_in_station</span> <span class="o">=</span> <span class="p">[]</span>
@@ -381,8 +442,8 @@
                 <span class="k">if</span> <span class="n">available</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">add_new_train_in_station</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
-                        <span class="s2">&quot;Error: Too many trains in station at beginning!&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: Too many trains in station at beginning!&quot;</span><span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">trains_not_in_station</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">trains_not_in_station</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
@@ -390,12 +451,30 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_capacity_is_full</span><span class="p">(</span><span class="n">capacity</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks a capacity if there is a stopped train in it</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            capacity (List[TrainInStation]): capacity, so a list of TrainInStation objects</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the capacity is full, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">_train_in_station</span> <span class="ow">in</span> <span class="n">capacity</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">compare_free_place</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a TrainInStation object can be inserted in the station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_station (TrainInStation): the TrainInStation object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[bool, int]: [True, -1] if station is free, [False, delay_time &gt; 0] if station is free in delay time, [False, -1] if station is blocked</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">station_capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">train_in_station</span><span class="o">.</span><span class="n">station_id</span><span class="p">]</span>
         <span class="n">capacity_minimal_times</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -431,7 +510,7 @@
                         <span class="n">skip_capacity</span> <span class="o">=</span> <span class="mi">1</span>
                         <span class="k">break</span>
 
-                    <span class="k">if</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="p">):</span>
                         <span class="k">return</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
                     <span class="k">elif</span> <span class="p">(</span><span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">-</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="o">-</span><span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">)</span> <span class="ow">and</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">&gt;=</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">:</span>
@@ -456,28 +535,36 @@
                 <span class="k">return</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_train_in_station_is_free</span><span class="p">(</span><span class="n">front_train_leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">back_train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">_train_in_station_is_free</span><span class="p">(</span><span class="n">front_train_leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">back_train_in_station_arrive_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
                                   <span class="n">in_station_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">leave_station_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the station is free for a given time range between two other times of trains in the station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            front_train_leave_time (int): leave_time of the first train</span>
+<span class="sd">            back_train_in_station_arrive_time (int): arrive time of the second train</span>
+<span class="sd">            in_station_time (int): time of the new train arriving at the station</span>
+<span class="sd">            leave_station_time (int): time of the new train leaving the station</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if station is free, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">front_train_leave_time</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="n">front_train_leave_time</span> <span class="o">&lt;</span> <span class="n">in_station_time</span> <span class="ow">and</span> <span class="n">back_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">&gt;</span> <span class="n">leave_station_time</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_train_in_station_pos</span><span class="p">(</span><span class="n">front_train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">,</span> <span class="n">back_train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">,</span>
-                              <span class="n">earliest_leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="n">distance_s_e</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">front_train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">leave_time</span> <span class="o">=</span> <span class="n">front_train_in_station</span><span class="o">.</span><span class="n">leave_time</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">leave_time</span> <span class="o">=</span> <span class="n">front_train_in_station</span><span class="o">.</span><span class="n">passenger_in_train_time</span>
-
-        <span class="n">distance_between_trains</span> <span class="o">=</span> <span class="n">back_train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">-</span> <span class="n">leave_time</span>
-        <span class="k">if</span> <span class="n">distance_s_e</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">distance_between_trains</span><span class="p">:</span>
-            <span class="n">earliest_leave_time</span> <span class="o">=</span> <span class="n">leave_time</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">earliest_leave_time</span>
+        <span class="k">return</span> <span class="n">front_train_leave_time</span> <span class="o">&lt;</span> <span class="n">in_station_time</span> <span class="ow">and</span> <span class="n">back_train_in_station_arrive_time</span> <span class="o">&gt;</span> <span class="n">leave_station_time</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_train_in_capacity</span><span class="p">(</span><span class="n">capacity</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrainInStation</span><span class="p">],</span> <span class="n">train</span><span class="p">:</span> <span class="n">Train</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a train is in a specific capacity</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            capacity (List[TrainInStation]): capacity, so a list of TrainInStation objects</span>
+<span class="sd">            train (Train): train to search in the capacity</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the train was found, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">train</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">train_in_station</span> <span class="ow">in</span> <span class="n">capacity</span><span class="p">:</span>
@@ -486,6 +573,16 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">add_new_train_in_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">,</span> <span class="n">train_to_replace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inserts a new TrainInStation objects in the right/best fitting capacity of the station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_station (TrainInStation): TrainInStation object to insert</span>
+<span class="sd">            train_to_replace ([type], optional): train in the station which should replaced with the new train. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if inserting was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">enable</span><span class="p">,</span> <span class="n">delay_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare_free_place</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">enable</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">delay_time</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -520,7 +617,7 @@
             <span class="n">last_train_in_station</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">last_train_in_station</span><span class="p">):</span>
                 <span class="n">leave_time</span> <span class="o">=</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span>
-                <span class="k">if</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="k">if</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span>
                                                                                                  <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="p">):</span>
                     <span class="n">finish</span> <span class="o">=</span> <span class="mi">1</span>
                     <span class="k">break</span>
@@ -552,6 +649,17 @@
             <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">add_train_leave_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="n">Train</span><span class="p">,</span> <span class="n">leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">station_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds the leave time of a stopped train in a specific station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train (Train): train to add the leave time</span>
+<span class="sd">            leave_time (int): the leave time</span>
+<span class="sd">            station_number (int): the id/number of the station</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if adding was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacity_number</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station_number</span><span class="p">]:</span>
             <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
@@ -568,6 +676,16 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">read_trains_from_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">also_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">Station</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the stopped trains at a station and the possible start/leave times</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station_number (int): the id/number of the station</span>
+<span class="sd">            also_not_in_station_trains (bool, optional): True if also trains with no start station should be checked for starting at the station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], Station]: start time of the trains, trains in the station, the station as object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">one_empty_capacity</span> <span class="o">=</span> <span class="mi">0</span>
@@ -596,13 +714,6 @@
                     <span class="n">start_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">Station</span><span class="p">(</span><span class="n">station_number</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station_number</span><span class="p">]))</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">train_leave_time</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">passenger_in_train_time</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span>
 </pre></div>
 
         </details>
@@ -623,6 +734,9 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Station</span><span class="p">],</span> <span class="n">trainlist</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">result</span><span class="p">:</span> <span class="n">Result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Stationlist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stations</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># the stations with capacities</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">result</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trains_not_in_station</span> <span class="o">=</span> <span class="p">[]</span>
@@ -646,8 +760,8 @@
                 <span class="k">if</span> <span class="n">available</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">add_new_train_in_station</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
-                        <span class="s2">&quot;Error: Too many trains in station at beginning!&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: Too many trains in station at beginning!&quot;</span><span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">trains_not_in_station</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">trains_not_in_station</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
@@ -656,7 +770,9 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Initializing Stationlist</p>
+</div>
+
 
                             </div>
                             <div id="Stationlist.compare_free_place" class="classattr">
@@ -673,6 +789,15 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">compare_free_place</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a TrainInStation object can be inserted in the station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_station (TrainInStation): the TrainInStation object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[bool, int]: [True, -1] if station is free, [False, delay_time &gt; 0] if station is free in delay time, [False, -1] if station is blocked</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">station_capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">train_in_station</span><span class="o">.</span><span class="n">station_id</span><span class="p">]</span>
         <span class="n">capacity_minimal_times</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -708,7 +833,7 @@
                         <span class="n">skip_capacity</span> <span class="o">=</span> <span class="mi">1</span>
                         <span class="k">break</span>
 
-                    <span class="k">if</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="p">):</span>
                         <span class="k">return</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
                     <span class="k">elif</span> <span class="p">(</span><span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">arrive_train_time</span> <span class="o">-</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="o">-</span><span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">)</span> <span class="ow">and</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">&gt;=</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">:</span>
@@ -735,7 +860,21 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Checks if a TrainInStation object can be inserted in the station</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>train_in_station (TrainInStation):</strong>  the TrainInStation object</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple[bool, int]: [True, -1] if station is free, [False, delay_time &gt; 0] if station is free in delay time, [False, -1] if station is blocked</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Stationlist.add_new_train_in_station" class="classattr">
@@ -753,6 +892,16 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">add_new_train_in_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">,</span> <span class="n">train_to_replace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inserts a new TrainInStation objects in the right/best fitting capacity of the station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_station (TrainInStation): TrainInStation object to insert</span>
+<span class="sd">            train_to_replace ([type], optional): train in the station which should replaced with the new train. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if inserting was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">enable</span><span class="p">,</span> <span class="n">delay_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare_free_place</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">enable</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">delay_time</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -787,7 +936,7 @@
             <span class="n">last_train_in_station</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">last_train_in_station</span><span class="p">):</span>
                 <span class="n">leave_time</span> <span class="o">=</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">leave_time</span>
-                <span class="k">if</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="k">if</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Stationlist</span><span class="o">.</span><span class="n">_train_in_station_is_free</span><span class="p">(</span><span class="n">leave_time</span><span class="p">,</span> <span class="n">capacity</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span>
                                                                                                  <span class="n">train_in_station</span><span class="o">.</span><span class="n">arrive_train_time</span><span class="p">,</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span><span class="p">):</span>
                     <span class="n">finish</span> <span class="o">=</span> <span class="mi">1</span>
                     <span class="k">break</span>
@@ -821,7 +970,22 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Inserts a new TrainInStation objects in the right/best fitting capacity of the station</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>train_in_station (TrainInStation):</strong>  TrainInStation object to insert</li>
+<li><strong>train_to_replace ([type], optional):</strong>  train in the station which should replaced with the new train. Defaults to None.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if inserting was successful, else False</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Stationlist.add_train_leave_time" class="classattr">
@@ -840,6 +1004,17 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">add_train_leave_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="n">Train</span><span class="p">,</span> <span class="n">leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">station_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds the leave time of a stopped train in a specific station</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train (Train): train to add the leave time</span>
+<span class="sd">            leave_time (int): the leave time</span>
+<span class="sd">            station_number (int): the id/number of the station</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if adding was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacity_number</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stations</span><span class="p">[</span><span class="n">station_number</span><span class="p">]:</span>
             <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
@@ -858,7 +1033,23 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Adds the leave time of a stopped train in a specific station</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>train (Train):</strong>  train to add the leave time</li>
+<li><strong>leave_time (int):</strong>  the leave time</li>
+<li><strong>station_number (int):</strong>  the id/number of the station</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if adding was successful, else False</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Stationlist.read_trains_from_station" class="classattr">
@@ -876,6 +1067,16 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">read_trains_from_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">also_not_in_station_trains</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">],</span> <span class="n">Station</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the stopped trains at a station and the possible start/leave times</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station_number (int): the id/number of the station</span>
+<span class="sd">            also_not_in_station_trains (bool, optional): True if also trains with no start station should be checked for starting at the station. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[List[int], List[Train], Station]: start time of the trains, trains in the station, the station as object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">one_empty_capacity</span> <span class="o">=</span> <span class="mi">0</span>
@@ -908,33 +1109,22 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Retrieves the stopped trains at a station and the possible start/leave times</p>
 
-                            </div>
-                            <div id="Stationlist.train_leave_time" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#Stationlist.train_leave_time">#&nbsp;&nbsp</a>
+<h6 id="args">Args</h6>
 
-                <div class="decorator">@staticmethod</div>
+<ul>
+<li><strong>station_number (int):</strong>  the id/number of the station</li>
+<li><strong>also_not_in_station_trains (bool, optional):</strong>  True if also trains with no start station should be checked for starting at the station. Defaults to True.</li>
+</ul>
 
-            <span class="def">def</span>
-            <span class="name">train_leave_time</span><span class="signature">(
-    train_in_station: <a href="classes/TrainInStation.html#TrainInStation">abfahrt.classes.TrainInStation.TrainInStation</a>
-) -&gt; int</span>:
-    </div>
+<h6 id="returns">Returns</h6>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">train_leave_time</span><span class="p">(</span><span class="n">train_in_station</span><span class="p">:</span> <span class="n">TrainInStation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">passenger_in_train_time</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">train_in_station</span><span class="o">.</span><span class="n">leave_time</span>
-</pre></div>
+<blockquote>
+  <p>Tuple[List[int], List[Train], Station]: start time of the trains, trains in the station, the station as object</p>
+</blockquote>
+</div>
 
-        </details>
-
-    
 
                             </div>
                 </section>

@@ -1,3 +1,10 @@
+"""
+    This is the abfahrt-Package for the InformatiCup 2022.
+
+    Developers:
+
+    Berkehan Ünal, Han, Linda, Lukas Dreyer
+"""
 from abfahrt.classes.Station import Station
 from abfahrt.classes.Train import Train
 from abfahrt.classes.Line import Line

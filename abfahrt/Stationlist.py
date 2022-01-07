@@ -1,3 +1,6 @@
+"""
+    This is Stationlist for managing the stations
+"""
 import sys
 # This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)
 
@@ -18,9 +21,13 @@ T_CAPACITY = 3
 S_ID = 0
 S_CAPACITY = 1
 
+
 class Stationlist:
 
     def __init__(self, stations: List[Station], trainlist: List[Train], result: Result):
+        """
+        Initializing Stationlist
+        """
         self.stations = []  # the stations with capacities
         self.result = result
         self.trains_not_in_station = []

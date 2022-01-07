@@ -64,11 +64,18 @@
                     <h1 class="modulename">
 <a href="./../abfahrt.html">abfahrt</a><wbr>.Linelist    </h1>
 
-                
+                        <div class="docstring"><p>This is Linelist for managing the lines</p>
+</div>
+
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is Linelist for managing the lines</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="c1"># This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="c1"># These can be used as types in annotations using [], each having a unique syntax. (https://docs.python.org/3/library/typing.html)</span>
 
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Train</span> <span class="kn">import</span> <span class="n">Train</span>
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Line</span> <span class="kn">import</span> <span class="n">Line</span>
@@ -78,6 +85,9 @@
 <span class="k">class</span> <span class="nc">Linelist</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Linelist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># the lines with capacities</span>
         <span class="n">linelist</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
@@ -91,6 +101,15 @@
             <span class="n">line_number</span> <span class="o">=</span> <span class="n">line_number</span> <span class="o">+</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">compare_free</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the given TrainInLine object can inserted into the line</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_line (TrainInLine): the TrainInLine object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the TrainInLine object can be inserted, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">earliest_leave_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">line_capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">line_id</span><span class="p">]</span>
 
@@ -122,26 +141,33 @@
         <span class="k">return</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="n">earliest_leave_time</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_train_in_line_is_full</span><span class="p">(</span><span class="n">train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">((</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">end</span> <span class="o">&gt;</span> <span class="n">start</span> <span class="o">&gt;=</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">start</span><span class="p">)</span> <span class="ow">or</span>
-                <span class="p">(</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">end</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="ow">and</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">end</span> <span class="o">&lt;=</span> <span class="n">end</span> <span class="ow">and</span> <span class="p">(</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="o">!=</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">end</span> <span class="ow">or</span> <span class="n">start</span> <span class="o">!=</span> <span class="n">end</span><span class="p">)))</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_train_in_line_pos</span><span class="p">(</span><span class="n">front_train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">back_train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                           <span class="n">earliest_leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="n">distance_s_e</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
-        <span class="n">distance_between_trains</span> <span class="o">=</span> <span class="n">back_train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">front_train_in_line</span><span class="o">.</span><span class="n">end</span>
-        <span class="k">if</span> <span class="n">distance_s_e</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">distance_between_trains</span><span class="p">:</span>
-            <span class="n">earliest_leave_time</span> <span class="o">=</span> <span class="n">front_train_in_line</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">earliest_leave_time</span>
-
-    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_train_in_line_between</span><span class="p">(</span><span class="n">front_train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">back_train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a given time range is free/can be inserted between two TrainInLine objects</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            front_train_in_line (TrainInLine): first TrainInLine object</span>
+<span class="sd">            back_train_in_line (TrainInLine): second TrainInLine object</span>
+<span class="sd">            start (int): start of time range</span>
+<span class="sd">            end (int): end of time range</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the time range is free/possible, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dis</span> <span class="o">=</span> <span class="n">back_train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">front_train_in_line</span><span class="o">.</span><span class="n">end</span>
         <span class="n">dis_needed</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
         <span class="k">return</span> <span class="n">dis_needed</span> <span class="o">&lt;=</span> <span class="n">dis</span>
 
     <span class="k">def</span> <span class="nf">add_new_train_in_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inserts a TrainInLine object into the right/best fitting capacity of the line</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_line (TrainInLine): the TrainInLine object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if inserting was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacity_number</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">line_id</span><span class="p">]:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -174,6 +200,15 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">read_trains_from_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restrieves the trains from a line</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            line_number (int): id of the line</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Train]: trains in the line</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">line_number</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">train_in_line</span> <span class="ow">in</span> <span class="n">capacity</span><span class="p">:</span>
@@ -199,6 +234,9 @@
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Linelist</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Linelist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># the lines with capacities</span>
         <span class="n">linelist</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
@@ -212,6 +250,15 @@
             <span class="n">line_number</span> <span class="o">=</span> <span class="n">line_number</span> <span class="o">+</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">compare_free</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the given TrainInLine object can inserted into the line</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_line (TrainInLine): the TrainInLine object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the TrainInLine object can be inserted, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">earliest_leave_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">line_capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">line_id</span><span class="p">]</span>
 
@@ -243,26 +290,33 @@
         <span class="k">return</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="n">earliest_leave_time</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_train_in_line_is_full</span><span class="p">(</span><span class="n">train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">((</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">end</span> <span class="o">&gt;</span> <span class="n">start</span> <span class="o">&gt;=</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">start</span><span class="p">)</span> <span class="ow">or</span>
-                <span class="p">(</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">end</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="ow">and</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">end</span> <span class="o">&lt;=</span> <span class="n">end</span> <span class="ow">and</span> <span class="p">(</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="o">!=</span> <span class="n">train_in_line</span><span class="o">.</span><span class="n">end</span> <span class="ow">or</span> <span class="n">start</span> <span class="o">!=</span> <span class="n">end</span><span class="p">)))</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_train_in_line_pos</span><span class="p">(</span><span class="n">front_train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">back_train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                           <span class="n">earliest_leave_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="n">distance_s_e</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
-        <span class="n">distance_between_trains</span> <span class="o">=</span> <span class="n">back_train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">front_train_in_line</span><span class="o">.</span><span class="n">end</span>
-        <span class="k">if</span> <span class="n">distance_s_e</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">distance_between_trains</span><span class="p">:</span>
-            <span class="n">earliest_leave_time</span> <span class="o">=</span> <span class="n">front_train_in_line</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">earliest_leave_time</span>
-
-    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_train_in_line_between</span><span class="p">(</span><span class="n">front_train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">back_train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if a given time range is free/can be inserted between two TrainInLine objects</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            front_train_in_line (TrainInLine): first TrainInLine object</span>
+<span class="sd">            back_train_in_line (TrainInLine): second TrainInLine object</span>
+<span class="sd">            start (int): start of time range</span>
+<span class="sd">            end (int): end of time range</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the time range is free/possible, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dis</span> <span class="o">=</span> <span class="n">back_train_in_line</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">front_train_in_line</span><span class="o">.</span><span class="n">end</span>
         <span class="n">dis_needed</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
         <span class="k">return</span> <span class="n">dis_needed</span> <span class="o">&lt;=</span> <span class="n">dis</span>
 
     <span class="k">def</span> <span class="nf">add_new_train_in_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inserts a TrainInLine object into the right/best fitting capacity of the line</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_line (TrainInLine): the TrainInLine object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if inserting was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacity_number</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">line_id</span><span class="p">]:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -295,6 +349,15 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">read_trains_from_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restrieves the trains from a line</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            line_number (int): id of the line</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Train]: trains in the line</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">line_number</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">train_in_line</span> <span class="ow">in</span> <span class="n">capacity</span><span class="p">:</span>
@@ -317,6 +380,9 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Line</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing Linelist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># the lines with capacities</span>
         <span class="n">linelist</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
@@ -332,7 +398,9 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Initializing Linelist</p>
+</div>
+
 
                             </div>
                             <div id="Linelist.compare_free" class="classattr">
@@ -346,6 +414,15 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">compare_free</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the given TrainInLine object can inserted into the line</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_line (TrainInLine): the TrainInLine object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if the TrainInLine object can be inserted, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">earliest_leave_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">line_capacities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">line_id</span><span class="p">]</span>
 
@@ -379,7 +456,21 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Checks if the given TrainInLine object can inserted into the line</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>train_in_line (TrainInLine):</strong>  the TrainInLine object</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if the TrainInLine object can be inserted, else False</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Linelist.add_new_train_in_line" class="classattr">
@@ -393,6 +484,15 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">add_new_train_in_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_in_line</span><span class="p">:</span> <span class="n">TrainInLine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inserts a TrainInLine object into the right/best fitting capacity of the line</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_in_line (TrainInLine): the TrainInLine object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True, if inserting was successful, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">capacity_number</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">train_in_line</span><span class="o">.</span><span class="n">line_id</span><span class="p">]:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -427,7 +527,21 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Inserts a TrainInLine object into the right/best fitting capacity of the line</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>train_in_line (TrainInLine):</strong>  the TrainInLine object</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>bool: True, if inserting was successful, else False</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Linelist.read_trains_from_line" class="classattr">
@@ -441,6 +555,15 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">read_trains_from_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Train</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restrieves the trains from a line</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            line_number (int): id of the line</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Train]: trains in the line</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">capacity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">line_number</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">train_in_line</span> <span class="ow">in</span> <span class="n">capacity</span><span class="p">:</span>
@@ -451,7 +574,21 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Restrieves the trains from a line</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>line_number (int):</strong>  id of the line</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>List[Train]: trains in the line</p>
+</blockquote>
+</div>
+
 
                             </div>
                 </section>

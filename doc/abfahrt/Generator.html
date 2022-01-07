@@ -43,9 +43,6 @@
                                 <a class="function" href="#Generator.random_input_generate_file">random_input_generate_file</a>
                         </li>
                         <li>
-                                <a class="function" href="#Generator.write_objects_to_file">write_objects_to_file</a>
-                        </li>
-                        <li>
                                 <a class="function" href="#Generator.random_input_generate">random_input_generate</a>
                         </li>
                         <li>
@@ -79,12 +76,16 @@
                     <h1 class="modulename">
 <a href="./../abfahrt.html">abfahrt</a><wbr>.Generator    </h1>
 
-                
+                        <div class="docstring"><p>This is Generator for generating random input</p>
+</div>
+
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="c1"># This module implements pseudo-random number generators for various distributions. (https://docs.python.org/3/library/random.html)</span>
+            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is Generator for generating random input</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">random</span>
-
+<span class="c1"># This module implements pseudo-random number generators for various distributions. (https://docs.python.org/3/library/random.html)</span>
 
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Passenger</span> <span class="kn">import</span> <span class="n">Passenger</span>
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Station</span> <span class="kn">import</span> <span class="n">Station</span>
@@ -94,7 +95,24 @@
 
 <span class="k">class</span> <span class="nc">Generator</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">_list_to_class_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_properties</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">stations</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing the Generator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_list_to_class_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_properties</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts list object to specific class object</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            list_properties (list): list of properties of the object</span>
+<span class="sd">            class_name (str): class name</span>
+<span class="sd">            stations (list): stations</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            any: class object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_class</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">class_name</span><span class="p">]</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_properties</span><span class="p">)):</span>
@@ -109,7 +127,26 @@
 
         <span class="k">return</span> <span class="n">_class</span><span class="p">(</span><span class="o">*</span><span class="n">list_properties</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">random_input_generate_as_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">random_input_generate_as_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates random input and returns it as stations, lines, trains, passengers objects</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size_station (int, optional): amount of stations. Defaults to 10.</span>
+<span class="sd">            size_lines (int, optional): amount of lines. Defaults to 20.</span>
+<span class="sd">            size_trains (int, optional): amount of trains. Defaults to 10.</span>
+<span class="sd">            size_pa (int, optional): amount of passengers. Defaults to 10.</span>
+<span class="sd">            sc_max (int, optional): max station capacity. Defaults to 10.</span>
+<span class="sd">            lc_max (int, optional): max line capacity. Defaults to 2.</span>
+<span class="sd">            ll_max (int, optional): max line length. Defaults to 10.</span>
+<span class="sd">            tc_max (int, optional): max train capacity. Defaults to 20.</span>
+<span class="sd">            pgs_max (int, optional): max passenger group size. Defaults to 10.</span>
+<span class="sd">            ptr_max (int, optional): max passenger target round. Defaults to 10.</span>
+<span class="sd">            max_speed_train (int, optional): max train speed. Defaults to 10.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: stations, lines, trains, passengers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
@@ -136,35 +173,53 @@
 
         <span class="k">return</span> <span class="p">[</span><span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">passengers</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">random_input_generate_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="p">,</span> <span class="n">size_lines</span><span class="p">,</span> <span class="n">size_trains</span><span class="p">,</span> <span class="n">size_pa</span><span class="p">,</span> <span class="n">sc_max</span><span class="p">,</span> <span class="n">lc_max</span><span class="p">,</span> <span class="n">ll_max</span><span class="p">,</span> <span class="n">tc_max</span><span class="p">,</span> <span class="n">pgs_max</span><span class="p">,</span> <span class="n">ptr_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">random_input_generate_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gnerates random input with entities stations, lines, trains, passengers and prints it in a file</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size_station (int, optional): amount of stations. Defaults to 10.</span>
+<span class="sd">            size_lines (int, optional): amount of lines. Defaults to 20.</span>
+<span class="sd">            size_trains (int, optional): amount of trains. Defaults to 10.</span>
+<span class="sd">            size_pa (int, optional): amount of passengers. Defaults to 10.</span>
+<span class="sd">            sc_max (int, optional): max station capacity. Defaults to 10.</span>
+<span class="sd">            lc_max (int, optional): max line capacity. Defaults to 2.</span>
+<span class="sd">            ll_max (int, optional): max line length. Defaults to 10.</span>
+<span class="sd">            tc_max (int, optional): max train capacity. Defaults to 20.</span>
+<span class="sd">            pgs_max (int, optional): max passenger group size. Defaults to 10.</span>
+<span class="sd">            ptr_max (int, optional): max passenger target round. Defaults to 10.</span>
+<span class="sd">            max_speed_train (int, optional): max train speed. Defaults to 10.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_input_generate</span><span class="p">(</span>
             <span class="n">size_station</span><span class="p">,</span> <span class="n">size_lines</span><span class="p">,</span> <span class="n">size_trains</span><span class="p">,</span> <span class="n">size_pa</span><span class="p">,</span> <span class="n">sc_max</span><span class="p">,</span> <span class="n">lc_max</span><span class="p">,</span> <span class="n">ll_max</span><span class="p">,</span> <span class="n">tc_max</span><span class="p">,</span> <span class="n">pgs_max</span><span class="p">,</span> <span class="n">ptr_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">)</span>
 
         <span class="n">out_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;output_generated.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Stations]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Lines]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Trains]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Passengers]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">write_objects_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_objects</span><span class="p">,</span> <span class="n">out_file</span><span class="p">):</span>
-
+    <span class="k">def</span> <span class="nf">_write_objects_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_objects</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">_object</span> <span class="ow">in</span> <span class="n">_objects</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">_object</span><span class="p">:</span>
@@ -178,14 +233,14 @@
                     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
                 <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">_depth_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">,</span> <span class="n">visited</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_depth_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">visited</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">visited</span><span class="p">[</span><span class="n">station</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="nb">next</span> <span class="ow">in</span> <span class="n">station_lines</span><span class="p">[</span><span class="n">station</span><span class="p">]:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">visited</span><span class="p">[</span><span class="nb">next</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_depth_search</span><span class="p">(</span><span class="nb">next</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">_check_all_stations_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_check_all_stations_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">visited</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)):</span>
             <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -197,7 +252,26 @@
             <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">random_input_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="p">,</span> <span class="n">size_lines</span><span class="p">,</span> <span class="n">size_trains</span><span class="p">,</span> <span class="n">size_pa</span><span class="p">,</span> <span class="n">sc_max</span><span class="p">,</span> <span class="n">lc_max</span><span class="p">,</span> <span class="n">ll_max</span><span class="p">,</span> <span class="n">tc_max</span><span class="p">,</span> <span class="n">pgs_max</span><span class="p">,</span> <span class="n">ptr_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">random_input_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gnerates random input with entities stations, lines, trains, passengers as list objects</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size_station (int, optional): amount of stations. Defaults to 10.</span>
+<span class="sd">            size_lines (int, optional): amount of lines. Defaults to 20.</span>
+<span class="sd">            size_trains (int, optional): amount of trains. Defaults to 10.</span>
+<span class="sd">            size_pa (int, optional): amount of passengers. Defaults to 10.</span>
+<span class="sd">            sc_max (int, optional): max station capacity. Defaults to 10.</span>
+<span class="sd">            lc_max (int, optional): max line capacity. Defaults to 2.</span>
+<span class="sd">            ll_max (int, optional): max line length. Defaults to 10.</span>
+<span class="sd">            tc_max (int, optional): max train capacity. Defaults to 20.</span>
+<span class="sd">            pgs_max (int, optional): max passenger group size. Defaults to 10.</span>
+<span class="sd">            ptr_max (int, optional): max passenger target round. Defaults to 10.</span>
+<span class="sd">            max_speed_train (int, optional): max train speed. Defaults to 10.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: stations, lines, trains, passengers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
@@ -285,7 +359,16 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">passengers</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">random_station_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">station_capacity_max</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            station_capacity_max ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">station</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">station_name</span> <span class="o">=</span> <span class="s2">&quot;S&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
         <span class="n">station_capacity</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">station_capacity_max</span><span class="p">)</span>
@@ -293,7 +376,19 @@
         <span class="k">return</span> <span class="n">station</span>
 
     <span class="k">def</span> <span class="nf">random_line_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">line_capacity_max</span><span class="p">,</span> <span class="n">line_length_max</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            stations ([type]): [description]</span>
+<span class="sd">            lines ([type]): [description]</span>
+<span class="sd">            line_capacity_max ([type]): [description]</span>
+<span class="sd">            line_length_max ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_stations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
 
         <span class="n">line_id</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
@@ -321,7 +416,19 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">line_id</span><span class="p">,</span> <span class="n">line_start</span><span class="p">,</span> <span class="n">line_end</span><span class="p">,</span> <span class="n">line_length</span><span class="p">,</span> <span class="n">line_capacity</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">random_train_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">train_capacity_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            stations ([type]): [description]</span>
+<span class="sd">            trains ([type]): [description]</span>
+<span class="sd">            train_capacity_max ([type]): [description]</span>
+<span class="sd">            max_speed_train ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_stations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
         <span class="n">train_id</span> <span class="o">=</span> <span class="s2">&quot;T&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
         <span class="n">train_start_station</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span>
@@ -348,7 +455,19 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">train_id</span><span class="p">,</span> <span class="n">train_start_station</span><span class="p">,</span> <span class="n">train_speed</span><span class="p">,</span> <span class="n">train_capacity</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">random_passenger_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">passengers</span><span class="p">,</span> <span class="n">group_size</span><span class="p">,</span> <span class="n">target_round</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            stations ([type]): [description]</span>
+<span class="sd">            passengers ([type]): [description]</span>
+<span class="sd">            group_size ([type]): [description]</span>
+<span class="sd">            target_round ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_stations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
         <span class="n">passenger_id</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
 
@@ -379,7 +498,24 @@
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Generator</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">_list_to_class_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_properties</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">stations</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing the Generator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_list_to_class_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_properties</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts list object to specific class object</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            list_properties (list): list of properties of the object</span>
+<span class="sd">            class_name (str): class name</span>
+<span class="sd">            stations (list): stations</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            any: class object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_class</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">class_name</span><span class="p">]</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_properties</span><span class="p">)):</span>
@@ -394,7 +530,26 @@
 
         <span class="k">return</span> <span class="n">_class</span><span class="p">(</span><span class="o">*</span><span class="n">list_properties</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">random_input_generate_as_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">random_input_generate_as_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates random input and returns it as stations, lines, trains, passengers objects</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size_station (int, optional): amount of stations. Defaults to 10.</span>
+<span class="sd">            size_lines (int, optional): amount of lines. Defaults to 20.</span>
+<span class="sd">            size_trains (int, optional): amount of trains. Defaults to 10.</span>
+<span class="sd">            size_pa (int, optional): amount of passengers. Defaults to 10.</span>
+<span class="sd">            sc_max (int, optional): max station capacity. Defaults to 10.</span>
+<span class="sd">            lc_max (int, optional): max line capacity. Defaults to 2.</span>
+<span class="sd">            ll_max (int, optional): max line length. Defaults to 10.</span>
+<span class="sd">            tc_max (int, optional): max train capacity. Defaults to 20.</span>
+<span class="sd">            pgs_max (int, optional): max passenger group size. Defaults to 10.</span>
+<span class="sd">            ptr_max (int, optional): max passenger target round. Defaults to 10.</span>
+<span class="sd">            max_speed_train (int, optional): max train speed. Defaults to 10.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: stations, lines, trains, passengers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
@@ -421,35 +576,53 @@
 
         <span class="k">return</span> <span class="p">[</span><span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">passengers</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">random_input_generate_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="p">,</span> <span class="n">size_lines</span><span class="p">,</span> <span class="n">size_trains</span><span class="p">,</span> <span class="n">size_pa</span><span class="p">,</span> <span class="n">sc_max</span><span class="p">,</span> <span class="n">lc_max</span><span class="p">,</span> <span class="n">ll_max</span><span class="p">,</span> <span class="n">tc_max</span><span class="p">,</span> <span class="n">pgs_max</span><span class="p">,</span> <span class="n">ptr_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">random_input_generate_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gnerates random input with entities stations, lines, trains, passengers and prints it in a file</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size_station (int, optional): amount of stations. Defaults to 10.</span>
+<span class="sd">            size_lines (int, optional): amount of lines. Defaults to 20.</span>
+<span class="sd">            size_trains (int, optional): amount of trains. Defaults to 10.</span>
+<span class="sd">            size_pa (int, optional): amount of passengers. Defaults to 10.</span>
+<span class="sd">            sc_max (int, optional): max station capacity. Defaults to 10.</span>
+<span class="sd">            lc_max (int, optional): max line capacity. Defaults to 2.</span>
+<span class="sd">            ll_max (int, optional): max line length. Defaults to 10.</span>
+<span class="sd">            tc_max (int, optional): max train capacity. Defaults to 20.</span>
+<span class="sd">            pgs_max (int, optional): max passenger group size. Defaults to 10.</span>
+<span class="sd">            ptr_max (int, optional): max passenger target round. Defaults to 10.</span>
+<span class="sd">            max_speed_train (int, optional): max train speed. Defaults to 10.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_input_generate</span><span class="p">(</span>
             <span class="n">size_station</span><span class="p">,</span> <span class="n">size_lines</span><span class="p">,</span> <span class="n">size_trains</span><span class="p">,</span> <span class="n">size_pa</span><span class="p">,</span> <span class="n">sc_max</span><span class="p">,</span> <span class="n">lc_max</span><span class="p">,</span> <span class="n">ll_max</span><span class="p">,</span> <span class="n">tc_max</span><span class="p">,</span> <span class="n">pgs_max</span><span class="p">,</span> <span class="n">ptr_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">)</span>
 
         <span class="n">out_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;output_generated.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Stations]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Lines]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Trains]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Passengers]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">write_objects_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_objects</span><span class="p">,</span> <span class="n">out_file</span><span class="p">):</span>
-
+    <span class="k">def</span> <span class="nf">_write_objects_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_objects</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">_object</span> <span class="ow">in</span> <span class="n">_objects</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">_object</span><span class="p">:</span>
@@ -463,14 +636,14 @@
                     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
                 <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">_depth_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">,</span> <span class="n">visited</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_depth_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">visited</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">visited</span><span class="p">[</span><span class="n">station</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="nb">next</span> <span class="ow">in</span> <span class="n">station_lines</span><span class="p">[</span><span class="n">station</span><span class="p">]:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">visited</span><span class="p">[</span><span class="nb">next</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_depth_search</span><span class="p">(</span><span class="nb">next</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">_check_all_stations_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_check_all_stations_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stations</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">station_lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">visited</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)):</span>
             <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -482,7 +655,26 @@
             <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">random_input_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="p">,</span> <span class="n">size_lines</span><span class="p">,</span> <span class="n">size_trains</span><span class="p">,</span> <span class="n">size_pa</span><span class="p">,</span> <span class="n">sc_max</span><span class="p">,</span> <span class="n">lc_max</span><span class="p">,</span> <span class="n">ll_max</span><span class="p">,</span> <span class="n">tc_max</span><span class="p">,</span> <span class="n">pgs_max</span><span class="p">,</span> <span class="n">ptr_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">random_input_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gnerates random input with entities stations, lines, trains, passengers as list objects</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size_station (int, optional): amount of stations. Defaults to 10.</span>
+<span class="sd">            size_lines (int, optional): amount of lines. Defaults to 20.</span>
+<span class="sd">            size_trains (int, optional): amount of trains. Defaults to 10.</span>
+<span class="sd">            size_pa (int, optional): amount of passengers. Defaults to 10.</span>
+<span class="sd">            sc_max (int, optional): max station capacity. Defaults to 10.</span>
+<span class="sd">            lc_max (int, optional): max line capacity. Defaults to 2.</span>
+<span class="sd">            ll_max (int, optional): max line length. Defaults to 10.</span>
+<span class="sd">            tc_max (int, optional): max train capacity. Defaults to 20.</span>
+<span class="sd">            pgs_max (int, optional): max passenger group size. Defaults to 10.</span>
+<span class="sd">            ptr_max (int, optional): max passenger target round. Defaults to 10.</span>
+<span class="sd">            max_speed_train (int, optional): max train speed. Defaults to 10.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: stations, lines, trains, passengers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
@@ -570,7 +762,16 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">passengers</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">random_station_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">station_capacity_max</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            station_capacity_max ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">station</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">station_name</span> <span class="o">=</span> <span class="s2">&quot;S&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
         <span class="n">station_capacity</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">station_capacity_max</span><span class="p">)</span>
@@ -578,7 +779,19 @@
         <span class="k">return</span> <span class="n">station</span>
 
     <span class="k">def</span> <span class="nf">random_line_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">line_capacity_max</span><span class="p">,</span> <span class="n">line_length_max</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            stations ([type]): [description]</span>
+<span class="sd">            lines ([type]): [description]</span>
+<span class="sd">            line_capacity_max ([type]): [description]</span>
+<span class="sd">            line_length_max ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_stations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
 
         <span class="n">line_id</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
@@ -606,7 +819,19 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">line_id</span><span class="p">,</span> <span class="n">line_start</span><span class="p">,</span> <span class="n">line_end</span><span class="p">,</span> <span class="n">line_length</span><span class="p">,</span> <span class="n">line_capacity</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">random_train_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">train_capacity_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            stations ([type]): [description]</span>
+<span class="sd">            trains ([type]): [description]</span>
+<span class="sd">            train_capacity_max ([type]): [description]</span>
+<span class="sd">            max_speed_train ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_stations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
         <span class="n">train_id</span> <span class="o">=</span> <span class="s2">&quot;T&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
         <span class="n">train_start_station</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span>
@@ -633,7 +858,19 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">train_id</span><span class="p">,</span> <span class="n">train_start_station</span><span class="p">,</span> <span class="n">train_speed</span><span class="p">,</span> <span class="n">train_capacity</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">random_passenger_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">passengers</span><span class="p">,</span> <span class="n">group_size</span><span class="p">,</span> <span class="n">target_round</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            stations ([type]): [description]</span>
+<span class="sd">            passengers ([type]): [description]</span>
+<span class="sd">            group_size ([type]): [description]</span>
+<span class="sd">            target_round ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_stations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
         <span class="n">passenger_id</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
 
@@ -659,8 +896,20 @@
             <span class="name">Generator</span><span class="signature">()</span>
     </div>
 
-        
-    
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializing the Generator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Initializing the Generator</p>
+</div>
+
 
                             </div>
                             <div id="Generator.random_input_generate_as_classes" class="classattr">
@@ -681,12 +930,31 @@
     pgs_max=10,
     ptr_max=10,
     max_speed_train=10
-)</span>:
+) -&gt; list</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_input_generate_as_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_input_generate_as_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates random input and returns it as stations, lines, trains, passengers objects</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size_station (int, optional): amount of stations. Defaults to 10.</span>
+<span class="sd">            size_lines (int, optional): amount of lines. Defaults to 20.</span>
+<span class="sd">            size_trains (int, optional): amount of trains. Defaults to 10.</span>
+<span class="sd">            size_pa (int, optional): amount of passengers. Defaults to 10.</span>
+<span class="sd">            sc_max (int, optional): max station capacity. Defaults to 10.</span>
+<span class="sd">            lc_max (int, optional): max line capacity. Defaults to 2.</span>
+<span class="sd">            ll_max (int, optional): max line length. Defaults to 10.</span>
+<span class="sd">            tc_max (int, optional): max train capacity. Defaults to 20.</span>
+<span class="sd">            pgs_max (int, optional): max passenger group size. Defaults to 10.</span>
+<span class="sd">            ptr_max (int, optional): max passenger target round. Defaults to 10.</span>
+<span class="sd">            max_speed_train (int, optional): max train speed. Defaults to 10.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: stations, lines, trains, passengers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
@@ -716,7 +984,31 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Generates random input and returns it as stations, lines, trains, passengers objects</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>size_station (int, optional):</strong>  amount of stations. Defaults to 10.</li>
+<li><strong>size_lines (int, optional):</strong>  amount of lines. Defaults to 20.</li>
+<li><strong>size_trains (int, optional):</strong>  amount of trains. Defaults to 10.</li>
+<li><strong>size_pa (int, optional):</strong>  amount of passengers. Defaults to 10.</li>
+<li><strong>sc_max (int, optional):</strong>  max station capacity. Defaults to 10.</li>
+<li><strong>lc_max (int, optional):</strong>  max line capacity. Defaults to 2.</li>
+<li><strong>ll_max (int, optional):</strong>  max line length. Defaults to 10.</li>
+<li><strong>tc_max (int, optional):</strong>  max train capacity. Defaults to 20.</li>
+<li><strong>pgs_max (int, optional):</strong>  max passenger group size. Defaults to 10.</li>
+<li><strong>ptr_max (int, optional):</strong>  max passenger target round. Defaults to 10.</li>
+<li><strong>max_speed_train (int, optional):</strong>  max train speed. Defaults to 10.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>list: stations, lines, trains, passengers</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Generator.random_input_generate_file" class="classattr">
@@ -726,84 +1018,96 @@
             <span class="def">def</span>
             <span class="name">random_input_generate_file</span><span class="signature">(
     self,
-    size_station,
-    size_lines,
-    size_trains,
-    size_pa,
-    sc_max,
-    lc_max,
-    ll_max,
-    tc_max,
-    pgs_max,
-    ptr_max,
-    max_speed_train
-)</span>:
+    size_station=10,
+    size_lines=20,
+    size_trains=10,
+    size_pa=10,
+    sc_max=10,
+    lc_max=10,
+    ll_max=10,
+    tc_max=10,
+    pgs_max=10,
+    ptr_max=10,
+    max_speed_train=10
+) -&gt; None</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_input_generate_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="p">,</span> <span class="n">size_lines</span><span class="p">,</span> <span class="n">size_trains</span><span class="p">,</span> <span class="n">size_pa</span><span class="p">,</span> <span class="n">sc_max</span><span class="p">,</span> <span class="n">lc_max</span><span class="p">,</span> <span class="n">ll_max</span><span class="p">,</span> <span class="n">tc_max</span><span class="p">,</span> <span class="n">pgs_max</span><span class="p">,</span> <span class="n">ptr_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_input_generate_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gnerates random input with entities stations, lines, trains, passengers and prints it in a file</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size_station (int, optional): amount of stations. Defaults to 10.</span>
+<span class="sd">            size_lines (int, optional): amount of lines. Defaults to 20.</span>
+<span class="sd">            size_trains (int, optional): amount of trains. Defaults to 10.</span>
+<span class="sd">            size_pa (int, optional): amount of passengers. Defaults to 10.</span>
+<span class="sd">            sc_max (int, optional): max station capacity. Defaults to 10.</span>
+<span class="sd">            lc_max (int, optional): max line capacity. Defaults to 2.</span>
+<span class="sd">            ll_max (int, optional): max line length. Defaults to 10.</span>
+<span class="sd">            tc_max (int, optional): max train capacity. Defaults to 20.</span>
+<span class="sd">            pgs_max (int, optional): max passenger group size. Defaults to 10.</span>
+<span class="sd">            ptr_max (int, optional): max passenger target round. Defaults to 10.</span>
+<span class="sd">            max_speed_train (int, optional): max train speed. Defaults to 10.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_input_generate</span><span class="p">(</span>
             <span class="n">size_station</span><span class="p">,</span> <span class="n">size_lines</span><span class="p">,</span> <span class="n">size_trains</span><span class="p">,</span> <span class="n">size_pa</span><span class="p">,</span> <span class="n">sc_max</span><span class="p">,</span> <span class="n">lc_max</span><span class="p">,</span> <span class="n">ll_max</span><span class="p">,</span> <span class="n">tc_max</span><span class="p">,</span> <span class="n">pgs_max</span><span class="p">,</span> <span class="n">ptr_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">)</span>
 
         <span class="n">out_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;output_generated.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Stations]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Lines]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Trains]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;[Passengers]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_objects_to_file</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">out_file</span><span class="p">)</span>
 
         <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>Gnerates random input with entities stations, lines, trains, passengers and prints it in a file</p>
 
-                            </div>
-                            <div id="Generator.write_objects_to_file" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#Generator.write_objects_to_file">#&nbsp;&nbsp</a>
+<h6 id="args">Args</h6>
 
-        
-            <span class="def">def</span>
-            <span class="name">write_objects_to_file</span><span class="signature">(self, _objects, out_file)</span>:
-    </div>
+<ul>
+<li><strong>size_station (int, optional):</strong>  amount of stations. Defaults to 10.</li>
+<li><strong>size_lines (int, optional):</strong>  amount of lines. Defaults to 20.</li>
+<li><strong>size_trains (int, optional):</strong>  amount of trains. Defaults to 10.</li>
+<li><strong>size_pa (int, optional):</strong>  amount of passengers. Defaults to 10.</li>
+<li><strong>sc_max (int, optional):</strong>  max station capacity. Defaults to 10.</li>
+<li><strong>lc_max (int, optional):</strong>  max line capacity. Defaults to 2.</li>
+<li><strong>ll_max (int, optional):</strong>  max line length. Defaults to 10.</li>
+<li><strong>tc_max (int, optional):</strong>  max train capacity. Defaults to 20.</li>
+<li><strong>pgs_max (int, optional):</strong>  max passenger group size. Defaults to 10.</li>
+<li><strong>ptr_max (int, optional):</strong>  max passenger target round. Defaults to 10.</li>
+<li><strong>max_speed_train (int, optional):</strong>  max train speed. Defaults to 10.</li>
+</ul>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">write_objects_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_objects</span><span class="p">,</span> <span class="n">out_file</span><span class="p">):</span>
+<h6 id="returns">Returns</h6>
 
-        <span class="k">for</span> <span class="n">_object</span> <span class="ow">in</span> <span class="n">_objects</span><span class="p">:</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">_object</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
-                    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">attr</span><span class="p">))</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">attr</span><span class="p">))</span>
-                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">_object</span><span class="p">):</span>
-                    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
+<blockquote>
+  <p>None</p>
+</blockquote>
+</div>
 
-        </details>
-
-    
 
                             </div>
                             <div id="Generator.random_input_generate" class="classattr">
@@ -813,23 +1117,42 @@
             <span class="def">def</span>
             <span class="name">random_input_generate</span><span class="signature">(
     self,
-    size_station,
-    size_lines,
-    size_trains,
-    size_pa,
-    sc_max,
-    lc_max,
-    ll_max,
-    tc_max,
-    pgs_max,
-    ptr_max,
-    max_speed_train
-)</span>:
+    size_station=10,
+    size_lines=20,
+    size_trains=10,
+    size_pa=10,
+    sc_max=10,
+    lc_max=10,
+    ll_max=10,
+    tc_max=10,
+    pgs_max=10,
+    ptr_max=10,
+    max_speed_train=10
+) -&gt; list</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_input_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="p">,</span> <span class="n">size_lines</span><span class="p">,</span> <span class="n">size_trains</span><span class="p">,</span> <span class="n">size_pa</span><span class="p">,</span> <span class="n">sc_max</span><span class="p">,</span> <span class="n">lc_max</span><span class="p">,</span> <span class="n">ll_max</span><span class="p">,</span> <span class="n">tc_max</span><span class="p">,</span> <span class="n">pgs_max</span><span class="p">,</span> <span class="n">ptr_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_input_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_station</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_lines</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">size_trains</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_pa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ll_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tc_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pgs_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ptr_max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gnerates random input with entities stations, lines, trains, passengers as list objects</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            size_station (int, optional): amount of stations. Defaults to 10.</span>
+<span class="sd">            size_lines (int, optional): amount of lines. Defaults to 20.</span>
+<span class="sd">            size_trains (int, optional): amount of trains. Defaults to 10.</span>
+<span class="sd">            size_pa (int, optional): amount of passengers. Defaults to 10.</span>
+<span class="sd">            sc_max (int, optional): max station capacity. Defaults to 10.</span>
+<span class="sd">            lc_max (int, optional): max line capacity. Defaults to 2.</span>
+<span class="sd">            ll_max (int, optional): max line length. Defaults to 10.</span>
+<span class="sd">            tc_max (int, optional): max train capacity. Defaults to 20.</span>
+<span class="sd">            pgs_max (int, optional): max passenger group size. Defaults to 10.</span>
+<span class="sd">            ptr_max (int, optional): max passenger target round. Defaults to 10.</span>
+<span class="sd">            max_speed_train (int, optional): max train speed. Defaults to 10.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: stations, lines, trains, passengers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">trains</span> <span class="o">=</span> <span class="p">[]</span>
@@ -919,7 +1242,31 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Gnerates random input with entities stations, lines, trains, passengers as list objects</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>size_station (int, optional):</strong>  amount of stations. Defaults to 10.</li>
+<li><strong>size_lines (int, optional):</strong>  amount of lines. Defaults to 20.</li>
+<li><strong>size_trains (int, optional):</strong>  amount of trains. Defaults to 10.</li>
+<li><strong>size_pa (int, optional):</strong>  amount of passengers. Defaults to 10.</li>
+<li><strong>sc_max (int, optional):</strong>  max station capacity. Defaults to 10.</li>
+<li><strong>lc_max (int, optional):</strong>  max line capacity. Defaults to 2.</li>
+<li><strong>ll_max (int, optional):</strong>  max line length. Defaults to 10.</li>
+<li><strong>tc_max (int, optional):</strong>  max train capacity. Defaults to 20.</li>
+<li><strong>pgs_max (int, optional):</strong>  max passenger group size. Defaults to 10.</li>
+<li><strong>ptr_max (int, optional):</strong>  max passenger target round. Defaults to 10.</li>
+<li><strong>max_speed_train (int, optional):</strong>  max train speed. Defaults to 10.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>list: stations, lines, trains, passengers</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Generator.random_station_generate" class="classattr">
@@ -933,7 +1280,16 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_station_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">station_capacity_max</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            station_capacity_max ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">station</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">station_name</span> <span class="o">=</span> <span class="s2">&quot;S&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
         <span class="n">station_capacity</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">station_capacity_max</span><span class="p">)</span>
@@ -943,7 +1299,22 @@
 
         </details>
 
-    
+            <div class="docstring"><p>[summary]</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>number ([type]):</strong>  [description]</li>
+<li><strong>station_capacity_max ([type]):</strong>  [description]</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>[type]: [description]</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Generator.random_line_generate" class="classattr">
@@ -957,7 +1328,19 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_line_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">line_capacity_max</span><span class="p">,</span> <span class="n">line_length_max</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            stations ([type]): [description]</span>
+<span class="sd">            lines ([type]): [description]</span>
+<span class="sd">            line_capacity_max ([type]): [description]</span>
+<span class="sd">            line_length_max ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_stations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
 
         <span class="n">line_id</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
@@ -987,7 +1370,25 @@
 
         </details>
 
-    
+            <div class="docstring"><p>[summary]</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>number ([type]):</strong>  [description]</li>
+<li><strong>stations ([type]):</strong>  [description]</li>
+<li><strong>lines ([type]):</strong>  [description]</li>
+<li><strong>line_capacity_max ([type]):</strong>  [description]</li>
+<li><strong>line_length_max ([type]):</strong>  [description]</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>[type]: [description]</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Generator.random_train_generate" class="classattr">
@@ -1001,7 +1402,19 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_train_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">train_capacity_max</span><span class="p">,</span> <span class="n">max_speed_train</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            stations ([type]): [description]</span>
+<span class="sd">            trains ([type]): [description]</span>
+<span class="sd">            train_capacity_max ([type]): [description]</span>
+<span class="sd">            max_speed_train ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_stations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
         <span class="n">train_id</span> <span class="o">=</span> <span class="s2">&quot;T&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
         <span class="n">train_start_station</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span>
@@ -1030,7 +1443,25 @@
 
         </details>
 
-    
+            <div class="docstring"><p>[summary]</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>number ([type]):</strong>  [description]</li>
+<li><strong>stations ([type]):</strong>  [description]</li>
+<li><strong>trains ([type]):</strong>  [description]</li>
+<li><strong>train_capacity_max ([type]):</strong>  [description]</li>
+<li><strong>max_speed_train ([type]):</strong>  [description]</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>[type]: [description]</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Generator.random_passenger_generate" class="classattr">
@@ -1044,7 +1475,19 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_passenger_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">passengers</span><span class="p">,</span> <span class="n">group_size</span><span class="p">,</span> <span class="n">target_round</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        [summary]</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            number ([type]): [description]</span>
+<span class="sd">            stations ([type]): [description]</span>
+<span class="sd">            passengers ([type]): [description]</span>
+<span class="sd">            group_size ([type]): [description]</span>
+<span class="sd">            target_round ([type]): [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [type]: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_stations</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
         <span class="n">passenger_id</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
 
@@ -1061,7 +1504,25 @@
 
         </details>
 
-    
+            <div class="docstring"><p>[summary]</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>number ([type]):</strong>  [description]</li>
+<li><strong>stations ([type]):</strong>  [description]</li>
+<li><strong>passengers ([type]):</strong>  [description]</li>
+<li><strong>group_size ([type]):</strong>  [description]</li>
+<li><strong>target_round ([type]):</strong>  [description]</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>[type]: [description]</p>
+</blockquote>
+</div>
+
 
                             </div>
                 </section>

@@ -1,3 +1,6 @@
+"""
+    This is Groups for managing and sorting the passengers
+"""
 from typing import List
 # This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)
 from typing import Tuple
@@ -7,9 +10,13 @@ from abfahrt.classes.Station import Station
 from abfahrt.classes.Line import Line
 from abfahrt.classes.Passenger import Passenger
 
+
 class Groups:
 
     def __init__(self, passengers: List[Passenger]):
+        """
+        Initializing Groups
+        """
         self.route = []
         if type(passengers) != list:
             return
@@ -53,7 +60,7 @@ class Groups:
 
         Returns:
             Passenger (List): List of all Passengers
-        """      
+        """
         if len(self.route) == 0:
             return None
         self.route.sort(key=self._get_min_target_round)
@@ -83,7 +90,7 @@ class Groups:
 
         Returns:
            int: largest Target Round
-        """        
+        """
         if len(group) == 0:
             return None
         passenger_max_time = group[0]
@@ -101,8 +108,8 @@ class Groups:
 
         Returns:
            bool: Has splitting worked?, true = splitting worked, false = splitting has not worked
-        """  
-        
+        """
+
         if group not in self.route:
             return False
         self.route.remove(group)

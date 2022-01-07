@@ -61,20 +61,21 @@
                 
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="c1"># The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes. This module intends to replace several older modules and functions. (https://docs.python.org/3/library/subprocess.html)</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
+            <div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="c1"># The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes. This module intends to replace several older modules and functions. (https://docs.python.org/3/library/subprocess.html)</span>
 
-<span class="c1"># The argparse module makes it easy to write user-friendly command-line interfaces. The program defines what arguments it requires, and argparse will figure out how to parse those out of sys.argv. The argparse module also automatically generates help and usage messages and issues errors when users give the program invalid arguments. (https://docs.python.org/3/library/argparse.html)</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
+<span class="c1"># The argparse module makes it easy to write user-friendly command-line interfaces. The program defines what arguments it requires, and argparse will figure out how to parse those out of sys.argv. The argparse module also automatically generates help and usage messages and issues errors when users give the program invalid arguments. (https://docs.python.org/3/library/argparse.html)</span>
 
-<span class="c1"># This module provides a portable way of using operating system dependent functionality. If you just want to read or write a file see open(), if you want to manipulate paths, see the os.path module, and if you want to read all the lines in all the files on the command line see the fileinput module. For creating temporary files and directories see the tempfile module, and for high-level file and directory handling see the shutil module. (https://docs.python.org/3/library/os.html)</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># This module provides a portable way of using operating system dependent functionality. If you just want to read or write a file see open(), if you want to manipulate paths, see the os.path module, and if you want to read all the lines in all the files on the command line see the fileinput module. For creating temporary files and directories see the tempfile module, and for high-level file and directory handling see the shutil module. (https://docs.python.org/3/library/os.html)</span>
 
-<span class="c1"># Returns the system/OS name, such as &#39;Linux&#39;, &#39;Darwin&#39;, &#39;Java&#39;, &#39;Windows&#39;. An empty string is returned if the value cannot be determined. (https://docs.python.org/3/library/platform.html)</span>
 <span class="kn">from</span> <span class="nn">platform</span> <span class="kn">import</span> <span class="n">system</span>
+<span class="c1"># Returns the system/OS name, such as &#39;Linux&#39;, &#39;Darwin&#39;, &#39;Java&#39;, &#39;Windows&#39;. An empty string is returned if the value cannot be determined. (https://docs.python.org/3/library/platform.html)</span>
 
-<span class="c1"># This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="c1"># This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)</span>
+
 
 
 <span class="n">ERRORS_MESSAGES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Traceback&quot;</span><span class="p">,</span> <span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">]</span>

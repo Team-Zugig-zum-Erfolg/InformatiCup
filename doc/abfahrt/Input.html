@@ -82,6 +82,21 @@
                                 <a class="function" href="#Input.from_file">from_file</a>
                         </li>
                         <li>
+                                <a class="function" href="#Input.check_station">check_station</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Input.check_line">check_line</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Input.check_train">check_train</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Input.check_passenger">check_passenger</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Input.check_input">check_input</a>
+                        </li>
+                        <li>
                                 <a class="function" href="#Input.parse_lines">parse_lines</a>
                         </li>
                         <li>
@@ -106,21 +121,25 @@
                     <h1 class="modulename">
 <a href="./../abfahrt.html">abfahrt</a><wbr>.Input    </h1>
 
-                
+                        <div class="docstring"><p>This is Input for parsing and reading the input from stdin or a file or generator</p>
+</div>
+
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="c1"># This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)</span>
+            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is Input for parsing and reading the input from stdin or a file or generator</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="c1"># This module provides runtime support for type hints. The most fundamental support consists of the types Any, Union, Callable, TypeVar, and Generic. For a full specification, please see PEP 484. For a simplified introduction to type hints, see PEP 483. (https://docs.python.org/3/library/typing.html)</span>
 
-<span class="c1"># This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="c1"># This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)</span>
 
-<span class="c1"># This module provides regular expression matching operations similar to those found in Perl. (https://docs.python.org/3/library/re.html)</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="c1"># This module provides regular expression matching operations similar to those found in Perl. (https://docs.python.org/3/library/re.html)</span>
 
-<span class="c1"># This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-
+<span class="c1"># This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter. (https://docs.python.org/3/library/sys.html)</span>
 
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Station</span> <span class="kn">import</span> <span class="n">Station</span>
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Line</span> <span class="kn">import</span> <span class="n">Line</span>
@@ -132,7 +151,8 @@
 <span class="k">class</span> <span class="nc">Input</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">star_station</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="nb">id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">999</span><span class="p">)</span>   <span class="c1"># the &quot;*&quot; station</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">star_station</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span><span class="p">)</span>   <span class="c1"># the &quot;*&quot; station</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Station&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Line&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Train&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
@@ -284,45 +304,271 @@
             <span class="n">mylines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_lines</span><span class="p">(</span><span class="n">mylines</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">check_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input station</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if it contains less or more parameter then the format (int)ID, (int)capacity</span>
+<span class="sd">            2. if format of id is not &quot;S1&quot;, like &quot;asdad123asdasd&quot;, or &quot;station1&quot;</span>
+<span class="sd">            3. if capacity &lt; 0</span>
+<span class="sd">            4. p[1] is int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 2&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="c1"># print(&quot;not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;capacity not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong capacity&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">check_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input line</span>
+<span class="sd">        [0]str(ID) [1]str(Anfang) [2]str(Ende) [3]dec(Länge) [4]int(Kapazität)</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if the parameters less or more than 5</span>
+<span class="sd">            2. if the id not in format &quot;L1&quot;</span>
+<span class="sd">            3. if the id of stations not in format &quot;S1&quot;</span>
+<span class="sd">            4. if the starting and end station not exist</span>
+<span class="sd">            5. if length &lt; 0</span>
+<span class="sd">            6. if capacity &lt; 0</span>
+<span class="sd">            7. if length is not double</span>
+<span class="sd">            8. if capacity is not int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 5&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not L&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[0][1:])</span>
+            <span class="c1"># print(&quot;L1 not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;start station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[1][1:])</span>
+            <span class="c1"># print(&quot;start station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;end station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[2][1:])</span>
+            <span class="c1"># print(&quot;end station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># print(&quot;station not exist&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># print(&quot;station not exist&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_isDouble</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]):</span>  <span class="c1"># length should be double</span>
+            <span class="c1"># print(&quot;length not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;length length&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;capacity not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong capacity&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">check_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input train</span>
+<span class="sd">        0 str(ID) 1 str(Startbahnhof)/* 2 dec(Geschwindigkeit) 3 int(Kapazität)</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if the parameters less or more than 4</span>
+<span class="sd">            2. if the id not in format &quot;T1&quot;</span>
+<span class="sd">            3. if the id of station not in format &quot;S1&quot; or not &quot;*&quot;</span>
+<span class="sd">            4. if the station does not exist</span>
+<span class="sd">            5. if speed &lt; 0</span>
+<span class="sd">            6. if capacity &lt; 0</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 4&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not T&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[0][1:])</span>
+            <span class="c1"># print(&quot;T1 not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="c1"># print(&quot;start station not S or not number or not *&quot;)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># speed should be double</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_isDouble</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="c1"># print(&quot;speed not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong speed&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;capacity not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong capacity&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">check_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input passenger</span>
+<span class="sd">        0 str(ID) 1 str(Startbahnhof) 2 str(Zielbahnhof) 3 int(Gruppengröße) 4 int(Ankunftszeit)</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if the parameters less or more than 5</span>
+<span class="sd">            2. if the id not in format &quot;P1&quot;</span>
+<span class="sd">            3. if the id of stations not in format &quot;S1&quot;</span>
+<span class="sd">            4. if the stations does not exist</span>
+<span class="sd">            5. if size &lt; 0</span>
+<span class="sd">            6. if time &lt; 0</span>
+<span class="sd">            7. size int</span>
+<span class="sd">            8. time int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 5&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;P&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not P&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[0][1:])</span>
+            <span class="c1"># print(&quot;P1 not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;start station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[1][1:])</span>
+            <span class="c1"># print(&quot;start station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;end station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[2][1:])</span>
+            <span class="c1"># print(&quot;end station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;size not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong size&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;time not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong time&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">check_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; check the logic of all input</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if there are only 1 station or no line</span>
+<span class="sd">            software will be stop</span>
+<span class="sd">        Note:</span>
+<span class="sd">            1. if the stations, that are used in lines, don&#39;t exist</span>
+<span class="sd">            2. if the stations, that are used in trains, don&#39;t exist</span>
+<span class="sd">            3. if the stations, that are used in passengers, don&#39;t exist</span>
+<span class="sd">            the line, train and passenger will not be added in input.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Stations</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Lines</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Trains</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
     <span class="k">def</span> <span class="nf">parse_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; this is used in from_input(), from_input_stdin() to parse a line read from file or stdin&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; this is used in from_input(), from_input_stdin() to parse a line read from file or stdin. The lines here means a list of line from text&#39;&#39;&#39;</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Stations]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_station</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_station</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_station</span><span class="p">(</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Lines]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                  <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">length</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_line</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                      <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">length</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Trains]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_train</span><span class="p">(</span>
-                        <span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">speed</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_train</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_train</span><span class="p">(</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">speed</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Passengers]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                       <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
-                <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_passenger</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                           <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Stations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Trains</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Passengers</span>
 
@@ -363,6 +609,18 @@
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
+
+
+<span class="k">def</span> <span class="nf">_isDouble</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39; check if string is double &#39;&#39;&#39;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>   <span class="c1"># [].[] or []</span>
+        <span class="k">for</span> <span class="n">si</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">si</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 
         </details>
@@ -382,7 +640,8 @@
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Input</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">star_station</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="nb">id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">999</span><span class="p">)</span>   <span class="c1"># the &quot;*&quot; station</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">star_station</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span><span class="p">)</span>   <span class="c1"># the &quot;*&quot; station</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Station&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Line&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Train&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
@@ -534,45 +793,271 @@
             <span class="n">mylines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_lines</span><span class="p">(</span><span class="n">mylines</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">check_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input station</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if it contains less or more parameter then the format (int)ID, (int)capacity</span>
+<span class="sd">            2. if format of id is not &quot;S1&quot;, like &quot;asdad123asdasd&quot;, or &quot;station1&quot;</span>
+<span class="sd">            3. if capacity &lt; 0</span>
+<span class="sd">            4. p[1] is int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 2&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="c1"># print(&quot;not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;capacity not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong capacity&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">check_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input line</span>
+<span class="sd">        [0]str(ID) [1]str(Anfang) [2]str(Ende) [3]dec(Länge) [4]int(Kapazität)</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if the parameters less or more than 5</span>
+<span class="sd">            2. if the id not in format &quot;L1&quot;</span>
+<span class="sd">            3. if the id of stations not in format &quot;S1&quot;</span>
+<span class="sd">            4. if the starting and end station not exist</span>
+<span class="sd">            5. if length &lt; 0</span>
+<span class="sd">            6. if capacity &lt; 0</span>
+<span class="sd">            7. if length is not double</span>
+<span class="sd">            8. if capacity is not int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 5&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not L&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[0][1:])</span>
+            <span class="c1"># print(&quot;L1 not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;start station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[1][1:])</span>
+            <span class="c1"># print(&quot;start station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;end station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[2][1:])</span>
+            <span class="c1"># print(&quot;end station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># print(&quot;station not exist&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># print(&quot;station not exist&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_isDouble</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]):</span>  <span class="c1"># length should be double</span>
+            <span class="c1"># print(&quot;length not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;length length&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;capacity not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong capacity&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">check_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input train</span>
+<span class="sd">        0 str(ID) 1 str(Startbahnhof)/* 2 dec(Geschwindigkeit) 3 int(Kapazität)</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if the parameters less or more than 4</span>
+<span class="sd">            2. if the id not in format &quot;T1&quot;</span>
+<span class="sd">            3. if the id of station not in format &quot;S1&quot; or not &quot;*&quot;</span>
+<span class="sd">            4. if the station does not exist</span>
+<span class="sd">            5. if speed &lt; 0</span>
+<span class="sd">            6. if capacity &lt; 0</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 4&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not T&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[0][1:])</span>
+            <span class="c1"># print(&quot;T1 not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="c1"># print(&quot;start station not S or not number or not *&quot;)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># speed should be double</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_isDouble</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="c1"># print(&quot;speed not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong speed&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;capacity not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong capacity&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">check_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input passenger</span>
+<span class="sd">        0 str(ID) 1 str(Startbahnhof) 2 str(Zielbahnhof) 3 int(Gruppengröße) 4 int(Ankunftszeit)</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if the parameters less or more than 5</span>
+<span class="sd">            2. if the id not in format &quot;P1&quot;</span>
+<span class="sd">            3. if the id of stations not in format &quot;S1&quot;</span>
+<span class="sd">            4. if the stations does not exist</span>
+<span class="sd">            5. if size &lt; 0</span>
+<span class="sd">            6. if time &lt; 0</span>
+<span class="sd">            7. size int</span>
+<span class="sd">            8. time int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 5&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;P&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not P&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[0][1:])</span>
+            <span class="c1"># print(&quot;P1 not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;start station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[1][1:])</span>
+            <span class="c1"># print(&quot;start station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;end station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[2][1:])</span>
+            <span class="c1"># print(&quot;end station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;size not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong size&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;time not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong time&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">check_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; check the logic of all input</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if there are only 1 station or no line</span>
+<span class="sd">            software will be stop</span>
+<span class="sd">        Note:</span>
+<span class="sd">            1. if the stations, that are used in lines, don&#39;t exist</span>
+<span class="sd">            2. if the stations, that are used in trains, don&#39;t exist</span>
+<span class="sd">            3. if the stations, that are used in passengers, don&#39;t exist</span>
+<span class="sd">            the line, train and passenger will not be added in input.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Stations</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Lines</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Trains</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
     <span class="k">def</span> <span class="nf">parse_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; this is used in from_input(), from_input_stdin() to parse a line read from file or stdin&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; this is used in from_input(), from_input_stdin() to parse a line read from file or stdin. The lines here means a list of line from text&#39;&#39;&#39;</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Stations]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_station</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_station</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_station</span><span class="p">(</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Lines]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                  <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">length</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_line</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                      <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">length</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Trains]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_train</span><span class="p">(</span>
-                        <span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">speed</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_train</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_train</span><span class="p">(</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">speed</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Passengers]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                       <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
-                <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_passenger</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                           <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Stations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Trains</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Passengers</span>
 
@@ -619,7 +1104,8 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">star_station</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="nb">id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">999</span><span class="p">)</span>   <span class="c1"># the &quot;*&quot; station</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">star_station</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span><span class="p">)</span>   <span class="c1"># the &quot;*&quot; station</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Stations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Station&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Line&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Trains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Train&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1054,6 +1540,364 @@
 
 
                             </div>
+                            <div id="Input.check_station" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#Input.check_station">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">check_station</span><span class="signature">(self, parameters: List) -&gt; bool</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input station</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if it contains less or more parameter then the format (int)ID, (int)capacity</span>
+<span class="sd">            2. if format of id is not &quot;S1&quot;, like &quot;asdad123asdasd&quot;, or &quot;station1&quot;</span>
+<span class="sd">            3. if capacity &lt; 0</span>
+<span class="sd">            4. p[1] is int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 2&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="c1"># print(&quot;not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;capacity not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong capacity&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>used in parse_lines(), check logic and syntax of input station
+regulation:
+    1. if it contains less or more parameter then the format (int)ID, (int)capacity
+    2. if format of id is not "S1", like "asdad123asdasd", or "station1"
+    3. if capacity &lt; 0
+    4. p[1] is int</p>
+</div>
+
+
+                            </div>
+                            <div id="Input.check_line" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#Input.check_line">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">check_line</span><span class="signature">(self, parameters: List) -&gt; bool</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input line</span>
+<span class="sd">        [0]str(ID) [1]str(Anfang) [2]str(Ende) [3]dec(Länge) [4]int(Kapazität)</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if the parameters less or more than 5</span>
+<span class="sd">            2. if the id not in format &quot;L1&quot;</span>
+<span class="sd">            3. if the id of stations not in format &quot;S1&quot;</span>
+<span class="sd">            4. if the starting and end station not exist</span>
+<span class="sd">            5. if length &lt; 0</span>
+<span class="sd">            6. if capacity &lt; 0</span>
+<span class="sd">            7. if length is not double</span>
+<span class="sd">            8. if capacity is not int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 5&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not L&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[0][1:])</span>
+            <span class="c1"># print(&quot;L1 not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;start station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[1][1:])</span>
+            <span class="c1"># print(&quot;start station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;end station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[2][1:])</span>
+            <span class="c1"># print(&quot;end station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># print(&quot;station not exist&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># print(&quot;station not exist&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_isDouble</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]):</span>  <span class="c1"># length should be double</span>
+            <span class="c1"># print(&quot;length not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;length length&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;capacity not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong capacity&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>used in parse_lines(), check logic and syntax of input line
+[0]str(ID) [1]str(Anfang) [2]str(Ende) [3]dec(Länge) [4]int(Kapazität)
+regulation:
+    1. if the parameters less or more than 5
+    2. if the id not in format "L1"
+    3. if the id of stations not in format "S1"
+    4. if the starting and end station not exist
+    5. if length &lt; 0
+    6. if capacity &lt; 0
+    7. if length is not double
+    8. if capacity is not int</p>
+</div>
+
+
+                            </div>
+                            <div id="Input.check_train" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#Input.check_train">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">check_train</span><span class="signature">(self, parameters: List) -&gt; bool</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input train</span>
+<span class="sd">        0 str(ID) 1 str(Startbahnhof)/* 2 dec(Geschwindigkeit) 3 int(Kapazität)</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if the parameters less or more than 4</span>
+<span class="sd">            2. if the id not in format &quot;T1&quot;</span>
+<span class="sd">            3. if the id of station not in format &quot;S1&quot; or not &quot;*&quot;</span>
+<span class="sd">            4. if the station does not exist</span>
+<span class="sd">            5. if speed &lt; 0</span>
+<span class="sd">            6. if capacity &lt; 0</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 4&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not T&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[0][1:])</span>
+            <span class="c1"># print(&quot;T1 not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="c1"># print(&quot;start station not S or not number or not *&quot;)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># speed should be double</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_isDouble</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="c1"># print(&quot;speed not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong speed&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;capacity not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong capacity&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>used in parse_lines(), check logic and syntax of input train
+0 str(ID) 1 str(Startbahnhof)/* 2 dec(Geschwindigkeit) 3 int(Kapazität)
+regulation:
+    1. if the parameters less or more than 4
+    2. if the id not in format "T1"
+    3. if the id of station not in format "S1" or not "*"
+    4. if the station does not exist
+    5. if speed &lt; 0
+    6. if capacity &lt; 0</p>
+</div>
+
+
+                            </div>
+                            <div id="Input.check_passenger" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#Input.check_passenger">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">check_passenger</span><span class="signature">(self, parameters: List) -&gt; bool</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; used in parse_lines(), check logic and syntax of input passenger</span>
+<span class="sd">        0 str(ID) 1 str(Startbahnhof) 2 str(Zielbahnhof) 3 int(Gruppengröße) 4 int(Ankunftszeit)</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if the parameters less or more than 5</span>
+<span class="sd">            2. if the id not in format &quot;P1&quot;</span>
+<span class="sd">            3. if the id of stations not in format &quot;S1&quot;</span>
+<span class="sd">            4. if the stations does not exist</span>
+<span class="sd">            5. if size &lt; 0</span>
+<span class="sd">            6. if time &lt; 0</span>
+<span class="sd">            7. size int</span>
+<span class="sd">            8. time int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="c1"># print(&quot;parameter &lt; 5&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;P&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;first letter not P&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[0][1:])</span>
+            <span class="c1"># print(&quot;P1 not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;start station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[1][1:])</span>
+            <span class="c1"># print(&quot;start station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;S&quot;</span><span class="p">:</span>
+            <span class="c1"># print(&quot;end station not S&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(parameters[2][1:])</span>
+            <span class="c1"># print(&quot;end station not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_station</span><span class="p">(</span><span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;size not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong size&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="c1"># print(&quot;time not number&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">_string_to_int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(&quot;wrong time&quot;)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>used in parse_lines(), check logic and syntax of input passenger
+0 str(ID) 1 str(Startbahnhof) 2 str(Zielbahnhof) 3 int(Gruppengröße) 4 int(Ankunftszeit)
+regulation:
+    1. if the parameters less or more than 5
+    2. if the id not in format "P1"
+    3. if the id of stations not in format "S1"
+    4. if the stations does not exist
+    5. if size &lt; 0
+    6. if time &lt; 0
+    7. size int
+    8. time int</p>
+</div>
+
+
+                            </div>
+                            <div id="Input.check_input" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#Input.check_input">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">check_input</span><span class="signature">(self) -&gt; bool</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">check_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; check the logic of all input</span>
+<span class="sd">        regulation:</span>
+<span class="sd">            1. if there are only 1 station or no line</span>
+<span class="sd">            software will be stop</span>
+<span class="sd">        Note:</span>
+<span class="sd">            1. if the stations, that are used in lines, don&#39;t exist</span>
+<span class="sd">            2. if the stations, that are used in trains, don&#39;t exist</span>
+<span class="sd">            3. if the stations, that are used in passengers, don&#39;t exist</span>
+<span class="sd">            the line, train and passenger will not be added in input.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Stations</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Lines</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Trains</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>check the logic of all input
+regulation:
+    1. if there are only 1 station or no line
+    software will be stop</p>
+
+<h6 id="note">Note</h6>
+
+<blockquote>
+  <ol>
+  <li>if the stations, that are used in lines, don't exist</li>
+  <li>if the stations, that are used in trains, don't exist</li>
+  <li>if the stations, that are used in passengers, don't exist
+  the line, train and passenger will not be added in input.</li>
+  </ol>
+</blockquote>
+</div>
+
+
+                            </div>
                             <div id="Input.parse_lines" class="classattr">
                                         <div class="attr function"><a class="headerlink" href="#Input.parse_lines">#&nbsp;&nbsp</a>
 
@@ -1065,51 +1909,56 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">parse_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; this is used in from_input(), from_input_stdin() to parse a line read from file or stdin&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; this is used in from_input(), from_input_stdin() to parse a line read from file or stdin. The lines here means a list of line from text&#39;&#39;&#39;</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Stations]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_station</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_station</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_station</span><span class="p">(</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Lines]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                  <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">length</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_line</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                      <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">length</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Trains]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_train</span><span class="p">(</span>
-                        <span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">speed</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_train</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_train</span><span class="p">(</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">speed</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">capacity</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;[Passengers]&quot;</span><span class="p">):</span>
                 <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Lines]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Stations]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Trains]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[Passengers]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">break</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">parameters</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                       <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-                    <span class="k">if</span><span class="p">((</span><span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="k">break</span>
-                <span class="k">break</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_passenger</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                           <span class="n">end_id</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Stations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Trains</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Passengers</span>
 </pre></div>
 
         </details>
 
-            <div class="docstring"><p>this is used in from_input(), from_input_stdin() to parse a line read from file or stdin</p>
+            <div class="docstring"><p>this is used in from_input(), from_input_stdin() to parse a line read from file or stdin. The lines here means a list of line from text</p>
 </div>
 
 

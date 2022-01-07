@@ -1,3 +1,6 @@
+"""
+    This is Generator for generating random input
+"""
 import random
 # This module implements pseudo-random number generators for various distributions. (https://docs.python.org/3/library/random.html)
 
@@ -6,9 +9,27 @@ from abfahrt.classes.Station import Station
 from abfahrt.classes.Line import Line
 from abfahrt.classes.Train import Train
 
+
 class Generator:
 
-    def _list_to_class_object(self, list_properties, class_name, stations):
+    def __init__(self) -> None:
+        """
+        Initializing the Generator
+        """
+        return
+
+    def _list_to_class_object(self, list_properties: list, class_name: str, stations: list) -> any:
+        """
+        Converts list object to specific class object
+
+        Args:
+            list_properties (list): list of properties of the object
+            class_name (str): class name
+            stations (list): stations
+
+        Returns:
+            any: class object
+        """
         _class = globals()[class_name]
 
         for i in range(len(list_properties)):
@@ -23,7 +44,26 @@ class Generator:
 
         return _class(*list_properties)
 
-    def random_input_generate_as_classes(self, size_station=10, size_lines=20, size_trains=10, size_pa=10, sc_max=10, lc_max=2, ll_max=10, tc_max=20, pgs_max=10, ptr_max=10, max_speed_train=10):
+    def random_input_generate_as_classes(self, size_station=10, size_lines=20, size_trains=10, size_pa=10, sc_max=10, lc_max=2, ll_max=10, tc_max=20, pgs_max=10, ptr_max=10, max_speed_train=10) -> list:
+        """
+        Generates random input and returns it as stations, lines, trains, passengers objects
+
+        Args:
+            size_station (int, optional): amount of stations. Defaults to 10.
+            size_lines (int, optional): amount of lines. Defaults to 20.
+            size_trains (int, optional): amount of trains. Defaults to 10.
+            size_pa (int, optional): amount of passengers. Defaults to 10.
+            sc_max (int, optional): max station capacity. Defaults to 10.
+            lc_max (int, optional): max line capacity. Defaults to 2.
+            ll_max (int, optional): max line length. Defaults to 10.
+            tc_max (int, optional): max train capacity. Defaults to 20.
+            pgs_max (int, optional): max passenger group size. Defaults to 10.
+            ptr_max (int, optional): max passenger target round. Defaults to 10.
+            max_speed_train (int, optional): max train speed. Defaults to 10.
+
+        Returns:
+            list: stations, lines, trains, passengers
+        """
         stations = []
         lines = []
         trains = []
@@ -50,35 +90,53 @@ class Generator:
 
         return [stations, lines, trains, passengers]
 
-    def random_input_generate_file(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max, max_speed_train):
+    def random_input_generate_file(self, size_station=10, size_lines=20, size_trains=10, size_pa=10, sc_max=10, lc_max=10, ll_max=10, tc_max=10, pgs_max=10, ptr_max=10, max_speed_train=10) -> None:
+        """
+        Gnerates random input with entities stations, lines, trains, passengers and prints it in a file
+
+        Args:
+            size_station (int, optional): amount of stations. Defaults to 10.
+            size_lines (int, optional): amount of lines. Defaults to 20.
+            size_trains (int, optional): amount of trains. Defaults to 10.
+            size_pa (int, optional): amount of passengers. Defaults to 10.
+            sc_max (int, optional): max station capacity. Defaults to 10.
+            lc_max (int, optional): max line capacity. Defaults to 2.
+            ll_max (int, optional): max line length. Defaults to 10.
+            tc_max (int, optional): max train capacity. Defaults to 20.
+            pgs_max (int, optional): max passenger group size. Defaults to 10.
+            ptr_max (int, optional): max passenger target round. Defaults to 10.
+            max_speed_train (int, optional): max train speed. Defaults to 10.
+
+        Returns:
+            None
+        """
         output = self.random_input_generate(
             size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max, max_speed_train)
 
         out_file = open("output_generated.txt", "w")
 
         out_file.write("[Stations]\n")
-        self.write_objects_to_file(output[0], out_file)
+        self._write_objects_to_file(output[0], out_file)
 
         out_file.write("\n")
 
         out_file.write("[Lines]\n")
-        self.write_objects_to_file(output[1], out_file)
+        self._write_objects_to_file(output[1], out_file)
 
         out_file.write("\n")
 
         out_file.write("[Trains]\n")
-        self.write_objects_to_file(output[2], out_file)
+        self._write_objects_to_file(output[2], out_file)
 
         out_file.write("\n")
 
         out_file.write("[Passengers]\n")
 
-        self.write_objects_to_file(output[3], out_file)
+        self._write_objects_to_file(output[3], out_file)
 
         out_file.close()
 
-    def write_objects_to_file(self, _objects, out_file):
-
+    def _write_objects_to_file(self, _objects: list, out_file) -> None:
         for _object in _objects:
             i = 1
             for attr in _object:
@@ -92,14 +150,14 @@ class Generator:
                     out_file.write(" ")
                 i += 1
 
-    def _depth_search(self, station, station_lines, visited):
+    def _depth_search(self, station: int, station_lines: list, visited: list) -> None:
         visited[station] = True
         for next in station_lines[station]:
             if not visited[next]:
                 self._depth_search(next, station_lines, visited)
         return
 
-    def _check_all_stations_connected(self, stations, station_lines):
+    def _check_all_stations_connected(self, stations: list, station_lines: list) -> bool:
         visited = [True]
         for i in range(len(stations)):
             visited.append(False)
@@ -111,7 +169,26 @@ class Generator:
             t += 1
         return True
 
-    def random_input_generate(self, size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max, max_speed_train):
+    def random_input_generate(self, size_station=10, size_lines=20, size_trains=10, size_pa=10, sc_max=10, lc_max=10, ll_max=10, tc_max=10, pgs_max=10, ptr_max=10, max_speed_train=10) -> list:
+        """
+        Gnerates random input with entities stations, lines, trains, passengers as list objects
+
+        Args:
+            size_station (int, optional): amount of stations. Defaults to 10.
+            size_lines (int, optional): amount of lines. Defaults to 20.
+            size_trains (int, optional): amount of trains. Defaults to 10.
+            size_pa (int, optional): amount of passengers. Defaults to 10.
+            sc_max (int, optional): max station capacity. Defaults to 10.
+            lc_max (int, optional): max line capacity. Defaults to 2.
+            ll_max (int, optional): max line length. Defaults to 10.
+            tc_max (int, optional): max train capacity. Defaults to 20.
+            pgs_max (int, optional): max passenger group size. Defaults to 10.
+            ptr_max (int, optional): max passenger target round. Defaults to 10.
+            max_speed_train (int, optional): max train speed. Defaults to 10.
+
+        Returns:
+            list: stations, lines, trains, passengers
+        """
         stations = []
         lines = []
         trains = []
@@ -199,7 +276,16 @@ class Generator:
         return [stations, lines, trains, passengers]
 
     def random_station_generate(self, number, station_capacity_max):
+        """
+        [summary]
 
+        Args:
+            number ([type]): [description]
+            station_capacity_max ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         station = []
         station_name = "S" + str(number)
         station_capacity = random.randint(1, station_capacity_max)
@@ -207,7 +293,19 @@ class Generator:
         return station
 
     def random_line_generate(self, number, stations, lines, line_capacity_max, line_length_max):
+        """
+        [summary]
 
+        Args:
+            number ([type]): [description]
+            stations ([type]): [description]
+            lines ([type]): [description]
+            line_capacity_max ([type]): [description]
+            line_length_max ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         size_stations = len(stations)
 
         line_id = "L" + str(number)
@@ -235,7 +333,19 @@ class Generator:
         return [line_id, line_start, line_end, line_length, line_capacity]
 
     def random_train_generate(self, number, stations, trains, train_capacity_max, max_speed_train):
+        """
+        [summary]
 
+        Args:
+            number ([type]): [description]
+            stations ([type]): [description]
+            trains ([type]): [description]
+            train_capacity_max ([type]): [description]
+            max_speed_train ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         size_stations = len(stations)
         train_id = "T" + str(number)
         train_start_station = "*"
@@ -262,7 +372,19 @@ class Generator:
         return [train_id, train_start_station, train_speed, train_capacity]
 
     def random_passenger_generate(self, number, stations, passengers, group_size, target_round):
+        """
+        [summary]
 
+        Args:
+            number ([type]): [description]
+            stations ([type]): [description]
+            passengers ([type]): [description]
+            group_size ([type]): [description]
+            target_round ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         size_stations = len(stations)
         passenger_id = "P" + str(number)
 
