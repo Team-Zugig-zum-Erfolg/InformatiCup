@@ -32,11 +32,24 @@ class Input:
         self.Generator = Generator()
 
     def get_star_station(self):
-        ''' return the assumed station for the star-train '''
+        """
+        return the assumed station for the star-train
+
+        Returns:
+            a assumed star_station
+        """
         return self.star_station
 
     def find_station(self, id) -> Station:
-        ''' return a station with id if it exist. if not exist yet, return None'''
+        """
+        return a station with id if it exist. if not exist yet, return None
+
+        Args:
+            id (int): the id of the station
+
+        Returns:
+            the station or None
+        """
         find = list(filter(lambda t: t.id == id, self.Stations))
         if(len(find) > 0):
             return find[0]  # assume there are no duplications
@@ -44,7 +57,15 @@ class Input:
             return None
 
     def find_line(self, id) -> Line:
-        ''' return a line with id if it exist. if not exist yet, return None'''
+        """
+        return a line with id if it exist. if not exist yet, return None
+
+        Args:
+            id (int): id of station
+
+        Returns:
+            the line or None
+        """
         find = list(filter(lambda t: t.id == id, self.Lines))
         if(len(find) > 0):
             return find[0]  # assume there are no duplications
@@ -52,7 +73,14 @@ class Input:
             return None
 
     def find_train(self, id) -> Train:
-        ''' return a train with id if it exist. if not exist yet, return None'''
+        """
+        return a train with id if it exist. if not exist yet, return None
+        Args:
+            id (int): id of train
+
+        Returns:
+            the train or None
+        """
         find = list(filter(lambda t: t.id == id, self.Trains))
         if(len(find) > 0):
             return find[0]  # assume there are no duplications
@@ -60,7 +88,15 @@ class Input:
             return None
 
     def find_passenger(self, id) -> Passenger:
-        ''' return a passenger with id if it exist. if not exist yet, return None'''
+        """
+        return a passenger with id if it exist. if not exist yet, return None
+
+        Args:
+            id (int): id of passenger
+
+        Returns:
+            the passenger or None
+        """
         find = list(filter(lambda t: t.id == id, self.Passengers))
         if(len(find) > 0):
             return find[0]  # assume there are no duplications
@@ -68,14 +104,29 @@ class Input:
             return None
 
     def add_station(self, id: str, capacity: str):
-        ''' this method is used in parse_lines(), add a station to member attribute Stations '''
+        """
+        this method is used in parse_lines(), add a station to member attribute Stations
+
+        Args:
+            id (str): id of station
+            capacity (str): capacity of station
+        """
         id = _string_to_int(id)
         station = self.find_station(id)
         if not station:  # a station is not founded
             self.Stations.append(Station(id=id, capacity=int(capacity)))
 
     def add_line(self, id: str, start_id: str, end_id: str, length: str, capacity: str):
-        ''' this method is used in parse_lines(), add a line to member attribute Lines '''
+        """
+        this method is used in parse_lines(), add a line to member attribute Lines
+
+        Args:
+            id (str): id of line
+            start_id (str): the id of the start station
+            end_id (str): the id of the end station
+            length (str): the length of the line
+            capacity (str): capacity of line
+        """
         id = _string_to_int(id)
         line = self.find_line(id)
         if not line:
@@ -83,7 +134,15 @@ class Input:
                 _string_to_int(end_id)), length=float(length), capacity=int(capacity)))
 
     def add_train(self, id: str, start_id: str, speed: str, capacity: str):
-        ''' this method is used in parse_lines(), add a train to member attribute Trains '''
+        """
+        this method is used in parse_lines(), add a train to member attribute Trains
+
+        Args:
+            id (str): id of train
+            start_id (str): the id of the start station
+            speed (str): the speed of the train
+            capacity (str): capacity of train
+        """
         id = _string_to_int(id)
         train = self.find_train(id)
         if not train:           # there are no such train duplicated
@@ -95,7 +154,16 @@ class Input:
                     _string_to_int(start_id)), speed=float(speed), capacity=int(capacity)))
 
     def add_passenger(self, id: str, start_id: str, end_id: str, size: str, target: str):
-        ''' this method is used in parse_lines(), add a passenger to member attribute Passengers '''
+        """
+        this method is used in parse_lines(), add a passenger to member attribute Passengers
+
+        Args:
+            id (str): id of passenger
+            start_id (str): the id of the start station
+            end_id (str): the id of the end station
+            size (str): the size of the passenger
+            target (str): target time of the passenger
+        """
         id = _string_to_int(id)
         passenger = self.find_passenger(id)
         if not passenger:
@@ -104,12 +172,22 @@ class Input:
                 start_id)), end_station=self.find_station(_string_to_int(end_id)), group_size=int(size), target_time=int(target)))
 
     def from_generator(self):
-        ''' generate a random input instance from Generator'''
+        """
+        generate a random input instance from Generator
+
+        Returns:
+            output: the generated input
+        """
         output = self.Generator.random_input_generate_as_classes()
-        return output
+        return 
 
     def from_stdin(self):
-        ''' read input from stdin '''
+        """
+        read input from stdin
+
+        Returns:
+            self.parse_lines(mylines): call parser to parse the lines
+        """
         lines = sys.stdin.readlines()
         mylines = []  # Declare an empty list.
 
@@ -120,7 +198,12 @@ class Input:
         return self.parse_lines(mylines)
 
     def to_input_text(self) -> str:
-        ''' return a string of input in format '''
+        """
+        return a string of input in format
+
+        Returns:
+            text (str): the output text
+        """
         text = "# Bahnhöfe: str(ID) \n [Stations] \n"
         for station in self.Stations:
             text = text + station.to_str_input() + "\n"
@@ -150,7 +233,12 @@ class Input:
         return text
 
     def to_input_file(self, path: str) -> bool:
-        ''' save input format in local file '''
+        """
+        save input format in local file
+
+        Returns:
+            state (state): true if save successfully
+        """
         state = False
         file = open(path, 'w')
         file.write(self.to_input_text())
@@ -159,14 +247,26 @@ class Input:
         return state
 
     def path_generator(self) -> str:
-        ''' generate a path for local file '''
+        """
+        generate a path for local file: "year month day - hour minute second.txt"
+
+        Returns:
+            filename (str): the generated filename
+        """
         filename = "Input-" + \
             time.strftime("%y%m%d-%H%M%S",
                           time.localtime(time.time())) + ".txt"
         return filename
 
     def from_file(self, path: str):
-        ''' load input from local file '''
+        """
+        load input from local file
+        Args:
+            path (str): the path of input.txt file
+
+        Returns:
+            parse_lines(mylines): parse the input file
+        """
         mylines = []  # Declare an empty list.
         # Open lorem.txt for reading text.
         with open(path, "rt") as myfile:
@@ -177,13 +277,21 @@ class Input:
         return self.parse_lines(mylines)
 
     def check_station(self, parameters: List) -> bool:
-        ''' used in parse_lines(), check logic and syntax of input station
+        """
+        used in parse_lines(), check logic and syntax of input station
         regulation:
             1. if it contains less or more parameter then the format (int)ID, (int)capacity
             2. if format of id is not "S1", like "asdad123asdasd", or "station1"
             3. if capacity < 0
             4. p[1] is int
-        '''
+            -> then false
+
+        Args: 
+            parameters (List): a list of parameters with str
+
+        Returns:
+            state (bool): true if valid input
+        """
         if len(parameters) != 2:
             # print("parameter < 2")
             return False
@@ -205,8 +313,8 @@ class Input:
         return True
 
     def check_line(self, parameters: List) -> bool:
-        ''' used in parse_lines(), check logic and syntax of input line
-        [0]str(ID) [1]str(Anfang) [2]str(Ende) [3]dec(Länge) [4]int(Kapazität)
+        """
+        used in parse_lines(), check logic and syntax of input line
         regulation:
             1. if the parameters less or more than 5
             2. if the id not in format "L1"
@@ -216,7 +324,14 @@ class Input:
             6. if capacity < 0
             7. if length is not double
             8. if capacity is not int
-        '''
+            -> then false
+
+        Args: 
+            parameters (List): a list of parameters with str
+
+        Returns:
+            state (bool): true if valid input
+        """
         if len(parameters) != 5:
             # print("parameter < 5")
             return False
@@ -268,7 +383,8 @@ class Input:
         return True
 
     def check_train(self, parameters: List) -> bool:
-        ''' used in parse_lines(), check logic and syntax of input train
+        """
+        used in parse_lines(), check logic and syntax of input train
         0 str(ID) 1 str(Startbahnhof)/* 2 dec(Geschwindigkeit) 3 int(Kapazität)
         regulation:
             1. if the parameters less or more than 4
@@ -277,7 +393,14 @@ class Input:
             4. if the station does not exist
             5. if speed < 0
             6. if capacity < 0
-        '''
+            -> then false
+
+        Args: 
+            parameters (List): a list of parameters with str
+
+        Returns:
+            state (bool): true if valid input
+        """
         if len(parameters) != 4:
             # print("parameter < 4")
             return False
@@ -316,7 +439,8 @@ class Input:
         return True
 
     def check_passenger(self, parameters: List) -> bool:
-        ''' used in parse_lines(), check logic and syntax of input passenger
+        """
+        used in parse_lines(), check logic and syntax of input passenger
         0 str(ID) 1 str(Startbahnhof) 2 str(Zielbahnhof) 3 int(Gruppengröße) 4 int(Ankunftszeit)
         regulation:
             1. if the parameters less or more than 5
@@ -325,9 +449,16 @@ class Input:
             4. if the stations does not exist
             5. if size < 0
             6. if time < 0
-            7. size int
-            8. time int
-        '''
+            7. size not int
+            8. time not int
+            -> then false
+
+        Args: 
+            parameters (List): a list of parameters with str
+
+        Returns:
+            state (bool): true if valid input
+        """
         if len(parameters) != 5:
             # print("parameter < 5")
             return False
@@ -375,7 +506,8 @@ class Input:
         return True
 
     def check_input(self) -> bool:
-        ''' check the logic of all input
+        """
+        check the logic of all input
         regulation:
             1. if there are only 1 station or no line
             software will be stop
@@ -383,9 +515,12 @@ class Input:
             1. if the stations, that are used in lines, don't exist
             2. if the stations, that are used in trains, don't exist
             3. if the stations, that are used in passengers, don't exist
-            the line, train and passenger will not be added in input.
+            -> the line, train and passenger will not be added in input.
 
-        '''
+        Returns:
+            state (bool): true if valid input
+        """
+
         if len(self.Stations) < 2:
             return False
 
@@ -398,7 +533,18 @@ class Input:
         return True
 
     def parse_lines(self, lines: list):
-        ''' this is used in from_input(), from_input_stdin() to parse a line read from file or stdin. The lines here means a list of line from text'''
+        """
+        this is used in from_input(), from_input_stdin() to parse a line read from file or stdin. The lines here means a list of line from text
+
+        Args: 
+            lines (List): the line readed from file or stdin
+
+        Returns:
+            Stations (List): a list of readed stations
+            Lines (List): a list of readed lines
+            Trains (List): a list of readed trains
+            Passengers (List): a list of readed passengers
+        """
         i = 0
         while(i < len(lines)-1):
             if lines[i] == ("[Stations]"):
@@ -445,7 +591,10 @@ class Input:
         return self.Stations, self.Lines, self.Trains, self.Passengers
 
     def print_input(self):
-        ''' print information of input '''
+        """
+        print information of input
+        """
+        '''  '''
         print("---------------")
         print("| * printing input started ...")
         print(f"| * Stations: [{len(self.Stations)}]")
@@ -475,7 +624,15 @@ class Input:
 
 # helper methods
 def _string_to_int(string: str) -> int:
-    ''' convert from string to int, like S1 -> 1'''
+    """
+    a helper function convert from string to int, like S1 -> 1
+
+    Args: 
+        string (str): input string
+
+    Returns:
+        (int): return value if this is a int, return 0 if this is not a int 
+    """
     r = re.findall('\d+', string)
     if (len(r) > 0):
         return int(r[0])
@@ -484,7 +641,15 @@ def _string_to_int(string: str) -> int:
 
 
 def _isDouble(string: str) -> bool:
-    ''' check if string is double '''
+    """
+    check if string is double
+
+    Args: 
+        string (str): input string
+
+    Returns:
+        (bool): true if this is a double (x.x or x) 
+    """
     s = string.split('.')
     if len(s) > 2:
         return False
