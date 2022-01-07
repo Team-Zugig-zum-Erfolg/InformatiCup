@@ -23,9 +23,21 @@ class Train:
         self.history = []
 
     def to_list(self):
+        """
+        convert to list
+
+        Returns:
+            the list of information
+        """
         return [self.id, self.start_station.id, self.speed, self.capacity]
 
     def to_str_input(self) -> str:
+        """
+        this method is used for input, generate information of one passenger
+
+        Returns:
+            output: string of information
+        """
         if self.start_station.id < 0:
             output = " ".join(
                 [self.get_id_str(), "*", str(self.speed), str(self.capacity)])
@@ -35,6 +47,12 @@ class Train:
         return output
 
     def to_str_output(self) -> str:
+        """
+        used for output, generate string of it's history
+
+        Returns:
+            output: string of information
+        """
         output = "\n".join(self.history)
         return output
 
@@ -44,20 +62,34 @@ class Train:
         return out
 
     def add_start(self, time: int, station: str):
-        # print(" *-> enter train")
+        """
+        add this action in history
+
+        Args:
+            time (int): start time
+            station (str): starting station
+        """
         out = str(time) + " " + "Start" + " " + station
-        # print(f" --- train [{self.id}] add start",out)
-        # print(" --- ", self.history)
         self.history.insert(0, out)
 
     def add_depart(self, time: int, line: str):
-        # print(" *-> enter train")
+        """
+        add this action in history
+
+        Args:
+            time (int): depart time
+            line (str): the line it goes
+        """
         out = str(time) + " " + "Depart" + " " + line
-        # print(f" --- train [{self.id}] add depart: ",out)
-        # print(" --- history:", self.history)
         self.history.append(out)
 
     def merge(self, train):
+        """
+        merge history of two train together (they should have same id)
+
+        Args:
+            train (Train): another train
+        """
         self.history += train.history
 
     def get_id(self):

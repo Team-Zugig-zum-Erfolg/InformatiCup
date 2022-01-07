@@ -28,33 +28,75 @@ class Passenger:
         self.history = []
 
     def to_list(self):
+        """
+        convert to list
+
+        Returns:
+            the list of information
+        """
         return [self.id, self.start_station.id, self.end_station.id, self.group_size, self.target_time]
 
     def to_str_input(self) -> str:
+        """
+        this method is used for input, generate information of one passenger
+
+        Returns:
+            output: string of information
+        """
         output = " ".join([self.get_id_str(), self.start_station.get_id_str(
         ), self.end_station.get_id_str(), str(self.group_size), str(self.target_time)])
         return output
 
     def to_str_output(self) -> str:
+        """
+        used for output, generate string of it's history
+
+        Returns:
+            output: string of information
+        """
         # return "[Passenger:P" + str(self.ID) + "]\n" + str(self.board_time) + " Board " + self.train + "\n" + str(self.arrive_time)+ " Detrain\n"
         output = "\n".join(self.history)
         return output
 
     def add_board(self, time: int, train: str):
+        """
+        add this action in history
+
+        Args:
+            time (int): board time
+            train (str): train
+        """
         out = str(time) + " " + "Board" + " " + train
         # print(f"passenger [{self.id}] add board",out)
         self.history.append(out)
 
     def add_detrain(self, time: int):
+        """
+        add this action in history
+
+        Args:
+            time (int): detrain time
+        """
         out = str(time) + " " + "Detrain"
         # print(f"passenger [{self.id}] add detrain",out)
         self.history.append(out)
 
     def merge(self, passenger):
+        """
+        merge history of two passengers together (they should have same id)
+
+        Args:
+            passenger (Passenger): another passenger
+        """
         self.history += passenger.history
 
     def get_id_str(self) -> str:
-        ''' get id with P in a string '''
+        """
+        get the str(id) with P
+
+        Returns:
+            out: string of information
+        """
         out = "P" + str(self.id)
         return out
 
