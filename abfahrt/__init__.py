@@ -20,3 +20,4 @@ from abfahrt.Input import Input
 from abfahrt.Result import Result
 from abfahrt.Plan import Plan
 from abfahrt.Travel_Center import Travel_Center
+from abfahrt.testutils import *
