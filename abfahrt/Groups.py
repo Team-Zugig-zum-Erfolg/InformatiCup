@@ -40,7 +40,7 @@ class Groups:
         Get the first arrival Time of the Passengers in a Group
 
         Args:
-            group:[Passenger] (List): List of all Passengers in Group
+            group: List[Passenger] (list): List of all Passengers in Group
 
         Returns:
            int: smallest Target Round
@@ -59,7 +59,7 @@ class Groups:
         Get the arrival time sorted from all Passengers 
 
         Returns:
-            Passenger (List): List of all Passengers
+            Passenger (list): List of all Passengers
         """
         if len(self.route) == 0:
             return None
@@ -71,7 +71,7 @@ class Groups:
         Checks if Passengers in Group have arivved
 
         Args:
-            group:[Passenger] (List): List of all Passengers in Group
+            group: List[Passenger] (list): List of all Passengers in Group
 
         Returns:
             bool: status Passenger arrived?, true = have arrived, false = haven't arrived
@@ -86,7 +86,7 @@ class Groups:
         Get the Passenger from Group with the latest arrival Time
 
         Args:
-            group:[Passenger] (List): List of all Passengers in Group
+            group: List[Passenger] (list): List of all Passengers in Group
 
         Returns:
            int: largest Target Round
@@ -104,7 +104,7 @@ class Groups:
         Passengers in a Group will be splitted, if possible 
 
         Args:
-            group:[Passenger] (List): List of all Passengers in a Group
+            group: List[Passenger] (list): List of all Passengers in Group
 
         Returns:
            bool: Has splitting worked?, true = splitting worked, false = splitting has not worked
