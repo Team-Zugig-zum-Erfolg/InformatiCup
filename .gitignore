@@ -13,3 +13,4 @@ abfahrt/input_generated.txt
 output_generated.txt
 input_generated.txt
 *.iml
+*.js
