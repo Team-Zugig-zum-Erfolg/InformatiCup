@@ -77,7 +77,6 @@ class Input:
             return self.str_ids_passengers[name]
         return None
 
-
     def find_station(self, id) -> Station:
         """
         return a station with id if it exist. if not exist yet, return None
@@ -103,7 +102,7 @@ class Input:
 
         Returns:
             the line or None
-        """        
+        """
         find = list(filter(lambda t: t.id == id, self.Lines))
         if(len(find) > 0):
             return find[0]  # assume there are no duplications
@@ -568,10 +567,6 @@ class Input:
                     if self.check_line(parameters):
                         self.add_line(id=parameters[0], start_id=parameters[1],
                                       end_id=parameters[2], length=parameters[3], capacity=parameters[4])
-            i += 1
-
-        i = 0
-        while(i < len(lines)-1):
             if lines[i] == ("[Trains]"):
                 while(True):
                     if(i+1 >= len(lines)-1) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
@@ -581,10 +576,6 @@ class Input:
                     if self.check_train(parameters):
                         self.add_train(
                             id=parameters[0], start_id=parameters[1], speed=parameters[2], capacity=parameters[3])
-            i += 1
-
-        i = 0
-        while(i < len(lines)-1):
             if lines[i] == ("[Passengers]"):
                 while(True):
                     if(i+1 >= len(lines)-1) or ('[Lines]' in lines[i+1]) or ('[Stations]' in lines[i+1]) or ('[Trains]' in lines[i+1]) or ('[Passengers]' in lines[i+1]):
@@ -595,7 +586,6 @@ class Input:
                         self.add_passenger(id=parameters[0], start_id=parameters[1],
                                            end_id=parameters[2], size=parameters[3], target=parameters[4])
             i += 1
-
         return self.Stations, self.Lines, self.Trains, self.Passengers
 
     def print_input(self):

@@ -5,6 +5,7 @@ from abfahrt.Groups import Groups
 from abfahrt.Result import Result
 from abfahrt.Travel_Center import Travel_Center
 
+
 def main():
     input_ = Input()
 
