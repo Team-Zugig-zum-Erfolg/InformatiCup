@@ -14,7 +14,6 @@ import time
 # This module provides various time-related functions. For related functionality, see also the datetime and calendar modules. (https://docs.python.org/3/library/time.html)
 
 
-
 ERRORS_MESSAGES = ["Traceback", "Error", "error"]
 
 
@@ -29,7 +28,9 @@ class test_simulator:
         self.Errlist = []
 
     def run(self):
-
+        """
+        Starts testing/validating the inputfiles in the directory and the calculated output
+        """
         parser = argparse.ArgumentParser(
             description="Simulator zum automatischen Testen unserer Software", add_help=False)
 

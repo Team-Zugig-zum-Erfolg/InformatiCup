@@ -13,7 +13,9 @@ from abfahrt.Generator import Generator
 class test_generator:
 
     def run(self):
-
+        """
+        Starts generating input and testing/validating the calculated output
+        """
         generator = Generator()
         test_number = 1
         test_success = 0
