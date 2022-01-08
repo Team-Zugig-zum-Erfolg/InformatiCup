@@ -3,8 +3,8 @@ from abfahrt import *
 
 def run():
     input_ = Input()
-    result = Result()
     stations, lines, trains, passengers = input_.from_stdin()
+    result = Result(input_)
 
     linelist = Linelist(lines)
     stationlist = Stationlist(stations, trains, result)

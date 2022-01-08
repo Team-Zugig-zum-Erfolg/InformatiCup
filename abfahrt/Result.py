@@ -24,20 +24,37 @@ class Result:
 
         self.input = input_instance
 
+        self.ids_str_stations = [""] * (len(self.input.str_ids_stations)+1)
+        self.ids_str_lines = [""] * (len(self.input.str_ids_lines)+1)
+        self.ids_str_trains = [""] * (len(self.input.str_ids_trains)+1)
+        self.ids_str_passengers = [""] * (len(self.input.str_ids_passengers)+1)
+
+        for k, i in self.input.str_ids_stations.items():
+            self.ids_str_stations[i] = k
+
+        for k, i in self.input.str_ids_lines.items():
+            self.ids_str_lines[i] = k
+
+        for k, i in self.input.str_ids_trains.items():
+            self.ids_str_trains[i] = k
+
+        for k, i in self.input.str_ids_passengers.items():
+            self.ids_str_passengers[i] = k
+
         self.id_trains: set = set()
         self.id_passengers: set = set()
 
     def get_str_by_id_line(self, id):
-        return list(self.input.str_ids_lines.keys())[list(self.input.str_ids_lines.values()).index(id)]
+        return self.ids_str_lines[id]
 
     def get_str_by_id_station(self, id):
-        return list(self.input.str_ids_stations.keys())[list(self.input.str_ids_stations.values()).index(id)]
+        return self.ids_str_stations[id]
 
     def get_str_by_id_train(self, id):
-        return list(self.input.str_ids_trains.keys())[list(self.input.str_ids_trains.values()).index(id)]
+        return self.ids_str_trains[id]
 
     def get_str_by_id_passenger(self, id):
-        return list(self.input.str_ids_passengers.keys())[list(self.input.str_ids_passengers.values()).index(id)]
+        return self.ids_str_passengers[id]
 
     def save_train_depart(self, id_train, time, id_line):
         """
@@ -158,7 +175,7 @@ class Result:
         Args:
             passenger (Passenger): a passenger
         """
-        
+
         if passenger.id in self.id_passengers:          # already exist
             # passenger already exists, only need to merge history
             self.find_or_add_passenger(passenger.id).merge(passenger)
