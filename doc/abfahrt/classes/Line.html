@@ -124,7 +124,6 @@
   <span class="n">length</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">capacity</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; a constructor with start&#39;&#39;&#39;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span> <span class="c1"># int</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">end</span>
@@ -132,15 +131,31 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
   
   <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    convert to list</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        [self.id, self.start.id, self.end.id, self.length, self.capacity]: a list of values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">]</span>
 
   <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;this method is used for input, generate information of one line&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this method is used for input, generate information of one line</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        output: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">()</span> <span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">)])</span>
     <span class="k">return</span> <span class="n">output</span>
 
   <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39; return the id of line with L, like &quot;L1&quot; &#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get the str(id)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        out: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span>
     
@@ -224,7 +239,6 @@
   <span class="n">length</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">capacity</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; a constructor with start&#39;&#39;&#39;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span> <span class="c1"># int</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">end</span>
@@ -232,15 +246,31 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
   
   <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    convert to list</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        [self.id, self.start.id, self.end.id, self.length, self.capacity]: a list of values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">]</span>
 
   <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;this method is used for input, generate information of one line&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this method is used for input, generate information of one line</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        output: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">()</span> <span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">)])</span>
     <span class="k">return</span> <span class="n">output</span>
 
   <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39; return the id of line with L, like &quot;L1&quot; &#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get the str(id)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        out: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span>
     
@@ -320,7 +350,6 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">capacity</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; a constructor with start&#39;&#39;&#39;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span> <span class="c1"># int</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">end</span>
@@ -330,9 +359,7 @@
 
         </details>
 
-            <div class="docstring"><p>a constructor with start</p>
-</div>
-
+    
 
                             </div>
                             <div id="Line.id" class="classattr">
@@ -391,12 +418,26 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    convert to list</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        [self.id, self.start.id, self.end.id, self.length, self.capacity]: a list of values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">]</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>convert to list</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>[self.id, self.start.id, self.end.id, self.length, self.capacity]: a list of values</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Line.to_str_input" class="classattr">
@@ -410,7 +451,12 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;this method is used for input, generate information of one line&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this method is used for input, generate information of one line</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        output: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">()</span> <span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">)])</span>
     <span class="k">return</span> <span class="n">output</span>
 </pre></div>
@@ -418,6 +464,12 @@
         </details>
 
             <div class="docstring"><p>this method is used for input, generate information of one line</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>output: string of information</p>
+</blockquote>
 </div>
 
 
@@ -433,14 +485,25 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39; return the id of line with L, like &quot;L1&quot; &#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get the str(id)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        out: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span>
 </pre></div>
 
         </details>
 
-            <div class="docstring"><p>return the id of line with L, like "L1"</p>
+            <div class="docstring"><p>get the str(id)</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>out: string of information</p>
+</blockquote>
 </div>
 
 

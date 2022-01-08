@@ -65,98 +65,100 @@
 <span class="c1"># The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes. This module intends to replace several older modules and functions. (https://docs.python.org/3/library/subprocess.html)</span>
 
 <span class="kn">import</span> <span class="nn">argparse</span>
-<span class="c1">#The argparse module makes it easy to write user-friendly command-line interfaces. The program defines what arguments it requires, and argparse will figure out how to parse those out of sys.argv. The argparse module also automatically generates help and usage messages and issues errors when users give the program invalid arguments. (https://docs.python.org/3/library/argparse.html)</span>
+<span class="c1"># The argparse module makes it easy to write user-friendly command-line interfaces. The program defines what arguments it requires, and argparse will figure out how to parse those out of sys.argv. The argparse module also automatically generates help and usage messages and issues errors when users give the program invalid arguments. (https://docs.python.org/3/library/argparse.html)</span>
 
 <span class="kn">from</span> <span class="nn">platform</span> <span class="kn">import</span> <span class="n">system</span>
-<span class="c1">#Returns the system/OS name, such as &#39;Linux&#39;, &#39;Darwin&#39;, &#39;Java&#39;, &#39;Windows&#39;. An empty string is returned if the value cannot be determined. (https://docs.python.org/3/library/platform.html)</span>
+<span class="c1"># Returns the system/OS name, such as &#39;Linux&#39;, &#39;Darwin&#39;, &#39;Java&#39;, &#39;Windows&#39;. An empty string is returned if the value cannot be determined. (https://docs.python.org/3/library/platform.html)</span>
 
 <span class="kn">from</span> <span class="nn">abfahrt.Generator</span> <span class="kn">import</span> <span class="n">Generator</span>
+
 
 <span class="k">class</span> <span class="nc">test_generator</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts generating input and testing/validating the calculated output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">generator</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">()</span>
         <span class="n">test_number</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">test_success</span> <span class="o">=</span> <span class="mi">0</span>
-        
-        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
-                <span class="n">formatter_class</span><span class="o">=</span><span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">HelpFormatter</span><span class="p">(</span>
-                    <span class="n">prog</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">130</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generator der automatisch Tests für unsere Software erstellt und testet&quot;</span><span class="p">,</span> <span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+                                         <span class="n">formatter_class</span><span class="o">=</span><span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">HelpFormatter</span><span class="p">(</span>
+                                             <span class="n">prog</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">130</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generator der automatisch Tests für unsere Software erstellt und testet&quot;</span><span class="p">,</span> <span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-h&#39;</span><span class="p">,</span> <span class="s1">&#39;--help&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Zeigt dieses Hilfemenü an&#39;</span><span class="p">)</span>
-        
+
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-test_amount&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span> 
-                            <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>                        
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl der auszuführenden Tests&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_stations&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Bahnhöfen&quot;</span><span class="p">)</span>
-            
+
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_lines&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;20&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;20&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Strecken&quot;</span><span class="p">)</span>  
-      
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Strecken&quot;</span><span class="p">)</span>
+
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_trains&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Zügen&quot;</span><span class="p">)</span>                
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Zügen&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_passengers&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Passagieren&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_capacity_station&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einem Bahnhof&quot;</span><span class="p">)</span> 
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einem Bahnhof&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_capacity_line&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einer Strecke&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_length_line&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Länge von einer Strecke&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_capacity_train&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einem Zug&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_groupsize_passenger&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Gruppengröße bei einem Passagier&quot;</span><span class="p">)</span>                          
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Gruppengröße bei einem Passagier&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_targettime_passenger&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Zielzeit bzw. -runde bei einem Passagier&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_speed_train&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Geschwindigkeit von einem Zug&quot;</span><span class="p">)</span>
 
@@ -168,24 +170,25 @@
                             <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Stoppt das Testen bei einem Fehler&quot;</span><span class="p">)</span>
 
-
         <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    
+
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">test_amount</span><span class="p">):</span>
-            
-            <span class="n">generator</span><span class="o">.</span><span class="n">random_input_generate_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">number_stations</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_lines</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_trains</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_passengers</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_station</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_length_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_train</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_groupsize_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_targettime_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_speed_train</span><span class="p">)</span>
-        
+
+            <span class="n">generator</span><span class="o">.</span><span class="n">random_input_generate_file</span><span class="p">(</span><span class="s2">&quot;input_generated.txt&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_stations</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_lines</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_trains</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_passengers</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_station</span><span class="p">,</span>
+                                                 <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_length_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_train</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_groupsize_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_targettime_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_speed_train</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
-                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;python3 -m abfahrt &lt; output_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            
+                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;python3 -m abfahrt &lt; input_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
             <span class="k">elif</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
-                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;python -m abfahrt &lt; output_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;python -m abfahrt &lt; input_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span>
 
             <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
-
 
             <span class="k">if</span> <span class="s1">&#39;error&#39;</span> <span class="ow">in</span> <span class="n">p1</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">):</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in test: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">test_number</span><span class="p">))</span>
@@ -193,10 +196,12 @@
                     <span class="k">break</span>
 
             <span class="k">if</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
-                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;&quot;./abfahrt/simulator/bahn-simulator&quot; -input output_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            
+                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;&quot;./abfahrt/simulator/bahn-simulator&quot; -input input_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
             <span class="k">elif</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
-                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;&quot;abfahrt/simulator/Bahn-Simulator.exe&quot; -input output_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;&quot;abfahrt/simulator/Bahn-Simulator.exe&quot; -input input_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span>
             <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
@@ -231,88 +236,89 @@
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">test_generator</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts generating input and testing/validating the calculated output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">generator</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">()</span>
         <span class="n">test_number</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">test_success</span> <span class="o">=</span> <span class="mi">0</span>
-        
-        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
-                <span class="n">formatter_class</span><span class="o">=</span><span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">HelpFormatter</span><span class="p">(</span>
-                    <span class="n">prog</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">130</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generator der automatisch Tests für unsere Software erstellt und testet&quot;</span><span class="p">,</span> <span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+                                         <span class="n">formatter_class</span><span class="o">=</span><span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">HelpFormatter</span><span class="p">(</span>
+                                             <span class="n">prog</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">130</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generator der automatisch Tests für unsere Software erstellt und testet&quot;</span><span class="p">,</span> <span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-h&#39;</span><span class="p">,</span> <span class="s1">&#39;--help&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Zeigt dieses Hilfemenü an&#39;</span><span class="p">)</span>
-        
+
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-test_amount&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span> 
-                            <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>                        
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl der auszuführenden Tests&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_stations&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Bahnhöfen&quot;</span><span class="p">)</span>
-            
+
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_lines&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;20&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;20&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Strecken&quot;</span><span class="p">)</span>  
-      
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Strecken&quot;</span><span class="p">)</span>
+
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_trains&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Zügen&quot;</span><span class="p">)</span>                
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Zügen&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_passengers&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Passagieren&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_capacity_station&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einem Bahnhof&quot;</span><span class="p">)</span> 
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einem Bahnhof&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_capacity_line&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einer Strecke&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_length_line&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Länge von einer Strecke&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_capacity_train&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einem Zug&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_groupsize_passenger&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Gruppengröße bei einem Passagier&quot;</span><span class="p">)</span>                          
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Gruppengröße bei einem Passagier&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_targettime_passenger&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Zielzeit bzw. -runde bei einem Passagier&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_speed_train&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Geschwindigkeit von einem Zug&quot;</span><span class="p">)</span>
 
@@ -324,24 +330,25 @@
                             <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Stoppt das Testen bei einem Fehler&quot;</span><span class="p">)</span>
 
-
         <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    
+
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">test_amount</span><span class="p">):</span>
-            
-            <span class="n">generator</span><span class="o">.</span><span class="n">random_input_generate_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">number_stations</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_lines</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_trains</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_passengers</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_station</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_length_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_train</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_groupsize_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_targettime_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_speed_train</span><span class="p">)</span>
-        
+
+            <span class="n">generator</span><span class="o">.</span><span class="n">random_input_generate_file</span><span class="p">(</span><span class="s2">&quot;input_generated.txt&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_stations</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_lines</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_trains</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_passengers</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_station</span><span class="p">,</span>
+                                                 <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_length_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_train</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_groupsize_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_targettime_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_speed_train</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
-                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;python3 -m abfahrt &lt; output_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            
+                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;python3 -m abfahrt &lt; input_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
             <span class="k">elif</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
-                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;python -m abfahrt &lt; output_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;python -m abfahrt &lt; input_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span>
 
             <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
-
 
             <span class="k">if</span> <span class="s1">&#39;error&#39;</span> <span class="ow">in</span> <span class="n">p1</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">):</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in test: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">test_number</span><span class="p">))</span>
@@ -349,10 +356,12 @@
                     <span class="k">break</span>
 
             <span class="k">if</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
-                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;&quot;./abfahrt/simulator/bahn-simulator&quot; -input output_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            
+                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;&quot;./abfahrt/simulator/bahn-simulator&quot; -input input_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
             <span class="k">elif</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
-                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;&quot;abfahrt/simulator/Bahn-Simulator.exe&quot; -input output_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;&quot;abfahrt/simulator/Bahn-Simulator.exe&quot; -input input_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span>
             <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
@@ -396,88 +405,89 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts generating input and testing/validating the calculated output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">generator</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">()</span>
         <span class="n">test_number</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">test_success</span> <span class="o">=</span> <span class="mi">0</span>
-        
-        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
-                <span class="n">formatter_class</span><span class="o">=</span><span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">HelpFormatter</span><span class="p">(</span>
-                    <span class="n">prog</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">130</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generator der automatisch Tests für unsere Software erstellt und testet&quot;</span><span class="p">,</span> <span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+                                         <span class="n">formatter_class</span><span class="o">=</span><span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">HelpFormatter</span><span class="p">(</span>
+                                             <span class="n">prog</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">130</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generator der automatisch Tests für unsere Software erstellt und testet&quot;</span><span class="p">,</span> <span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-h&#39;</span><span class="p">,</span> <span class="s1">&#39;--help&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Zeigt dieses Hilfemenü an&#39;</span><span class="p">)</span>
-        
+
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-test_amount&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span> 
-                            <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>                        
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl der auszuführenden Tests&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_stations&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Bahnhöfen&quot;</span><span class="p">)</span>
-            
+
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_lines&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;20&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;20&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Strecken&quot;</span><span class="p">)</span>  
-      
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Strecken&quot;</span><span class="p">)</span>
+
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_trains&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Zügen&quot;</span><span class="p">)</span>                
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Zügen&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-number_passengers&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Anzahl an Passagieren&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_capacity_station&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einem Bahnhof&quot;</span><span class="p">)</span> 
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einem Bahnhof&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_capacity_line&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einer Strecke&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_length_line&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Länge von einer Strecke&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_capacity_train&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Kapazität von einem Zug&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_groupsize_passenger&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Gruppengröße bei einem Passagier&quot;</span><span class="p">)</span>                          
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Gruppengröße bei einem Passagier&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_targettime_passenger&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Zielzeit bzw. -runde bei einem Passagier&quot;</span><span class="p">)</span>
 
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max_speed_train&#39;</span><span class="p">,</span>
-                            <span class="nb">type</span><span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
-                            <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
                             <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[int]&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximale Geschwindigkeit von einem Zug&quot;</span><span class="p">)</span>
 
@@ -489,24 +499,25 @@
                             <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
                             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Stoppt das Testen bei einem Fehler&quot;</span><span class="p">)</span>
 
-
         <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    
+
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">test_amount</span><span class="p">):</span>
-            
-            <span class="n">generator</span><span class="o">.</span><span class="n">random_input_generate_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">number_stations</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_lines</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_trains</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_passengers</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_station</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_length_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_train</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_groupsize_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_targettime_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_speed_train</span><span class="p">)</span>
-        
+
+            <span class="n">generator</span><span class="o">.</span><span class="n">random_input_generate_file</span><span class="p">(</span><span class="s2">&quot;input_generated.txt&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_stations</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_lines</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_trains</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_passengers</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_station</span><span class="p">,</span>
+                                                 <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_length_line</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_capacity_train</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_groupsize_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_targettime_passenger</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_speed_train</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
-                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;python3 -m abfahrt &lt; output_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            
+                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;python3 -m abfahrt &lt; input_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
             <span class="k">elif</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
-                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;python -m abfahrt &lt; output_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">p1</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;python -m abfahrt &lt; input_generated.txt&#39;</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span>
 
             <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
-
 
             <span class="k">if</span> <span class="s1">&#39;error&#39;</span> <span class="ow">in</span> <span class="n">p1</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">):</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in test: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">test_number</span><span class="p">))</span>
@@ -514,10 +525,12 @@
                     <span class="k">break</span>
 
             <span class="k">if</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
-                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;&quot;./abfahrt/simulator/bahn-simulator&quot; -input output_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            
+                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;&quot;./abfahrt/simulator/bahn-simulator&quot; -input input_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
             <span class="k">elif</span> <span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
-                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;&quot;abfahrt/simulator/Bahn-Simulator.exe&quot; -input output_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">p2</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="s1">&#39;&quot;abfahrt/simulator/Bahn-Simulator.exe&quot; -input input_generated.txt -output output.txt -verbose&#39;</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span>
             <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
@@ -537,7 +550,9 @@
 
         </details>
 
-    
+            <div class="docstring"><p>Starts generating input and testing/validating the calculated output</p>
+</div>
+
 
                             </div>
                 </section>
