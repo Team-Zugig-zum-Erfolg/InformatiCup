@@ -95,13 +95,31 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
   
   <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    convert to list</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the list of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">]</span>
 
   <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this method is used for input, generate information of one passenger</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        output: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">)])</span>
     <span class="k">return</span> <span class="n">output</span>
 
   <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get the str(id) with S</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        out: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;S&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span>
 
@@ -157,13 +175,31 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
   
   <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    convert to list</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the list of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">]</span>
 
   <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this method is used for input, generate information of one passenger</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        output: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">)])</span>
     <span class="k">return</span> <span class="n">output</span>
 
   <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get the str(id) with S</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        out: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;S&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span>
 
@@ -247,12 +283,26 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    convert to list</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the list of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">]</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>convert to list</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>the list of information</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Station.to_str_input" class="classattr">
@@ -266,13 +316,27 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this method is used for input, generate information of one passenger</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        output: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">)])</span>
     <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>this method is used for input, generate information of one passenger</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>output: string of information</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Station.get_id_str" class="classattr">
@@ -286,13 +350,27 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get the str(id) with S</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        out: string of information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;S&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>get the str(id) with S</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>out: string of information</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Station.get_id" class="classattr">

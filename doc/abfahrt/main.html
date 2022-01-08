@@ -59,15 +59,17 @@
 <span class="kn">from</span> <span class="nn">abfahrt.Result</span> <span class="kn">import</span> <span class="n">Result</span>
 <span class="kn">from</span> <span class="nn">abfahrt.Travel_Center</span> <span class="kn">import</span> <span class="n">Travel_Center</span>
 
+
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">input_</span> <span class="o">=</span> <span class="n">Input</span><span class="p">()</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">Result</span><span class="p">()</span>
 
     <span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">passengers</span> <span class="o">=</span> <span class="n">input_</span><span class="o">.</span><span class="n">from_stdin</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">input_</span><span class="o">.</span><span class="n">check_input</span><span class="p">()</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: Not enough or invalid objects given!&quot;</span><span class="p">)</span>
         <span class="k">return</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Result</span><span class="p">(</span><span class="n">input_</span><span class="p">)</span>
 
     <span class="n">linelist</span> <span class="o">=</span> <span class="n">Linelist</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
     <span class="n">stationlist</span> <span class="o">=</span> <span class="n">Stationlist</span><span class="p">(</span><span class="n">stations</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
@@ -146,13 +148,14 @@
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">input_</span> <span class="o">=</span> <span class="n">Input</span><span class="p">()</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">Result</span><span class="p">()</span>
 
     <span class="n">stations</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">passengers</span> <span class="o">=</span> <span class="n">input_</span><span class="o">.</span><span class="n">from_stdin</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">input_</span><span class="o">.</span><span class="n">check_input</span><span class="p">()</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVALID INPUT: Not enough or invalid objects given!&quot;</span><span class="p">)</span>
         <span class="k">return</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Result</span><span class="p">(</span><span class="n">input_</span><span class="p">)</span>
 
     <span class="n">linelist</span> <span class="o">=</span> <span class="n">Linelist</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
     <span class="n">stationlist</span> <span class="o">=</span> <span class="n">Stationlist</span><span class="p">(</span><span class="n">stations</span><span class="p">,</span> <span class="n">trains</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>

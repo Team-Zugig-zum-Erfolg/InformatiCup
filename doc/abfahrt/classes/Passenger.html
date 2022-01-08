@@ -141,114 +141,157 @@
 
 <span class="kn">from</span> <span class="nn">abfahrt.classes.Station</span> <span class="kn">import</span> <span class="n">Station</span>
 
+
 <span class="k">class</span> <span class="nc">Passenger</span><span class="p">:</span>
-  <span class="c1"># Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)</span>
+    <span class="c1"># Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)</span>
 
-  <span class="nb">id</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">start_station</span><span class="p">:</span><span class="n">Station</span> <span class="o">=</span> <span class="kc">None</span>
-  <span class="n">end_station</span><span class="p">:</span><span class="n">Station</span> <span class="o">=</span> <span class="kc">None</span>
-  <span class="n">group_size</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">target_time</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">target_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
-  <span class="n">action_board_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">action_arrive_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">action_train</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">action_board_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">action_arrive_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">action_train</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-  <span class="n">history</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">target_time</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">group_size</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_time</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">group_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
 
-  <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        convert to list</span>
 
-  <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">)])</span>
-    <span class="k">return</span> <span class="n">output</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the list of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">]</span>
 
-  <span class="k">def</span> <span class="nf">to_str_output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="c1"># return &quot;[Passenger:P&quot; + str(self.ID) + &quot;]\n&quot; + str(self.board_time) + &quot; Board &quot; + self.train + &quot;\n&quot; + str(self.arrive_time)+ &quot; Detrain\n&quot;</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">output</span>
-  
-  <span class="k">def</span> <span class="nf">add_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">train_id</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Board&quot;</span> <span class="o">+</span> <span class="s2">&quot; T&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_id</span><span class="p">)</span>
-    <span class="c1"># print(f&quot;passenger [{self.id}] add board&quot;,out)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method is used for input, generate information of one passenger</span>
 
-  <span class="k">def</span> <span class="nf">add_detrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Detrain&quot;</span>
-    <span class="c1"># print(f&quot;passenger [{self.id}] add detrain&quot;,out)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            output: string of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(</span>
+        <span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">output</span>
 
-  <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">+=</span> <span class="n">passenger</span><span class="o">.</span><span class="n">history</span>
+    <span class="k">def</span> <span class="nf">to_str_output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        used for output, generate string of it&#39;s history</span>
 
-  <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39; get id with P in a string &#39;&#39;&#39;</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
-    
-  <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
-  
-  <span class="k">def</span> <span class="nf">set_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">id_passenger</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_passenger</span>
-    <span class="k">return</span> <span class="kc">True</span>
-    
-  <span class="k">def</span> <span class="nf">get_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span>
-  
-  <span class="k">def</span> <span class="nf">set_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start_station</span><span class="p">:</span><span class="n">Station</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">start_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
-    <span class="k">return</span> <span class="kc">True</span>
-  
-  <span class="k">def</span> <span class="nf">get_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span>
-  
-  <span class="k">def</span> <span class="nf">set_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">end_station</span><span class="p">:</span><span class="n">Station</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">end_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
-    <span class="k">return</span> <span class="kc">True</span>
-  
-  <span class="k">def</span> <span class="nf">get_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span>
-  
-  <span class="k">def</span> <span class="nf">set_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">size</span>
-    <span class="k">return</span> <span class="kc">True</span>
-  
-  <span class="k">def</span> <span class="nf">set_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_round</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target_round</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_round</span>
-    <span class="k">return</span> <span class="kc">True</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            output: string of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># return &quot;[Passenger:P&quot; + str(self.ID) + &quot;]\n&quot; + str(self.board_time) + &quot; Board &quot; + self.train + &quot;\n&quot; + str(self.arrive_time)+ &quot; Detrain\n&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
 
-  <span class="k">def</span> <span class="nf">get_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span>
-  
-  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">get_start_station</span><span class="p">()</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">get_end_station</span><span class="p">()</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_group_size</span><span class="p">()),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_target_round</span><span class="p">())])</span>
-    <span class="k">return</span> <span class="n">output</span>
-  
-  <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Station</span><span class="p">)):</span>
-      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">group_size</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">start_station</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">end_station</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">target_time</span>
-    <span class="k">return</span> <span class="kc">False</span>
-  
-  
+    <span class="k">def</span> <span class="nf">add_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add this action in history</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time (int): board time</span>
+<span class="sd">            train (str): train</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Board&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">train</span>
+        <span class="c1"># print(f&quot;passenger [{self.id}] add board&quot;,out)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_detrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add this action in history</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time (int): detrain time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Detrain&quot;</span>
+        <span class="c1"># print(f&quot;passenger [{self.id}] add detrain&quot;,out)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        merge history of two passengers together (they should have same id)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            passenger (Passenger): another passenger</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">+=</span> <span class="n">passenger</span><span class="o">.</span><span class="n">history</span>
+
+    <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the str(id) with P</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            out: string of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+    <span class="k">def</span> <span class="nf">set_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_passenger</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">get_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span>
+
+    <span class="k">def</span> <span class="nf">set_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">start_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">get_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span>
+
+    <span class="k">def</span> <span class="nf">set_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">end_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">get_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span>
+
+    <span class="k">def</span> <span class="nf">set_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">set_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_round</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target_round</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_round</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">get_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_start_station</span><span class="p">()</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(</span>
+        <span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end_station</span><span class="p">()</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_group_size</span><span class="p">()),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_target_round</span><span class="p">())])</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Station</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">group_size</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">start_station</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">end_station</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">target_time</span>
+        <span class="k">return</span> <span class="kc">False</span>
 </pre></div>
 
         </details>
@@ -266,111 +309,155 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Passenger</span><span class="p">:</span>
-  <span class="c1"># Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)</span>
+    <span class="c1"># Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)</span>
 
-  <span class="nb">id</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">start_station</span><span class="p">:</span><span class="n">Station</span> <span class="o">=</span> <span class="kc">None</span>
-  <span class="n">end_station</span><span class="p">:</span><span class="n">Station</span> <span class="o">=</span> <span class="kc">None</span>
-  <span class="n">group_size</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">target_time</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">target_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
-  <span class="n">action_board_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">action_arrive_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="n">action_train</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">action_board_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">action_arrive_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">action_train</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-  <span class="n">history</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">target_time</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">group_size</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_time</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">group_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
 
-  <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        convert to list</span>
 
-  <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">)])</span>
-    <span class="k">return</span> <span class="n">output</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the list of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">]</span>
 
-  <span class="k">def</span> <span class="nf">to_str_output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="c1"># return &quot;[Passenger:P&quot; + str(self.ID) + &quot;]\n&quot; + str(self.board_time) + &quot; Board &quot; + self.train + &quot;\n&quot; + str(self.arrive_time)+ &quot; Detrain\n&quot;</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">output</span>
-  
-  <span class="k">def</span> <span class="nf">add_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">train_id</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Board&quot;</span> <span class="o">+</span> <span class="s2">&quot; T&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_id</span><span class="p">)</span>
-    <span class="c1"># print(f&quot;passenger [{self.id}] add board&quot;,out)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method is used for input, generate information of one passenger</span>
 
-  <span class="k">def</span> <span class="nf">add_detrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Detrain&quot;</span>
-    <span class="c1"># print(f&quot;passenger [{self.id}] add detrain&quot;,out)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            output: string of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(</span>
+        <span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">output</span>
 
-  <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">+=</span> <span class="n">passenger</span><span class="o">.</span><span class="n">history</span>
+    <span class="k">def</span> <span class="nf">to_str_output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        used for output, generate string of it&#39;s history</span>
 
-  <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39; get id with P in a string &#39;&#39;&#39;</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
-    
-  <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
-  
-  <span class="k">def</span> <span class="nf">set_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">id_passenger</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_passenger</span>
-    <span class="k">return</span> <span class="kc">True</span>
-    
-  <span class="k">def</span> <span class="nf">get_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span>
-  
-  <span class="k">def</span> <span class="nf">set_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start_station</span><span class="p">:</span><span class="n">Station</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">start_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
-    <span class="k">return</span> <span class="kc">True</span>
-  
-  <span class="k">def</span> <span class="nf">get_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span>
-  
-  <span class="k">def</span> <span class="nf">set_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">end_station</span><span class="p">:</span><span class="n">Station</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">end_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
-    <span class="k">return</span> <span class="kc">True</span>
-  
-  <span class="k">def</span> <span class="nf">get_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span>
-  
-  <span class="k">def</span> <span class="nf">set_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">size</span>
-    <span class="k">return</span> <span class="kc">True</span>
-  
-  <span class="k">def</span> <span class="nf">set_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_round</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target_round</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_round</span>
-    <span class="k">return</span> <span class="kc">True</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            output: string of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># return &quot;[Passenger:P&quot; + str(self.ID) + &quot;]\n&quot; + str(self.board_time) + &quot; Board &quot; + self.train + &quot;\n&quot; + str(self.arrive_time)+ &quot; Detrain\n&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
 
-  <span class="k">def</span> <span class="nf">get_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span>
-  
-  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">get_start_station</span><span class="p">()</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">get_end_station</span><span class="p">()</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_group_size</span><span class="p">()),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_target_round</span><span class="p">())])</span>
-    <span class="k">return</span> <span class="n">output</span>
-  
-  <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Station</span><span class="p">)):</span>
-      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">group_size</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">start_station</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">end_station</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">target_time</span>
-    <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">def</span> <span class="nf">add_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add this action in history</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time (int): board time</span>
+<span class="sd">            train (str): train</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Board&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">train</span>
+        <span class="c1"># print(f&quot;passenger [{self.id}] add board&quot;,out)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_detrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add this action in history</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time (int): detrain time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Detrain&quot;</span>
+        <span class="c1"># print(f&quot;passenger [{self.id}] add detrain&quot;,out)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        merge history of two passengers together (they should have same id)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            passenger (Passenger): another passenger</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">+=</span> <span class="n">passenger</span><span class="o">.</span><span class="n">history</span>
+
+    <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the str(id) with P</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            out: string of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+    <span class="k">def</span> <span class="nf">set_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_passenger</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">get_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span>
+
+    <span class="k">def</span> <span class="nf">set_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">start_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">get_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span>
+
+    <span class="k">def</span> <span class="nf">set_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">end_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">get_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span>
+
+    <span class="k">def</span> <span class="nf">set_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">set_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_round</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target_round</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_round</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">get_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_start_station</span><span class="p">()</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(</span>
+        <span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end_station</span><span class="p">()</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_group_size</span><span class="p">()),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_target_round</span><span class="p">())])</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Station</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">group_size</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">start_station</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">end_station</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">target_time</span>
+        <span class="k">return</span> <span class="kc">False</span>
 </pre></div>
 
         </details>
@@ -392,13 +479,13 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span><span class="n">Station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">target_time</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">group_size</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_time</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">,</span> <span class="n">group_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">group_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
 </pre></div>
 
         </details>
@@ -497,13 +584,27 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">]</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        convert to list</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the list of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">]</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>convert to list</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>the list of information</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Passenger.to_str_input" class="classattr">
@@ -516,14 +617,29 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">)])</span>
-    <span class="k">return</span> <span class="n">output</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">to_str_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method is used for input, generate information of one passenger</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            output: string of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(</span>
+        <span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span><span class="o">.</span><span class="n">get_id_str</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_size</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_time</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>this method is used for input, generate information of one passenger</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>output: string of information</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Passenger.to_str_output" class="classattr">
@@ -536,15 +652,29 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">to_str_output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="c1"># return &quot;[Passenger:P&quot; + str(self.ID) + &quot;]\n&quot; + str(self.board_time) + &quot; Board &quot; + self.train + &quot;\n&quot; + str(self.arrive_time)+ &quot; Detrain\n&quot;</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">output</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">to_str_output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        used for output, generate string of it&#39;s history</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            output: string of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># return &quot;[Passenger:P&quot; + str(self.ID) + &quot;]\n&quot; + str(self.board_time) + &quot; Board &quot; + self.train + &quot;\n&quot; + str(self.arrive_time)+ &quot; Detrain\n&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>used for output, generate string of it's history</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>output: string of information</p>
+</blockquote>
+</div>
+
 
                             </div>
                             <div id="Passenger.add_board" class="classattr">
@@ -552,20 +682,36 @@
 
         
             <span class="def">def</span>
-            <span class="name">add_board</span><span class="signature">(self, time: int, train_id: int)</span>:
+            <span class="name">add_board</span><span class="signature">(self, time: int, train: str)</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">add_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">train_id</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Board&quot;</span> <span class="o">+</span> <span class="s2">&quot; T&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_id</span><span class="p">)</span>
-    <span class="c1"># print(f&quot;passenger [{self.id}] add board&quot;,out)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">add_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add this action in history</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time (int): board time</span>
+<span class="sd">            train (str): train</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Board&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">train</span>
+        <span class="c1"># print(f&quot;passenger [{self.id}] add board&quot;,out)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>add this action in history</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>time (int):</strong>  board time</li>
+<li><strong>train (str):</strong>  train</li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="Passenger.add_detrain" class="classattr">
@@ -578,15 +724,29 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">add_detrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Detrain&quot;</span>
-    <span class="c1"># print(f&quot;passenger [{self.id}] add detrain&quot;,out)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">add_detrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add this action in history</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time (int): detrain time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;Detrain&quot;</span>
+        <span class="c1"># print(f&quot;passenger [{self.id}] add detrain&quot;,out)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>add this action in history</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>time (int):</strong>  detrain time</li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="Passenger.merge" class="classattr">
@@ -599,13 +759,27 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">+=</span> <span class="n">passenger</span><span class="o">.</span><span class="n">history</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passenger</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        merge history of two passengers together (they should have same id)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            passenger (Passenger): another passenger</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">+=</span> <span class="n">passenger</span><span class="o">.</span><span class="n">history</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>merge history of two passengers together (they should have same id)</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>passenger (Passenger):</strong>  another passenger</li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="Passenger.get_id_str" class="classattr">
@@ -618,15 +792,26 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39; get id with P in a string &#39;&#39;&#39;</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_id_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the str(id) with P</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            out: string of information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;P&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
 </pre></div>
 
         </details>
 
-            <div class="docstring"><p>get id with P in a string</p>
+            <div class="docstring"><p>get the str(id) with P</p>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>out: string of information</p>
+</blockquote>
 </div>
 
 
@@ -641,8 +826,8 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
 </pre></div>
 
         </details>
@@ -660,11 +845,11 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">set_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">id_passenger</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_passenger</span>
-    <span class="k">return</span> <span class="kc">True</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">set_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_passenger</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">id_passenger</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_passenger</span>
+        <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 
         </details>
@@ -682,8 +867,8 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">get_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span>
 </pre></div>
 
         </details>
@@ -701,11 +886,11 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">set_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start_station</span><span class="p">:</span><span class="n">Station</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">start_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
-    <span class="k">return</span> <span class="kc">True</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">set_start_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">start_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_station</span> <span class="o">=</span> <span class="n">start_station</span>
+        <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 
         </details>
@@ -723,8 +908,8 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">get_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span>
 </pre></div>
 
         </details>
@@ -742,11 +927,11 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">set_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">end_station</span><span class="p">:</span><span class="n">Station</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">end_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
-    <span class="k">return</span> <span class="kc">True</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">set_end_station</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_station</span><span class="p">:</span> <span class="n">Station</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">end_station</span><span class="p">,</span> <span class="n">Station</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_station</span> <span class="o">=</span> <span class="n">end_station</span>
+        <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 
         </details>
@@ -764,8 +949,8 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">get_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span>
 </pre></div>
 
         </details>
@@ -783,11 +968,11 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">set_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">size</span>
-    <span class="k">return</span> <span class="kc">True</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">set_group_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 
         </details>
@@ -805,11 +990,11 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">set_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_round</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target_round</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_round</span>
-    <span class="k">return</span> <span class="kc">True</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">set_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_round</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target_round</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span> <span class="o">=</span> <span class="n">target_round</span>
+        <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 
         </details>
@@ -827,8 +1012,8 @@
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>  <span class="k">def</span> <span class="nf">get_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_target_round</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_time</span>
 </pre></div>
 
         </details>
