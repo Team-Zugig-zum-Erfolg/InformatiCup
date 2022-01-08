@@ -90,11 +90,12 @@ class Generator:
 
         return [stations, lines, trains, passengers]
 
-    def random_input_generate_file(self, size_station=10, size_lines=20, size_trains=10, size_pa=10, sc_max=10, lc_max=10, ll_max=10, tc_max=10, pgs_max=10, ptr_max=10, max_speed_train=10) -> None:
+    def random_input_generate_file(self, file_name="input_generated.txt", size_station=10, size_lines=20, size_trains=10, size_pa=10, sc_max=10, lc_max=10, ll_max=10, tc_max=10, pgs_max=10, ptr_max=10, max_speed_train=10) -> None:
         """
         Generates random input with entities stations, lines, trains, passengers and prints it in a file
 
         Args:
+            file_name (int, optional): filename. Defaults to input_generated.txt
             size_station (int, optional): amount of stations. Defaults to 10
             size_lines (int, optional): amount of lines. Defaults to 20
             size_trains (int, optional): amount of trains. Defaults to 10
@@ -113,7 +114,7 @@ class Generator:
         output = self.random_input_generate(
             size_station, size_lines, size_trains, size_pa, sc_max, lc_max, ll_max, tc_max, pgs_max, ptr_max, max_speed_train)
 
-        out_file = open("output_generated.txt", "w")
+        out_file = open(file_name, "w")
 
         out_file.write("[Stations]\n")
         self._write_objects_to_file(output[0], out_file)
@@ -142,7 +143,7 @@ class Generator:
 
         Args:
             _objekt(list): List of all Generated _objekts
-            
+
         Returns:
             None
         """
