@@ -99,12 +99,14 @@ class Groups:
                 passenger_max_time = passenger
         return passenger_max_time
 
-    def split_group(self, group: List[Passenger]) -> bool:
+    def split_group(self, group: List[Passenger], train_capacity_in_station, max_train_capacity) -> bool:
         """
         Passengers in a Group will be splitted, if possible 
 
         Args:
             group: List[Passenger] (list): List of all Passengers in Group
+            train_capacity_in_station : Train's Capacity in current Station
+            max_train_capacity : Largest Capacity among the Trains
 
         Returns:
            bool: Has splitting worked?, true = splitting worked, false = splitting has not worked
@@ -113,13 +115,21 @@ class Groups:
         if group not in self.route:
             return False
         self.route.remove(group)
+        first_passenger_group = group[0]
+        if first_passenger_group.group_size > train_capacity_in_station:
+            capacity = max_train_capacity
+        else:
+            capacity = train_capacity_in_station
+        capacity_count = 0
+        first_group = []
+        second_group = []
+        for passenger in group:
+            if passenger.group_size <= capacity - capacity_count:
+                first_group.append(passenger)
+                capacity_count += passenger.group_size
+            else:
+                second_group.append(passenger)
 
-        passenger_with_max_time = self.get_passenger_with_most_time(group)
-
-        group.remove(passenger_with_max_time)
-
-        first_group = group
-        second_group = [passenger_with_max_time]
         if len(first_group) != 0:
             self.route.append(first_group)
         if len(second_group) != 0:
