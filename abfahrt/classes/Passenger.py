@@ -5,7 +5,6 @@ from abfahrt.classes.Station import Station
 
 
 class Passenger:
-    # Passagiere: str(ID) str(Startbahnhof) str(Zielbahnhof) int(Gruppengröße) int(Ankunftszeit)
 
     id: int = 0
     start_station: Station = None
@@ -20,6 +19,16 @@ class Passenger:
     history: List[str] = []
 
     def __init__(self, id: int, start_station: Station, end_station: Station, group_size: int, target_time: int):
+        """
+        Creating a passenger
+
+        Args:
+            id (int): id
+            start_station (Station): start station
+            end_station (Station): end station
+            group_size (int): group size
+            target_time (int): expected target time
+        """
         self.id = id
         self.start_station = start_station
         self.end_station = end_station
@@ -27,21 +36,21 @@ class Passenger:
         self.target_time = target_time
         self.history = []
 
-    def to_list(self):
+    def to_list(self) -> list:
         """
-        convert to list
+        Convert to list
 
         Returns:
-            the list of information
+            list: the list of information/parameters
         """
         return [self.id, self.start_station.id, self.end_station.id, self.group_size, self.target_time]
 
     def to_str_input(self) -> str:
         """
-        this method is used for input, generate information of one passenger
+        This method is used for input, generate information of one passenger
 
         Returns:
-            output: string of information
+            str: string of information/parameters
         """
         output = " ".join([self.get_id_str(), self.start_station.get_id_str(
         ), self.end_station.get_id_str(), str(self.group_size), str(self.target_time)])
@@ -49,41 +58,38 @@ class Passenger:
 
     def to_str_output(self) -> str:
         """
-        used for output, generate string of it's history
+        Used for output, generate string of it's history
 
         Returns:
-            output: string of information
+            str: string of information for output
         """
-        # return "[Passenger:P" + str(self.ID) + "]\n" + str(self.board_time) + " Board " + self.train + "\n" + str(self.arrive_time)+ " Detrain\n"
         output = "\n".join(self.history)
         return output
 
     def add_board(self, time: int, train: str):
         """
-        add this action in history
+        Add this action in history
 
         Args:
             time (int): board time
             train (str): train
         """
         out = str(time) + " " + "Board" + " " + train
-        # print(f"passenger [{self.id}] add board",out)
         self.history.append(out)
 
     def add_detrain(self, time: int):
         """
-        add this action in history
+        Add this action in history
 
         Args:
             time (int): detrain time
         """
         out = str(time) + " " + "Detrain"
-        # print(f"passenger [{self.id}] add detrain",out)
         self.history.append(out)
 
     def merge(self, passenger):
         """
-        merge history of two passengers together (they should have same id)
+        Merge history of two passengers together (they should have same id)
 
         Args:
             passenger (Passenger): another passenger
@@ -92,10 +98,10 @@ class Passenger:
 
     def get_id_str(self) -> str:
         """
-        get the str(id) with P
+        Get the str(id) with P
 
         Returns:
-            out: string of information
+            str: string of id
         """
         out = "P" + str(self.id)
         return out

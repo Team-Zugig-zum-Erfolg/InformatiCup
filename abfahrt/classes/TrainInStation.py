@@ -3,7 +3,18 @@ from abfahrt.classes.Station import Station
 
 
 class TrainInStation:
+
     def __init__(self, arrive_train_time: int, passenger_in_train_time: int, train: Train, leave_time: int, station_id: int):
+        """
+        Represents the assignment/reservation of a station by a train
+
+        Args:
+            arrive_train_time (int): arriving time of the train at the station
+            passenger_in_train_time (int): time passengers can enter/detrain the train
+            train (Train): the train in the station
+            leave_time (int): last time the train is in the station
+            station_id (int): id of the station
+        """
         self.arrive_train_time = arrive_train_time
         self.passenger_in_train_time = passenger_in_train_time
         self.train = train

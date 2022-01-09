@@ -1,103 +1,111 @@
 from abfahrt.classes.Station import Station
 
+
 class Line:
-  # Strecken: str(ID) str(Anfang) str(Ende) dec(Länge) int(Kapazität)
-  # L1 S1 S2 1 3
-  id:int = 0
-  start:Station = None
-  end:Station = None
-  capacity:float = 0.0
-  length:int = 0
 
-  def __init__(self, id:int,start:Station, end:Station, length:float, capacity:int):
-    self.id = id # int
-    self.start = start
-    self.end = end
-    self.capacity = capacity
-    self.length = length
-  
-  def to_list(self):
-    """
-    convert to list
+    id: int = 0
+    start: Station = None
+    end: Station = None
+    capacity: float = 0.0
+    length: int = 0
 
-    Returns:
-        [self.id, self.start.id, self.end.id, self.length, self.capacity]: a list of values
-    """
-    return [self.id, self.start.id, self.end.id, self.length, self.capacity]
+    def __init__(self, id: int, start: Station, end: Station, length: float, capacity: int):
+        """
+        Creating a Line
 
-  def to_str_input(self):
-    """
-    this method is used for input, generate information of one line
+        Args:
+           id (int): id
+           start (Station): first station to connect
+           end (Station): second station to connect
+           length (float): length
+           capacity (int): capacity
+        """
+        self.id = id
+        self.start = start
+        self.end = end
+        self.capacity = capacity
+        self.length = length
 
-    Returns:
-        output: string of information
-    """
-    output = " ".join([self.get_id_str(), self.start.get_id_str(), self.end.get_id_str() ,str(self.length),str(self.capacity)])
-    return output
+    def to_list(self) -> list:
+        """
+        Convert to list
 
-  def get_id_str(self)->str:
-    """
-    get the str(id)
+        Returns:
+            list: a list of values
+        """
+        return [self.id, self.start.id, self.end.id, self.length, self.capacity]
 
-    Returns:
-        out: string of information
-    """
-    out = "L" + str(self.id)
-    return out
-    
-  def get_id(self):
-    return self.id
-  
-  def set_id(self,id_line:str):
-    if type(id_line) != str:
-      return False
-    self.id = id_line
-    return True
-  
-  def get_capacity(self):
-    return self.capacity
-  
-  def set_capacity(self,capacity:int):
-    if type(capacity) != int:
-      return False
-    self.capacity = capacity
-    return True
-  
-  def get_start(self):
-    return self.start
-  
-  def set_start(self,start:Station):
-    if (isinstance(start,Station)==False):
-      return False
-    self.start = start
-    return True
+    def to_str_input(self):
+        """
+        This method is used for input, generate information of one line
 
-  def get_end(self):
-    return self.end
-  
-  def set_end(self,end:Station):
-    if (isinstance(end,Station)==False):
-      return False
-    self.end = end
-    return True
-  
-  def get_length(self):
-    return self.length
-  
-  def set_length(self,length:float):
-    if type(length) != float:
-      return False
-    self.length = length
-    return True
+        Returns:
+            str: string of information
+        """
+        output = " ".join([self.get_id_str(), self.start.get_id_str(
+        ), self.end.get_id_str(), str(self.length), str(self.capacity)])
+        return output
 
-  def __repr__(self):
-    # output = " ".join([self.get_id(),str(self.get_end()[0]),str(self.get_end()[1]),str(self.get_length()),str(self.get_capacity())])
-    out = self.to_str_input()
-    return out
+    def get_id_str(self) -> str:
+        """
+        Get the str(id)
 
-  def __eq__(self, other):
-    if (isinstance(other, Station)):
-      return self.id == other.id and self.capacity == other.capacity and self.length == other.length and self.start == other.start and self.end == other.end
-    return False
+        Returns:
+            str: string of id
+        """
+        out = "L" + str(self.id)
+        return out
 
+    def get_id(self):
+        return self.id
 
+    def set_id(self, id_line: str):
+        if type(id_line) != str:
+            return False
+        self.id = id_line
+        return True
+
+    def get_capacity(self):
+        return self.capacity
+
+    def set_capacity(self, capacity: int):
+        if type(capacity) != int:
+            return False
+        self.capacity = capacity
+        return True
+
+    def get_start(self):
+        return self.start
+
+    def set_start(self, start: Station):
+        if (isinstance(start, Station) == False):
+            return False
+        self.start = start
+        return True
+
+    def get_end(self):
+        return self.end
+
+    def set_end(self, end: Station):
+        if (isinstance(end, Station) == False):
+            return False
+        self.end = end
+        return True
+
+    def get_length(self):
+        return self.length
+
+    def set_length(self, length: float):
+        if type(length) != float:
+            return False
+        self.length = length
+        return True
+
+    def __repr__(self):
+        out = self.to_str_input()
+        return out
+
+    def __eq__(self, other):
+        if (isinstance(other, Station)):
+            return self.id == other.id and self.capacity == other.capacity and self.length == other.length and self.start == other.start and self.end == other.end
+        return False

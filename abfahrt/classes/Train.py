@@ -6,7 +6,6 @@ from abfahrt.classes.Line import Line
 
 
 class Train:
-    # Züge: str(ID) str(Startbahnhof)/* dec(Geschwindigkeit) int(Kapazität)
 
     id: int = 0
     start_station: Station = None
@@ -15,7 +14,15 @@ class Train:
     history: List[str] = []
 
     def __init__(self, id: int, start_station: Station, speed: float, capacity: int):
-        '''if start_station is *, input value of start_station could be None '''
+        """
+        Creating a train
+
+        Args:
+            id (int): id
+            start_station (Station): start station
+            speed (float): speed
+            capacity (int): capacity
+        """
         self.id = id
         self.start_station = start_station
         self.speed = speed
@@ -24,7 +31,7 @@ class Train:
 
     def to_list(self):
         """
-        convert to list
+        Convert to list
 
         Returns:
             the list of information
@@ -33,7 +40,7 @@ class Train:
 
     def to_str_input(self) -> str:
         """
-        this method is used for input, generate information of one passenger
+        This method is used for input, generate information of one passenger
 
         Returns:
             output: string of information
@@ -48,22 +55,27 @@ class Train:
 
     def to_str_output(self) -> str:
         """
-        used for output, generate string of it's history
+        Used for output, generate string of it's history
 
         Returns:
-            output: string of information
+            str: string of information
         """
         output = "\n".join(self.history)
         return output
 
     def get_id_str(self) -> str:
-        ''' get id with T in a string '''
+        """
+        Get id with T in a string
+
+        Returns:
+            str: train id as string
+        """
         out = "T" + str(self.id)
         return out
 
     def add_start(self, time: int, station: str):
         """
-        add this action in history
+        Add this action in history
 
         Args:
             time (int): start time
@@ -74,7 +86,7 @@ class Train:
 
     def add_depart(self, time: int, line: str):
         """
-        add this action in history
+        Add this action in history
 
         Args:
             time (int): depart time
@@ -85,7 +97,7 @@ class Train:
 
     def merge(self, train):
         """
-        merge history of two train together (they should have same id)
+        Merge history of two train together (they should have same id)
 
         Args:
             train (Train): another train

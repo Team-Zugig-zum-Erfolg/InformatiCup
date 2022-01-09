@@ -8,9 +8,25 @@ from abfahrt.classes.TrainInLine import TrainInLine
 from abfahrt.classes.TrainInStation import TrainInStation
 from abfahrt.classes.Train import Train
 
+
 class Travel:
+
     def __init__(self, start_time: int, on_board: int, line_time: List[TrainInLine], station_time: TrainInStation, start_station: Station,
                  end_station: Station, train: Train, station_times: List[TrainInStation], length: int):
+        """
+        Represents the travel of a train from a station to an other station and collects the route and the time information
+
+        Args:
+            start_time (int): starting time of the travel
+            on_board (int): time when the passengers enter/board
+            line_time (List[TrainInLine]): assignmnents of the lines
+            station_time (TrainInStation): assignment of the target station
+            start_station (Station): start station
+            end_station (Station): end/target station
+            train (Train): train
+            station_times (List[TrainInStation]): assignments of all stations
+            length (int): absolute length of the route
+        """
         self.start_time = start_time
         self.on_board = on_board
         self.line_time = line_time
