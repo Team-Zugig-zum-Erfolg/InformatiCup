@@ -19,6 +19,12 @@ from abfahrt.Input import Input
 class Result:
 
     def __init__(self, input_instance: Input):
+        """
+        Intializing Result
+
+        Args:
+            input_instance (Input): instance of Input
+        """
         self.trains = input_instance.Trains
         self.passengers = input_instance.Passengers
 
@@ -44,99 +50,113 @@ class Result:
         self.id_trains: set = set()
         self.id_passengers: set = set()
 
-    def get_str_by_id_line(self, id):
+    def _get_str_by_id_line(self, id: int) -> str:
         return self.ids_str_lines[id]
 
-    def get_str_by_id_station(self, id):
+    def _get_str_by_id_station(self, id: int) -> str:
         return self.ids_str_stations[id]
 
-    def get_str_by_id_train(self, id):
+    def _get_str_by_id_train(self, id: int) -> str:
         return self.ids_str_trains[id]
 
-    def get_str_by_id_passenger(self, id):
+    def _get_str_by_id_passenger(self, id: int) -> str:
         return self.ids_str_passengers[id]
 
-    def save_train_depart(self, id_train, time, id_line):
+    def save_train_depart(self, id_train: int, time: int, id_line: int) -> None:
         """
-        find the train in trains[], add this action in its history
+        Find the train in trains[], add this action in its history
 
         Args:
             id_train (int): id of the train
             time (int): depart time of the train
             id_line (int): id of the line
+
+        Returns:
+            None
         """
         # find the train in list, or add one in list
         train = self.trains[id_train-1]
-        train.add_depart(time=time, line=self.get_str_by_id_line(id_line))
+        train.add_depart(time=time, line=self._get_str_by_id_line(id_line))
 
-    def save_train_start(self, id_train, time, id_station):
+    def save_train_start(self, id_train: int, time: int, id_station: int) -> None:
         """
-        find the train in trains[], add this action in its history
+        Find the train in trains[], add this action in its history
 
         Args:
             id_train (int): id of the train
             time (int): time of start
             id_station (int): id of the station
+
+        Returns:
+            None
         """
         train = self.trains[id_train-1]
         train.add_start(
-            time=time, station=self.get_str_by_id_station(id_station))
+            time=time, station=self._get_str_by_id_station(id_station))
 
-    def save_passenger_board(self, id_passenger, time, id_train):
+    def save_passenger_board(self, id_passenger: int, time: int, id_train: int) -> None:
         """
-        find the passenger in passenger[], add this action in its history
+        Find the passenger in passenger[], add this action in its history
 
         Args:
             id_passenger (int): id of the passenger
             time (int): time of board
             id_train (int): id of the train
+
+        Returns:
+            None
         """
         p = self.passengers[id_passenger-1]
-        p.add_board(time=time, train=self.get_str_by_id_train(id_train))
+        p.add_board(time=time, train=self._get_str_by_id_train(id_train))
 
-    def save_passenger_detrain(self, id_passenger, time):
+    def save_passenger_detrain(self, id_passenger: int, time: int) -> None:
         """
-        find the passenger in passenger[], add this action in its history
+        Find the passenger in passenger[], add this action in its history
 
         Args:
             id_passenger (int): id of the passenger
             time (int): time of detrain
+
+        Returns:
+            None
         """
         p = self.passengers[id_passenger-1]
         p.add_detrain(time=time)
 
     # saving methods
-    def to_output_text(self):
+    def to_output_text(self) -> str:
         """
-        create the output text
+        Create the output text
 
         Returns:
-            result: the output text
+            str: the output text
         """
         result = ""
         for t in self.trains:
-            result += f"[Train:{self.get_str_by_id_train(t.id)}]\n"
+            result += f"[Train:{self._get_str_by_id_train(t.id)}]\n"
             result += t.to_str_output()
             result += "\n"
             result += "\n"
         for p in self.passengers:
-            result += f"[Passenger:{self.get_str_by_id_passenger(p.id)}]\n"
+            result += f"[Passenger:{self._get_str_by_id_passenger(p.id)}]\n"
             result += p.to_str_output()
             result += "\n"
             result += "\n"
         return result
 
-    def to_file_same(self):
+    def to_file_same(self) -> bool:
         """
-        save output file in SAME file output
+        Save output to file in SAME file called output.txt
 
         Returns:
-            state: true if successfully
+            bool: True if successful, else False
         """
         path = './output.txt'
-        state = False
-        file = open(path, 'w')
-        file.write(self.to_output_text())
-        file.close()
-        state = True
-        return state
+        try:
+            file = open(path, 'w')
+        except OSError:
+            return False
+        with file:
+            file.write(self.to_output_text())
+            file.close()
+            return True
