@@ -11,7 +11,7 @@ def main():
 
     stations, lines, trains, passengers = input_.from_stdin()
 
-    if input_.check_input() == False:
+    if not input_.check_input():
         print("INVALID INPUT: Not enough or invalid objects given!")
         return
 
@@ -34,7 +34,7 @@ def main():
 
         start_station, end_station, group_size = travel_center.check_passengers(
             group)
-        start_time_list, trainlist, available = travel_center.check_train_in_station(
+        start_time_list, trainlist, available, train_capacity_in_station, max_train_capacity = travel_center.check_train_in_station(
             start_station, group_size)
 
         if not available:
@@ -47,7 +47,7 @@ def main():
                 if len(group) == 1:
                     print("INVALID INPUT: capacity of all trains too low!")
                     return
-                groups.split_group(group)
+                groups.split_group(group, train_capacity_in_station, max_train_capacity)
             continue
 
         route_length = travel_center.time_count_length(
