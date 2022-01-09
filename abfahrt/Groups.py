@@ -123,6 +123,7 @@ class Groups:
         capacity_count = 0
         first_group = []
         second_group = []
+        group.sort(key=lambda x: x.target_time)
         for passenger in group:
             if passenger.group_size <= capacity - capacity_count:
                 first_group.append(passenger)
