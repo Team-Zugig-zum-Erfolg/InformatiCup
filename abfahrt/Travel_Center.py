@@ -630,8 +630,6 @@ class Travel_Center:
             start_station.id, include_not_in_station_trains)
         capacity_enable = self.check_capacity(
             trains, group_size, start_times, None)
-        self.remove_passing_station_trains(
-            start_station, trains, start_times)
         available = False
         if len(trains) > 0:
             available = True
