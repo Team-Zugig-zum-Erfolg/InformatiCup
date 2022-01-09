@@ -319,18 +319,12 @@ class Input:
             mylines.append("")
         return self.parse_lines(mylines)
 
-    def check_station(self, parameters: List) -> bool:
+    def check_station(self, parameters: list) -> bool:
         """
         used in parse_lines(), check logic and syntax of input station
-        regulation:
-            1. if it contains less or more parameter then the format (int)ID, (int)capacity
-            2. if format of id is not "S1", like "asdad123asdasd", or "station1"
-            3. if capacity < 0
-            4. p[1] is int
-            -> then false
 
-        Args: 
-            parameters (List): a list of parameters with str
+        Args:
+            parameters (list): a list of parameters with type str
 
         Returns:
             bool: True if valid input, else False
@@ -354,10 +348,10 @@ class Input:
             return False
         return True
 
-    def check_line(self, parameters: List) -> bool:
+    def check_line(self, parameters: list) -> bool:
         """
         used in parse_lines(), check logic and syntax of input line
-        regulation:
+            regulation:
             1. if the parameters less or more than 5
             2. if the id not in format "L1"
             3. if the id of stations not in format "S1"
@@ -368,8 +362,8 @@ class Input:
             8. if capacity is not int
             -> then false
 
-        Args: 
-            parameters (List): a list of parameters with str
+        Args:
+            parameters (list): a list of parameters with type str
 
         Returns:
             bool: True if valid input, else False
@@ -406,7 +400,7 @@ class Input:
             return False
         return True
 
-    def check_train(self, parameters: List) -> bool:
+    def check_train(self, parameters: list) -> bool:
         """
         used in parse_lines(), check logic and syntax of input train
         0 str(ID) 1 str(Startbahnhof)/* 2 dec(Geschwindigkeit) 3 int(Kapazität)
@@ -419,8 +413,8 @@ class Input:
             6. if capacity < 0
             -> then false
 
-        Args: 
-            parameters (List): a list of parameters with str
+        Args:
+            parameters (list): a list of parameters with type str
 
         Returns:
             bool: True if valid input, else False
@@ -457,11 +451,13 @@ class Input:
 
         return True
 
-    def check_passenger(self, parameters: List) -> bool:
+    def check_passenger(self, parameters: list) -> bool:
         """
         Used in parse_lines(), check logic and syntax of input passenger
         0 str(ID) 1 str(Startbahnhof) 2 str(Zielbahnhof) 3 int(Gruppengröße) 4 int(Ankunftszeit)
-        regulation:
+
+        Note:
+            regulation/checks:
             1. if the parameters less or more than 5
             2. if the id not in format "P1"
             3. if the id of stations not in format "S1"
@@ -470,10 +466,9 @@ class Input:
             6. if time < 0
             7. size not int
             8. time not int
-            -> then false
 
-        Args: 
-            parameters (List): a list of parameters with str
+        Args:
+            parameters (list): a list of parameters with type str
 
         Returns:
             bool: True if valid input, else False
@@ -538,7 +533,7 @@ class Input:
 
     def parse_lines(self, lines: list) -> Tuple[List[Station], List[Line], List[Train], List[Passenger]]:
         """
-        This is used in from_input(), from_input_stdin() to parse a line read from file or stdin. The lines here means a list of line from text
+        This is used in from_input(), from_stdin() to parse a line read from file or stdin. The lines here means a list of line from text
 
         Args: 
             lines (list): the lines readed from file or stdin
