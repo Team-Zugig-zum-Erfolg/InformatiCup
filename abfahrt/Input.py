@@ -351,7 +351,8 @@ class Input:
     def check_line(self, parameters: list) -> bool:
         """
         used in parse_lines(), check logic and syntax of input line
-            regulation:
+        
+        Regulation:
             1. if the parameters less or more than 5
             2. if the id not in format "L1"
             3. if the id of stations not in format "S1"
@@ -404,7 +405,8 @@ class Input:
         """
         used in parse_lines(), check logic and syntax of input train
         0 str(ID) 1 str(Startbahnhof)/* 2 dec(Geschwindigkeit) 3 int(Kapazität)
-        regulation:
+        
+        Regulation:
             1. if the parameters less or more than 4
             2. if the id not in format "T1"
             3. if the id of station not in format "S1" or not "*"
@@ -456,8 +458,7 @@ class Input:
         Used in parse_lines(), check logic and syntax of input passenger
         0 str(ID) 1 str(Startbahnhof) 2 str(Zielbahnhof) 3 int(Gruppengröße) 4 int(Ankunftszeit)
 
-        Note:
-            regulation/checks:
+        Regulation:
             1. if the parameters less or more than 5
             2. if the id not in format "P1"
             3. if the id of stations not in format "S1"
@@ -507,9 +508,13 @@ class Input:
     def check_input(self) -> bool:
         """
         check the logic of all input
-        regulation:
-            1. if there are only 1 station or no line
-            software will be stop
+
+        Regulation:
+            1. if there are less than 2 station
+            2. if there are no line
+            3. if there are no train
+            -> software will be stop
+
         Note:
             1. if the stations, that are used in lines, don't exist
             2. if the stations, that are used in trains, don't exist
