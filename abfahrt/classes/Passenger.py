@@ -107,56 +107,146 @@ class Passenger:
         return out
 
     def get_id(self):
+        """
+        Get the int(id)
+
+        Returns:
+            int: int of id
+        """
         return self.id
 
     def set_id(self, id_passenger: int):
+        """
+        Set id of passenger
+
+        Args:
+            id_passenger (int): Id of passenger
+
+        Returns:
+            bool: id_passenger is from type int?, true = Type int, false = Type is false
+        """
         if type(id_passenger) != int:
             return False
         self.id = id_passenger
         return True
 
     def get_start_station(self):
+        """
+        Get start station of passenger
+
+        Returns:
+            start (Station): Boarding station
+        """    
         return self.start_station
 
     def set_start_station(self, start_station: Station):
+        """
+        set start station of passenger
+
+        Args:
+            start (Station): first station to board
+
+        Returns:
+            bool: start is instance of Station?, true = Type is correct, false = Type is false
+        """        
         if (isinstance(start_station, Station) == False):
             return False
         self.start_station = start_station
         return True
 
     def get_end_station(self):
+        """
+        Get end station of passenger
+
+        Returns:
+            end (Station): end station to deboard
+        """   
         return self.end_station
 
     def set_end_station(self, end_station: Station):
+        """
+        set end station
+
+        Args:
+            end (Station): end station to deboard
+
+        Returns:
+            bool: end is instance of Station?, true = Type is correct, false = Type is false
+        """     
         if (isinstance(end_station, Station) == False):
             return False
         self.end_station = end_station
         return True
 
     def get_group_size(self):
+        """
+        get group size of passengers
+
+        Returns:
+            int: returns group size
+        """
         return self.group_size
 
     def set_group_size(self, size):
+        """
+        set group size
+
+        Args:
+            size (int): size of passenger group
+
+        Returns:
+            bool: size is from type int?, true = Type is correct, false = Type is false
+        """    
         if type(size) != int:
             return False
         self.group_size = size
         return True
 
     def set_target_round(self, target_round):
+        """
+        [summary]
+
+        Args:
+            target_round ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         if type(target_round) != int:
             return False
         self.target_time = target_round
         return True
 
     def get_target_round(self):
+        """
+        get target round of passengers
+
+        Returns:
+            int: returns target round
+        """
         return self.target_time
 
     def __repr__(self):
+        """
+        representation of object Passenger ( can be used for print)
+
+        Returns:
+            string: string from object
+        """   
         output = " ".join([self.get_id_str(), self.get_start_station().get_id_str(
         ), self.get_end_station().get_id_str(), str(self.get_group_size()), str(self.get_target_round())])
         return output
 
     def __eq__(self, other):
-        if (isinstance(other, Station)):
+        """
+        chek if both objects are equal.
+
+        Args:
+            other (object): unknown object
+
+        Returns:
+            bool: other is equal to Passenger?, true = Type is correct, false = Type is false
+        """            
+        if (isinstance(other, Passenger)):
             return self.id == other.id and self.group_size == other.group_size and self.start_station == other.start_station and self.end_station == other.end_station and self.target_time == other.target_time
         return False

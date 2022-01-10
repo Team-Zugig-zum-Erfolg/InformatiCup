@@ -73,7 +73,7 @@ class Line:
             id_line (str): string of id 
 
         Returns:
-             bool: id_line is not from type string?, true = Type string, false = Type int
+            bool: id_line is not from type string?, true = Type string, false = Type int
         """        
         if type(id_line) != str:
             return False
@@ -97,7 +97,7 @@ class Line:
             capacity (int): int capacity 
 
         Returns:
-             bool: capacity is not from type int?, true = Type int, false = Type is false
+            bool: capacity is not from type int?, true = Type int, false = Type is false
         """           
         if type(capacity) != int:
             return False
@@ -106,7 +106,7 @@ class Line:
 
     def get_start(self):
         """
-        Get start station  of line
+        Get start station of line
 
         Returns:
             start (Station): first station to connect
@@ -121,7 +121,7 @@ class Line:
             start (Station): first station to connect
 
         Returns:
-             bool: start is instance of Station?, true = Type is correct, false = Type is false
+            bool: start is instance of Station?, true = Type is correct, false = Type is false
         """          
         if (isinstance(start, Station) == False):
             return False
@@ -130,7 +130,7 @@ class Line:
 
     def get_end(self):
         """
-        Get end station  of line
+        Get end station of line
 
         Returns:
             end (Station): end station to connect
@@ -145,7 +145,7 @@ class Line:
             end (Station): end station to connect
 
         Returns:
-             bool: end is instance of Station?, true = Type is correct, false = Type is false
+            bool: end is instance of Station?, true = Type is correct, false = Type is false
         """           
         if (isinstance(end, Station) == False):
             return False
@@ -169,7 +169,7 @@ class Line:
             legth (float): float of length 
 
         Returns:
-             bool: length is not from type float?, true = Type float, false = Type is false
+            bool: length is not from type float?, true = Type float, false = Type is false
         """        
         if type(length) != float:
             return False
@@ -178,7 +178,7 @@ class Line:
 
     def __repr__(self):
         """
-        representation of object line ( can be used for print)
+        representation of object Line ( can be used for print)
 
         Returns:
             string: string from object
@@ -191,10 +191,10 @@ class Line:
         chek if both objects are equal.
 
         Args:
-            other (Line): Line object
+            other (object): unknown object
 
         Returns:
-             bool: other is equal to Line?, true = Type is correct, false = Type is false
+            bool: other is equal to Line?, true = Type is correct, false = Type is false
         """           
         if (isinstance(other, Line)):
             return self.id == other.id and self.capacity == other.capacity and self.length == other.length and self.start == other.start and self.end == other.end
