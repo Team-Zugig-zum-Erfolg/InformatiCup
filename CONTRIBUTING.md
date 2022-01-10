@@ -2,28 +2,26 @@
 
 ## Before contributing
 
-Please familiarize yourself with the codebase before writing any code. If you have any questions, feel free to reach out to us! You can write us emails or open an issue.
-
-You can find our full documentation under ([https://github.com/team-zugig-zum-erfolg/documentation](https://github.com/TeamBrot/paper).) unsere git adressee!!!!
+Bitte lese dich in den Code rein, bevor du  änderungen durchführst. Bei fragen kannst du dich per Email bei uns melden oder ein issue öffnen.
+Die gesammte Dokumentation findet man unter ([https://github.com/team-zugig-zum-erfolg/documentation](https://github.com/team-zugig-zum-erfolg/documentation).) 
 
 ## Contributions
 
 Always welcome are:
 
-- Improving documentation
-- Adding tests
-- Improving logging / error messages
-- Improving error message
-- Improving performance / security
-- Minor refactorings
+- Verbesserung der Dokumentation
+- Einfügen von neuen Testfällen
+- Verbesserungen von Fehlernachrichten
+- Verbesserungen von der Leisung
+- Kleinere Umgestalltungen
 
-For other types of contributions, consider opening an issue first so we can chat about the possible change.
+Bei größeren Änderungen sollte zuerst ein issue geöffnet werden, bevor was geändert wird. Damit man über die Änderungen noch diskutieren kann.
 
 ## Style
 
-Please use python snake case. Please run `python -m abfahrt.testutils.test_simulator` to check that all tests still pass.
+Bitte benutze python snake case und nutze `python -m abfahrt.testutils.test_simulator` um zu prüfen ob alle testfälle durchkommen und ob die scores und die Zeit sich verbessert.
 
 ## Code of conduct
 
-When contributing, please also check out our code of conduct in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+Beim Einreichen deiner Änderungen, achte darauf das du unseren code of conduct in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) einhältst.
 
