@@ -1,13 +1,10 @@
 import unittest, sys, os
 
-path = os.path.abspath(os.getcwd())
-sys.path.append(path+'\\..')
-
-from Linelist import Linelist
-from classes.Train import Train
-from classes.Station import Station
-from classes.Line import Line
-from classes.TrainInLine import TrainInLine
+from abfahrt.Linelist import Linelist
+from abfahrt.classes.Train import Train
+from abfahrt.classes.Station import Station
+from abfahrt.classes.Line import Line
+from abfahrt.classes.TrainInLine import TrainInLine
 
 __unittest = True
 
@@ -17,10 +14,10 @@ trains = [Train(1,stations[0],1,10), Train(2,stations[1],1,10), Train(3,stations
 
 linelist = []
 
-for line in lines:
-		linelist.append(line.to_list())
+#for line in lines:
+#		linelist.append(line.to_list())
 
-test_linelist = Linelist(linelist)
+test_linelist = Linelist(lines)
 
 test_linelist.lines[1][0].append(TrainInLine(trains[0],0,1,1))
 test_linelist.lines[1][0].append(TrainInLine(trains[1],4,5,1))
