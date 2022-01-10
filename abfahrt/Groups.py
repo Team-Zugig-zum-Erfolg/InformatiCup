@@ -27,7 +27,8 @@ class Groups:
             if self.max_size < passenger.group_size:
                 self.max_size = passenger.group_size
             for route_searched in self.route:
-                if route_searched[0].start_station == passenger.start_station and route_searched[0].end_station == passenger.end_station:
+                if route_searched[0].start_station == passenger.start_station and \
+                        route_searched[0].end_station == passenger.end_station:
                     self.route[route_number].append(passenger)
                     added = 1
                     break
@@ -138,3 +139,38 @@ class Groups:
         if len(second_group) != 0:
             self.route.append(second_group)
         return True
+
+    def group_choose(self, start_station: Station, end_station: Station, train_capacity: int) -> Tuple[
+        bool, List[Passenger]]:
+        """
+        Determining the group of passengers with the starting station and the ending station, if possible
+
+        Args:
+            start_station (Station): start station
+            end_station (Station): end station
+            train_capacity (int): train's capacity
+
+        Returns:
+           bool: Has a group?, true = yes, false = no
+           group: List[Passenger] (list) true -> group, false -> None
+        """
+        choose_group = []
+        group_size = 0
+        for group in self.route:
+            if group[0].start_station.id == start_station.id and group[0].end_station.id == end_station.id:
+                choose_group = group
+                break
+        if choose_group is None:
+            return [False, None]
+        else:
+            choose_group.sort(key=lambda x: x.target_time)
+            for passenger in choose_group:
+                group_size = group_size + passenger.group_size
+            if group_size > train_capacity:
+                if len(choose_group) > 1:
+                    self.split_group(choose_group, train_capacity, train_capacity)
+                    return self.group_choose(start_station, end_station, train_capacity)
+                else:
+                    return [False, None]
+            else:
+                return [True, choose_group]

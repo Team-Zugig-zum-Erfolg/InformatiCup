@@ -42,7 +42,7 @@ def main():
                 group_size)
             if capacity_enable:
                 travel_center.train_move_to_start_station(
-                    start_station, trains, start_times, start_stations)
+                    start_station, trains, start_times, start_stations, groups)
             else:
                 if len(group) == 1:
                     print("INVALID INPUT: capacity of all trains too low!")
@@ -58,7 +58,7 @@ def main():
                 groups.max_size)
             if capacity_enable:
                 travel_center.train_move_to_start_station(
-                    start_station, trainlist, start_times, start_stations)
+                    start_station, trainlist, start_times, start_stations, groups)
             else:
                 print("INVALID INPUT: capacity of all trains too low!")
                 return

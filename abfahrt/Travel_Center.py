@@ -540,7 +540,7 @@ class Travel_Center:
                         travel_available.append(travels[i])
                         available_run = 1
                     i += 1
-
+                
                 if available_run:
                     short_time = travel_available[0].station_time.arrive_train_time
                     short_travel = travel_available[0]
@@ -548,7 +548,11 @@ class Travel_Center:
                         if short_time > travel.station_time.arrive_train_time:
                             short_time = travel.station_time.arrive_train_time
                             short_travel = travel
-
+                    if passengers is None:
+                        b_choose, passengers = groups.group_choose(short_travel.start_station, short_travel.end_station, 
+                                                               short_travel.train.capacity)
+                        if not b_choose:
+                            groups = None
                     save = self.save_travel(
                         short_travel, groups, passengers)
 
@@ -1053,7 +1057,7 @@ class Travel_Center:
 
     # move a train to start station
     def train_move_to_start_station(self, start_station: Station, trains: List[Train], start_times: List[int],
-                                    start_stations: List[Station]) -> bool:
+                                    start_stations: List[Station], groups: Groups) -> bool:
         """
         Moves the fastest train by given trains and start times to a specific station
 
@@ -1062,12 +1066,13 @@ class Travel_Center:
             trains (List[Train]): possible trains
             start_times (List[int]): start times of the trains
             start_stations (List[Station]): start stations of the trains
-
+            groups (Groups): train move with group, if possible
+            
         Returns:
             bool: True, if moving train was successful, else False
         """
         save = self._train_to_station(
-            start_station, trains, start_times, start_stations)
+            start_station, trains, start_times, start_stations, groups)
         return save
 
     def remove_passing_station_trains(self, start_station: Station, trains: List[Train],
@@ -1212,7 +1217,7 @@ class Travel_Center:
             return 1
 
     def _train_to_station(self, end_station: Station, trains: List[Train], start_times: List[int],
-                          start_stations: List[Station]) -> bool:
+                          start_stations: List[Station], groups: Groups) -> bool:
         """
         Moves the fastest train by given trains and start times to a specific station
         Used as a helper function
@@ -1222,7 +1227,8 @@ class Travel_Center:
             trains (List[Train]): possible trains
             start_times (List[int]): start times of the trains
             start_stations (List[Station]): start stations of the trains
-
+            groups (Groups): train move with group, if possible
+            
         Returns:
             bool: True, if moving train was successful, else False
         """
@@ -1245,6 +1251,6 @@ class Travel_Center:
                 start, end_station, train, start_time))
 
         self.determine_and_save_shortest_travel(
-            travels, None, None)
+            travels, groups, None)
 
         return True
