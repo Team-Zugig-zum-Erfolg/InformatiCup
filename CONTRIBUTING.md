@@ -1,23 +1,29 @@
-# Contributing
+# Contributing guidelines
 
+## Before contributing
 
-## Vorwort
-Dies ist ein Projekt, welches im Rahmen einer Gruppenarbeit von vier Personen entwickelt wurde. Die Commit-Historie spiegelt dabei nicht immer die Leistung der einzelnen Personen für das Projekt wieder,
-da häufig gemeinsam über ein Gerät gearbeitet wurde.  
+Please familiarize yourself with the codebase before writing any code. If you have any questions, feel free to reach out to us! You can write us emails or open an issue.
 
+You can find our full documentation under ([https://github.com/team-zugig-zum-erfolg/documentation](https://github.com/TeamBrot/paper).) unsere git adressee!!!!
 
-## Contributors
-**Berkehan Ünal**  
-Email: berkehan.uenal@stud.uni-hannover.de 
+## Contributions
 
+Always welcome are:
 
-**Han Yang**  
-Email: han.yang@stud.uni-hannover.de  
+- Improving documentation
+- Adding tests
+- Improving logging / error messages
+- Improving error message
+- Improving performance / security
+- Minor refactorings
 
+For other types of contributions, consider opening an issue first so we can chat about the possible change.
 
-**Ling-Hsuan Hsu**  
-Email: ling-hsuan.hsu@stud.uni-hannover.de  
+## Style
 
+Please use python snake case. Please run `python -m abfahrt.testutils.test_simulator` to check that all tests still pass.
 
-**LukasDreyer**  
-Email: lukas.dreyer@stud.uni-hannover.de  
+## Code of conduct
+
+When contributing, please also check out our code of conduct in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
