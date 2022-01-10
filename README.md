@@ -1,8 +1,13 @@
 # Team zug zum erfolg
+# Lösung für den InformatiCup 2022
 
-Team Arbeit Informati Cup
+## Systemvoraussetzungen
 
+## Installation
 
+## Benutzung
+
+## Testen
 doc:
 
 python -m pdoc -o ./doc -d google abfahrt
@@ -40,3 +45,12 @@ python -m abfahrt.testutils.test_generator
 
 
 python -m abfahrt.testutils.test_generator -test_amount 10 -number_stations 10 -number_lines 20 -number_trains 10 -number_passengers 10 -max_capacity_station 10 -max_capacity_line 10 -max_length_line 10 -max_capacity_train 10 -max_groups
+
+
+```sh
+$ ./ic20_linux -t 0
+```
+
+## Lizenz
+
+Diese Projekt unterliegt der [MIT Lizenz](./LICENSE).
