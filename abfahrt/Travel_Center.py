@@ -39,8 +39,6 @@ T_S_ID = 1
 T_SPEED = 2
 T_CAPACITY = 3
 
-MAX_TRAIN_CAPACITY = 0
-TRAIN_LINE_TIME_LIST = []
 
 
 class Travel_Center:
@@ -50,8 +48,8 @@ class Travel_Center:
         """
         Initializing Travel_Center
         """
-        global MAX_TRAIN_CAPACITY
-        global TRAIN_LINE_TIME_LIST
+        self.max_train_capacity = 0
+        self.train_line_time_list = []
         self.line_plan = []
 
         self.stationlist = stationlist
@@ -73,17 +71,17 @@ class Travel_Center:
 
         self.average_line_length = 0
 
-        TRAIN_LINE_TIME_LIST.append([])
+        self.train_line_time_list.append([])
 
         self.plan = Plan()
 
         for train in train_input_list:
-            if train.capacity > MAX_TRAIN_CAPACITY:
-                MAX_TRAIN_CAPACITY = train.capacity
-            TRAIN_LINE_TIME_LIST.append([])
-            TRAIN_LINE_TIME_LIST[train.id].append(0)
+            if train.capacity > self.max_train_capacity:
+                self.max_train_capacity = train.capacity
+            self.train_line_time_list.append([])
+            self.train_line_time_list[train.id].append(0)
             for line in line_input_list:
-                TRAIN_LINE_TIME_LIST[train.id].append(
+                self.train_line_time_list[train.id].append(
                     math.ceil(Decimal.from_float(line[L_LEN]) / Decimal.from_float(train.speed)) - 1)
 
         self.line_plan.append([])
@@ -237,7 +235,7 @@ class Travel_Center:
         prev_station = start_station
         for li in range(len(lines)):
             line_time.append(TrainInLine(train.id, add_time,
-                                         add_time + TRAIN_LINE_TIME_LIST[train.id][lines[li]], lines[li]))
+                                         add_time + self.train_line_time_list[train.id][lines[li]], lines[li]))
             stations = self.get_stations_by_line(lines[li])
             if stations[0].id != prev_station.id:
                 next_station = stations[0]
@@ -246,19 +244,19 @@ class Travel_Center:
 
             current_leave_time = None
             current_passenger_in_time = add_time + \
-                                        TRAIN_LINE_TIME_LIST[train.id][lines[li]] + 1
+                                        self.train_line_time_list[train.id][lines[li]] + 1
 
             if next_station.id != end_station.id:
                 current_leave_time = add_time + \
-                                     TRAIN_LINE_TIME_LIST[train.id][lines[li]]
+                                     self.train_line_time_list[train.id][lines[li]]
                 current_passenger_in_time = add_time + \
-                                            TRAIN_LINE_TIME_LIST[train.id][lines[li]]
+                                            self.train_line_time_list[train.id][lines[li]]
 
             station_times.append(TrainInStation(
-                add_time + TRAIN_LINE_TIME_LIST[train.id][lines[li]], current_passenger_in_time, train,
+                add_time + self.train_line_time_list[train.id][lines[li]], current_passenger_in_time, train,
                 current_leave_time, next_station.id))
 
-            add_time += TRAIN_LINE_TIME_LIST[train.id][lines[li]] + 1
+            add_time += self.train_line_time_list[train.id][lines[li]] + 1
 
             prev_station = next_station
 
@@ -656,7 +654,7 @@ class Travel_Center:
                     train_capacity = train.capacity
         capacity_enable = self.check_capacity(
             trains, group_size, start_times, None)
-        return start_times, trains, capacity_enable, train_capacity, MAX_TRAIN_CAPACITY
+        return start_times, trains, capacity_enable, train_capacity, self.max_train_capacity
 
         # choose train from other station
 
