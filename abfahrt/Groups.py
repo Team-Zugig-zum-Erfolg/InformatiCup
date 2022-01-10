@@ -116,10 +116,12 @@ class Groups:
             return False
         self.route.remove(group)
         first_passenger_group = group[0]
-        if first_passenger_group.group_size > train_capacity_in_station:
+        if first_passenger_group.group_size <= train_capacity_in_station:
+            capacity = train_capacity_in_station
+        elif first_passenger_group.group_size <= max_train_capacity:
             capacity = max_train_capacity
         else:
-            capacity = train_capacity_in_station
+            capacity = first_passenger_group.group_size
         capacity_count = 0
         first_group = []
         second_group = []
