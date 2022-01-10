@@ -26,10 +26,10 @@ test_stationlist = Stationlist(stations, trains, None)
 
 
 test_travelcenter = Travel_Center(
-    stations, lines, trains, test_stationlist, test_linelist, None)
+    trains, test_stationlist, test_linelist, None)
 
 
-class Testing(unittest.TestCase):
+class Testing_Travel_Center(unittest.TestCase):
 
     def test_get_stations_by_line(self):
         self.assertEqual(test_travelcenter.get_stations_by_line(1), [

@@ -20,8 +20,9 @@ test_stationlist.stations[1][0].append(TrainInStation(0, 1, trains[0], 1, 2))
 test_stationlist.stations[2][0].append(
     TrainInStation(4, 4, trains[1], None, 2))
 test_stationlist.stations[3][0].append(TrainInStation(4, 5, trains[2], 5, 2))
-	
-class Testing(unittest.TestCase):
+
+
+class Testing_Stationlist(unittest.TestCase):
 
 	def test_between_two_trains(self):
 		self.assertEqual(test_stationlist.compare_free_place(TrainInStation(3,3,trains[2],4,2)), [False,-1])
