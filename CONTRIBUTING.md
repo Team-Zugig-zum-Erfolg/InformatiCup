@@ -17,9 +17,9 @@ Diese Änderungen können immer durchgeführt werden:
 
 Bei größeren Änderungen sollte zuerst ein issue geöffnet werden, bevor der Code geändert wird. Damit man über die Änderungen noch diskutieren kann.
 
-## Code Style
+## Programmierstil
 
-Bitte halte dich an die Formartierungsrichtlinie PEP 8 ([PEP8]) case und nutze `python -m abfahrt.testutils.test_simulator` um zu prüfen ob alle Testfälle durchkommen und ob die scores und die Zeit sich verbessert.
+Bitte halte dich an die Formartierungsrichtlinie PEP 8 [PEP8] und nutze `python -m abfahrt.testutils.test_simulator`, um zu prüfen ob alle Testfälle durchkommen und ob die scores und die Zeit sich verbessert.
 
 ## Code of conduct
 
