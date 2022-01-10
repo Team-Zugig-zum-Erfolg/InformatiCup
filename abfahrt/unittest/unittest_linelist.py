@@ -59,4 +59,3 @@ class Testing_Linelist(unittest.TestCase):
 	#def test_before_first_train(self):
 		#test_linelist._train_in_line_pos(TrainInLine(trains[2],4,2,1))
 		#self.assertEqual(test_linelist._train_in_line_pos(TrainInLine(trains[1],5,3,3)), [True, -1])
-unittest.main()

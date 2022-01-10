@@ -75,4 +75,3 @@ class Testing_Stationlist(unittest.TestCase):
 		self.assertEqual(test_stationlist.train_leave_time(TrainInStation(-1,7,trains[0],-1,-1)), -1)
 		self.assertEqual(test_stationlist.train_leave_time(TrainInStation(-1,7,trains[0],None,-1)), 7)
 
-unittest.main()

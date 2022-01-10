@@ -67,14 +67,14 @@ class Line:
 
     def set_id(self, id_line: str):
         """
-        set id of line
+        Set id of line
 
         Args:
             id_line (str): string of id 
 
         Returns:
             bool: id_line is not from type string?, true = Type string, false = Type int
-        """        
+        """
         if type(id_line) != str:
             return False
         self.id = id_line
@@ -86,19 +86,19 @@ class Line:
 
         Returns:
             int: int of capacity
-        """        
+        """
         return self.capacity
 
     def set_capacity(self, capacity: int):
         """
-        set capacity of line
+        Set capacity of line
 
         Args:
             capacity (int): int capacity 
 
         Returns:
             bool: capacity is not from type int?, true = Type int, false = Type is false
-        """           
+        """
         if type(capacity) != int:
             return False
         self.capacity = capacity
@@ -110,19 +110,19 @@ class Line:
 
         Returns:
             start (Station): first station to connect
-        """    
+        """
         return self.start
 
     def set_start(self, start: Station):
         """
-        set start station
+        Set start station
 
         Args:
             start (Station): first station to connect
 
         Returns:
             bool: start is instance of Station?, true = Type is correct, false = Type is false
-        """          
+        """
         if (isinstance(start, Station) == False):
             return False
         self.start = start
@@ -134,19 +134,19 @@ class Line:
 
         Returns:
             end (Station): end station to connect
-        """    
+        """
         return self.end
 
     def set_end(self, end: Station):
         """
-        set end station
+        Set end station
 
         Args:
             end (Station): end station to connect
 
         Returns:
             bool: end is instance of Station?, true = Type is correct, false = Type is false
-        """           
+        """
         if (isinstance(end, Station) == False):
             return False
         self.end = end
@@ -158,19 +158,19 @@ class Line:
 
         Returns:
             float: float of length
-        """           
+        """
         return self.length
 
     def set_length(self, length: float):
         """
-        set length of line
+        Set length of line
 
         Args:
-            legth (float): float of length 
+            length (float): float of length 
 
         Returns:
             bool: length is not from type float?, true = Type float, false = Type is false
-        """        
+        """
         if type(length) != float:
             return False
         self.length = length
@@ -178,24 +178,24 @@ class Line:
 
     def __repr__(self):
         """
-        representation of object Line ( can be used for print)
+        Representation of object Line ( can be used for print)
 
         Returns:
             string: string from object
-        """             
+        """
         out = self.to_str_input()
         return out
 
     def __eq__(self, other):
         """
-        chek if both objects are equal.
+        Check if both lines are equal
 
         Args:
-            other (object): unknown object
+            other (Line): pther line
 
         Returns:
             bool: other is equal to Line?, true = Type is correct, false = Type is false
-        """           
+        """
         if (isinstance(other, Line)):
             return self.id == other.id and self.capacity == other.capacity and self.length == other.length and self.start == other.start and self.end == other.end
         return False

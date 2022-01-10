@@ -105,52 +105,133 @@ class Train:
         self.history += train.history
 
     def get_id(self):
+        """
+        Get the id of the train
+
+        Returns:
+            int: id of the train
+        """
         return self.id
 
     def set_id(self, id_train):
+        """
+        Set the id of the train
+
+        Args:
+            id_train (int): id to set
+
+        Returns:
+            bool: True, if successful, else False
+        """
         if type(id_train) != str:
             return False
         self.id = id_train
         return True
 
-    def set_start_station(self, start_station):
-        if type(start_station) != str:
+    def set_start_station(self, start_station: Station):
+        """
+        Set the start station of the train
+
+        Args:
+            start_station (Station): start station to set
+
+        Returns:
+            bool: True, if successful set, else False
+        """
+        if not isinstance(start_station, Station):
             return False
         self.start_station = start_station
         return True
 
     def get_start_station(self):
+        """
+        Get the start station of the train
+
+        Returns:
+            Station: the start station
+        """
         return self.start_station
 
-    def set_speed(self, speed):
+    def set_speed(self, speed: float):
+        """
+        Set the speed of the train
+
+        Args:
+            speed (float): speed to set
+
+        Returns:
+            bool: True, if set was successful, else False
+        """
         if type(speed) != float:
             return False
         self.speed = speed
         return True
 
     def get_speed(self):
+        """
+        Get the speed of the train
+
+        Returns:
+            float: the speed of the train
+        """
         return self.speed
 
-    def set_capacity(self, capacity):
+    def set_capacity(self, capacity: int):
+        """
+        Set the capacity of the train
+
+        Args:
+            capacity (int): capacity to set
+
+        Returns:
+            bool: True, if set was successful, else False
+        """
         if type(capacity) != int:
             return False
         self.capacity = capacity
         return True
 
     def get_capacity(self):
+        """
+        Get the capacity of the train
+
+        Returns:
+            int: the capacity of the train
+        """
         return self.capacity
 
     def to_str(self):
+        """
+        Get the train as string
+
+        Returns:
+            str: train as string
+        """
         output = " ".join([self.get_id_str(), self.start_station.get_id_str(), str(
             self.get_capacity()), str(self.get_speed())])
         return output
 
     def __repr__(self):
+        """
+        Representing train as string
+
+        Returns:
+            str: train as string
+        """
         output = " ".join([self.get_id_str(), self.start_station.get_id_str(), str(
             self.get_capacity()), str(self.get_speed())])
         return output
 
     def __eq__(self, other):
+        """
+        Compares the train with an other train
+
+        Args:
+            other (Train): other train to compare
+
+        Returns:
+            bool: True, if trains are equal, else False
+        """
         if (isinstance(other, Train)):
             return self.id == other.id and self.capacity == other.capacity and self.start_station == other.start_station and self.speed == other.speed
         return False
