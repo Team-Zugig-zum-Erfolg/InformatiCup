@@ -100,14 +100,14 @@ class Groups:
                 passenger_max_time = passenger
         return passenger_max_time
 
-    def split_group(self, group: List[Passenger], train_capacity_in_station, max_train_capacity) -> bool:
+    def split_group(self, group: List[Passenger], train_capacity_in_station: int, max_train_capacity: int) -> bool:
         """
         Passengers in a Group will be splitted, if possible 
 
         Args:
             group: List[Passenger] (list): List of all Passengers in Group
-            train_capacity_in_station : Train's Capacity in current Station
-            max_train_capacity : Largest Capacity among the Trains
+            train_capacity_in_station (int): Train's Capacity in current Station
+            max_train_capacity (int): Largest Capacity among the Trains
 
         Returns:
            bool: Has splitting worked?, true = splitting worked, false = splitting has not worked
@@ -141,7 +141,7 @@ class Groups:
         return True
 
     def group_choose(self, start_station: Station, end_station: Station, train_capacity: int) -> Tuple[
-        bool, List[Passenger]]:
+            bool, List[Passenger]]:
         """
         Determining the group of passengers with the starting station and the ending station, if possible
 
@@ -151,13 +151,12 @@ class Groups:
             train_capacity (int): train's capacity
 
         Returns:
-           bool: Has a group?, true = yes, false = no
-           group: List[Passenger] (list) true -> group, false -> None
+            Tuple[bool, List[Passenger]]: Has a group? (true = yes, false = no), passengers (true -> group, false -> None)
         """
         choose_group = []
         group_size = 0
         for group in self.route:
-            if group[0].start_station.id == start_station.id and group[0].end_station.id == end_station.id:
+            if group[0].start_station == start_station and group[0].end_station == end_station:
                 choose_group = group
                 break
         if choose_group is None:
@@ -168,7 +167,8 @@ class Groups:
                 group_size = group_size + passenger.group_size
             if group_size > train_capacity:
                 if len(choose_group) > 1:
-                    self.split_group(choose_group, train_capacity, train_capacity)
+                    self.split_group(
+                        choose_group, train_capacity, train_capacity)
                     return self.group_choose(start_station, end_station, train_capacity)
                 else:
                     return [False, None]

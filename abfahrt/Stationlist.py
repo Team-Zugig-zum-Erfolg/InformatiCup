@@ -31,13 +31,13 @@ class Stationlist:
         self.stations = []  # the stations with capacities
         self.result = result
         self.trains_not_in_station = []
-        stationlist = []
+        self.stationlist = []
         for station in stations:
-            stationlist.append(station.to_list())
+            self.stationlist.append(station.to_list())
 
         self.stations.append([])
         station_id = 1
-        for station in stationlist:
+        for station in self.stationlist:
             self.stations.append([])
             for i in range(0, station[S_CAPACITY]):
                 self.stations[station_id].append([])

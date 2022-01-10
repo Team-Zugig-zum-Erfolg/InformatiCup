@@ -8,8 +8,7 @@ def run():
 
     linelist = Linelist(lines)
     stationlist = Stationlist(stations, trains, result)
-    travel_center = Travel_Center(
-        stations, lines, trains, stationlist, linelist, result)
+    travel_center = Travel_Center(trains, stationlist, linelist, result)
 
     groups = Groups(passengers)
 
@@ -22,7 +21,7 @@ def run():
 
         start_station, end_station, group_size = travel_center.check_passengers(
             group)
-        start_time_list, trainlist, available = travel_center.check_train_in_station(
+        start_time_list, trainlist, available, _, _ = travel_center.check_train_in_station(
             start_station, group_size)
 
         if not available:

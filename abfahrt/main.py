@@ -1,9 +1,4 @@
-from abfahrt.Stationlist import Stationlist
-from abfahrt.Linelist import Linelist
-from abfahrt.Input import Input
-from abfahrt.Groups import Groups
-from abfahrt.Result import Result
-from abfahrt.Travel_Center import Travel_Center
+from abfahrt import *
 
 
 def main():
@@ -19,8 +14,7 @@ def main():
 
     linelist = Linelist(lines)
     stationlist = Stationlist(stations, trains, result)
-    travel_center = Travel_Center(
-        stations, lines, trains, stationlist, linelist, result)
+    travel_center = Travel_Center(trains, stationlist, linelist, result)
 
     groups = Groups(passengers)
 
@@ -47,7 +41,8 @@ def main():
                 if len(group) == 1:
                     print("INVALID INPUT: capacity of all trains too low!")
                     return
-                groups.split_group(group, train_capacity_in_station, max_train_capacity)
+                groups.split_group(
+                    group, train_capacity_in_station, max_train_capacity)
             continue
 
         route_length = travel_center.time_count_length(

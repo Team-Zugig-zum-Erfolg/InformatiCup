@@ -18,12 +18,12 @@ class Linelist:
         Initializing Linelist
         """
         self.lines = []  # the lines with capacities
-        linelist = []
+        self.linelist = []
         for line in lines:
-            linelist.append(line.to_list())
+            self.linelist.append(line.to_list())
         line_number = 1
         self.lines.append([])
-        for line in linelist:
+        for line in self.linelist:
             self.lines.append([])
             for i in range(0, line[4]):
                 self.lines[line_number].append([])
