@@ -5,7 +5,7 @@ Dies ist eine Lösung für den von der [GI](https://gi.de/) veranstalteten Wettb
 <!-- Unsere Lösung wurde mit Python und Algorithmus Dynamischee Planung erstellt, mit Docker deployed. Weitere Informationen über das Projekt finden Sie in der [Dokumentation](./), die Informationen über API finden Sie [hier](./). -->
 ## Systemvoraussetzungen
 Unsere Lösung wurde mit Python erstellt. Zur Ausführung der Software brauchen Sie zumindest **Python 3 (3.x.x)** und Betriebssystem **Windows** oder **Linux**. Python-spezifische Erweiterungen oder Module muss hingegen nur für die Entwickler-Dokumentation installiert werden und werden von unserer Software auch nicht weiter benötigt.
-## Installation
+## Installation der Umgebung
 Eine Entwicklungskopie des Repository des Projekts bzw. der Software kann mit folgendem Befehl erstellt werden.
 ```
 $ git clone https://gitlab.uni-hannover.de/informaticup-2022/gruppe-3/team-zug-zum-erfolg.git
