@@ -19,7 +19,7 @@ Bei größeren Änderungen solltest du bitte zuerst ein Issue anlegen, bevor der
 
 ## Programmierstil
 
-Bitte halte dich an die Formartierungsrichtlinie PEP 8 [PEP8] und an unsere Coding Conventions, wir nutzen ausschließlich Snake-Case.
+Bitte halte dich an die Formartierungsrichtlinie PEP 8 und an unsere Coding Conventions, wir nutzen ausschließlich Snake-Case.
 
 ## Code of conduct
 
