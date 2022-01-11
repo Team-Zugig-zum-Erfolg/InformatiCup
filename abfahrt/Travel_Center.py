@@ -720,13 +720,13 @@ class Travel_Center:
                 return True
         return False
 
-    def station_is_in_station_times_list(self, station: Station, station_times_list: TrainInStation) -> bool:
+    def station_is_in_station_times_list(self, station: Station, station_times_list: List[TrainInStation]) -> bool:
         """
         Checks if a station is in a list of TrainInStation entities/objects 
 
         Args:
             station (Station): station to find/check in the list
-            station_times_list (TrainInStation): list of TrainInStation entities/objects
+            station_times_list (List[TrainInStation]): list of TrainInStation entities/objects
 
         Returns:
             bool: True, if the station was found, else False

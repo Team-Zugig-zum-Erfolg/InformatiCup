@@ -27,6 +27,12 @@ test_travelcenter = Travel_Center(
     trains, test_stationlist, test_linelist, None)
 
 
+test_station_times = [TrainInStation(
+    0, 1, trains[0], 1, 1), TrainInStation(0, 1, trains[0], 1, 2)]
+
+test_station_times2 = []
+
+
 class Testing_Travel_Center(unittest.TestCase):
 
     "Unittest-Testcases for class Travel_Center"
@@ -79,3 +85,10 @@ class Testing_Travel_Center(unittest.TestCase):
             stations[4]), True)
         self.assertEqual(test_travelcenter.station_is_never_blocked(
             stations[5]), True)
+
+    def test_station_is_in_station_times_list(self):
+        """
+        Testcases for station_is_in_station_times_list()
+        """
+        self.assertEqual(test_travelcenter.station_is_in_station_times_list(
+            stations[2], test_station_times), False)
