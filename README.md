@@ -1,11 +1,11 @@
 # Lösung für den InformatiCup 2022
 ### Teamname: **Team Zug zum Erfolg**
-Dies ist eine Lösung für den von der [GI](https://gi.de/) veranstalteten Wettbewerb InformatiCup2022. Thema des Wettbewerbs ist es, mit Hilfe von Software und Algorithmen eine Lösung mit der geringsten Verspätung für das Reisen von Zügen und Fahrgästen zu planen. Die genaue Aufgabe des Wettbewerbs finden Sie [hier](https://informaticup.github.io/competition/20-current).
+Dies ist eine Lösung für den von der [GI](https://gi.de/) veranstalteten Wettbewerb InformatiCup2022. Thema des Wettbewerbs ist, eine Software zu entwickeln, welche Fahrpläne erstellen/berechnen kann und die Gesamtverspätung der Passagiere möglichst minimiert. Die genaue Aufgabe des Wettbewerbs finden Sie [hier](https://informaticup.github.io/competition/20-current).
 
 <!-- Unsere Lösung wurde mit Python und Algorithmus Dynamischee Planung erstellt, mit Docker deployed. Weitere Informationen über das Projekt finden Sie in der [Dokumentation](./), die Informationen über API finden Sie [hier](./). -->
 ## Systemvoraussetzungen
-Unsere Lösung wurde mit Python erstellt. Zur Ausführung der Software brauchen Sie zumindest **Python 3 (3.x.x)** und Betriebssystem **Windows** oder **Linux**. Python-spezifische Erweiterungen oder Module muss hingegen nur für die Entwickler-Dokumentation installiert werden und werden von unserer Software auch nicht weiter benötigt.
-## Installation der Umgebung
+Unsere Lösung wurde mit Python entwickelt. Zur Ausführung der Software wird mindestens **Python 3 (3.x.x)** und eine Betriebssystem-Distribution von **Windows** oder **Linux** benötigt. Python-spezifische Erweiterungen oder Module muss hingegen nur für die Entwickler-Dokumentation installiert werden und werden von unserer Software auch nicht weiter benötigt.
+## Installation der Software und der Abhängigkeiten
 Eine Entwicklungskopie des Repository des Projekts bzw. der Software kann mit folgendem Befehl erstellt werden.
 ```
 $ git clone https://gitlab.uni-hannover.de/informaticup-2022/gruppe-3/team-zug-zum-erfolg.git
@@ -13,12 +13,12 @@ $ git clone https://gitlab.uni-hannover.de/informaticup-2022/gruppe-3/team-zug-z
 
 ### Linux
 
-#### Installation von Python3
-Zur Installation von **Python3** Sie können folgender Befehl ausgeführt. 
+#### Installation von Python
+Zur Installation von **Python 3** muss der folgende Befehl ausgeführt werden.
 ```
-$ sudo apt-get install python
+$ sudo apt-get install python3
 ```
-Nachdem die Installation abgeschlossen wurde, kann mit folgendem Befehl die Version von Python überprüft werden:
+Nachdem die Installation abgeschlossen wurde, kann mit folgendem Befehl die Version von Python überprüft werden.
 
 ```
 $ python3 --version
@@ -26,7 +26,7 @@ $ python3 --version
 Wenn die Ausgabe **Python 3.x.x** entspricht, ist die Installation erfolgreich abgeschlossen und die für die Software benötigte Version von Python wurde erfolgreich installiert.
 
 #### Installation von Docker
-Ein Docker-Container enthält alle benötigte Umgebung und Module. Um die Software in einem Docker-Container auszuführen, muss Docker ebenfalls installiert werden, falls noch nicht geschehen. 
+Ein Docker-Container enthält alle benötigte Umgebung und Module. Um die Software in einem Docker-Container auszuführen, muss Docker ebenfalls installiert werden, falls noch nicht geschehen.
 
 Für die Installation von Docker gibt es, wie auf der offiziellen Internetseite unter https://docs.docker.com/engine/install beschrieben, mehrere Möglichkeiten. Wir empfehlen die Installation über ein DEB-/RPM-Package, denn bei dieser Möglichkeit sind am wenigsten Schritte durchzuführen.
 
@@ -58,7 +58,7 @@ Liegt ein anderes Betriebssystem vor, muss die im oberen Abschnitt genannte Inte
 
 ### Windows
 
-#### Installation von Python3
+#### Installation von Python
 Eine herkömmliche Installation in Windows ist über die Kommandozeile eher weniger zu empfehlen. Stattdessen wird die Installation über die graphische Benutzeroberfläche und mithilfe eines Internet-Browsers empfohlen. Dazu muss lediglich die folgende Internetseite bzw. URL aufgerufen werden:
 
     https://www.python.org/download
@@ -78,16 +78,37 @@ Für die Installation sind die folgenden Schritte notwendig:
 
 1. Zuerst muss zu der Internetseite navigiert werden.
 
-    https://docs.docker.com/desktop/windows/install 
+    https://docs.docker.com/desktop/windows/install
 
 2. Danach muss auf der geladenen Seite über die (eindeutig sichtbare) Herunterladen-Schaltfläche, die ausführbare Installationsdatei heruntergeladen und dann ausgeführt werden.
 
 3. Danach muss den Anweisungen des Installationsvorgangs Folge geleistet werden und zum Schluss der Rechner neu gestartet werden. Dabei muss (vermutlich) ein Update-Paket für den Linux-Kernel heruntergeladen werden, den Link zum diesem wird jedoch natürlich während der Installation mitgeteilt und ebenfalls darauf hingewiesen, dass dieses installiert werden muss. Ansonsten ist Docker auf dem Windows-System nicht vollständig einsatzbereit.
 
-## Benutzung
+
+### Generierung der Entwickler-Dokumentation
+```
+$ python3 -m pdoc -o ./doc -d google abfahrt
+```
+Windows:
+```
+$ python -m pdoc -o ./doc -d google abfahrt
+```
+> Dazu muss zwingend die Python-Erweiterung `pdoc` installiert sein, falls noch nicht geschehen.
+
+Die Installation von der Python-Erweiterung `pdoc` kann mit folgendem Befehl durchgeführt werden.
+
+```
+$ python3 -m pip install pdoc
+```
+Windows:
+```
+$ python -m pip install pdoc
+```
+
+## Ausführung
 Die Ausführung der Software kann auf zwei unterschiedliche Möglichkeiten erfolgen. Jedoch muss bei beiden die Kommandozeile (engl. Terminal) genutzt werden. Bei ersten Möglichkeit handelt es sich um die direkte Ausführung mit einem Befehl, indem unser Python-Modul einfach mit Python gestartet wird. Die zwei Möglichkeit hingegen, beschreibt die Ausführung der Software in einem Docker-Container.
 
-### Direkte Benutzung
+### Direkte Ausführung
 **Linux**
 
 Falls noch nicht erfolgt, muss zuerst in das Hauptverzeichnis des Projekts navigiert werden. In der Kommandozeile muss dann einfach abhängig vom Betriebssystem folgender Befehl ausgeführt werden:
@@ -99,7 +120,7 @@ $ python3 -m abfahrt
 Um den Inhalt einer Eingabedatei einlesen zu lassen:
 
 ```
-$ python -m abfahrt < [Dateipfad]
+$ python3 -m abfahrt < [Dateipfad]
 ```
 
 **Windows**
@@ -130,79 +151,47 @@ Mit den Argumenten `--rm` und `-i` wird die korrekte Ausführung gewährleistet 
 
 ## Testen
 
-Im Folgenden sind einige Methoden zum Testen.
+Mit folgenden Werkzeugen/Modulen kann die Software getestet werden.
 
-### Zur Erzeugung der Dokumentation mit `pdoc`
-
-
+### Testen mit dem Modul **test_simulator**:
 ```
-$ python -m pdoc -o ./doc -d google abfahrt
+$ python3 -m abfahrt.testutils.test_simulator
 ```
-> Sie müssen eventuell das Modul `pdoc` installieren
-
-```
-$ pip install pdoc
-```
----
-
-### Zum Testen vom Modul **main**:
-
-```
-$ python -m abfahrt [< input.txt]
-```
-
-
-
-**Example**:
-
-```
-$ python -m abfahrt < abfahrt/testfiles/test_1.txt
-```
-
----
-
-
-### Zum Testen vom Modul **test_simulator**:
+Windows:
 ```
 $ python -m abfahrt.testutils.test_simulator
 ```
 
-
-**Example only one Test**:
-
+### Testen mit dem Modul **test_generator**:
 ```
-$ python -m abfahrt.testutils.test_simulator -singletest test_1.txt
+$ python3 -m abfahrt.testutils.test_generator
 ```
-
-
-
-**Example Verbose**:
-```
-$ python -m abfahrt.testutils.test_simulator -verbose
-```
-
-
-**Example soft**:
-```
-$ python -m abfahrt.testutils.test_simulator -soft
-```
----
-
-### Zum Testen vom Modul **test_generator**:
+Windows:
 ```
 $ python -m abfahrt.testutils.test_generator
 ```
-
-
-**Example**:
-
+Beispiel:
 ```
-$ python -m abfahrt.testutils.test_generator
+$ python3 -m abfahrt.testutils.test_generator -test_amount 10 -number_stations 10 -number_lines 20 -number_trains 10 -number_passengers 10 -max_capacity_station 10 -max_capacity_line 10 -max_length_line 10 -max_capacity_train 10
+```
+Windows:
+```
+$ python -m abfahrt.testutils.test_generator -test_amount 10 -number_stations 10 -number_lines 20 -number_trains 10 -number_passengers 10 -max_capacity_station 10 -max_capacity_line 10 -max_length_line 10 -max_capacity_train 10
+```
+
+### Ausführen der **Unittests**:
+```
+$ python3 -m abfahrt.unittest
+```
+Windows:
+```
+$ python -m abfahrt.unittest
 ```
 
 
+**Beispiel**:
 ```
-$ python -m abfahrt.testutils.test_generator -test_amount 10 -number_stations 10 -number_lines 20 -number_trains 10 -number_passengers 10 -max_capacity_station 10 -max_capacity_line 10 -max_length_line 10 -max_capacity_train 10 -max_groups
+$ python -m abfahrt.testutils.test_generator -test_amount 10 -number_stations 10 -number_lines 20 -number_trains 10 -number_passengers 10 -max_capacity_station 10 -max_capacity_line 10 -max_length_line 10 -max_capacity_train 10
 ```
 
 
@@ -212,12 +201,11 @@ Diese Projekt unterliegt der [MIT Lizenz](./LICENSE).
 
 ```
   _______                      ______                                     ______       __      _         ___   ___ ___  ___  
- |__   __|                    |___  /                                    |  ____|     / _|    | |       |__ \ / _ \__ \|__ \ 
+ |__   __|                    |___  /                                    |  ____|     / _|    | |       |__ \ / _ \__ \|__ \
     | | ___  __ _ _ __ ___       / /_   _  __ _    _____   _ _ __ ___    | |__   _ __| |_ ___ | | __ _     ) | | | | ) |  ) |
-    | |/ _ \/ _` | '_ ` _ \     / /| | | |/ _` |  |_  / | | | '_ ` _ \   |  __| | '__|  _/ _ \| |/ _` |   / /| | | |/ /  / / 
-    | |  __/ (_| | | | | | |   / /_| |_| | (_| |   / /| |_| | | | | | |  | |____| |  | || (_) | | (_| |  / /_| |_| / /_ / /_ 
+    | |/ _ \/ _` | '_ ` _ \     / /| | | |/ _` |  |_  / | | | '_ ` _ \   |  __| | '__|  _/ _ \| |/ _` |   / /| | | |/ /  / /
+    | |  __/ (_| | | | | | |   / /_| |_| | (_| |   / /| |_| | | | | | |  | |____| |  | || (_) | | (_| |  / /_| |_| / /_ / /_
     |_|\___|\__,_|_| |_| |_|  /_____\__,_|\__, |  /___|\__,_|_| |_| |_|  |______|_|  |_| \___/|_|\__, | |____|\___/____|____|
                                            __/ |                                                  __/ |                      
                                           |___/                                                  |___/                       
 ```
-
