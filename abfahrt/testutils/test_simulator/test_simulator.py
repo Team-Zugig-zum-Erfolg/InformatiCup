@@ -31,8 +31,8 @@ class test_simulator:
         """
         Starts testing/validating the inputfiles in the directory and the calculated output
         """
-        parser = argparse.ArgumentParser(
-            description="Simulator zum automatischen Testen unserer Software", add_help=False)
+        parser = argparse.ArgumentParser(usage=argparse.SUPPRESS,
+                                         description="Simulator zum automatischen Testen der Software mit den Eingabedateien aus abfahrt/testfiles", add_help=False)
 
         parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
                             help='Zeigt dieses Hilfemenü an')

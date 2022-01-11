@@ -22,7 +22,7 @@ class test_generator:
 
         parser = argparse.ArgumentParser(usage=argparse.SUPPRESS,
                                          formatter_class=lambda prog: argparse.HelpFormatter(
-                                             prog, max_help_position=80, width=130), description="Generator der automatisch Tests für unsere Software erstellt und testet", add_help=False)
+                                             prog, max_help_position=80, width=130), description="Generator zum Generieren von zufälligen Eingaben und dem automatischen Testen der Software mit diesen", add_help=False)
 
         parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
                             help='Zeigt dieses Hilfemenü an')
