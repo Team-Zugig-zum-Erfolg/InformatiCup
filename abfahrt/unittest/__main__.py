@@ -4,6 +4,8 @@ from abfahrt.unittest.unittest_linelist import Testing_Linelist
 from abfahrt.unittest.unittest_stationlist import Testing_Stationlist
 from abfahrt.unittest.unittest_travelcenter import Testing_Travel_Center
 
+unittest.TestCase.shortDescription = lambda x: None
+
 __unittest = True
 
 if __name__ == '__main__':

@@ -18,8 +18,6 @@ trains = [Train(1, Station(1, 1), 1, 10), Train(2, Station(3, 2), 1, 10), Train(
 lines = [Line(1, stations[0], stations[1], 1, 1), Line(2, stations[1], stations[2], 1, 1), Line(2, stations[2], stations[3], 1, 1), Line(
     3, stations[3], stations[4], 1, 1), Line(4, stations[1], stations[3], 1, 1), Line(5, stations[0], stations[2], 1, 1)]
 
-lineplans = []
-
 
 test_linelist = Linelist(lines)
 test_stationlist = Stationlist(stations, trains, None)
@@ -31,7 +29,12 @@ test_travelcenter = Travel_Center(
 
 class Testing_Travel_Center(unittest.TestCase):
 
+    "Unittest-Testcases for class Travel_Center"
+
     def test_get_stations_by_line(self):
+        """
+        Testcases for get_stations_by_line()
+        """
         self.assertEqual(test_travelcenter.get_stations_by_line(1), [
                          stations[0], stations[1]])
         self.assertEqual(test_travelcenter.get_stations_by_line(2), [
@@ -42,10 +45,11 @@ class Testing_Travel_Center(unittest.TestCase):
                          stations[3], stations[4]])
         self.assertEqual(test_travelcenter.get_stations_by_line(5), [
                          stations[1], stations[3]])
-   # self.assertEqual(test_travelcenter.get_stations_by_line(None)) Wrong input data is inposible
 
     def test_find_only_one_line_between_stations(self):
-        # (self,start_station_id,end_station_id):   # return [length,[line]]
+        """
+        Testcases for find_only_one_line_between_stations()
+        """
         self.assertEqual(
             test_travelcenter.find_only_one_line_between_stations(1, 2), [1, [1]])
         self.assertEqual(
@@ -59,16 +63,10 @@ class Testing_Travel_Center(unittest.TestCase):
         self.assertEqual(
             test_travelcenter.find_only_one_line_between_stations(4, 2), [1, [4]])
 
-    # def test_find_best_lines(self):
-    #	self.assertEqual(test_travelcenter.find_best_line(self, 1, 2), [1, [1]])
-    #	self.assertEqual(test_travelcenter.find_best_line(self, 1, 3), [1, [1]])
-    #	#find_best_line(self, s_station_id, e_station_id):
-
-    # def test_time_count_length(self):
-    #	self.assertEqual(test_travelcenter.time_count_length(self, 1, 3), [1, [1]])
-
     def test_station_is_never_blocked(self):
-        # station_is_never_blocked(station, stationlist: Stationlist):
+        """
+        Testcases for station_is_never_blocked()
+        """
         self.assertEqual(test_travelcenter.station_is_never_blocked(
             stations[0]), False)
         self.assertEqual(test_travelcenter.station_is_never_blocked(
