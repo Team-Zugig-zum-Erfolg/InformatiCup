@@ -105,7 +105,7 @@ class Groups:
         Passengers in a Group will be splitted, if possible 
 
         Args:
-            group: List[Passenger] (list): List of all Passengers in Group
+            group: List[Passenger] (list): list of all Passengers in Group
             train_capacity_in_station (int): Train's Capacity in current Station
             max_train_capacity (int): Largest Capacity among the Trains
 
