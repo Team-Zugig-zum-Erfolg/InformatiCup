@@ -1,4 +1,6 @@
 import unittest
+# The unittest unit testing framework was originally inspired by JUnit and has a similar flavor as major unit testing frameworks in other languages.
+# It supports test automation, sharing of setup and shutdown code for tests, aggregation of tests into collections, and independence of the tests from the reporting framework.(https://docs.python.org/3/library/unittest.html)
 
 from abfahrt.Travel_Center import Travel_Center
 from abfahrt.classes.TrainInStation import TrainInStation
@@ -10,28 +12,22 @@ from abfahrt.Stationlist import Stationlist
 
 __unittest = True
 
-
 stations = [Station(1, 1), Station(2, 1), Station(
-    3, 2),  Station(4, 2), Station(5, 3), Station(6, 3)]
+    3, 2),  Station(4, 2), Station(5, 3), Station(6, 3), Station(7,4), Station(8,4), Station(9,4), Station(10,3), Station(11,0)]
 trains = [Train(1, Station(1, 1), 1, 10), Train(2, Station(3, 2), 1, 10), Train(
     3, Station(5, 3), 1, 10), Train(4, Station(6, 3), 1, 10)]
 lines = [Line(1, stations[0], stations[1], 1, 1), Line(2, stations[1], stations[2], 1, 1), Line(2, stations[2], stations[3], 1, 1), Line(
-    3, stations[3], stations[4], 1, 1), Line(4, stations[1], stations[3], 1, 1), Line(5, stations[0], stations[2], 1, 1)]
-
+    3, stations[3], stations[4], 1, 1), Line(4, stations[1], stations[3], 1, 1), Line(5, stations[0], stations[2], 1, 1), Line(
+    6, stations[2], stations[4], 1, 1), Line(7, stations[4], stations[5], 1, 1), Line(8, stations[5], stations[6], 1, 1), Line(
+    9, stations[5], stations[7], 1, 1), Line(10, stations[5], stations[8], 1, 1), Line(11, stations[8], stations[9], 1, 1)]
 
 test_linelist = Linelist(lines)
 test_stationlist = Stationlist(stations, trains, None)
-
-
 test_travelcenter = Travel_Center(
     trains, test_stationlist, test_linelist, None)
-
-
 test_station_times = [TrainInStation(
-    0, 1, trains[0], 1, 1), TrainInStation(0, 1, trains[0], 1, 2)]
-
+    0, 1, trains[0], 1, 1), TrainInStation(6, 1, trains[2], 1, 2)]
 test_station_times2 = []
-
 
 class Testing_Travel_Center(unittest.TestCase):
 
@@ -51,6 +47,18 @@ class Testing_Travel_Center(unittest.TestCase):
                          stations[3], stations[4]])
         self.assertEqual(test_travelcenter.get_stations_by_line(5), [
                          stations[1], stations[3]])
+        self.assertEqual(test_travelcenter.get_stations_by_line(6), [
+                         stations[0], stations[2]])
+        self.assertEqual(test_travelcenter.get_stations_by_line(7), [
+                         stations[2], stations[4]])
+        self.assertEqual(test_travelcenter.get_stations_by_line(8), [
+                         stations[4], stations[5]])
+        self.assertEqual(test_travelcenter.get_stations_by_line(9), [
+                         stations[5], stations[6]])
+        self.assertEqual(test_travelcenter.get_stations_by_line(10), [
+                         stations[5], stations[7]])
+        self.assertEqual(test_travelcenter.get_stations_by_line(11), [
+                         stations[5], stations[8]])
 
     def test_find_only_one_line_between_stations(self):
         """
@@ -68,7 +76,38 @@ class Testing_Travel_Center(unittest.TestCase):
             test_travelcenter.find_only_one_line_between_stations(2, 4), [1, [4]])
         self.assertEqual(
             test_travelcenter.find_only_one_line_between_stations(4, 2), [1, [4]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(4, 2), [1, [4]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(3, 4), [1, [2]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(4, 5), [1, [3]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(5, 6), [1, [7]])
 
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(6, 7), [1, [8]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(6, 9), [1, [10]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(6, 8), [1, [9]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(6, 5), [1, [7]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(4, 3), [1, [2]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(5, 4), [1, [3]])
+        self.assertEqual(            
+            test_travelcenter.find_only_one_line_between_stations(9, 6), [1, [10]])
+        self.assertEqual(            
+            test_travelcenter.find_only_one_line_between_stations(8, 6), [1, [9]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(7, 6), [1, [8]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(4, 3), [1, [2]])
+        self.assertEqual(
+            test_travelcenter.find_only_one_line_between_stations(9, 10), [1, [11]])
+        
     def test_station_is_never_blocked(self):
         """
         Testcases for station_is_never_blocked()
@@ -85,10 +124,42 @@ class Testing_Travel_Center(unittest.TestCase):
             stations[4]), True)
         self.assertEqual(test_travelcenter.station_is_never_blocked(
             stations[5]), True)
+        self.assertEqual(test_travelcenter.station_is_never_blocked(
+            stations[6]), True)
+        self.assertEqual(test_travelcenter.station_is_never_blocked(
+            stations[7]), True)
+        self.assertEqual(test_travelcenter.station_is_never_blocked(
+            stations[8]), True)
+        self.assertEqual(test_travelcenter.station_is_never_blocked(
+            stations[9]), True)
+        self.assertEqual(test_travelcenter.station_is_never_blocked(
+            stations[10]), False)
 
     def test_station_is_in_station_times_list(self):
         """
         Testcases for station_is_in_station_times_list()
         """
-        self.assertEqual(test_travelcenter.station_is_in_station_times_list(
-            stations[2], test_station_times), False)
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[0], test_station_times), True) 
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[1], test_station_times), True)      
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[1], test_station_times), True)       
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[2], test_station_times), False)
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[3], test_station_times), False)
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[4], test_station_times), False)
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[5], test_station_times), False)
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[6], test_station_times), False)
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[7], test_station_times), False)
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[8], test_station_times), False)
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[9], test_station_times), False)
+        self.assertEqual(
+            test_travelcenter.station_is_in_station_times_list(stations[10], test_station_times), False)
