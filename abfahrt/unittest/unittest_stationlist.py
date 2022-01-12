@@ -1,10 +1,11 @@
 import unittest
+# The unittest unit testing framework was originally inspired by JUnit and has a similar flavor as major unit testing frameworks in other languages.
+# It supports test automation, sharing of setup and shutdown code for tests, aggregation of tests into collections, and independence of the tests from the reporting framework.(https://docs.python.org/3/library/unittest.html)
 
 from abfahrt.classes.TrainInStation import TrainInStation
 from abfahrt.classes.Station import Station
 from abfahrt.classes.Train import Train
 from abfahrt.Stationlist import Stationlist
-
 
 __unittest = True
 
@@ -13,14 +14,12 @@ stations = [Station(1, 1), Station(2, 1), Station(
 trains = [Train(1, Station(1, 1), 1, 10), Train(2, Station(3, 2), 1, 10), Train(
     3, Station(5, 3), 1, 10), Train(4, Station(6, 3), 1, 10)]
 
-
 test_stationlist = Stationlist(stations, trains, None)
 
 test_stationlist.stations[1][0].append(TrainInStation(0, 1, trains[0], 1, 2))
 test_stationlist.stations[2][0].append(
     TrainInStation(4, 4, trains[1], None, 2))
 test_stationlist.stations[3][0].append(TrainInStation(4, 5, trains[2], 5, 2))
-
 
 class Testing_Stationlist(unittest.TestCase):
 
@@ -50,6 +49,7 @@ class Testing_Stationlist(unittest.TestCase):
             TrainInStation(3, 99, trains[3], 4, 1)), [False, -1])
         self.assertEqual(test_stationlist.compare_free_place(
             TrainInStation(2, 2, trains[3], 6, 1)), [False, -1])
+
         self.assertEqual(test_stationlist.compare_free_place(
             TrainInStation(-1, 7, trains[0], 3, 1)), [False, -1])
         self.assertEqual(test_stationlist.compare_free_place(
@@ -70,3 +70,45 @@ class Testing_Stationlist(unittest.TestCase):
             TrainInStation(3, 1, trains[2], 5, 2)), [False, -1])
         self.assertEqual(test_stationlist.compare_free_place(
             TrainInStation(3, 3, trains[1], 7, 1)), [False, -1])
+
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(3, 3, trains[2], 7, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(0, 1, trains[1], 1, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(1, 2, trains[2], 1, 2)), [True, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(2, 3, trains[2], 2, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(3, 5, trains[2], 7, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(4, 7, trains[0], -1, -1)), [True, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(4, 7, trains[0], 3, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(4, 7, trains[1], 3, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(4, 7, trains[0], 7, 3)), [True, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(2, 2, trains[2], 24, 1)), [False, -1])
+        
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(7, 4, trains[2], 24, 5)), [True, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(2, 5, trains[3], 6, 3)), [True, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(6, 3, trains[1], 0, 4)), [True, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(2, 7, trains[1], 7, 3)), [True, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(2, 2, trains[2], 6, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(2, 2, trains[1], 6, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(5, 7, trains[0], 3, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(3, 3, trains[3], 2, 1)), [False, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+             TrainInStation(5, 4, trains[3], 5, 3)), [True, -1])
+        self.assertEqual(test_stationlist.compare_free_place(
+            TrainInStation(7, 1, trains[0], 5, 4)), [True, -1])
