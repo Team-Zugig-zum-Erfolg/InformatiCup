@@ -22,7 +22,6 @@ class test_simulator:
     def __init__(self, dir: str):
         self.files_test = os.listdir(dir)
         self.files_test.remove('testlexicon.txt')
-        self.files_test.remove('test_two_train_nets.txt')
         self.dir = dir
 
         self.tests_completed = 0
