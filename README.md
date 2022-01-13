@@ -11,7 +11,7 @@ Unsere Lösung wurde mit Python entwickelt. Zur Ausführung der Software wird mi
 ## Installation der Software und der Abhängigkeiten
 Eine Entwicklungskopie des Repository des Projekts bzw. der Software kann mit folgendem Befehl erstellt werden.
 ```
-$ git clone https://gitlab.uni-hannover.de/informaticup-2022/gruppe-3/team-zug-zum-erfolg.git
+$ git clone https://github.com/Team-Zugig-zum-Erfolg/InformatiCup.git
 ```
 
 ### Linux
