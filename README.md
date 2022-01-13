@@ -200,7 +200,7 @@ $ python -m abfahrt.testutils.test_generator -test_amount 10 -number_stations 10
 
 ## Lizenz
 
-Diese Projekt unterliegt der [MIT Lizenz](./LICENSE).
+Diese Projekt unterliegt der [MIT Lizenz](./LICENSE.md).
 
 ```
   _______                      ______                                     ______       __      _         ___   ___ ___  ___  
