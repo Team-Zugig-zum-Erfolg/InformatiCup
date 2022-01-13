@@ -817,7 +817,6 @@ class Travel_Center:
         # get the neighboor stations of the target_station,
         # so the blocking trains in the target_station can be moved to one of the free
         # (or not blocked) neighboor stations
-        # print(target_station)
         neighboor_stations = self.get_neighboor_stations(target_station)
         next_station = None
         for neighboor_station in neighboor_stations:
@@ -832,10 +831,10 @@ class Travel_Center:
                 if neighboor_station == prev_station:
                     next_station = prev_station
         if next_station == None:
-            # no neighboor station is free (free = not blocked) and origin station is also not available
+            # no neighboor station is free (free = not blocked) and prev station is also not available
             raise NameError("clear station error: no station available")
 
-        # get the blocking trains in the station (blocking trains = trains in the station with no leave time)
+        # get the blocking trains in the station to clear (blocking trains = trains in the station with no leave time)
         # a station is only blocked, if all trains in the station have no leave time
         start_times, trains, _ = self.stationlist.read_trains_from_station(
             target_station.id, False)
@@ -970,7 +969,7 @@ class Travel_Center:
             # no neighboor station is free (free = not blocked) and origin station is also not available
             raise NameError("clear station error: no station available")
 
-        # get the blocking trains in the station (blocking trains = trains in the station with no leave time)
+        # get the blocking trains in the station to clear (blocking trains = trains in the station with no leave time)
         # a station is only blocked, if all trains in the station have no leave time
         start_times, trains, _ = self.stationlist.read_trains_from_station(
             target_station.id, False)
