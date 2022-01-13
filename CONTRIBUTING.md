@@ -3,7 +3,7 @@
 ## Bevor Änderungen an dem Programmcode durchgeführt werden:
 
 Bitte lese dich sorgfältig in den Code ein. Bei Fragen kannst du dich per E-Mail an uns wenden oder ein neues Issue eröffnen/anlegen.
-Die gesamte Dokumentation findet man unter ([https://github.com/team-zugig-zum-erfolg/](https://github.com/team-zugig-zum-erfolg/).) 
+Die gesamte Dokumentation findet man unter [https://github.com/Team-Zugig-zum-Erfolg/InformatiCup](https://github.com/Team-Zugig-zum-Erfolg/InformatiCup).
 
 ## Kleinere Änderungen
 
@@ -24,4 +24,3 @@ Bitte halte dich an die Formartierungsrichtlinie PEP 8 und an unsere Coding Conv
 ## Code of conduct
 
 Achte bei deinen Änderungen zusätzlich darauf, dass du unseren Code-of-Conduct in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) einhältst.
-
