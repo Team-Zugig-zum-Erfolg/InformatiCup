@@ -2,6 +2,9 @@
 ### Teamname: **Team Zug zum Erfolg**
 Dies ist eine Lösung für den von der [GI](https://gi.de/) veranstalteten Wettbewerb InformatiCup2022. Thema des Wettbewerbs ist, eine Software zu entwickeln, welche Fahrpläne erstellen/berechnen kann und die Gesamtverspätung der Passagiere möglichst minimiert. Die genaue Aufgabe des Wettbewerbs finden Sie [hier](https://informaticup.github.io/competition/20-current).
 
+Entwickler:
+Berkehan Ünal, Han Yang, Ling-Hsuan Hsu, Lukas Dreyer
+
 <!-- Unsere Lösung wurde mit Python und Algorithmus Dynamischee Planung erstellt, mit Docker deployed. Weitere Informationen über das Projekt finden Sie in der [Dokumentation](./), die Informationen über API finden Sie [hier](./). -->
 ## Systemvoraussetzungen
 Unsere Lösung wurde mit Python entwickelt. Zur Ausführung der Software wird mindestens **Python 3 (3.x.x)** und eine Betriebssystem-Distribution von **Windows** oder **Linux** benötigt. Python-spezifische Erweiterungen oder Module muss hingegen nur für die Entwickler-Dokumentation installiert werden und werden von unserer Software auch nicht weiter benötigt.
