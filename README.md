@@ -79,8 +79,7 @@ Um die Ausführung unserer Software auf einem Windows-System in einem Docker-Con
 
 Für die Installation sind die folgenden Schritte notwendig:
 
-1. Zuerst muss zu der Internetseite navigiert werden.
-
+1. Zuerst muss zu der folgenden Internetseite navigiert werden.
     https://docs.docker.com/desktop/windows/install
 
 2. Danach muss auf der geladenen Seite über die (eindeutig sichtbare) Herunterladen-Schaltfläche, die ausführbare Installationsdatei heruntergeladen und dann ausgeführt werden.
