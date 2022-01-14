@@ -33,7 +33,7 @@ Ein Docker-Container enthält alle benötigte Umgebung und Module. Um die Softwa
 
 Für die Installation von Docker gibt es, wie auf der offiziellen Internetseite unter https://docs.docker.com/engine/install beschrieben, mehrere Möglichkeiten. Wir empfehlen die Installation über ein DEB-/RPM-Package, denn bei dieser Möglichkeit sind am wenigsten Schritte durchzuführen.
 
-1.  Dazu  muss  zuerst  im  Browser  zu  der  Internetseite  unter https://docs.docker.com/engine/install/navigiert werden.
+1.  Dazu  muss  zuerst  im  Browser  zu  der  Internetseite  unter https://docs.docker.com/engine/install/ navigiert werden.
 
 2. Dort muss dann im nächsten Schritt das Betriebssystem ausgewählt werden.
 
