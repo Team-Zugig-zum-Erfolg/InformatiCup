@@ -116,6 +116,7 @@ class Groups:
         if group not in self.route:
             return False
         self.route.remove(group)
+        group.sort(key=lambda x: x.target_time)
         first_passenger_group = group[0]
         if first_passenger_group.group_size <= train_capacity_in_station:
             capacity = train_capacity_in_station
@@ -126,7 +127,6 @@ class Groups:
         capacity_count = 0
         first_group = []
         second_group = []
-        group.sort(key=lambda x: x.target_time)
         for passenger in group:
             if passenger.group_size <= capacity - capacity_count:
                 first_group.append(passenger)
